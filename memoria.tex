@@ -1,0 +1,130 @@
+\documentclass[titlepage,a4paper,12pt]{book}
+
+\usepackage[latin1]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{graphicx}
+\usepackage{marvosym}
+
+\begin{document}
+
+\thispagestyle{empty}
+%PAGINA3
+\rule{160mm}{0.20mm}\\
+\textbf{DADES DEL PROJECTE}\\
+\\
+\textit{Títol del Projecte:} Algoritmes genètics aplicats a ciències de la vida\\
+\\
+\\
+\textit{Nom de l'estudiant:}Raimon Grau Cuscó\\
+\\
+\textit{Titulació:} Enginyeria Informàtica\\
+\\
+\textit{Crèdits:} 37.50 \\
+\\
+\textit{Director/Ponent:} Ignasi Belda Reig / Jordi Delgado Pin\\
+\\
+\textit{Departament:} Llenguatges i Sistemes Informàtics\\
+\\
+\\
+\rule{160mm}{0.20mm}\\
+\textbf{MEMBRES DEL TRIBUNAL}\textit{(nom i signatura)}\\
+\\
+\textit{President:} Jordi Torres Viñals.\\
+\\
+\\
+\textit{Vocal:} Juan Luis Esteban Ángeles.\\
+\\
+\\
+\textit{Secretari:} Eduardo Ayguadé Parra.\\
+\\
+\\
+\\
+\rule{160mm}{0.20mm}\\
+\textbf{QUALIFICACIÓ}\\
+\\
+\textit{Qualificació numèrica:}\\
+\textit{Qualificació descriptiva:}\\
+\\
+\textit{Data:}
+\\
+\\
+\rule{160mm}{0.20mm}\\
+%end pagina3
+\newpage{\pagestyle{empty}\cleardoublepage}
+%PORTADA AMB FOTOS I TAL SINÓ FORA
+\begin{titlepage}
+\begin{center}
+{\Huge Algorismes genètics aplicats a ciències de la vida}\\[2cm]
+{\Large  Raimon Grau Cuscó }\\[5cm]
+
+	\begin{figure}[h]
+	\begin{center}
+	%\includegraphics[width=4in]{img/ip.eps}
+	\end{center}
+	\end{figure}
+
+	\begin{figure}[h]
+	\begin{center}
+	%\includegraphics[width=3in]{img/bsc.eps}
+	%\includegraphics[width=1in]{img/gridSS.eps}
+	\end{center}
+	\end{figure}
+\end{center}
+\end{titlepage}
+
+\newpage{\pagestyle{empty}\cleardoublepage}
+
+\pagenumbering{roman}
+
+%INICIEM
+\tableofcontents
+
+\newpage{\pagestyle{empty}\cleardoublepage}
+
+%Introducció
+\chapter{Introducció}
+\pagenumbering{arabic}
+%\addcontentsline{toc}{chapter}{Introducció}
+	\include{introduccio}
+\chapter{Algoritmes genètics}
+	\include{genetics}
+
+\chapter{BedRoc Tanimotos}
+\include{bedroc}
+        
+
+
+
+\chapter{Daedalus\label{chap:daedalus}}
+	\include {daedalus}
+\chapter{GRID Superscalar\label{chap:gridSS}}	
+	\include{gridSS}
+\chapter{AutoDock\label{chap:autodock}}
+	\include{autodock}
+	\include{optimitzaci'o}
+\chapter{Estadístiques\label{chap:estadistica}}
+	\include{estad'istiques}
+
+%Resultats del PFC (números i exemples)
+\chapter{Resultats}
+	\include{resultats}
+
+%Conclusions del PFC
+\chapter{Conclusions\label{chap:conclusions}}
+	\include{conclusions}
+
+\appendix 
+\chapter{Fitxers AutoDock}
+	\include{autoDockFiles}
+\chapter{Codis font}
+	\include{codis}
+
+\bibliography{bibliography}
+\bibliographystyle{unsrt}
+\end{document}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% ispell-local-dictionary: "catala-tex"
+%%% End:

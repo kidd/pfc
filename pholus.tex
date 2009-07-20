@@ -1,0 +1,126 @@
+\documentclass[titlepage,a4paper,12pt]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{graphicx}
+\usepackage{marvosym}
+\usepackage{amssymb, amsmath} 
+
+\begin{document}
+\section{Objectius} % (fold)
+\label{sec:Objectius}
+Aquest projecte anomenat \texttt{Pholus}, ha estat desenvolupat per a equilibrar (ponderar) pesos dels
+diferents maps, per a veure quins són més rellevants a l'hora de 'enganxar' amb el receptor.  %XXX enganxar
+
+Es tracta d'un algoritme evolutiu relativament senzill pel que fa al propi algoritme, però més
+complex pel referent a les condicions externes que s'imposen per la natura, i que ens obliguen a
+posar condicions i limitacions al Algoritme Evolutiu (als Algoritmes Evolutius no els agraden les 
+limitacions )
+
+Com es mostrarà en les següents seccions, hi ha una part important de feina
+realitzada en la preparació de les dades, i en la corresponent validació.
+% section Objectius (end)
+
+\section{Context Químic} % (fold)
+\label{sec:Context Quimic}
+Tanimotos, conformacions, y tal 
+% section Context Químic (end)
+
+\section{Procediment informàtic} % (fold)
+\label{sec:Procediment informatic}
+
+
+% section inf (end)
+\section{preparació de dades} % (fold)
+\label{sec:preparacio de dades}
+Una molècula es pot trobar en la natura en diverses formes.  Les clasificacions es divideixen en
+isomers i conformacions.  Una molècula pot tenir diversos isomers, i cada isomer es pot trobar en  
+diverses conformacions.
+
+És a dir, que per un nom (o id), en la natura deriven diverses estructures, que comparteixen nom, i
+elements, però poden estar organitzats de forma diferent en l'espai. Aquestes organitzacions son
+simètriques en l'espai 3D, donant lloc a molècules similars, però que en l'espai 3D, no es superposen de la
+mateixa forma. (exemple, les mans, que no es poden superposar en 3D).
+
+Les conformacions, en canvi, són variacions de la posició dels àtoms en l'espai, però mantenint els
+enllaços entre àtoms.
+
+Per passar d'un estereoisomer a un altre, s'han de trencar enllaços, i tornar-se a formar.  En les
+conformacions no passa això, i es pot passar d'una a una altra, només canviant els angles dels
+enllaços i la seva flexibilitat. 
+
+Donat un conjunt de molècules que volem utilitzar, hem de saber quina de les conformacions triarem
+per a cada molècula.  Per a fer la \texttt{explosió} de combinacions, s'utilitza un sofware
+especific, que fa la combinatoria i genera les possibles variacions sobre una molècula donada. 
+
+\subsection{Procés de preparació} % (fold)
+\label{sub:Proces de preparacio}
+
+Amb un conjunt de molècules, l'hi hem de trobar tots els isomers i les conformacions diferents en
+les que es poden trobar a la natura, és per això que primer, donada una base de dades de molècules
+diferents, hem de generar totes les conformacions possibles de cada molècula.  Una vegada les tenim
+generades, hem de quedar-nos amb la conformació que millors resultats dóna en aquest problema.  Per
+fer això, tenim un seguit de programes de tractament de dades, que ens permeten prepararles d'acord
+amb les nostres necessitats.
+% subsection Procés de preparació (end)
+
+\subsection{Massatgeant les dades} % (fold)
+\label{sub:Massatgeant les dades}
+
+% subsection Massatgeant les dades (end)
+
+% section preparació de dades (end)
+
+\section{Algoritme genètic} % (fold)
+\label{sec:Algoritme genetic}
+
+\subsection{Fitness} % (fold)
+\label{sub:Fitness}
+En aquest problema, la funció que ens indica com de bò és un individu (funció \texttt{fitness}) és
+el resultat de evaluar la ordenació que dóna la ponderació indicada per l'individu, respecte els
+nostres coneixements de activitat. Aquesta evaluació la fem mitjançant un dels diferents algoritmes
+de evaluació d'ordenacions.
+
+\begin{itemize}
+	\item Roc
+	\item BedRoc
+	\item Enrichment Factor
+	\item \dots
+\end{itemize}
+
+
+En qualsevol d'aquests procediments, es tracta d'evaluar com està de ben ordenada una llista, en
+funció d'unes regles.
+
+% subsection Fitness (end)
+\subsection{Operadors} % (fold)
+\label{sub:Operadors}
+% subsection Operadors (end)
+
+Els operadors usats en aquest algoritme genètic són els més clàssics ja que donat el problema, tan
+sols hi ha necessitat d'aplicar operadors ``bàsics'' als individus.  
+
+\subsubsection{Crossover} % (fold)
+\label{ssub:Crossover}
+Pel creuament s'ha provat un creuament per un punt, i el creuament per dos punts, donant millors
+resultats el creuament en tant sols un punt.  Amb una provabilitat d'un 0.8 es fa creuament i el
+``fill'' és tan sols una partició formada a partir dels 2 pares, amb un punt de tall aleatori.
+% subsubsection crossover (end)
+
+\subsubsection{Mutacions} % (fold)
+\label{ssub:Mutacions}
+
+S'apliquen mutacions en un 0.1\% dels individus una vegada fet el creuament.  Les mutacions en
+aquesta aplicació consisteixen en modificar una ponderació per una altra (al·lel).  La única
+restricció és que es mantingui dins dels marges [-1,+1] .
+% subsubsection Mutacions (end)
+
+\subsection{sobreentrenament} % (fold)
+\label{sub:sobreentrenament}
+
+- Pq no es sobreentreni, conjunt de test i conj de validació.
+% subsection sobreentrenament (end)
+
+% section Al (end)
+
+\end{document}
