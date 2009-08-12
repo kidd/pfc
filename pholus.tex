@@ -118,7 +118,29 @@ restricció és que es mantingui dins dels marges [-1,+1] .
 \subsection{sobreentrenament} % (fold)
 \label{sub:sobreentrenament}
 
+Un dels problemes que comporta la utilització d'algoritmes evolutius és
+l'anomenat sobreentrenament.  El sobreentrenament és l'efecte que es dóna quan
+utilitzem un conjunt de dades per entrenar un programa, i l'utilitzem tantes
+vegades, que la solució obtinguda és molt bona pel conjunt de dades amb el qual
+ha estat entrenat, però al aplicar la solució obtinguda en altres dades, els
+resultats obtinguts són molt pitjors als esperats.
+
+Això es pot donar per diversos motius, però un dels motius més freqüents és quan
+disposem de poques dades en el nostre conjunt d'entrenament.  L'algoritme
+genètic, prepara una solució ``a mida'', donant-nos molt bons resultats en les
+nostres dades, perquè ``estudia'' els casos del conjunt de entrenament un a un,
+creant solucions ad-hoc, no aplicables a altres conjunts de dades.
+
+Per tenir controlat aquest sobreentrenament, s'ha aplicat una tècnica basada en
+``leave one out'' on fem l'entrenament amb un percentatge determinat de les
+dades, 
+
 - Pq no es sobreentreni, conjunt de test i conj de validació.
+- 80 10 10, es fa sobre molecules i despres es deixen passar totes les
+conformacions d'aquestes molecules, fent que les dades finals no siguin 80 10 10
+, pero aixo es correcte pq la flexibilitat d'una molecula es part de la seva
+'qualitat'.
+
 % subsection sobreentrenament (end)
 
 % section Al (end)
