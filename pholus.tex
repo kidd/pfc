@@ -15,15 +15,111 @@ diferents maps, per a veure quins són més rellevants a l'hora de 'enganxar' am
 Es tracta d'un algoritme evolutiu relativament senzill pel que fa al propi algoritme, però més
 complex pel referent a les condicions externes que s'imposen per la natura, i que ens obliguen a
 posar condicions i limitacions al Algoritme Evolutiu (als Algoritmes Evolutius no els agraden les 
-limitacions )
+limitacions).
 
 Com es mostrarà en les següents seccions, hi ha una part important de feina
-realitzada en la preparació de les dades, i en la corresponent validació.
+realitzada en la preparació de les dades, i en la corresponent validació dels
+resultats.
+
+
 % section Objectius (end)
 
 \section{Context Químic} % (fold)
 \label{sec:Context Quimic}
 Tanimotos, conformacions, y tal 
+
+El problema al que ens enfrontem és el de, donat un \texttt{receptor} i un conjunt de %glossari
+\texttt{lligands}, deduir quins són els factors que fan que la unió sigui millor
+o pitjor.  Els factors que intervenen en aquesta unió són molts, però a nivell
+pràctic, utilitzem ``nomes'' 22 indicadors, que són els que podem quantificar
+amb facilitat, i que hem cregut que tenen més rellevància en aquest procés.
+
+Aquests indicadors són:
+
+\begin{list}{Indicadors}{}
+\item Pes molecular
+\item potencial electroestàtic
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\end{list}
+
+Per tal que una unió entre lligand i receptor sigui bona, les energies
+dissipades s'han de minimitzar, mostrant així que entre les dues molècules es
+neutralitzen.  Si la energia és alta, fa que la estructura final (lligand +
+receptor) sigui poc estable i fàcilment trencada, ja que les dues parts, poden
+trobar alguna altra formació on ``es troben més còmodes''.
+
+Tanimotos. Què cony son? %XXX
+
+\subsubsection{Estereoisomers i conformacions}\label{ssub:estereoisomers i conformacions}
+
+Una altra particularitat del problema és la varietat de estereoisomers i de
+conformacions que pot tenir una molecula donada.  Una molècula, identificada per
+un nom i una composició pot tenir diverses maneres de mapejar-se en un espai
+tridimensional.
+
+Quan diem que una molècula pot tenir varis estereoisomers, ens referim a que
+dues molècules, poden ser simètriques, però no superposables.  Un exemple al que
+podem estar més acostumats, per entendre el concepte són les mans.  La mà dreta
+i la esquerra, tindrien la mateixa composició, però al ser simètriques una
+respecte la altra, fa que no puguem superposarles.
+
+Cada estereoisomer pot tenir diverses conformacions.  Amb això ens referim a què
+en la natura, no sempre trobem la molècula amb els mateixos angles entre atoms,
+tipus d'enllassos, etc. Per exemple, una molècula pot trobarse en la natura
+enrotllada sobre ella mateixa, o bé estirada (és bastant comú trobar aquests
+tipus de conformacions).
+
+%XXX Fotos de isomers i conformacions
+
+Quan sabem que una molècula és activa, podem no tan sols buscar la minimització
+d'energia (és una feina costosa, i no podem controlar tots els agents externs
+presents en l'entorn), sinó que podem, simplement refiar-nos de que sabem
+empíricament que la activitat d'un lligand amb un receptor.
+
+%XXX quan tenim molecules actives, no tenim la conf ni isomer, i hem de buscar
+%d'entre totes, la millor, i fiarnos que aquella es la bona, per comparar amb
+%les que busquem
+
+
+El que utilitzem és la informació de molecules que sabem que són actives,
+i elaborem tot el procediment per a descobrir quines condicions compleixen entre
+elles que les pot fer actives.
+
+Així doncs, les dades que tenim com a entrada són simplement els 22 valors per a
+cada molecula (isomer X conformació), i una llista de quines d'elles sabem del
+cert que presenten activitat contra un receptor donat.  El que volem aconseguir
+és doncs, 22 factors, pels que multiplicar els 22 \textbf{tanimotos} i que al
+sumar-los, ens donin una ordenació de les molècules, situant les actives en
+les primeres posicions (un index de activitat?).
+
+% XXX Formula
+
+Inicialment, hem provat la intuició química, per decidir quin tipus de
+indicadors són els més rellevants, i ajudats amb eines estadístiques, hem
+aconseguit trobar unes ponderacions que situen la majoria de molecules actives
+en les primeres posicions, però el procés és manual, i no assegura ni la
+ordenació actives/inactives, ni la propia ordenació de les actives al principi
+de la llista (no totes les actives són ``igual'' d'actives).
+
 % section Context Químic (end)
 
 \section{Procediment informàtic} % (fold)
