@@ -1,0 +1,41 @@
+\documentclass[titlepage,a4paper,12pt]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{graphicx}
+\usepackage{marvosym}
+\begin{document}
+	\section{Introducció} % (fold)
+	\label{sec:Introduccio}
+	Un altre problema on hem aplicat Algoritmes evolutius és en el descobriment
+	de fàrmacs 'de novo'.
+
+	La situació és la següent.  En determinades situacions, es disposa d'un
+	esquelet o \textit{scaffold} que se sap que té certa activitat, però no es
+	disposa amb seguretat de alguns \textit{radicals} , que són les parts de la
+	molècula que, sense canviar la seva estructura general, ni la seva
+	activitat, faran que es pugui 'enganxar' millor en el lligand.  Els radicals
+	que poden anar en cada posició són coneguts (en la majoria de cassos).
+
+	Un dels problemes que es deriven dels mètodes actuals són els grans costos
+	que es deriven d'aquest procés, ja que el que es fa és sintetitzar TOTES les
+	possibles variants i combinacions de radicals, i mesurant la energia %XXX (disipada?)
+	s'intenta buscar la que minimitza aquesta.
+
+	La idea en aquest programa és construir un algoritme genètic que ens permeti
+	arribar a la millor tria de radicals (o alguna de molt bona) sintetitzant
+	una petita part del espai de búsqueda.
+
+	Per a evaluar la qualitat de una combinació, no es té més remei que
+	sintetitzar la molècula en qüestió en el laboratori i retornar el resultat.
+	Així doncs, es tracta d'un algorisme genètic interactiu %XXX ref a paper.
+	que ens guiarà les proves a través dels creuaments i les mutacions, trobant
+	``relacions'' entre els diferents radicals, i aconseguint resultats bons
+	explorant una petita part del espai de búsqueda.
+
+	mataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaat
+
+	
+	
+	% section Introducció (end)
+\end{document}
