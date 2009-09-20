@@ -1,0 +1,613 @@
+\documentclass[titlepage,a4paper,12pt]{report}
+
+\usepackage[latin1]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage[dvips]{graphicx}
+\usepackage{marvosym}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{graphicx}
+%\usepackage{hyphenat}
+\usepackage{longtable}
+\usepackage{setspace}
+%\usepackage{a4wide}
+%\usepackage{babel}
+%\usepackage{tocbibind}
+%\usepackage{cite}
+%\usepackage{subfigure}
+\usepackage{multirow}
+
+\begin{document}
+
+\title{Projecte Final de Carrera-no tinc títol encara}
+\author{Xavier Maresma Coll}
+\date{\today}
+\maketitle
+\pagenumbering{arabic}
+
+\tableofcontents  %%Index
+
+\part{Semblances entre molecules}
+
+\chapter{Introducció química al problema}
+%Introducció química sobre lo dels potencials, la semblança i aquestes coses
+
+Aquest projecte consistirà en explicar el procés que ens ha portat fins a considerar les Màquines de Suport Vectorial com la millor tècnica per a la discriminació en el cas en què ens trobem. Per això abans de començar, explicarem el context químic en el que ens mourem. 
+
+Aquest treball forma part de la nova tecnologia desenvolupada per Intelligent Pharma, anomenada HELIOS, que serveix per identificar,a partir d'un compost de referència prèviament donat, nous compostos amb propietats estructurals completament diferents que imiten el comportament d'aquest compost de referència. Per exemple, si el compost de referència ja és conegut (per exemple, un extret d'un producte natural o d'una patent), HELIOS pot trobar compostos no  vinculats estructuralmnt que reprodueixin les seves propietats psico-químiques tridimensionals; per tant, aquests compostos tindran les mateixes característiques biològiques però amb diferent estructura mol·lecular. A aquesta búsqueda se l'anomena "Scaffold hopping" (búsqueda entre diferents famílies químiques).
+
+La tècnica utilitzada és el Virtual Screening(VS), que normalment s'utilitza per descobrir noves famílies químiques en relació a una activitat biològica desitjada. El VS té mètodes que es basen en l'estructura dels compostos i d'altres que no. Com hem dit, HELIOS té com a objectiu identificar nous compostos que no són anàlegs estructuralment, però sí biològicament. 
+
+HELIOS es basa en la superposició de camps mol·leculars entre qualsevol compost i un lligam de referència. Però HELIOS, no només considera la superposició generada per càrregues formals, sinó també altres tipus relacionades amb el comportament dinàmic; així, es fan diferents superposicions entre parells de mol·lècules es duen a terme a la vegada. 
+L'alineament de camps mol·leculars va ser descrit durant els anys noranta, però no s'ha dut a terme fins aquesta dècada degut a que l'alineament mol·lecular flexible és un problema impossible de resoldre sense les eines de supercomputació. Fins els últims anys, el Virtual Screening basat en els lligams s'ha basat en metodologies per buscar semblances moleculars com l'estructura, farmacòfor, etc. 
+
+HELIOS utilitza alineaments de camps moleculars flexibles per identificar compostos que s'assemblin a un compost de referència. L'alineament molecular e duu a terme mitjançant la metodologia "cloud computing", la qual permet fer-ho en pocs dies. Els compostos amb els quals es fa l'alineament es treuen d'una base de dades que pot variar segons l'objectiu de la búsqueda. 
+
+Els camps moleculars són discretitzats dins d'una caixa en forma de grid de punts. Idealment, la caixa hauria de ser suficientment gran per introduir-hi tots els lligans de la base de dades en una conformació extesa. De la mateixa manera la capsa ha d'incloure aquells punts al voltant de les molècules que tenen valors significatius. Diferents representacions dels camps moleculars, que donen diferent informació sobre la densitat electrònica, són construits amb sondes atòmiques. Una sonda atòmica és una partícula amb característiques químiques particulars que s'assemblen a propietats atòmiques en ambients electrònics particulars. 
+
+Les 22 sondes atòmiques que són implementades en HELIOS són les que  es veuen a la taula \ref{table:maps} 
+
+\begin{table}
+\centering
+\begin{tabular}{|ccc|}
+\hline
+aromatic carbon &aliphatic carbon&non-hydrogen bonding sulfur\\
+non-hydrogen bonding phosphor&phosphor&non-hydrogen bonding nitrogen\\
+hydrogen donor&oxygen acceptor&nitrogen acceptor\\
+sulfur acceptor&spherical nitrogen acceptor&spherical oxygen acceptor\\
+fluorine&chlorine&bromine\\
+iodine&iron&manganese\\
+calcium&magnesium&zinc\\
+positive charge&& \\
+\hline
+\end{tabular}
+\caption{The 22 atom probes implemented in HELIOS.}
+\label{table:maps}
+\end{table}
+
+El camp molecular definit per una sonda en un punt donat és calculat amb la següent equació
+
+\[
+V = C_1 \sum \limits_{i} \left(\frac{A_{pi}}{r_{pi}^{12}}-\frac{B_{pi}}{r_{pi}^{6}}\right)+C_2 \sum \limits_{i} E(t)\left(\frac{C_{pi}}{r_{pi}^{12}}-\frac{D_{pi}}{r_{pi}^{10}}\right)+C_3 \sum \limits_{i}\frac{qi}{\epsilon r{pi}}
+\]
+
+on $p$ i $i$ indexen la sonda i l'àtom lligant respectivament, i $A, B, C$ i $D$ són paràmetres; $E(t)$ és una funció de la geometria dels ponts d'hidrogen establerta; $\epsilon$ indica la constant dielèctrica i $C_{1}$, $C_{2}$ i $C_{3}$ són constants.
+
+L'alineament múltiple de camps moleculars flexibles és una taxa complexa que requereix de tècniques i recursos computacionals avançats. El procés implementat per HELIOS fixa el camp molecular del compost de referència i utilitza algoritmes evolutius en un sistems de "cloud-computing" per duu a terme l'alineament flexible múltiple dels camps moleculars de cadascún dels diferents compostos que hi ha dins la base de dades.
+
+Amb això obtenim per a cada mol·lècula de la base de dades 22 vectors on hi ha els valors per cadascún dels punts ordenats del grid de les 22 sondes moleculars. A partir d'aquí hem de trobar alguna manera d'evaluar la similitud entre mol·lècules.
+
+\chapter{Índex de semblança}
+
+Fins ara tenim el següent: una base de dades de mol·lècules que hem d'ordenar segons la semblança amb una mol·lècula de referència. Per a cada molècula considerem la discretització del camp molecular (grid o capsa) ordenada de manera que tinguem les 22 representacions del grid en 22 vectors on a la posició $i$ del vector hi vagi el valor del punt del grid que estigui en la posició $i$ segons l'ordenació que hem considerat. Per tant, el següent pas seria determinar numèricament una mesura de la semblança entre els grids (vectors). Abans de fer aquest pas, repassem diferents conceptes importants i algunes mesures que seran candidates a evaluar la semblança en el nostre problema.
+
+La idea de determinar una mesura numèrica de la semblança entre dos objectes, cadascun caracteritzats per un conjunts d'atributs, és comú de moltes disciplines, com biologia,psicologia, recuperació d'informació bibliogràfica. Per tant, considerarem a partir d'ara el cas general de buscar semblances entre dos vectors. 
+
+En general, semblança $S_{A,B}$ entre dos objectes és estimada pel nombre d'elements iguals que tenen. Els objectes que són iguals, haurien de tenir la màxima puntuació. Per tant, una expressió de la semblança seria en termes de la teoria de conjunts, la intersecció $(A\cap B)$ que en lògica seria l'operador $AND$. La dissimilitud $D_{A,b}$ és estimat pel nombre d'elements diferents que tenen. Els objectes idèntics obtindrien la mínima puntuació. Anàlogament a la similitud, parlant en termes de teoria de conjunts, la dissimilitud es calcularia posant amb la unió $(A\cup B)$ o el que seria el mateix amb l'operador lògic $OR$. El denominador serà simplement un normalitzador per tenir l'índex entre 0 i 1. 
+
+El concepte de semblança normalment s'utilitza per referir-se tan a la semblança com a la diferència, ja que es suposa que si dos objectes són semblants és perquè no són diferents. En matemàtiques i estadística s'utilitzen els conceptes de semblança, proximitat, distància per referir-se al mateix, però en química similitut i dissimilitut poden portar a diferents resultats. Per exemple, considerem dues seqüències de caràcters, F1 i F2, cadascuna té conjunts de 407 caràcters, 402 dels quals són comuns entre ells. F3 i F4, cadascuna té un conjunt de 5 caràcters, dels quals cap d'ells és comú. En els dos casos la distància Euclídia és $10 \over 1024$  o $0.0098$ quan és evident que les dues primeres són més semblants entre elles que la segona parella.
+
+\section{Mesures}
+ 
+Alguns dels coeficients són mesures de les distàncies o dissimilitut entre objectes (i tenen valor 0 per objectes idèntics), mentre que altres mesures semblances directament(i tenen el valor màxim per objectes idèntics). En la majoria els coeficients de mesura estaran entre 0 i 1 o poden ser normalitzats, la qual cosa vol dir que estan fitats tan superiorment com inferiorment. Aquest rang entre 0 i 1 permet a partir d'una mesura obtenir la seva complementària, cosa que en alguns casos de similitut ha passat que paral·lelament s'han desenvolupat dues mesures que s'ha vist que eren complementaries, però que tenien diferents noms. 
+
+Els coeficients de distància són anàlegs a una distància en un espai geomètric multidimensional, tot i que no necessàriament han de ser equivalents. Recordem el concepte distància, perquè una distància sigui considerada com una mètrica ha de complir el següent:
+
+\begin{enumerate}
+\item $D_{A,B}\geq 0$,  $D_{A,A}=D_{B,B}=0$
+\item  $D_{A,B}=D_{B,A}$
+\item $D_{A,B} \leq D_{A,C} + D_{C,B}$ 
+\item $A\neq B \Longleftrightarrow D_{A,B} > 0$
+\end{enumerate}
+
+Una distància que compleixi les tres primeres propietas se l'anomena una pseudomètrica i si no compleix la tercera tampoc se l'anomena una no-mètrica. Però que un coeficient de distància compleixi les quatre propietats, no vol dir que es pugui fer un embedding a un espai euclidià, es requereixen altres propietats. 
+
+De coeficients se n'han definit molt, tan de similitut com de distància, però molts d'ells s'ha demostrat que estan relacionat o simplement molt correlacionats. Per això, mostrarem coeficients que no estiguin correlacionats. 
+
+\subsection{Mesures qualitatives}
+
+Suposem que els valors estan restringits a 0 i 1. En aquest context cal definir un nombre de símbols que poden ser importants. Primerament, caracteritzem dos objectes A i B com $X_{A}$ i $X_{B}$, llavors definim:
+\begin{center}
+$a=\sum_{j=1}^{j=n} x_{jA}$	nombre de 1's en A
+
+$b=\sum_{j=1}^{j=n} x_{jB}$     nombre de 1's en B
+
+$c=\sum_{j=1}^{j=n} x_{jA}x_{jB}$   nombre de 1's en A i B a la vegada
+
+$d=\sum_{j=1}^{j=n} (1-x_{jA}-x_{jB}+x_{jA}x_{jB}$ nombre de 0's en A i B a la vegada
+
+\end{center}
+
+I d'aquesta manera, tenim $n=a+b-c+d$. Aquestes quantitats representen conjunts ($a=\mid\chi_{A}\mid$, $b=\mid\chi_{B}\mid$, $\mid\chi_{A}\cap\chi_{B}\mid$, $d=n-\mid\chi_{A}\cup\chi_{B}\mid$), i la igualtat final s'aconsegueix simplement aplicant la teoria de conjunts ($\mid\chi_{A}\cup\chi_{B}\mid=a+b-c$).
+
+A partir d'aquí es poden construir diferents mesures intuitivament. A les taules \ref{tablemesures} i \ref{tablemesures2} es mostren, expressades de manera diferent, les principals mesures de similitut, dissimilitut i mixtes, tot i que algunes d'aquestes que es poden fer servir són el producte d'una mesura de similitut amb una de dissimilitut, com Dixon que utilitzava el producte d'un Tanimoto amb una distància euclídia. 
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline 
+Tipus & Nom de la mesura & mesura qualitativa\\ \hline
+\multirow{4}{4cm}{Mesures de Similitut} & nombre d'encerts comuns & c \\ 
+\cline{2-3}
+&Tanimoto & $c/(a+b-c)$\\ 
+\cline{2-3}
+&Dice & $2c/(a+b)$\\ 
+\cline{2-3}
+&Cosinus,Carbo & $c/(ab)^{2}$\\
+\hline
+\multirow{2}{4cm}{Mesures de Dissimilitut} & distancia Hamming & a+b-2c\\
+\cline{2-3}
+&distancia euclídea & $\sqrt{(a+b-2c)}$\\
+\hline
+\multirow{2}{4cm}{mesures mixtes} & Hamann & $(3c+d-a-b)/(a+b+d-2c)$\\
+\cline{2-3}
+& Tversky & $\rho c - \alpha a - \beta b$ \\
+\hline
+\end{tabular}
+\caption{Tipus de Mesures}
+\label{tablemesures}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Tipus & Nom de la mesura &  definició teòrica\\ \hline
+\multirow{4}{4cm}{Mesures de Similitut} & nombre d'encerts comuns & $\chi_{A} \cap \chi_{B}$\\
+\cline{2-3}
+&Tanimoto & $ \mid\chi_{A}\cap\chi_{B}\mid / \mid\chi_{A}\cup\chi_{B}\mid$\\
+\cline{2-3}
+&Dice & $2[\mid\chi_{A}\cap\chi_{B}\mid]/[\mid\chi_{A}\mid+\mid\chi_{B}\mid]^{1/2}$\\ 
+\cline{2-3}
+&Cosinus,Carbo & $\mid\chi_{A}\cap\chi_{B}\mid/[\mid\chi_{A}\mid \mid\chi_{B}\mid]$\\
+\hline
+\multirow{2}{4cm}{Mesures de Dissimilitut} & distancia Hamming & $\mid\chi_{A}\cup\chi_{B}\mid-\mid\chi_{A}\cap\chi_{B}\mid$\\
+\cline{2-3}
+&distancia euclídea & $ [\mid\chi_{A}\cup\chi_{B}\mid-\mid\chi_{A}\cap\chi_{B}\mid]^{1/2}$\\
+\hline
+\end{tabular}
+\caption{Tipus de Mesures}
+\label{tablemesures2}
+\end{table}
+
+
+\subsection{Mesures quantitatives}
+
+En aquest cas només fa falta definir $X_{A}$ com el vector de dades de l'objecte A i $X_{B}$ el de B i traduir directament de l'expressió del coeficient en termes de la teoria de conjunts, ja que $X_{A}X_{B}$ seria equivalent a la intersecció i $X_{A}+X_{B}-X_{A}X_{B}$ la unió. 
+
+
+A la taula \ref{tablemesures2} es mostren mesures pel cas quantitatiu en què els valors són reals. Les expressions de la distància euclídea i el cosinus són els mateix que un espai euclidà de dimensió finita. 
+
+Apuntar que en el cas límit s'hauria de substituir els sumatoris per la integral. 
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Tipus & Nom de la mesura & mesura quantitativa \\ \hline
+\multirow{4}{4cm}{Mesures de Similitut} & nombre d'encerts comuns & $\sum_{j=1}^{n} X_{jA}X_{jB}$ \\
+\cline{2-3}
+&Tanimoto & $[\sum_{j=1}^{n} X_{jA}X_{jB}] \over [\sum_{j=1}^{n} (X_{jA})^{2} + \sum_{j=1}^{n} (X_{jB})^{2} + \sum_{j=1}^{n} (X_{jA})(X_{jB})]$ \\
+\cline{2-3}
+&Dice & $[2\sum_{j=1}^{n} X_{jA}X_{jB}] \over [\sum_{j=1}^{n} (X_{jA})^{2} + \sum_{j=1}^{n} (X_{jB})^{2}]$ \\
+\cline{2-3}
+&Cosinus,Carbo & $[\sum_{j=1}^{n} X_{jA}X_{jB}] \over [\sum_{j=1}^{n} (X_{jA})^{2} \sum_{j=1}^{n} (X_{jB})^{2}]$ \\
+\hline
+\multirow{2}{4cm}{Mesures de Dissimilitut} & distancia Hamming & $\sum_{j=1}^{n} |X_{jA}-X_{jB}|$ \\
+\cline{2-3}
+&distancia euclídea & $[\sum_{j=1}^{n} (X_{jA}-X_{jB})^{2}]$ \\
+\hline
+mesures mixtes & Pearson & $[\sum_{j=1}^{n} (X_{jA}-\bar{X_{jA}})(X_{jB}-\bar{X_{jB}})] \over [\sum_{j=1}^{n} (X_{jA}-\bar{X_{jA}})^{2} \sum_{j=1}^{n} (X_{jB}-\bar{X_{jB}})^{2}$ \\
+
+\hline
+\end{tabular}
+\caption{Tipus de Mesures2}
+\label{tablemesures2}
+\end{table}
+
+\subsection{Elecció de la mesura}
+
+Amb les definicions dels apartats anteriors es descriuen un nombre de coeficients de distància i similitut que més s'usen en el context químic, tan amb variables contínues com discretes. 
+
+Entre tots els coeficients de distància i similitut n'hi ha molts d'ells que estan relacionats. En alguns casos es pot obtenir un coeficient com a combinació d'alguns altres; i en d'altres casos coeficients que són diferents quan es calculen de manera contínua, esdevenen equivalents per atributs discrets. Alguns coeficients se'ls descriu com a monotonics entre ells, que significa que es pot demostrar analíticament que sempre produeixen el mateix tipus de ranking tot i calcular-se de forma diferent, d'altres en canvi no seran monotonics però sí que estaran molt correlacionats. Finalment haurem de triar entre els grups de coeficients que presentin correlacions baixes, el qual voldrà dir que estaran reflexant característiques diferents dels objectes a evaluar. 
+
+Analitzant les diferents mesures, arribem a la conclusió que les mesures de similitut són monotòniques o correlacinades entre elles (Tanimoto i Dice monotòniques entre elles i correlacionades amb el cosinus) de la mateixa manera que les de distància (Euclídea i de Hamming són monotoniques). Les distàncies Hamming i Euclídea formen part d'una classe distàncies anomenades de Minkowski que tenen com a fórmula general $D_{A,B}=[\sum_{j=1}^{j=n} (|x_{jA}-x_{jB}|)^{t}]^{1/t}$, on $t=1$ és per la distància de Hamming i $t=2$ per la distància Euclídea.
+
+Una diferència fonamental entre les distàncies de Hamming i Euclídea per una banda i els coeficients de Tanimoto, Dice o Cosinus per l'altra, és que els primers consideren l'absència d'informació (o valors baixos en el cas continu) com una evidència de similitut, mentre que l'altre no. Aquest és un aspecte filosòfic molt discutit en la literatura. Un exemple seria el comentat per Sokal and Sneath: ''L'absència d'ales entre un grup d'organismes seria un indicador absurd (camells, cavalls, gossos,...). De la mateixa manera la presència d'ales també podria un mal indicador (rat penat, oreneta, papallona).''
+
+En el context químic les distàncies Hamming i Euclídea  són útils només per comparacions relatives (entre dues molècules semblants) però no per comparacions absolutes (entre dues molècules independents) per les que és millor coeficients com el de Tanimoto. No obstant, la distància euclídea és la que s'utilitza en mètodes de clustering, els quals han donat bons resultats.
+
+Una altra diferència fonamental és que les mesures d'associació tenen un factor normalitzador que ajuda a reduir el biaix produit per la mida de les molècules. Així, si busquem les semblances, una molècula gran és, a priori, més probable que tingui més elements en comú que una molècula petita. Si utilitzem mesures de dissimilitud, tenim el problema invers. És més probable que una molècula petita tingui menys elements diferents que una molècula gran. Per aquest motiu, hi ha estudis on han utilitzat mesures que són combinacions de mesures de similitut i dissimilitut, per exemple, Tanimoto amb la distància Hamming.
+
+Segons Willet, estudis recents en què han comparat ambdós coeficients per veure qui mesurava millor un valor d'activitat equivalent a veure quin era el més semblant a un compost de referència. En aquest estudi els coeficients de similitut han donat millors resultats que els de dissimilitut, sobretot el de Tanimoto i el Cosinus. Però si s'ha d'escollir un dels dos s'elegeix el de Tanimoto ja que és més ràpid de calcular. 
+
+Un altre criteri que hem descrit és el d'utilitzar mesures de similitut asimètriques o mixtes basades en la mesura de Tversky. La forma general d'aquesta mesura és: $S_{A,B}={c \over \alpha(a-c) + \beta(b-c) + c}$ on $\alpha$ i $\beta$ són paràmetres a definir per l'usuari. Si $\alpha$ i $\beta$ són iguals el coeficient resultant és simètric. Si $\alpha=\beta=1/2$ és iguals al coeficient Dice i si $\alpha=\beta=1$ és igual al de Tanimoto. Si $\alpha$ i $\beta$ són diferents el coeficient resultant serà asimètric, i quan  $\alpha=1$ i $\beta=0$ $S_{A,B} = {c \over a}$ que es pot interpretar com la part de A que està a B. Diferents tipus de mesures s'obtenen amb la modificació dels paràmetres $\alpha$ i $\beta$.
+
+Finalment ens hem quedat amb el coeficient de Tanimoto com a mesura de la semblança entre mol·lècules. En el següent apartat, explicarem l'adaptació d'aquest coeficient al nostre cas. 
+
+Com a conclusió s'ha de dir que existeixen altres coeficients d'altres disciplines i que no està demostrat que existeixi un únic coeficient que sigui el millor. El que s'ha fet en aquest apartat triar els que podrien anar millor, i d'aquests agafar el que és menys costós. 
+
+\subsection{Adaptació al nostre cas}
+
+Com hem dit a l'apartat anterior, hem seleccionat el coeficient de Tanimoto. El coeficient de Tanimoto és definit com la mida de la interesecció dividida per la mida de la unió dels conjunts de mostra. Si A i B són dos conjunts, en termes de la teoria de conjunts el coeficient de Tanimoto és igual a 
+
+$$T(A,B)={|A\cup B| \over |A\cap B|}$$
+
+Per tant, si tractem amb vectors el coeficient tindrà la següent expressió: 
+
+$$T(A,B)={A \cdot B \over \|A\|^{2} + \|B\|^{2} - A·B}$$
+
+Els vectors de dades (de potencials) amb què treballem nosaltres pertanyen a $\Re^{N}$ on N són el nombre de punts que s'han considerat dins el grid. L'adaptació que fem nosaltres és convertir-los a vectors binaris de manera que només es consideren potencials rellevants. La unió de dos camps moleculars alineats són totes aquells punts de l'espai on qualsevol dels dos camps presentet potencials de Van del Waals menors de -0.1 i el valor absolut del potencial electrostàtic és més gran que 0.5 o amb potencials de desolvatació més grans que 0.25(C'). La intersecció són tots aquells punts de la unió que presenten diferències entre els camps moleculars més petites de 0.25(C). Per tant, el nostre coeficient de Tanimoto modificat és definit com:
+
+$$T'_{j}(A_{j},B_{j})={C_{j} \over C'_{j}}$$
+
+on j és un camp molecular donat. Un cop $T'_{j}$ és calculat per cadascún dels 22 camps moleculars, el coeficient de Tanimoto final, $T'_{i}$ (compost de referència i), és calculat amb una mitjana aritmètica ponderada:
+
+$$T'_{i}={\sum_{j=0}^{n} \omega_{j}\cdot T'_{i,j} \over \sum_{j=0}^{n} \omega_{j}}$$
+
+L'últim pas va ser trobar una ponderació general dels 22 coeficients de Tanimoto. La primera ponderació utilitzada va ser trobada sota criteris químics. Llavors es va realitzar un anàlisi de components principals sobre una base dades de 1534 molècules i amb una molècula de referència. Els resultats obtinguts van ser millors que amb la ponderació sota criteris químics. 
+
+Obtinguts aquests resultats es va agafar la mateixa base de dades i es va calcular els coeficients de Tanimoto amb 10 molècules de referència diferents i es va realitzar un anàlisi canònica de poblacions per veure si es podia trobar una ponderació única, i els resultats obtinguts van mostrar que no era possible. Per tant, degut a l'alt cost computacional que tindria fer un anàlisi de components principals per cada càlcul s'ha optat per mantenir la ponderació sota criteris químics, ja que aquesta en global donava millors resultats que la ponderació obtinguda per anàlisi de components principals.
+
+La manera com s'ha avaluat cada ordenació s'explica en el següent apartat.
+
+\section{Evalució de la ordenació}
+
+''Virtual Screening'' és un terme que s'aplica a un tipus de problema que conceptualment és l'equivalent computacional de ....... screening, o sigui, a on un gran nombre de mostres (mol·lècules en aquest cas) estan disposades per ser discriminades entre actives i inactives. Per Intelligent Pharma evaluar l'execució del VS és una pràctica necessària, ja que és una forma de seleccionar quin mètode ordena millor. Com hem indicat en l'apartat anterior evaluar el VS ens servirà per comparar entre diferents ponderacions, o sigui, per determinar quina ponderació discrimina millor entre mol·lècules actives i inactives. 
+
+L'èxit en el ''Virtual Screening'' està en trobar un bon coeficient que assigni bones puntuacions a les molècules interessants(normalment definides com a actives respecte a una proteïna) i males puntuacions a les mol·lècules menys interessants (inactives). Per tant, un virtual screening exitós posarà a d'alt de tot de la llista ordenada les mol·lècules actives i després les inactives. 
+
+A partir d'ara el que tenim és una llista ordenada de mol·lècules i volem saber si l'ordenació obtinguda és adequada al nostre problema, per tal de poder comparar diferents coeficients i diferents ponderacions. De fet, això no es restringeix només al ''Virtual Screening'', és un problema universal de tots els exercicis de predicció. Això ens pot ajudar a l'hora de trobar aproximacions de la bondad de l'ordenació. El problema és que el Virtual Screening té una particularitat, i és que la proporció d'actius a posar a d'alt de tot de la llista és molt petita, i pot provocar molt biaix a l'hora de fer la predicció. Aquest problema en la literatura és conegut com el ''early recognition problem''. Aquest tema ha estat de gran interès en molts àmbits tan acadèmics com de la indústria farmacèutica en els últims anys. En aquest apartat estudiarem diferents maneres de tractar el problema presentat. 
+
+\subsection{Propietats de les mètriques}
+
+S'ha fet pal·lès recentment en la literatura que als químics mèdics i computacionals els hi falten mètodes estàndards o universals per evaluar els resultats d'algun nou assaig. Aquest és el típic indicador d'un camp que ha estat mal desenvolupat. En efecte, hi ha moltes mètriques diferents que estan en ús, a vegades adaptades d'altres camp. Malgrat tot, cap d'aquestes mètriques que s'usen aconsegueix resoldre el problema de ''early recognition'' que és específic del VS. 
+
+Considerant altres mesures que han esdevingut estandards en altres camps, Nicholls, proposa les següents propietats que hauria de tenir: 
+
+\begin{enumerate}
+\item Independència respecte les variables
+\item Robustesa
+\item Expressions d'error
+\item Absència de paràmetres lliures (sobretot de la proporció d'actius)
+\item Fàcil d'entendre i d'interpretar
+\end{enumerate}
+
+Per solucionar el problema del ''early recognition'' seria bo que la mètrica diferenciés entre tres casos: (1)la meitat dels actius es troben al principi de la llista i la resta al final, (2)els actius estan distribuits uniformement al llarg de la llista i (3) tots els actius estan situats al mig de la llista. Una bona mètrica ha els tres casos segons aquest ordre.
+
+A continació mostrarem les diferents mètriques que més s'utilitzen i mostrarem les seves virtuds i les seves debilitats.
+
+\subsection{Mètriques}
+
+\begin{enumerate}
+\item Àrea sota la curva acumulada(AUAC)
+
+L'AUAC és simplement l'Àrea sota la funció distribució de les mol·lècules actives. S'utlitza la funció de distribució empírica, o sigui, que a l'eix de les abcisses hi ha el rang relatiu de les mol·lècules (es segueix l'ordre creixen dels rangs, de millora pitjor) i a les ordenades hi ha la proporció relativa d'actives. Si notem la funció de distribució com $F_{a}(x)$, la qual és la probabilitat de trobar un actiu en el primer x \% de la mostra, l'AUAC és obtinguda: 
+\begin{center}
+$ AUAC=\int_{0}^{1} F_{a}(x) dx$
+\end{center}
+
+Aquí, $F_{a}(x)$ és normalitzada i per tant va de l'origen al punt $(1,1)$. Al ser una funció de distribució el pitjor valor és 0 i el millor valor és 1 i si les les actives estan distribuïdes uniformement, el valor esperat de AUAC és 0.5. Per tant, l'AUAC pot ser interpretat com la probabilitat que un actiu seleccionat d'una mostra on els actius estan distribuits segons la funció de distribució empírica de la nostra llista ordenada, estigui millor situat que un actiu seleccionat aleatoriament d'una mostra on el ranking dels actius segueix una funció de distribució uniforme. 
+
+En el cas discret l'AUAC es calcularia de la següent manera:
+\begin{center}
+$ AUAC={1 \over 2nN}\sum_{k=0}^{n} [F_{a}(k)+F_{a}(k+1)]$
+\end{center}
+
+Aquí $F_{a}(x)$ no està normalitzada ja que hi ha el coeficient $nN$. Prenem el conveni de que la funció de distribució està normalitzada implícitament en el cas continu i explícitament en el cas discret. Per tant, $F_{a}(k)$ serà la posició del k-èssim actiu trobat a la nostra llista ordenada. El valor màxim de l'AUAC, quan tots els actius estan al principi de la llista, serà $1-{n \over (2N)}$ que tendeix a 1 quan ${n\over N}$ es fa petit; el miním valor és ${n\over(2N)}$, quan tots els actius estan al final de la llista.
+
+Si considerem $w(x)$ qualsevol funció contínua i suficientment suau en funció del rang relatiu, podem definir l'Àrea sota la corba acumulada ponderada (weighted area under the accumulation curve) calculada: 
+
+\begin{center}
+$ wAUAC={\int_{0}^{1} F_{a}(x)w(x)dx \over \int_{0}^{1} w(x)dx}$
+\end{center}
+
+Si integrem per parts el numerador
+$$\int_{0}^{1}F_{a}(x)w(x)dx=F_{a}(1)F_{w}(1)-F_{a}(0)F_{w}(0)-\int_{0}^{1}F_{w}(x){dF_{a}(x)\over dx}dx$$
+$$=F_{w}(1)-\int_{0}^{1}F_{w}(x)f_{a}(x) dx$$
+
+on $f_{a}(x)$ és la funció de densitat empírica i $F_{w}(x)=\int_{0}^{x}w(z)dz$. Això porta a que poguem expressar wAUAC com:
+$$wAUAC={F_{w}(1)-\int_{0}^{1}F_{w}(x)f_{a}(x) dx \over F_{w}(1)}$$
+
+Si apliquem una funció de pesos uniforme $w(x)=1$ llavors $F_{w}(x)=x$ i wAUAC és igual a AUAC, i podem escriure AUAC de la següent manera:
+$$AUAC=1-\int_{0}^{1} xf_{a}(x)dx$$
+
+Així AUAC queda en funció de l'esperança del rang relatiu, el que mostra que és equivalent a aquesta esperança, excepte en què la interpretació del coeficient és oposada. 
+
+Aquesta expressió en el cas discret, si considerem que $r_{i}$ és el rang de l'actiu i-èssim de la llista i $x_{i}$ el rang relatiu, queda:
+
+$$AUAC=1-{1\over nN}\sum_{i=0}^{n} r_{i} = 1-{1\over n}\sum_{i=0}^{n} x_{i}$$
+
+Notar que en el cas discret existeix un petit error, ja que està formulat com una integral de Riemann. Aquest error disminueix a mesura que augmenta N. 
+
+Aquesta nova expressió mostra que un actiu situal al principi o al final de la llista ordenada influeix de la mateixa manera sobre l'AUAC. 
+
+Aquesta mètrica no s'usa molt ja que no distingeix entre els tres casos considerats en l'apartat anterior. 
+
+\item{Àrea sota la corba ROC}
+
+La corba de ROC és una mètrica àmpliament usada en moltes disciplines com l'estadística, medicina, criminologia i bioinformàtica. El seu origen està en l'anàlisi de la detecció del senyal i ha estat molt utilitzada per la comunitat mèdica per evaluar el poder discriminatori de nombrosos tests. La corba de ROC s'obté representant el soroll (proporció de falsos positius) en l'eix de les abcisses contral el senyal (verdaders positius) en l'eix de les ordenades. Si apliquem la corba de ROC en el ''virtual screening'', aquesta il·lustra l'èxit en ordenar les actives (senyal) per davant de les inactives (soroll). La popularitat de la corba de ROC sobre altres mètriques, prové del fet que és no paramètrica, no necessita cap suposició sobre la forma de la distribució. A més, la seva representació gràfica és molt útil per determinar visulament si l'ordenació és bona o no. L'àrea sota la corba de ROC és simplement la probabilitat que un verdader positiu (actiu) escollit aleatòriament estigui més ben classificat que un fals positiu (inactiu) escollit aleatòriament, el qual està altament relacionat amb el test de suma de rangs de Wilcoxon. Aquest nombre permet la predicció de la probable efectivitat d'una eina en l'experiment. Aquesta habilitat predictiva no la té la mètrica presentada anteriorment, l'AUAC, perquè mentre la ROC descriu una propietat de l'aplicació estudiada, les altres mètriques descriuen una propietat de l'experiment.
+
+La fórmula de l'àrea sota la corba de ROC en el cas discret és: 
+
+\begin{center}
+$ROC={1 \over nN}\sum_{k=2}^{n} F_{a}(k)[F_{i}(k)-F_{i}(k-1)]$
+\end{center}
+
+on $F_{i}(k)$ com per l'AUAC és la funció de distribució de les molècules inactives, la qual en el cas discret no estànormalitzada i per tant, és la freqúència acumulada dels inactius a la posició k de la llista. $F_{a}(k)$ és l'anàleg a $F_{i}(k)$ pels actius. 
+
+La definició de contínua de l'Àrea sota la ROC és la següent:
+
+\begin{center}
+$ROC=\int_{0}^{1}F_{a}(x)f_{i}(x)dx$
+\end{center}
+
+aquí $f_{i}(x)$ és la densitat de les inactives dins la llista ordenada. Existeix una terminologia en estadística on a $F_{a}(x)$ se l'anomena la sensivitat i a $F_{i}(X)$ 1-l'especificitat. 
+
+L'AUROC té valors entre 0 i 1. En el cas que totes les actives estan al principi el valor és 1 i si totes les actives estan al final el valor és 0. El valor esperat per la corba de ROC en el cas discret si les actives estan distribuïdes uniformement és $1/2+1/[2(N-n)]$.
+
+\begin{figure}
+\centering
+\includegraphics[width=6cm,height=6cm]{Fallo_ROC.eps}
+\caption{ROC equivalent per actives al principi i al final}
+\label{falloROC}
+\end{figure}
+
+Anant a les propietats de L'Àrea sota la corba de ROC, observem que satisfà les 5 propietats esmentades anteriorment, incluída la de fàcil interpretació. Però la principal objecció és que no aconsegueix solucionar el problema de l' ''early recognition'' ja que no és capaç de distingir entre els tres casos de l'apartat anterior. A la figura \ref{falloROC} es mostra un cas típic on la corba ROC no dóna solucions. En el gràfic es mostren dues corbes ROC que es creuen i que tenen la mateix àrea, però segons el nostre criteri la que està per sobre al principi seria millor ja que té més actius al principi. Si dues corbes ROC no hi hauria problema ja que llavors una de les dues corbes està per sobre de l'altre, té una àrea més gran i per tant l'ordenació corresponent seria millor clarament. 
+
+En resum, en el cas de no tenir el problema de l'"early recognition" la corba ROC seria la millor mètrica per utilitzar ja que pràcticament compleix les 5 propietats descrites anteriorment incluïda la de fàcil interpretació, però en el cas concret en el que ens trobem té mancances importants. 
+
+Segons demostra Truchon, es pot expressar la corba ROC en funció de l'AUAC. Considerem $R_{a}$ com la proporció d'actius a la llista (n/N), $R_{i}$ com la proporció d'inactius (N-n)/N i l'expressió contínua de l'àrea sota la ROC $\int_{o}^{1}F_{a}(x)f_{i}(x)dx$. La demostració es basa en el fet que si coneixem la densitat de les actives, llavors també coneixem la de les inactives. En efecte, si considerem una part de la llista $dx$ la suma dels actius i els inactius és igual a la llargada de l'interval considerat. Per tant, tenim: 
+
+$$f_{a}(x)dxn+f_{i}(x)dx(N-n)=Ndx$$
+$$f_{i}(x)={1-R_{a}f_{a}(x) \over R_{i}}$$
+
+Si substituïm aquesta expressió en la fórmula contínua de l'Àrea sota la ROC, tenim: 
+
+$$ROC=\int_{0}^{1}F_{a}(x)({1-R_{a}f_{a}(x) \over R_{i}})dx$$
+$$={1 \over R_{i}}\int_{0}^{1}F_{a}(x)-{R_{a} \over R_{i}}\int_{0}^{1}F_{a}(x)f_{a}(x)dx$$
+$$\int_{0}^{1}F_{a}(x)f_{a}(x)dx=[F_{a}F_{a}(x)]_{0}^{1} - \int_{0}^{1}F_{a}(x)f_{a}(x)dx$$
+$$={1 \over 2}$$
+
+Finalment, obtenim la relació ajuntant els resultats anteriors:
+
+$$ROC={\int_{0}^{1}F_{a}(x)dx \over R_{i}}-{R_{a} \over 2R_{i}}$$
+$$={AUAC \over R_{i}}-{R_{a} \over 2R_{i}}$$
+
+Un altre camí per arribar a la igualtat anterior seria utilitzant els màxim i el mínim de l'AUAC: $AUAC_{max}=1-n/(2N)$ i $AUAC_{min}=n/(2N)$ i obtenim:
+
+$$ROC={AUAC - AUAC_{min} \over AUAC_{max} - AUAC_{min}} = {AUAC \over R_{i}}-{R_{a} \over 2R_{i}}$$
+
+Aquesta última expressió mostra la simplicitat de la idea de la corba de ROC, l'AUAC estandaritzat, i per tant, mostra una avantatge evident de l'àrea sota la ROC respecte l'AUAC que el màxim i el mínim no depenen del nombre d'actius que tingui la nostra llista. 
+
+A partir de les igualtats anteriors, observem que si $n \ll N$, llavors $R_{i}\rightarrow1$ i $R_{a}\rightarrow0$ i per tant:
+
+$$ROC\thickapprox AUAC$$
+
+segons aquesta expressió ROC i AUAC són equivalents quan la proporció d'actius és alta, però el nostre cas és el contrari ja que ens trobem en el cas en què la proporció d'actius és molt petita. Quan ens trobem amb el problema d' ''early recognition'' la ROC i l'AUAC seran diferents, però cap de les dues serà adequada pel problema, ja que les dues es basen en la posició relativa dels actius, la qual cosa fa que la totes les posicions contribuieixen de la mateixa manera en aquests coeficients. Això mostra clarament que cap de les dues discrimina adequadament el principi de la llista ordenada i per tant no són mètriques adequades pel problema, en el cas de la corba ROC és patent en la literatura on Truchon i Nicholls esmenten que segons Hanley que l'error disminueix més significativament quan es disminueix el nombre d'actius que quan s'augmenta el nombre d'actius. Això no vol dir que la corba ROC sigui una mala mètrica, perquè quan la proporció d'actius és més elevada la corba ROC és útil. En el cas de l'AUAC aquest grau d'utilitat baixa ja que no està fitada superiorment, fet que si passa per la ROC on el cas ideal té una àrea igual a 1 i representa la línia vertical de l'origen al (0,1) i d'aquest al (1,1), o sigui la vora del quadrat $[0,1]x[0,1]$. 
+
+En resum, la corba ROC és una bona mètrica però té debilitats en dos aspectes, primer que no és adequada per discriminar favorablement les actives que estan al principi de la llista respecte les altres, i segon que depèn de la proporció d'actius excepte l'origen i el final; per tant, no respecte la quarta propietat que hem demanat a una bona mètrica que és que no depengui de cap paràmetre.  
+
+\item{Enrichment Factor}
+
+Aquest és el més utilitzat perquè és el més fàcil de calcular. Simplement és la mesura de quants actius més hi ha en el primer $x\%$ de la llista respecte d'una llista on els actius estan distribuits aleatòriament. Efectivament, si $Act_{mostra}^{x\%}=$nombre d'actius que es troben en el primer $x\%$, $N_{mostra}^{x\%}=$nombre de mol·lècules dins el primer $x\%$, $Act_{total}=$nombre d'actius que hi ha en tota la llista i $N_{total}=$nombre total de mol·lècules, llavors l'expressió de l'enrichment factor del $x\%$ és:
+
+$$EF={Act_{mostra}^{x\%}\over N_{mostra}^{x\%}} x {N_{total}\over Act_{total}}=$$
+$$={{Act_{mostra}^{x\%}\over Act_{total}} / {N_{mostra}^{x\%} \over N_{total}}}$$
+
+la qual ens mostra que l'EF compara la proporció d'actius respecte el total d'actius en el primer $x\%$ respecte la proporció de mol·lècules respecte el total de mol·lècules, o sigui, com hem dit anteriorment, compara la distribució dels actius de la llista ordenada amb la d'una ordenada aleatòriament. 
+
+EF tracta la part més interessant de la llista, o sigui, l'habilitat de situar actius a d'alt de tot de la llista. A la vegada és fàcil de calcular i fàcil d'entendre, la qual cosa pot fer pensar que és la mètrica adequada. No obstant, EF té molts inconvenients, especialment quan es comparen resultats entre estudis (el nostre cas) o quan s'usa per fer prediccions. Principalment, el problema és que $\frac{Act_{mostra}^{x\%}}{Act_{total}}$, la fracció d'actives trobades, no compleix el primer requeriment, és a dir, està en funció de variables extensibles com ho són el nombre d'actius i inactius. Això vol dir que EF no és una mesura d'un mètode sinó d'un experiment en particular. Tampoc compleix el segon requeriment, perquè si es pren un percentatge suficientment petit, EF esdevé una funció inestable de les posicions exactes dels actius, i a la vegada, no es pot fer que el percentatge a triar sigui un paràmetre per estimar. Finalment, no es coneix cap expressió de l'error, per tant tampoc compleix el tercer requeriment. 
+
+L'expressió contínua de l'EF és la següent:
+\begin{eqnarray*}
+EF={\int_{0}^{1}f_{a}(x)w(x)dx \over \int_{0}^{1}w(x)dx} & \mbox{  on  } & w(x)=\left\{ \begin{array}{lcl}  
+																												  							 				1 & \mbox{ si } & x\leq \chi \\
+																												  							 				0 & \mbox{ si } & x > \chi 
+						\end{array}
+						\right.\\																		 		
+	={\int_{0}^{1}f_{a}(x)dx \over \chi}									 							 	                
+\end{eqnarray*}
+
+
+
+
+
+on $\chi$ és la fracció de la llista ordenada que és considerada, la qual es considera que va de 0 a 1. El valor màxim de EF és ${1\over \chi}$ si $\chi\geq n/N$ i N/n si $\chi < n/N$ i el valor mínim és 0. Si els actius estiguessin distribuïts segons una uniforme, EF tindria com a valor esperat $\lfloor \chi N \rfloor/(\chi N)$.
+
+Segons les expressions contínues s'observen inconvenients de l'EF. El primer inconvenient evident, és que EF no té en compte l'ordenació dins de la fracció de la llista considerada. És el mateix que tots els actius estiguin al principi com al final d'aquesta fracció. Altrament, hem vist quee els valors màxims i mínim de EF són molt dependents de $\chi$, n i N. Un tercer desavantatge és que no es té en compte res del que hi ha després del punt de tall. Altres problemes presents en la literatura però que no s'han demostrat analíticament són primer la variabilitat quan la proporció d'actius és petita i que no sabem cap manera d'elegir cap $\chi$ òptima. 
+
+Alguns per evitar la falta de robustesa de l'EF han proposat un petit canvi dins l'EF, el qual és que en comptes de considerar el punt de tall com el primer $x\%$ de totes les mol·lècules, es consideri el primer $x\%$ de totes les mol·lècules inactives. Aquest petit canvi fa la mètrica més robusta i més accessible a l'aproximació analítica de l'error. No s'ha fet servir gaire, potser degut a la falta de no. Nicholls li posa el nom de ROC Enrichment. Aquesta és una mètrica amb molt bones propietats, però falla en el moment de tractar el problema de ''early recognition''. 
+
+\item{Robust Initial Enhancement(RIE)}
+RIE, desenvolupada per Sherindan és una mètrica que usa una funció exponencial decreixent en funció del rang. L'avantatge d'aquesta funció és principalment que és menys susceptible a grans variacions si s'utilitza un petit nombre d'actius. Aquesta exponencial permet a la vegada solventar el problema de l ''"early recognition''.
+
+L'expressió discreta del RIE és la següent:
+
+\begin{align*}
+RIE=& \frac{\sum_{i=1}^{n}e^{-\alpha r_{i}/N}}{<\sum_{i=1}^{n}e^{-\alpha r_{i}/N}>_{r}} \\
+   =& \frac{\sum_{i=1}^{n}e^{-\alpha x_{i}}}{<\sum_{i=1}^{n}e^{-\alpha x_{i}}>_{r}} 
+\end{align*}
+
+
+on $r_{i}$ és el rang de i-èssima activa i $x_{i}$ el rang escalat. El denominador correspon a l'esperança de la suma d'exponencials de totes les distribucions amb n actives en N possibles rangs si cada posició és equiprobable(uniforme). Normalment es calculava via MonteCarlo, fins que Truchon, va calcular analíticament la fórmula. Aquí presentem com va calcular l'expressió:
+
+El primer pas és escriure explícitament l'esperança sobre totes les combinacions possibles de posicions de n actius dins N compostos, on $C_{n}^{N}={N! \over (N-n)!n!}$ és el número total de maneres que poden ser situades en els n actius dins la llista on cada posició és equiprobable. $C_{i}$ és una realització particular i consisteix en n rangs $r_{j}$ entre 1 i N sense repetició. El següent pas seria en contar quantes vegades es repeteix una posició k al llarg de totes les combinacions. Aquest recompte és simplement el número de maneres que es poden col·locar les n-1 actives restants en les N-1 posicions restants. Finalment la suma de N exponencials és una progressió geomètrica per qui la suma és coneguda. L'expressió del procediment és:
+
+\begin{align*}
+<\sum_{i=1}^{n} e^{-\alpha x_{i}}>_{r} &= {1 \over C_{n}^{N}} \sum_{i=1}^{C_{n}^{N}} \sum_{j \in C_{i}}^{n} e^{-\alpha r_{i}/N}  \\ 
+&= {1 \over C_{n}^{N}} \sum_{k=1}^{N} C_{n-1}^{N-1} e^{-\alpha k/N}  \\
+&=  {n \over N} \sum_{k=1}^{N} (e^{-\alpha  /N})^{k}\\
+&=  {n \over N} e^{-\alpha/N}({1- e^{-\alpha} \over 1-e^{-\alpha / N}})  \\
+&= {n \over N} ({1- e^{-\alpha} \over e^{\alpha / N} -1})
+\end{align*}
+
+Finalment l'expressió que obtenim pel RIE és: 
+
+\begin{align*}
+RIE &= \frac{\sum_{i=1}^{n} e^{-\alpha x_{i}}}{{n \over N} ({1- e^{-\alpha} \over e^{\alpha / N} -1})} \\
+& \\
+&= \frac{{1 \over n} \sum_{i=1}^{n} e^{-\alpha x_{i}}}{{1 \over N} ({1- e^{-\alpha} \over e^{\alpha / N} -1})}
+\end{align*}
+
+A l'expressió final s'observa com el numerador és simplement l'esperança exponencial de la funció de densitat del ranking dels actius. El denominador és l'esperança exponencial de la funció de densitat uniforme.
+L'expressió contínua del RIE, per tant seria:
+$$RIE=\frac{\int_{0}^{1} f_{a}(x) e^{-\alpha x} dx}{{1 \over \alpha}(1-e^{-\alpha})}$$
+
+El denominador de l'expressió contínua correspon a: 
+
+$$\lim_{N \rightarrow \infty} {e^{-\alpha /N} \over N}(\frac{1-e^{-\alpha}}{1-e^{-\alpha /N}})=\frac{1-e^{-\alpha}}{\alpha}$$
+
+El significant del RIE és semblant al del EF perquè també mostra quantes vegades millor que la distribuició aleatoria és l'esperança exponencial de la distribució generada per la llista ordenada. El significat de $1/ \alpha$ és semblant a $\chi$ a EF, ja que, en una distribució exponencial la desviació estàndard és donada per la inversa de l'exponent i més o menys correspon a l'amplada. Per tant, $1/ \alpha$ pot ser entès com la fracció de la llista on el pes és important. No obstant, al contrari que EF, el RIE té l'avantatge que tots els actius contribueixen al resultat final. Un altre avantatge és que distingeix la situació on totes les actives estan al principi de la llista de quan estan al límit del llindar $(\chi(EF) o 1/ \alpha(RIE))$.
+
+Un desavantatge important és que el mínim i el màxim depenen de n,N i $\alpha$. Això també passa amb AUAC, que és com el RIE sense la funció pes exponencial.
+
+\begin{align*}
+RIE_{min} &= \frac{1-e^{\alpha R_{a}}}{R_{a}(1-e^{\alpha})}   \\
+&\approx \frac{\alpha}{e^{\alpha}-1}  \mbox{  , quan } \alpha R_{a} \ll 1
+\end{align*}
+
+\begin{align*}
+RIE_{max} &= \frac{1-e^{-\alpha R_{a}}}{R_{a}(1-e^{-\alpha})}   \\
+&\approx \frac{\alpha}{1-e^{-\alpha}}  \mbox{  , quan } \alpha R_{a} \ll 1
+\end{align*}
+
+En altres paraules, l'escala canvia significantment depenent de $\alpha \mbox{ i } R_{a}$, el qual fa la comparació entre dos valors RIE perillosa si la condició $\alpha R_{a} \ll 1$ no es compleix. 
+
+Segons Truchon, també es possible relacionar l'àrea sota la distribució (AUAC) i sota la corba ROC amb el RIE, i obté les següents relacions:
+
+$$ROC \approx \frac{RIE(\alpha)-1}{\alpha R_{i}}+\frac{1}{2} \mbox{; } \alpha \mbox{ és petita} $$
+$$AUAC \approx \frac{RIE(\alpha)-1}{\alpha }+\frac{1}{2} \mbox{; } \alpha \mbox{ és petita} $$
+
+Això ens mostra que la mètrica ROC està linealment relacionada amb el RIE quan $\alpha$ és petita (un funció pes uniforme). 
+
+\item{Discriminació Boltzman-reforçada de ROC (BEDROC)}
+
+Hem vist que el RIE reconeix bé el problema de ''early recognition'' en un mètode de ranking. També hem vist anteriorment que l'àrea sota la corba ROC és l'estandarització de l'àrea sota la corba acumulada (AUAC). El AUAC ponderat (wAUAC) que és $wAUAC=\int_{0}^{1} F_{a}(x)\tilde{f}(x)dx$ on $\tilde{f}(x)=\frac{w(x)}{\int_{0}^{1}w(y)dy}$, on wAUAC pot ser interpretat com la probabilitat que un actiu estigui ordenat abans que un compost ordenat per un algoritme amb un densitat igual a $\tilde{f}(x)$. wAUAC no està entre 0 i 1 i per tant el màxim i el mínim depenen dels paràmetres de la llista, això porta a estandaritzar wAUAC de la mateixa manera que es fa per obtenir l'àrea sota la ROC. Per tant, tenim la wAUAC escalada, ''swAUAC'':
+
+\begin{align*}
+swAUAC &= \frac{wAUAC-wAUAC_{min}}{wAUAC_{max}-wAUAC{min}} &  \\
+&= \frac{wAUAC}{wAUAC_{max}-wAUAC{min}} - \frac{wAUAC_{min}}{wAUAC_{max}-wAUAC{min}} 
+\end{align*}
+
+Escollint l'exponencial decreixent el problema d' ''early recognition'' és controlable pel paràmetre $\alpha$ i a més es comporta matemàticament bé. O sigui, si escollim $w(x)=e^{-\alpha x}$, tenim:
+
+\begin{align*}
+F_{w}(x) &= \int_{0}^{x} e^{-\alpha z}dz \\
+&= \frac{1-e^{-\alpha x}}{\alpha}
+\end{align*}
+
+Substituïnt això en l'expressió obtinguda anteriorment pel wAUAC.
+
+\begin{align*}
+wAUAC &= 1-\frac{\int_{0}^{1} (\frac{1-e^{-\alpha x}}{\alpha})f_{a}(x)dx}{(1-e^{-\alpha}) / \alpha} \\
+&= 1- \frac{{1 \over \alpha}\int_{0}^{1} f_{a}(x)dx}{(1-e^{-\alpha}) / \alpha}+\frac{{1 \over \alpha}\int_{0}^{1} e^{-\alpha x}f_{a}(x)dx}{(1-e^{-\alpha}) / \alpha} \\
+&=\frac{RIE}{\alpha}+\frac{1}{1-e^{\alpha}}
+\end{align*}
+
+Per tant, $wAUAC \approx \frac{RIE}{\alpha} \mbox{ si } e^{\alpha} \gg 1$. Finalment, la mètrica que s'obté: 
+
+\begin{align*}
+BEDROC &=\frac{wAUAC-wAUAC_{min}}{wAUAC_{max}-wAUAC_{min}} \\
+&= \frac{RIE -RIE_{min}}{RIE_{max}-RIE_{min}}
+\end{align*}
+
+Si substituïm l'expressions discreta del RIE i les expressions del màxim i el mínim RIE, obtenim:
+
+\begin{align*}
+BEDROC &\approx \frac{RIE}{\alpha} + \frac{1}{1-e^{\alpha}} \mbox{, si} \alpha R_{a} \ll 1 \mbox{ i } \alpha \neq 0 \\
+&= wAUAC 
+\end{align*}
+
+Sota aquestes condicions el BEDROC és la probabilitat que un actiu segons el mètode evaluat estigui situat abans que un actiu que ha estat distribuit segons una exponencial negativa amb paràmetre $\alpha$ o $\tilde{f}(x)$ si no tenim una exponencial. En el cas de la corba ROC teníem que aproximadament era igual a 1/2 si l'ordenació era com una uniforme, en el cas del BEDROC tenim 1/2 aproximadament si la distribució empírica dels actius és igual a l'exponencial amb paràmetre $\alpha$ o a $\tilde{f}(x)$. Per tant, es canvia la distribució de referència per tal de donar més importància a les primeres posicions de la llista però sense deixar de banda les últimes. 
+
+Finalment, mostrem que si els actius es distribueixen uniformement obtenim el següent BEDROC:
+
+\begin{align*}
+BEDROC_{u} &= \frac{e^{\alpha R_{a}}-R_{i}}{e^{\alpha R_{a}}-1} - \frac{R_{i}}{1-e^{-\alpha R_{i}}} \\
+&\approx {1 \over \alpha}+\frac{1}{1-e^{\alpha}} \mbox{ si } \alpha R_{a} \ll 1  
+\end{align*}
+
+En resum, la idea del BEDROC és igual a la del ROC, canviant la distribució uniforme per l'exponencial negativa. Això fa que distingeixi els tres casos representatius del problema de ''early recognition''. No obstant, no té un significat probabilístic si $\alpha R_{a} \ll 1$ condició més restrictiva que $R_{a} \ll 1$, la qual es demana per la ROC. El problema del BEDROC és l'elecció del paràmetre $\alpha$ el qual és equivalent a l'elecció de la part important de la lista. 
+
+Un exemple de la diferència d'evaluació entre la ROC i el BEDROC el trobem en la figura \ref{falloroc2} realitzada per Truchon i Bayly on n=50 i N=25000 i $\alpha =20$. Observant la figura vegem que de les 5 gràfiques el ROC i el BEDROC discuteixen sobre 3. La tercera millor ordenació pel BEDROC és la cinquena pel ROC. Aqueta és la que té molts actius al principi i els altres repartits en la resta de la llista. Aquesta evaluació és la que es busca amb l'elecció del BEDROC com a mètrica. 
+
+\begin{figure}
+\centering
+\includegraphics[width=8cm,height=8cm]{Fallo_ROC2.eps}
+\caption{Diferència d'evaluació de l'ordenació entre ROC i BEDROC}
+\label{falloroc2}
+\end{figure}
+
+
+\end{enumerate}
+
+\subsection{Elecció de la mètrica}
+Tot i el nombre creixent d'evaluacions de l'execució de mètodes de ranking en el context del ''Virtual Screening'', no hi ha consens en la mètrica que s'ha d'utilitzar per analitzar els resultats. Les més utilitzades en altres camps com l'àrea sota la corba ROC, no funcionen pel problema de ''early recognition''. En l'apartat anterior hem ensenyat algunes de les mètriques més utilitzades en aquest àmbit. Semblen mètriques que són diferents, però s'ha vist que estan relacionades les unes amb les altres. 
+
+Un resultat important demostrat per Truchon i Bayly és que, a diferència del que assegurava la literatura, es demostra que la corba ROC depèn de la proporció d'actius de la llista ordenada i per tant, no és útil pel problema de ''early recognition''. El ''Enrichment Factor'' una altra mètrica molt utilitzada en el Virtual Screening, s'utilitza per solucionar aquest problema. Però hem vist que no és gaire útil, té molta variabilitat, i el valor del màxim depèn directament de la proporció d'actius. La RIE és una mètrica millor, que va bé pel ''early recognition'', però falla en diversos aspectes, primer, el màxim varia significativament segons la proporció d'actius, fent difícil la comparació entre evaluacions difícil, segon, no està fitat entre 0 i 1 i per últim, li falta una interpretació probabilística que l'àrea sota la corba ROC té. Finalment, s'ha introduït el BEDROC, aquesta mètrica és una generalització de la ROC adaptada al problema de ''early recognition''. Està fitada entre 0 i 1, i es pot interpretar com la probabilitat que un actiu escollit aleatòriament estigui posicionat abans que un actiu seleccionat aleatòriament i distribuït segons una exponencial de paràmetre $\alpha$. Aquesta interpretació és veritat només quan $\alpha R_{a} \ll 1$. 
+
+Per tant, sembla lògica l'elecció del BEDROC com la mètrica a utiltizar en el nostre cas. Encara faltarà trobar quins paràmetres són els millors per garantir el mínim de variabilitat i el màxm de robustesa i utilitat del BEDROC pel nostre problema. Per això mostrarem una aproximació de la variabilitat de la mètrica i introduïrem el problema anomenat ''efectes de la saturació'', que fa referència al fet de donar molta importància a una zona on tots són actius. Ambdós conceptes són extrets de l'article de Truchon i Bayly. 
+
+Primer és important saber quins paràmetres són importants. Truchon i Bayly van realitzar simulacions per tal de trobar-los. Primerament simlula una distribució exponencial negativa $F(x)=\frac{1-e^{-\lambda x}}{1-e^{-\lambda}}$ amb dos valors pel paràmetre $\lambda$ 1 i 10, on $\lambda =1$ és un mètode ranking dolent i $\lambda =10$ bo. En el gràfic \ref{parametres} s'observa primer que deixant fix el nombre d'actius i augmentant el nombre d'inactius, la desviació estàndard arriba a un valor constant. Per tant, el total de la mostra no és important. En canvi en els altres gràfics, N està fixada en 25000 i es fa córrer el nombre d'actius; s'observa que la desviació de totes les mètriques disminueix quan s'augmenta n, el qual és esperat. La desviació de AUAC és igual a la de ROC i la de RIE igual a la de BEDROC, la qual cosa també era esperable donat als resultats donats anteriorment. En l'últim gràfic es veu com l'efecte del paràmetre $\alpha$ o $1/\chi$ és més gran que en els altres casos. 
+
+\begin{figure}
+\centering
+\includegraphics[width=13cm,height=10cm]{grafic1.eps}
+\caption{resultats simulacions per Truchon i Bayly}
+\label{parametres}
+\end{figure}
+ 
+Aquests resultats es poden demostrar analíticament donant l'error relatiu $(sqrt(var)/mean)$, donat que el màxim es donarà davant una distribució dels actius uniforme. Per tal de veure això Truchon i Bayly calculen les variàncies per cadascuna de les mètriques, la qual mostrem a la taula \ref{varmesures}
+ 
+\begin{table}
+\begin{tabular}{|ccc|}
+\hline
+Mètrica & Variança analítica per una densitat uniforme & esperança per a una densitat uniforme \\ \hline
+AUAC & $\frac{(N-n)(N+1)}{12nN^{2}}$ & $ \frac{N+1}{2N}$ \\ 
+ & & \\
+ROC & $\frac{N+1}{12n(N-n)}$ & $\frac{1}{2}+\frac{1}{2(N-n)}$ \\
+ & & \\
+EF  & $\frac{W}{nN\chi ^{2}}[1+\frac{n-1}{N-1}(W-1)]-\frac{W^{2}}{\chi^{2}N^{2}} $ & $\frac{W}{\chi N}$ \\
+ & & \\
+RIE & $\frac{[\frac{1-e^{-2\alpha}}{e^{2\alpha/N}-1}]+\frac{2(n-1)}{(N-1)}\frac{e^{-2\alpha}(e^{\alpha/N}-e^{\alpha})(1-e^{\alpha})}{(e^{\alpha/N}-1)^{2}(1+e^{\alpha/N})}}{{n\over N}(\frac{1-e^{-\alpha}}{e^{\alpha/N}-1})^{2}}-1 $ &  \\
+ & & \\
+wAUAC & $\frac{Var[RIE]_{r}}{\alpha^{2}}$ & ${1 \over \alpha}+{1 \over 1-e^{\alpha}} $ \\
+ & & \\
+BEDROC & $\frac{Var[RIE]_{r} R_{a}^{2}sinh^{2}(\alpha/2)}{[cosh(\alpha/2)-cosh(\alpha/2-\alpha R_{a})]^{2}} $& $\frac{e^{\alpha R_{a}}-R_{i}}{e^{\alpha R_{a}}-1}-\frac{R_{i}}{1-e^{-\alpha R_{i}}}$ \\
+ & & \\
+\hline
+\multicolumn{3}{|c}{$ W=\lfloor \chi N \rfloor$, $R_{i}=(N-n)/N$, $R_{a}=n/N$, $\alpha >0$} \\
+\hline
+\end{tabular}
+\caption{Formula analtica de la Variança}
+\label{varmesures}
+\end{table}
+
+És important tenir en comte que aquestes variances només són exactes en el cas que els actius estiguin distribuits uniformement. El BEDROC es comporta com el ROC quan $\alpha$ tendeix a 0, la mitjana del BEDROC en una distribució uniforme tendeix a 0.5 en aquesta situació. Quan $ \alpha \gg 1$ la mitjana de BEDROC va a $R_{a}$ i a la mitjana de wAUAC quan $\alpha R_{a} \ll 1$. Es podria fer servir els resultats de la taula \ref{varmesures} per calcular l'error relatiu, però no és gaire pràctic degut a la dificultat del càlcul en alguns casos. 
+
+Una manera més eficient d'estimar l'error és amb un anàlisi estadístic de bootstraping, treient un $20\%$ dels compostos varies vegades. La variancia obtinguda es pot fer servir per estimar l'error. 
+
+%%Es podria fer si hi ha temps un bootstraping amb el BEDROC, ROC i EF.
+
+Hi ha un altre problema a tenir en compte anomenat l' ''efecte de saturació'', el qual passa quan s'elegeix una petita part de la llista com a rellevant i aquesta és plena d'actius. Aquest fet fa que el valor de la mètrica no es pot fer gaire més gran. Truchon i Bayly van realitzar unes simulacions amb diferents proporcions d'actius i arriben a la conclusió que la corba ROC i AUAC haurien d'operar amb la restricció $ R_{a} \ll 1$ i el BEDROC i el RIE amb $\alpha R_{a} \ll 1$. 
+
+Finalment el que falta és una manera d'escollir el paràmetre $\alpha$ del BEDROC. Sabem que si $\alpha$ és gran, menys part de la llista contarà significativament. Així, triant $\alpha$ es determina quina part de la llista és rellevant. Com hem vist, si es compleix $\alpha R_{a} \ll 1$ BEDROC=wAUAC. Llavors tenim: 
+
+$$wAUAC=\frac{\int_{0}^{1} F_{a}(x)e^{-\alpha x} dx}{(1-e^{-\alpha})/\alpha}$$
+
+I suposem que volem calcular el màxim de contribució del primer $z\%$ de la llista. Si diem a $\theta$ la contribució o sigui el valor de wAUAC, i considerem $F_{a}(x)=1$ (mètode perfecte) tenim:
+
+\begin{align*}
+\theta &= \frac{\int_{0}^{z}e^{-\alpha x} dx}{(1-e^{-\alpha})/\alpha} \\
+&= \frac{1-e^{-\alpha z}}{1-e^{-\alpha}}
+\end{align*}
+
+$$\Rightarrow 0=\theta(1-e^{-\alpha})+1-e^{-\alpha z}-1$$
+
+El resultat que s'obté s'interpreta de la següent manera: quina és el valor de $\alpha$ que fa contribuir un $\theta \%$ al $z\%$ de la llista. Un exemple seria, si volem que el $80\%$ del coeficient representi el primer $5\%$ de la llista i resolem l'equació, tenim una $\alpha$ igual a 32.2 .
+
+\section{Búsqueda Ponderació}
+
+
+\end{document}

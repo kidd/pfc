@@ -1,15 +1,87 @@
+\documentclass[a4paper]{article}
+\usepackage[catalan]{babel}
+\usepackage[utf8]{inputenc}
+\begin{document}
 La computació evolutiva és un camp recerca dins de la informàtica.  Com el nom
-indica, es un tipus especial de computació, una manera determinada d'atacar
-problemes que agafa idees en la evolució natural de les espècies.
+indica, es un camp especial dins la computació, una manera determinada d'atacar
+problemes que agafa idees en la evolució natural de les espècies.  No es extrany
+que s'hagin intentat portar idees de la naturalesa a camps de la computació, i
+menys a camps relacionats amb la inteligència artificial, ja que és ben clar
+que, la evolució en aquets cas, ha tingut un fort impacte positiu en les
+espècies, a nivell individual, i als ecosistemes, amb multitud d'espècies
+convivint i co-evolucionant al llarg del temps.
+
+Un altre cas on s'intenta adaptar els procediments naturals en la computació és,
+per exemple, en les ``Xarxes neuronals'', on s'intenta simular les interaccions
+de les neurones en un cervell, per a solucionar problemes on hi intervé
+l'aprenentatge.
+
+fault-tolerance
+
+En general, els problemes que la evolució intenta solucionar (la evolució no
+s'atura, amb el qual mai arriba a un estadi totalment estàtic), els soluciona
+mitjançant prova i error.
+
+% TODO : Petita intro a la evolució? 
 
 \section{Breu Història} % (fold)
 \label{sec:Breu Historia}
+
+Els principis de la aplicació de les idees de Darwin a la resolució de problemes
+daten dels anys quaranta, cuan Alan Turing va proposar ``búsquedes genètiques o
+evolutives''.  Al any 1962, Bremermann va executar amb èxit alguns experiments
+de ``optimització mitjançant evolució i recombinació''.  Durant els anys
+seixanta, es van desenvolupar diferents estudis i implementacions d'aquests
+principis en 3 llocs diferents, amb 3 noms lleugerament diferents:
+
+
+ % theme=Berlin;caption_top=1;caption=Els inicis
+ % Nom & Qui & On
+ % Fogel, Owens, Walsh & programació evolutiva & EEUU
+ % & Algoritme genètic & Holanda
+ % Rechenberg, Schwefel & estratègies evolutives & Alemanya
+
+\begin{table}
+\centering
+\caption{Els inicis}
+\begin{tabular}{|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Nom }} & \multicolumn{1}{c|}{\textbf{ Qui }} & \multicolumn{1}{c|}{\textbf{ On}} \\
+\hline
+\hline
+Fogel, Owens, Walsh  & programació evolutiva  & EEUU     \\
+                     & Algoritme genètic      & Holanda  \\
+Rechenberg, Schwefel & estratègies evolutives & Alemanya \\
+\hline
+\end{tabular}
+\end{table}
+
+Més endavant, als anys noranta, John Koza va encunyar el terme programació
+genètica.  Actualment, totes aquestes variants es conceben dins del que
+s'anomenen algorismes evolutius.
+
+% TODO : Ferreira i GEP
+
+Avui dia, i donat que les cerques en problemes NP-Complets son més i més
+rellevants, les tècniques englobades dins dels algorismes evolutius estan tenint
+cada any més rellevància.  Prova d'això és que ja hi ha vàries conferències
+i publicacions dedicades.
 
 \subsection{Inspiració de la Naturalesa} % (fold)
 \label{sub:Inspiracio de la Naturalesa}
 
 \subsubsection{Evolució darwiniana} % (fold)
 \label{ssub:Evolucio darwiniana}
+
+La teoria de la Evolució de Darwin \cite{Darwin} dóna una explicació de la
+diversitat biològica i dels mecanismes de sel·lecció natural.  Aquesta
+sel·lecció natural és qui juga el paper principal en la direcció que agafa la
+evolució.  Donat un entorn que pot assumir un número limitat de individus, i
+l'instint bàsic dels individus a reproduir-se, la sel·lecció esdevé inevitable.
+Altrament, la població s'aniria incrementat indefinidament, i l'entorn no podria
+suportar-ho.  La sel·lecció natural fa que els individus competeixin pels
+recursos existents, i permet només reproduir-se als que estiguin més adaptats al
+medi en qüestió.
 
 \subsubsection{Genètica} % (fold)
 \label{ssub:Genetica}
@@ -20,4 +92,9 @@ problemes que agafa idees en la evolució natural de les espècies.
 
 % subsection Inspiració de la Naturalesa (end)
 
+\section{Introduccio als Algorismes evolutius} % (fold)
+\label{sec:Introduccio als AE}
+
+% section Introduccio als AE (end)
 % section Breu Història (end)
+\end{document}

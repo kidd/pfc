@@ -5,7 +5,7 @@
 \usepackage{graphicx}
 \usepackage{marvosym}
 \begin{document}
-	\section{Introducció} % (fold)
+\section{Introducció} % (fold)
 	\label{sec:Introduccio}
 	Un altre problema on hem aplicat Algoritmes evolutius és en el descobriment
 	de fàrmacs 'de novo'.
@@ -19,7 +19,7 @@
 
 	Un dels problemes que es deriven dels mètodes actuals són els grans costos
 	que es deriven d'aquest procés, ja que el que es fa és sintetitzar TOTES les
-	possibles variants i combinacions de radicals, i mesurant la energia %XXX (disipada?)
+possibles variants i combinacions de radicals, i mesurant la energia %XXX (disipada?)
 	s'intenta buscar la que minimitza aquesta.
 
 	La idea en aquest programa és construir un algoritme genètic que ens permeti
@@ -29,13 +29,38 @@
 	Per a evaluar la qualitat de una combinació, no es té més remei que
 	sintetitzar la molècula en qüestió en el laboratori i retornar el resultat.
 	Així doncs, es tracta d'un algorisme genètic interactiu %XXX ref a paper.
-	que ens guiarà les proves a través dels creuaments i les mutacions, trobant
-	``relacions'' entre els diferents radicals, i aconseguint resultats bons
-	explorant una petita part del espai de búsqueda.
+	que ens guiarà les proves que hem de fer a través dels creuaments i les
+	mutacions, trobant ``relacions'' (epistàcia) entre els diferents radicals, i
+	aconseguint resultats bons explorant una petita part del espai de búsqueda.
+% section Introducció (end)
 
-	mataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaat
+\section{Context Químic} % (fold)
+	\label{sec:Context Quimic}
 
-	
-	
-	% section Introducció (end)
-\end{document}
+	En el proccés de descobriment de fàrmacs (drug discovery), no només és
+	necessari trobar un compost que reaccioni favorablement en una molècula
+	objectiu, sinó que també ha de reunir certes condicions per tal que un
+	principi actiu es pugui convertir en un fàrmac aplicable.  Aquestes
+	condicions son tals com:
+
+	\begin{itemize}
+	\item No toxicitat
+	\item Que es el cos no el rebutgi
+	\item Facilitat d'absorció i estabilitat del nou compost (lligand +
+			receptor)
+	\end{itemize}
+
+% section Context Químic (end)
+
+\section{Algoritme Genètic} % (fold)
+	\label{sec:Algoritme Genetic}
+% section Algoritme Genetic (end)
+
+\section{Implementació} % (fold)
+	\label{sec:Implementacio}
+% section Implementació (end)
+
+\section{Resultats} % (fold)
+	\label{sec:Resultats}
+% section Resultats (end)
+	\end{document}
