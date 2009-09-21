@@ -36,30 +36,48 @@ amb facilitat, i que hem cregut que tenen més rellevància en aquest procés.
 
 Aquests indicadors són:
 
-\begin{list}{Indicadors}{}
-\item Pes molecular
-\item potencial electroestàtic
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\end{list}
+%\begin{list}{Indicadors}{}
+%\item Pes molecular
+%\item potencial electroestàtic
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\item 
+%\end{list}
+
+\begin{table}
+\centering
+\begin{tabular}{|ccc|}
+\hline
+aromatic carbon &aliphatic carbon&non-hydrogen bonding sulfur\\
+non-hydrogen bonding phosphor&phosphor&non-hydrogen bonding nitrogen\\
+hydrogen donor&oxygen acceptor&nitrogen acceptor\\
+sulfur acceptor&spherical nitrogen acceptor&spherical oxygen acceptor\\
+fluorine&chlorine&bromine\\
+iodine&iron&manganese\\
+calcium&magnesium&zinc\\
+positive charge&& \\
+\hline
+\end{tabular}
+\caption{The 22 atom probes implemented in HELIOS.}
+\label{table:maps}
+\end{table}
 
 Per tal que una unió entre lligand i receptor sigui bona, les energies
 dissipades s'han de minimitzar, mostrant així que entre les dues molècules es
@@ -181,16 +199,29 @@ amb les nostres necessitats.
 \subsection{Algoritme genètic} % (fold)
 \label{sub:genetic}
 
+Els operadors usats en aquest algoritme genètic són dels més clàssics ja que
+donat el problema, tan sols hi ha necessitat d'aplicar operadors ``bàsics'' als
+individus.  Com s'ha explicat anteriorment, no s'ha volgut potenciar la
+dependència entre els diferents gens dels individus.
+
+Parametres
+
 \subsubsection{Individu (Cromosoma)}
 \label{ssub:individu (cromosoma)}
 
-Els individus són les ponderacions.  Cada individu de la població és un conjunt
-de 22 valors de coma flotant (de doble precisió).  S'han fet proves sobre acotar
-els valors possibles entre 0 i $Inf$, però si permetem valors negatius,
-l'Algoritme evolutiu pot jugar amb fer ponderar negativament un tipus de maps,
-donant més flexibilitat al Algoritme evolutiu per trobar una bona ponderació.
-Si el mínim valor que pogués asignar fós 0, simplement eliminaria un map si no
-té cap rellevància però d'aquesta manera li permetem penalitzar un indicador.
+En aquest algoritme genètic, els individus són les ponderacions.  Cada individu
+de la població és un conjunt de 22 valors de coma flotant (de doble precisió)
+que es correspon a cadascun dels 22 indicadors (maps),  Donat que volem saber
+quines rellevàncies tenen els indicadors, però confiem que no tenen cap relació
+un amb el següent, hem decidit no utilitzar cap representació que tingui en
+compte l'ordre, ni que afavoreixi la dependència dels gens. %XXX GENS?
+
+S'han fet proves sobre acotar els valors possibles entre 0 i $Inf$, però si
+permetem valors negatius, l'Algoritme evolutiu pot jugar amb fer ponderar
+negativament un tipus de maps, donant més flexibilitat al Algoritme evolutiu per
+trobar una bona ponderació.  Si el mínim valor que pogués asignar fós 0,
+simplement eliminaria un map si no té cap rellevància però d'aquesta manera li
+permetem penalitzar un indicador.
 
 Donar de marge de $-Inf$ a $Inf$, era problemàtic en tant que l'Algoritme
 evolutiu acaba donant molta rellevància a uns quants (pocs) maps, i
@@ -206,20 +237,35 @@ estiguéssin dins d'uns marges).
 Al final, s'ha adoptat donar de marge [-1,1], però sense límit en la suma total
 dels valors.
 
+
 \subsubsection{Mutacions} % (fold)
 \label{ssub:Mutacions}
 
-S'apliquen mutacions en un 0.1\% dels individus una vegada fet el creuament.  Les mutacions en
-aquesta aplicació consisteixen en modificar una ponderació per una altra (al·lel).  La única
-restricció és que es mantingui dins dels marges [-1,+1] .
+S'apliquen mutacions en un 0.1\% dels individus una vegada fet el creuament.
+Les mutacions en aquesta aplicació consisteixen en modificar una ponderació per
+una altra (al·lel).  La única restricció és que es mantingui dins dels marges
+[-1,+1] .
 % subsubsection Mutacions (end)
+
+\subsubsection{Crossover} % (fold)
+\label{ssub:Crossover}
+Pel creuament s'ha provat un creuament per un punt, i el creuament per dos punts, donant millors
+resultats el creuament en tant sols un punt.  
+
+Donats dos individus (els que han estat sel·leccionats en el procés de
+sel·lecció , amb una provabilitat d'un 0.8 es fa creuament i els fills són tan
+sols una partició formada a partir dels 2 pares, amb un punt de tall aleatori.
+% subsubsection crossover (end)
 
 \subsubsection{Fitness} % (fold)
 \label{ssub:Fitness}
-En aquest problema, la funció que ens indica com de bò és un individu (funció \texttt{fitness}) és
-el resultat de evaluar la ordenació que dóna la ponderació indicada per l'individu, respecte els
-nostres coneixements de activitat. Aquesta evaluació la fem mitjançant un dels diferents algoritmes
-de evaluació d'ordenacions.
+En aquest problema, la funció que ens indica com de bò és un individu (funció
+\texttt{fitness}) és el resultat de evaluar la ordenació que dóna la ponderació
+indicada per l'individu, respecte els nostres coneixements de activitat. Aquesta
+evaluació la fem mitjançant un dels diferents algoritmes de evaluació d'ordenacions.
+
+%XXX : enchufar bedroc, ROC, tanimotos, i tota la merda
+
 
 És així, una funció que pondera ordenacions.  Per tant, la funció té un cost
 elevat per a ser cridada per cada evaluació d'un individu.  S'han utilitzat
@@ -240,19 +286,7 @@ En qualsevol d'aquests procediments, es tracta d'evaluar com està de ben ordena
 funció d'unes regles.
 
 % subsubsection Fitness (end)
-\subsubsection{Operadors} % (fold)
-\label{ssub:Operadors}
-% subsubsection Operadors (end)
 
-Els operadors usats en aquest algoritme genètic són els més clàssics ja que donat el problema, tan
-sols hi ha necessitat d'aplicar operadors ``bàsics'' als individus.  
-
-\subsubsection{Crossover} % (fold)
-\label{ssub:Crossover}
-Pel creuament s'ha provat un creuament per un punt, i el creuament per dos punts, donant millors
-resultats el creuament en tant sols un punt.  Amb una provabilitat d'un 0.8 es fa creuament i el
-``fill'' és tan sols una partició formada a partir dels 2 pares, amb un punt de tall aleatori.
-% subsubsection crossover (end)
 
 \subsection{sobreentrenament} % (fold)
 \label{sub:sobreentrenament}
