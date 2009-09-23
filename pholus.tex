@@ -17,6 +17,44 @@ complex pel referent a les condicions externes que s'imposen per la natura, i qu
 posar condicions i limitacions al Algoritme Evolutiu (als Algoritmes Evolutius no els agraden les 
 limitacions).
 
+Aquest treball forma part de la nova tecnologia desenvolupada per Intelligent Pharma, anomenada HELIOS, que serveix per identificar,a partir d'un compost de referència prèviament donat, nous compostos amb propietats estructurals completament diferents que imiten el comportament d'aquest compost de referència. Per exemple, si el compost de referència ja és conegut (per exemple, un extret d'un producte natural o d'una patent), HELIOS pot trobar compostos no  vinculats estructuralmnt que reprodueixin les seves propietats psico-químiques tridimensionals; per tant, aquests compostos tindran les mateixes característiques biològiques però amb diferent estructura mol·lecular. A aquesta búsqueda se l'anomena "Scaffold hopping" (búsqueda entre diferents famílies químiques).
+
+La tècnica utilitzada és el Virtual Screening(VS), que normalment s'utilitza per descobrir noves famílies químiques en relació a una activitat biològica desitjada. El VS té mètodes que es basen en l'estructura dels compostos i d'altres que no. Com hem dit, HELIOS té com a objectiu identificar nous compostos que no són anàlegs estructuralment, però sí biològicament. 
+
+HELIOS es basa en la superposició de camps mol·leculars entre qualsevol compost i un lligam de referència. Però HELIOS, no només considera la superposició generada per càrregues formals, sinó també altres tipus relacionades amb el comportament dinàmic; així, es fan diferents superposicions entre parells de mol·lècules es duen a terme a la vegada. 
+L'alineament de camps mol·leculars va ser descrit durant els anys noranta, però no s'ha dut a terme fins aquesta dècada degut a que l'alineament mol·lecular flexible és un problema impossible de resoldre sense les eines de supercomputació. Fins els últims anys, el Virtual Screening basat en els lligams s'ha basat en metodologies per buscar semblances moleculars com l'estructura, farmacòfor, etc. 
+
+HELIOS utilitza alineaments de camps moleculars flexibles per identificar compostos que s'assemblin a un compost de referència. L'alineament molecular e duu a terme mitjançant la metodologia "cloud computing", la qual permet fer-ho en pocs dies. Els compostos amb els quals es fa l'alineament es treuen d'una base de dades que pot variar segons l'objectiu de la búsqueda. 
+
+Els camps moleculars són discretitzats dins d'una caixa en forma de grid de punts. Idealment, la caixa hauria de ser suficientment gran per introduir-hi tots els lligans de la base de dades en una conformació extesa. De la mateixa manera la capsa ha d'incloure aquells punts al voltant de les molècules que tenen valors significatius. Diferents representacions dels camps moleculars, que donen diferent informació sobre la densitat electrònica, són construits amb sondes atòmiques. Una sonda atòmica és una partícula amb característiques químiques particulars que s'assemblen a propietats atòmiques en ambients electrònics particulars. 
+
+Les 22 sondes atòmiques que són implementades en HELIOS són les que  es veuen a la taula \ref{table:maps} 
+
+\begin{table}
+\centering
+\begin{tabular}{|ccc|}
+\hline
+aromatic carbon &aliphatic carbon&non-hydrogen bonding sulfur\\
+non-hydrogen bonding phosphor&phosphor&non-hydrogen bonding nitrogen\\
+hydrogen donor&oxygen acceptor&nitrogen acceptor\\
+sulfur acceptor&spherical nitrogen acceptor&spherical oxygen acceptor\\
+fluorine&chlorine&bromine\\
+iodine&iron&manganese\\
+calcium&magnesium&zinc\\
+positive charge&& \\
+\hline
+\end{tabular}
+\caption{The 22 atom probes implemented in HELIOS.}
+\label{table:maps}
+\end{table}
+
+El camp molecular definit per una sonda en un punt donat és calculat amb la
+següent equació % XXX : TREURE-HO, no?
+
+L'alineament múltiple de camps moleculars flexibles és una taxa complexa que requereix de tècniques i recursos computacionals avançats. El procés implementat per HELIOS fixa el camp molecular del compost de referència i utilitza algoritmes evolutius en un sistems de "cloud-computing" per duu a terme l'alineament flexible múltiple dels camps moleculars de cadascún dels diferents compostos que hi ha dins la base de dades.
+
+Amb això obtenim per a cada mol·lècula de la base de dades 22 vectors on hi ha els valors per cadascún dels punts ordenats del grid de les 22 sondes moleculars. A partir d'aquí hem de trobar alguna manera d'evaluar la similitud entre mol·lècules.
+
 Com es mostrarà en les següents seccions, hi ha una part important de feina
 realitzada en la preparació de les dades, i en la corresponent validació dels
 resultats.
@@ -35,31 +73,6 @@ pràctic, utilitzem ``nomes'' 22 indicadors, que són els que podem quantificar
 amb facilitat, i que hem cregut que tenen més rellevància en aquest procés.
 
 Aquests indicadors són:
-
-%\begin{list}{Indicadors}{}
-%\item Pes molecular
-%\item potencial electroestàtic
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\item 
-%\end{list}
 
 \begin{table}
 \centering
@@ -209,12 +222,13 @@ Parametres
 \subsubsection{Individu (Cromosoma)}
 \label{ssub:individu (cromosoma)}
 
-En aquest algoritme genètic, els individus són les ponderacions.  Cada individu
-de la població és un conjunt de 22 valors de coma flotant (de doble precisió)
-que es correspon a cadascun dels 22 indicadors (maps),  Donat que volem saber
-quines rellevàncies tenen els indicadors, però confiem que no tenen cap relació
-un amb el següent, hem decidit no utilitzar cap representació que tingui en
-compte l'ordre, ni que afavoreixi la dependència dels gens. %XXX GENS?
+En aquest algoritme genètic, els individus són les ponderacions corresponents a
+cadascun dels maps.  Cada individu de la població és un conjunt de 22 valors de
+coma flotant (de doble precisió) que es correspon a cadascun dels 22 indicadors
+(maps),  Donat que volem saber quines rellevàncies tenen els indicadors, però
+confiem que no tenen cap relació un amb el següent, hem decidit no utilitzar cap
+representació que tingui en compte l'ordre, ni que afavoreixi la dependència
+dels gens. %XXX GENS es la paraula?
 
 S'han fet proves sobre acotar els valors possibles entre 0 i $Inf$, però si
 permetem valors negatius, l'Algoritme evolutiu pot jugar amb fer ponderar
@@ -244,7 +258,7 @@ dels valors.
 S'apliquen mutacions en un 0.1\% dels individus una vegada fet el creuament.
 Les mutacions en aquesta aplicació consisteixen en modificar una ponderació per
 una altra (al·lel).  La única restricció és que es mantingui dins dels marges
-[-1,+1] .
+[-1,+1] .  Aplicant aquesta mutació, mantenim la diversitat en la població.
 % subsubsection Mutacions (end)
 
 \subsubsection{Crossover} % (fold)
@@ -253,8 +267,15 @@ Pel creuament s'ha provat un creuament per un punt, i el creuament per dos punts
 resultats el creuament en tant sols un punt.  
 
 Donats dos individus (els que han estat sel·leccionats en el procés de
-sel·lecció , amb una provabilitat d'un 0.8 es fa creuament i els fills són tan
-sols una partició formada a partir dels 2 pares, amb un punt de tall aleatori.
+sel·lecció per a reproduir-se , amb una provabilitat d'un 0.8 es fa creuament i
+els fills són tan sols una partició formada a partir dels 2 pares, amb un punt
+de tall aleatori.  Donat que no hi ha cap relació entre els diferents indexos
+(estàn ordenats arbitràriament) no ens hem de preocupar de partir el cromosoma
+per lloc ``delicat''. 
+
+Així doncs, el que es busca és interpolar les qualitats de dos individuus ben
+adaptats, per a crear uns descendents amb propietats similars.
+
 % subsubsection crossover (end)
 
 \subsubsection{Fitness} % (fold)
