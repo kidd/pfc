@@ -7,6 +7,7 @@
 \usepackage{amssymb, amsmath} 
 
 \begin{document}
+\tableofcontents  %%Index
 \section{Objectius} % (fold)
 \label{sec:Objectius}
 Aquest projecte anomenat \texttt{Pholus}, ha estat desenvolupat per a equilibrar (ponderar) pesos dels
@@ -59,7 +60,6 @@ Com es mostrarà en les següents seccions, hi ha una part important de feina
 realitzada en la preparació de les dades, i en la corresponent validació dels
 resultats.
 
-
 % section Objectius (end)
 
 \section{Context Químic} % (fold)
@@ -97,6 +97,10 @@ dissipades s'han de minimitzar, mostrant així que entre les dues molècules es
 neutralitzen.  Si la energia és alta, fa que la estructura final (lligand +
 receptor) sigui poc estable i fàcilment trencada, ja que les dues parts, poden
 trobar alguna altra formació on ``es troben més còmodes''.
+
+En general, semblança $S_{A,B}$ entre dos objectes és estimada pel nombre d'elements iguals que tenen. Els objectes que són iguals, haurien de tenir la màxima puntuació. Per tant, una expressió de la semblança seria en termes de la teoria de conjunts, la intersecció $(A\cap B)$ que en lògica seria l'operador $AND$. La dissimilitud $D_{A,b}$ és estimat pel nombre d'elements diferents que tenen. Els objectes idèntics obtindrien la mínima puntuació. Anàlogament a la similitud, parlant en termes de teoria de conjunts, la dissimilitud es calcularia posant amb la unió $(A\cup B)$ o el que seria el mateix amb l'operador lògic $OR$. El denominador serà simplement un normalitzador per tenir l'índex entre 0 i 1. 
+
+El concepte de semblança normalment s'utilitza per referir-se tan a la semblança com a la diferència, ja que es suposa que si dos objectes són semblants és perquè no són diferents. En matemàtiques i estadística s'utilitzen els conceptes de semblança, proximitat, distància per referir-se al mateix, però en química similitut i dissimilitut poden portar a diferents resultats. Per exemple, considerem dues seqüències de caràcters, F1 i F2, cadascuna té conjunts de 407 caràcters, 402 dels quals són comuns entre ells. F3 i F4, cadascuna té un conjunt de 5 caràcters, dels quals cap d'ells és comú. En els dos casos la distància Euclídia és $10 \over 1024$  o $0.0098$ quan és evident que les dues primeres són més semblants entre elles que la segona parella.
 
 Tanimotos. Què cony son? %XXX
 
