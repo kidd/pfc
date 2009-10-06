@@ -5,7 +5,8 @@
 \usepackage{graphicx}
 \usepackage{marvosym}
 \begin{document}
-\section{Introducció} % (fold)
+\tableofcontents
+\section{Introducció} % (fold) Objectius?
 	\label{sec:Introduccio}
 	Un altre problema on hem aplicat Algoritmes evolutius és en el descobriment
 	de fàrmacs 'de novo'.
@@ -17,7 +18,7 @@
 	activitat, faran que es pugui 'enganxar' millor en el lligand.  Els radicals
 	que poden anar en cada posició són coneguts (en la majoria de cassos).
 
-	Un dels problemes que es deriven dels mètodes actuals són els grans costos
+	Un dels problemes que tenen els mètodes actuals són els grans costos
 	que es deriven d'aquest procés, ja que el que es fa és sintetitzar TOTES les
 possibles variants i combinacions de radicals, i mesurant la energia %XXX (disipada?)
 	s'intenta buscar la que minimitza aquesta.
@@ -32,6 +33,33 @@ possibles variants i combinacions de radicals, i mesurant la energia %XXX (disip
 	que ens guiarà les proves que hem de fer a través dels creuaments i les
 	mutacions, trobant ``relacions'' (epistàcia) entre els diferents radicals, i
 	aconseguint resultats bons explorant una petita part del espai de búsqueda.
+
+	Una altra objectiu d'aquest programa, ha estat convertir-lo en un
+	``framework'' d'algorismes genètics.  Veient que la funció de fitness és una
+	funció que executa l'usuari, i ell es qui puntua cadascuna de les
+	combinacions, s'ha intentat anar més enllà i aconseguir una aplicació que
+	pugui ser utilitzada no només en aquest context, sinó en cualsevol que ens
+	podem trobar en un futur, i que requereixi uns operadors similars.
+
+	Una altra manera d'imaginarse aquest enfoc \texttt{meta} és pensar-ho com si
+	separéssim la funció fitness de la resta del procés d'algoritme genètic.
+	L'únic que necesita el algoritme genètic és un receptor de dades, que
+	donada una entrada, hi doni una sortida.  Si es mira d'aquesta manera, no
+	estem fent més que desacoblar la evaluació del procés de creuaments,
+	mutacions i reproducció.
+
+	Una vegada estem en aquest punt, la següent evolució lògica és la
+	deslocalització també espaial de les 2 parts.  Donat que el procés
+	d'evaluació d'una combinació de erres donada pot trigar dies, el coll
+	d'ampolla serà clarament aquest, permetent-nos així separar algorisme
+	genètic i Fitness a través d'una xarxa, i permetent convertir el sistema en
+	un servei web, accessible des d'arreu del món.
+
+	La gestió d'això només ens implica implementar el sistema com a servei web
+	(SOAP) i tenir una bona gestió d'usuaris i projectes.
+
+	Tot seguit s'expliquen els detalls d'implementació.
+
 % section Introducció (end)
 
 \section{Context Químic} % (fold)
@@ -62,5 +90,10 @@ possibles variants i combinacions de radicals, i mesurant la energia %XXX (disip
 
 \section{Resultats} % (fold)
 	\label{sec:Resultats}
+	\subsection{treball futur} % (fold)
+	\label{sub:treball futur}
+	implementar tècniques de algorisme genètic  interactius
+	
+	% subsection treball futur (end)
 % section Resultats (end)
 	\end{document}
