@@ -171,6 +171,7 @@ Utilitzem un algoritme evolutiu, per trobar els 22 valors als que multiplicar
 cadascun dels maps, que fan que obtinguem una ordenació de les molècules que
 classifica les actives al principi.
 
+
 % subsubsection subsubsection name (end)
 % section inf (end)
 \subsection{preparació de dades} % (fold)
@@ -219,7 +220,8 @@ amb les nostres necessitats.
 Els operadors usats en aquest algoritme genètic són dels més clàssics ja que
 donat el problema, tan sols hi ha necessitat d'aplicar operadors ``bàsics'' als
 individus.  Com s'ha explicat anteriorment, no s'ha volgut potenciar la
-dependència entre els diferents gens dels individus.
+dependència entre els diferents gens dels individus, és a dir, que suposem que
+no hi ha epistàcia entre els diferents gens.
 
 Parametres
 
@@ -253,7 +255,9 @@ tenia molt de sentit lògic més que el de acotar que tots els individus
 estiguéssin dins d'uns marges).
 
 Al final, s'ha adoptat donar de marge [-1,1], però sense límit en la suma total
-dels valors.
+dels valors ja que així acotem els valors i també els hi deixem tenir valors
+negatius, donant més versatilitat al algorisme, que així és capaç de trobar
+relaccions inverses d'algunes ponderacions.
 
 
 \subsubsection{Mutacions} % (fold)
@@ -262,13 +266,27 @@ dels valors.
 S'apliquen mutacions en un 0.1\% dels individus una vegada fet el creuament.
 Les mutacions en aquesta aplicació consisteixen en modificar una ponderació per
 una altra (al·lel).  La única restricció és que es mantingui dins dels marges
-[-1,+1] .  Aplicant aquesta mutació, mantenim la diversitat en la població.
+[-1,+1] .  
+
+Aplicant aquesta mutació, mantenim la diversitat en la població i anem
+introduint sempre material genètic nou.  La mutació, juntament amb els
+creuaments són la font principal de la variació genètica, i en aquest cas en
+particular, la mutació és l'únic operador que introdueoix material genètic nou.
+
+El valor de 0.1\% s'ha utilitzat ja que és un valor estàndard, i les variacions
+que hem aplicat a posteriori sobre aquest valor no han aportat millores
+objectives a les solucions.
+
+Si ens trobéssim amb problemes de convergència prematura, un dels ``trucs''
+utilitzats és augmentar la provabilitat de mutació.  Com que no ens hem trobat
+amb aquest tipus de problemes, el valor de 0.1 s'ha deixat com a bo.
 % subsubsection Mutacions (end)
 
 \subsubsection{Crossover} % (fold)
 \label{ssub:Crossover}
-Pel creuament s'ha provat un creuament per un punt, i el creuament per dos punts, donant millors
-resultats el creuament en tant sols un punt.  
+
+Pel creuament s'ha provat un creuament per un punt, i el creuament per dos
+punts, donant millors resultats el creuament en tant sols un punt.  
 
 Donats dos individus (els que han estat sel·leccionats en el procés de
 sel·lecció per a reproduir-se , amb una provabilitat d'un 0.8 es fa creuament i
@@ -278,7 +296,12 @@ de tall aleatori.  Donat que no hi ha cap relació entre els diferents indexos
 per lloc ``delicat''. 
 
 Així doncs, el que es busca és interpolar les qualitats de dos individuus ben
-adaptats, per a crear uns descendents amb propietats similars.
+adaptats, per a crear uns descendents amb propietats similars.  És d'esperar que
+si un individu té bon fitness, les ponderacions donades als seus indicadors
+siguin bastant encertades.  Llavors, en interpolar una parella de individuus,
+suposem que el descendent també tindrà un fitness bo, i això farà que a mesura
+que passen les generacions, la població tendeixi a millorar (en mitja).
+
 
 % subsubsection crossover (end)
 
@@ -291,13 +314,16 @@ evaluació la fem mitjançant un dels diferents algoritmes de evaluació d'orden
 
 %XXX : enchufar bedroc, ROC, tanimotos, i tota la merda
 
-
 És així, una funció que pondera ordenacions.  Per tant, la funció té un cost
 elevat per a ser cridada per cada evaluació d'un individu.  S'han utilitzat
 algunes tècniques d'optimització per a evitar recalcular ponderacions ja fetes,
-etc.
+com per exemple, catxejar els resultats (memoize).  Com que l'algorisme
+s'executa ``d'una sola tacada'', la caché pot ser totalment mapejada a memòria,
+sense haver de volcar-la en cap moment a disc.  Això és de vital importància, ja
+que segons com haguéssim d'emmagatzemar les dades en disc, el cost d'accés a les
+dades seria superior al de recalcular. 
 
-%XXX Explicar memoize
+%XXX Explicar memoize linkar a HOP memoize
 
 \begin{itemize}
 	\item Roc
@@ -307,8 +333,10 @@ etc.
 \end{itemize}
 
 
-En qualsevol d'aquests procediments, es tracta d'evaluar com està de ben ordenada una llista, en
-funció d'unes regles.
+En qualsevol d'aquests procediments, es tracta d'evaluar com està de ben ordenada una llista, en funció d'unes regles.
+
+Posarem un exemple per tal de fer més fàcil la comprensió de la funció de
+fitness.
 
 % subsubsection Fitness (end)
 
