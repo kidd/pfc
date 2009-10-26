@@ -2,25 +2,41 @@
 \usepackage[catalan]{babel}
 \usepackage[utf8]{inputenc}
 \begin{document}
+
 La computació evolutiva és un camp recerca dins de la informàtica.  Com el nom
-indica, es un camp especial dins la computació, una manera determinada d'atacar
-problemes que agafa idees en la evolució natural de les espècies.  No es extrany
-que s'hagin intentat portar idees de la naturalesa a camps de la computació, i
-menys a camps relacionats amb la inteligència artificial, ja que és ben clar
-que, la evolució en aquets cas, ha tingut un fort impacte positiu en les
-espècies, a nivell individual, i als ecosistemes, amb multitud d'espècies
-convivint i co-evolucionant al llarg del temps.
+indica, és un camp especial dins la computació, una manera determinada d'atacar
+problemes que agafa idees i té la seva inspiració inicial en la evolució natural
+de les espècies.  No es extrany que s'hagin intentat portar idees de la
+naturalesa a camps de la computació, i menys a camps relacionats amb la
+inteligència artificial, ja que és ben clar que, la evolució en aquets cas, ha
+tingut un fort impacte positiu en les espècies, a nivell individual, i als
+ecosistemes, amb multitud d'espècies convivint i co-evolucionant al llarg del
+temps.
 
 Un altre cas on s'intenta adaptar els procediments naturals en la computació és,
 per exemple, en les ``Xarxes neuronals'', on s'intenta simular les interaccions
 de les neurones en un cervell, per a solucionar problemes on hi intervé
-l'aprenentatge.
+l'aprenentatge.  No parlaré d'aquesta tècnica durant aquest treball, però només
+fer notar que la informàtica en general, i la inteligència artificial en
+particular, s'ha nodrit molt d'idees i estratègies de la pròpia naturalesa.
 
-fault-tolerance
+Una altra de les particularitats dels algoritmes evolutius, és la seva bona
+resposta davant d'irregularitats en les mostres d'on aprèn.  Es diu doncs, que
+té una bona tolerància a fallades.  Aquest tret el comparteix amb altres
+tècniques basades en l'aprenentatge, com per exemple les xarxes neuronals.
+Aquest tret particular, també és una de les característiques que fan dels
+algoritmes genètics una molt bona opció davant de problemes dels que tenim dades
+experimentals, i no tan sols problemes teòrics, o d'entorns molt controlats.
+
+De la mateixa manera que els algoritmes evolutius són processos estocàstics, que
+no sempre donaran la mateixa solució davant d'unes dades d'entrada, tampoc
+requereixen unes dades d'entrada perfectament fiables per a donar una solució
+més que acceptable al problema.
 
 En general, els problemes que la evolució intenta solucionar (la evolució no
 s'atura, amb el qual mai arriba a un estadi totalment estàtic), els soluciona
-mitjançant prova i error.
+mitjançant prova i error.  Tant sols conta amb el factor temps, que en cas de la
+evolució natural no té final.
 
 % TODO : Petita intro a la evolució? 
 
@@ -34,11 +50,10 @@ de ``optimització mitjançant evolució i recombinació''.  Durant els anys
 seixanta, es van desenvolupar diferents estudis i implementacions d'aquests
 principis en 3 llocs diferents, amb 3 noms lleugerament diferents:
 
-
  % theme=Berlin;caption_top=1;caption=Els inicis
- % Nom & Qui & On
+ % Nom & Què & On
  % Fogel, Owens, Walsh & programació evolutiva & EEUU
- % & Algoritme genètic & Holanda
+ % John Henry Holland & Algoritme genètic & 
  % Rechenberg, Schwefel & estratègies evolutives & Alemanya
 
 \begin{table}
@@ -46,11 +61,11 @@ principis en 3 llocs diferents, amb 3 noms lleugerament diferents:
 \caption{Els inicis}
 \begin{tabular}{|l|l|l|}
 \hline
-\multicolumn{1}{|c|}{\textbf{Nom }} & \multicolumn{1}{c|}{\textbf{ Qui }} & \multicolumn{1}{c|}{\textbf{ On}} \\
+\multicolumn{1}{|c|}{\textbf{Nom }} & \multicolumn{1}{c|}{\textbf{ Què }} & \multicolumn{1}{c|}{\textbf{ On}} \\
 \hline
 \hline
 Fogel, Owens, Walsh  & programació evolutiva  & EEUU     \\
-                     & Algoritme genètic      & Holanda  \\
+                     & Algoritme genètic      &   \\
 Rechenberg, Schwefel & estratègies evolutives & Alemanya \\
 \hline
 \end{tabular}
@@ -81,7 +96,20 @@ l'instint bàsic dels individus a reproduir-se, la sel·lecció esdevé inevitab
 Altrament, la població s'aniria incrementat indefinidament, i l'entorn no podria
 suportar-ho.  La sel·lecció natural fa que els individus competeixin pels
 recursos existents, i permet només reproduir-se als que estiguin més adaptats al
-medi en qüestió.
+medi en qüestió.  La sel·lecció basada en la competència és una de les dues
+pedres angulars del procés evolutiu.  L'altra força primària identificada pels
+resultats de Darwin són les variacions en el fenotip dels individus d'una
+mateixa població. Els trets del fenotip són aquelles característiques de
+comportament i físiques que un individu presenta i que afecten directament a la
+seva resposta a determinades situacions i al entorn en general (també als altres
+individuus).
+
+Un individu representa una única combinació de trets que són evaluats en conjunt
+en un entorn determinat.  Si l'individu és dels que respon millor al medi
+(fitness), el seu fenotip serà propagat a la següent generació d'individuus a
+través de la reproducció (offspring).  Si la combinació de trets no és de les
+millors, l'individu no s'arribarà a reproduir i el seu codi genètic morirà i no
+passarà a la següent generació.
 
 \subsubsection{Genètica} % (fold)
 \label{ssub:Genetica}
@@ -94,6 +122,9 @@ medi en qüestió.
 
 \section{Introduccio als Algorismes evolutius} % (fold)
 \label{sec:Introduccio als AE}
+
+\url{http://en.wikipedia.org/wiki/Evolutionary\_computation}
+
 
 % section Introduccio als AE (end)
 % section Breu Història (end)
@@ -117,6 +148,11 @@ paralelització de processos, aprofitant sistemes distribuits, o fins i tot en
 cloud.  Més endevant es faran cinc cèntims de tècniques concretes de
 paralelització (tot i que no s'han aplicat en aquest projecte en concret).
 
+Els treballs més recents relacionats amb algoritmes evolutius estan relacionats
+amb la utilització de entorns de treball (frameworks) i paradigmes de
+programació paralela, com poden ser hadoop o MapReduce. XXX Paper 
+\url{http://www.xavierllora.net/2009/10/09/scaling-genetic-algorithms-using-mapreduce/}
+
 \subsection{Tecnologia} % (fold)
 \label{sub:Tecnologia}
 
@@ -127,9 +163,9 @@ hi havia fortran com a alternativa, un llenguatge molt més rígid).  Així donc
 els majors avenços relacionats amb la IA han tingut gairebé sempre les seves
 primeres implementacions en lisps o derivats (scheme).  
 
-El problema de llenguatges tant dinàmics com lisp, és que al treballar sobre
+El problema dels llenguatges tant dinàmics com lisp, és que al treballar sobre
 màquina virtual (lisp es va poder compilar a partir del %XXX
-) i eren massa lents per a la implementació en producció.  Recordem que les
+) eren massa lents per a la implementació en producció.  Recordem que les
 aplicacions que utilitzen algorismes de intelligència artificial requereixen un
 gran volum de càlculs.
 
@@ -139,7 +175,12 @@ C/C++.
 
 Actualment i donada la gran potència de calcul dels ordenadors actuals, hi ha
 empreses que comencen a utilitzar llenguatges interpretats per a realitzar
-algorismes genètics  com per exemple \footnote{oblong}.
+algorismes genètics  com per exemple \footnote{oblong}.  Llenguatges com haskell
+i erlang que han demostrat ser molt ràpids i paralelitzables, no han fet el salt
+a la inteligència artificial massivament, ja que la seva puresa (transparència
+referencial i fortament tipats) els fa més ferragosos de treballar en problemes
+eminentment dinàmics com els algoritmes evolutius  
+
 % subsection Tecnologia (end)
 
 % section Estat de l'art (end)

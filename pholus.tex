@@ -3,8 +3,36 @@
 \usepackage[utf8]{inputenc}
 \usepackage[catalan]{babel}
 \usepackage{graphicx}
+\usepackage{verbatim}
 \usepackage{marvosym}
 \usepackage{amssymb, amsmath} 
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[]{color}
+
+%\lstset{
+	%language=C++,
+	%keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+	%identifierstyle=\ttfamily,
+	%commentstyle=\color[rgb]{0.133,0.545,0.133},
+	%stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+	%showstringspaces=false,
+	%basicstyle=\small,
+	%numberstyle=\footnotesize,
+	%numbers=left,
+	%stepnumber=1,
+	%numbersep=10pt,
+	%tabsize=2,
+	%breaklines=true,
+	%prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	%breakatwhitespace=false,
+	%aboveskip={1.5\baselineskip},
+  %columns=fixed,
+  %upquote=true,
+  %extendedchars=true,
+%% frame=single,
+%% backgroundcolor=\color{lbcolor},
+%}
 
 \begin{document}
 \tableofcontents  %%Index
@@ -104,6 +132,7 @@ El concepte de semblança normalment s'utilitza per referir-se tan a la semblan�
 
 Tanimotos. Què cony son? %XXX
 
+% subsection hola (end)
 \subsubsection{Estereoisomers i conformacions}\label{ssub:estereoisomers i conformacions}
 
 Una altra particularitat del problema és la varietat de estereoisomers i de
@@ -176,25 +205,38 @@ classifica les actives al principi.
 % section inf (end)
 \subsection{preparació de dades} % (fold)
 \label{sub:preparacio de dades}
-Una molècula es pot trobar en la natura en diverses formes.  Les clasificacions es divideixen en
-isomers i conformacions.  Una molècula pot tenir diversos isomers, i cada isomer es pot trobar en  
-diverses conformacions.
+Una molècula es pot trobar en la natura en diverses formes.  Les clasificacions
+es divideixen en isomers i conformacions.  Una molècula pot tenir diversos
+isomers, i cada isomer es pot trobar en  diverses conformacions.
 
-És a dir, que per un nom (o id), en la natura deriven diverses estructures, que comparteixen nom, i
-elements, però poden estar organitzats de forma diferent en l'espai. Aquestes organitzacions son
-simètriques en l'espai 3D, donant lloc a molècules similars, però que en l'espai 3D, no es superposen de la
-mateixa forma. (exemple, les mans, que no es poden superposar en 3D).
+És a dir, que per un nom (o id), en la natura existeixen diverses estructures, que
+comparteixen nom, i elements, però poden estar organitzats de forma diferent en
+l'espai. Aquestes organitzacions son simètriques en l'espai 3D, donant lloc a
+molècules similars, però que en l'espai 3D, no es superposen de la mateixa
+forma. (exemple, les mans, que no es poden superposar en 3D).
 
-Les conformacions, en canvi, són variacions de la posició dels àtoms en l'espai, però mantenint els
-enllaços entre àtoms.
+Les conformacions, en canvi, són variacions de la posició dels àtoms en l'espai,
+però mantenint els enllaços entre àtoms.
 
-Per passar d'un estereoisomer a un altre, s'han de trencar enllaços, i tornar-se a formar.  En les
-conformacions no passa això, i es pot passar d'una a una altra, només canviant els angles dels
-enllaços i la seva flexibilitat. 
+Per passar d'un estereoisomer a un altre, s'han de trencar enllaços, i tornar-se
+a formar.  En les conformacions no passa això, i es pot passar d'una a una
+altra, només canviant els angles dels enllaços i la seva flexibilitat. 
 
-Donat un conjunt de molècules que volem utilitzar, hem de saber quina de les conformacions triarem
-per a cada molècula.  Per a fer la \texttt{explosió} de combinacions, s'utilitza un sofware
-especific, que fa la combinatoria i genera les possibles variacions sobre una molècula donada. 
+Donat un conjunt de molècules que volem utilitzar, hem de saber quina de les
+conformacions triarem per a cada molècula.  Per a fer la \texttt{explosió} de
+combinacions, s'utilitza un sofware especific, que fa la combinatoria i genera
+les possibles variacions sobre una molècula donada. Després de fer aquesta
+explosió de combinacions, tenim diverses entrades per a cadascuna de les
+molècules.  Les molècules que sabem que són actives, sabem que ho són, però no
+sabem quina conformació i isomer és el que la fa activa.
+
+Per això, en el llistat d'actives, tenim només una entrada per a cada família de
+molecules actives, tot i que en la taula de tanimotos, aquesta molècula estarà
+representada en diverses entrades. 
+
+Durant la execució del programa, el que fem, és ordenar la llista de tanimotos,
+amb molècules ``repetides'', i al moment de fer la puntuació de la llista
+ordenada, ens quedem només amb la millor conformació de cada família.
 
 \subsubsection{Procés de preparació} % (fold)
 \label{ssub:Proces de preparacio}
@@ -302,6 +344,8 @@ siguin bastant encertades.  Llavors, en interpolar una parella de individuus,
 suposem que el descendent també tindrà un fitness bo, i això farà que a mesura
 que passen les generacions, la població tendeixi a millorar (en mitja).
 
+El creuament per dos punts no ha donat millors resultats que el creuament fet
+per un únic punt, i s'ha decidit quedarse amb el creuament per un sol punt.
 
 % subsubsection crossover (end)
 
@@ -324,6 +368,57 @@ que segons com haguéssim d'emmagatzemar les dades en disc, el cost d'accés a l
 dades seria superior al de recalcular. 
 
 %XXX Explicar memoize linkar a HOP memoize
+La memoització, és una tècnica semblant a la programació dinàmica, la qual ens
+permet estalviar càlculs en els casos d'haver de fer el mateix càlcul moltes
+vegades.  A diferència de la programació dinàmica, no es necessita una taula de
+2 dimensions on guardar els resultats parcials, sinó que els resultats de
+anteriors càlculs es guarden en un diccionari local a la funció que volem
+memoitzar.  
+
+Per a utilitzar la memoització tal i com es va definir en els inicis
+(scheme), el llenguatge en el que ho implementem ha de tenir ``closures''
+(tancaments).  Com que C++ no les té (això canviarà probablement amb
+\texttt{C++0x}) %XXX
+i aprofitant que les llibreries utilitzades utilitzen ja una emulació de
+closures anomenat functors, hem pogut guardar l'estat de les funcions sense
+molta difucultat. 
+
+Functors és la tècnica utilitzada en c++ per emular una funció amb estat privat,
+que es manté de crida a crida d'aquesta.  Per a fer això es crea un objecte, amb
+l'operador ``()'' sobrecarregat.  D'aquesta manera, podem simular que l'objecte
+creat, és en realitat una funció, amb la particularitat que la hem de crear
+anteriorment amb un \texttt{new}.  Segueix un exemple en pseudo-c++.
+
+%\lstlistoflistings
+
+
+\lstset{language=c++,
+	tabsize=2}
+\lstset{commentstyle=\textit}
+
+\begin{lstlisting}[frame=trbl]{}
+class Funcio{
+private:
+	map<int,double> dict;
+public:
+	Funcio(){};
+	~Funcio(){};
+	operator()(int param1){
+		if( dict.exist(param1)){
+			return dict[param1];
+		}
+		double resultat;
+		// calcular i omplir resultat ...
+
+		dict[param1]=resultat;
+		return resultat;
+	}
+}
+
+\end{lstlisting}
+
+
+Per a calcular la qualitat d'una ordenació, hi ha diverses maneres de fer-ho.
 
 \begin{itemize}
 	\item Roc
@@ -337,6 +432,38 @@ En qualsevol d'aquests procediments, es tracta d'evaluar com està de ben ordena
 
 Posarem un exemple per tal de fer més fàcil la comprensió de la funció de
 fitness.
+
+Suposem una taula amb els identificadors i tanimotos d'un seguit de molècules,
+unes d'elles actives i altres inactives (o decoys).
+
+
+ % theme=Berlin;caption_top=1;caption=Exemple tanimotos
+ % id & indicador1 & indicador2
+ % m1\\_i001\\_c001 & 0.4 & 2
+ % m1\\_i001\\_c002 & 0.7 & 63
+ % m2\\_i001\\_c001 & 0.2 & 9
+ % m3\\_i001\\_c001 & 0.1 & 0
+
+\begin{table}
+\centering
+\caption{Exemple tanimotos}
+\begin{tabular}{|l|r|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{id }} & \multicolumn{1}{c|}{\textbf{ indicador1 }} & \multicolumn{1}{c|}{\textbf{ indicador2}} \\
+\hline
+\hline
+m1\_i001\_c001 & 0.4 & 2  \\
+m1\_i001\_c002 & 0.7 & 63 \\
+m2\_i001\_c001 & 0.2 & 9  \\
+m3\_i001\_c001 & 0.1 & 0  \\
+\hline
+\end{tabular}
+\end{table}
+
+De totes elles, sabem que les actives son, per exemple m1 i m2, però no sabem
+en quina de les conformacions i estereoisomer ho son.  Per tant, agafem només el
+nom genèric, i cada cop escollirem la millor de cada familia en funció de quina
+quedi millor posicionada.
 
 % subsubsection Fitness (end)
 
