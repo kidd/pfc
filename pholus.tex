@@ -124,12 +124,49 @@ Per tal que una unió entre lligand i receptor sigui bona, les energies
 dissipades s'han de minimitzar, mostrant així que entre les dues molècules es
 neutralitzen.  Si la energia és alta, fa que la estructura final (lligand +
 receptor) sigui poc estable i fàcilment trencada, ja que les dues parts, poden
-trobar alguna altra formació on ``es troben més còmodes''.
+trobar alguna altra formació on ``es troben més còmodes'' i desfan la unió que
+tenien.
 
-En general, semblança $S_{A,B}$ entre dos objectes és estimada pel nombre d'elements iguals que tenen. Els objectes que són iguals, haurien de tenir la màxima puntuació. Per tant, una expressió de la semblança seria en termes de la teoria de conjunts, la intersecció $(A\cap B)$ que en lògica seria l'operador $AND$. La dissimilitud $D_{A,b}$ és estimat pel nombre d'elements diferents que tenen. Els objectes idèntics obtindrien la mínima puntuació. Anàlogament a la similitud, parlant en termes de teoria de conjunts, la dissimilitud es calcularia posant amb la unió $(A\cup B)$ o el que seria el mateix amb l'operador lògic $OR$. El denominador serà simplement un normalitzador per tenir l'índex entre 0 i 1. 
+% XAVISTART
+En general, semblança $S_{A,B}$ entre dos objectes és estimada pel nombre
+d'elements iguals que tenen. Els objectes que són iguals, haurien de tenir la
+màxima puntuació. Per tant, una expressió de la semblança seria en termes de la
+teoria de conjunts, la intersecció $(A\cap B)$ que en lògica seria l'operador
+$AND$. La dissimilitud $D_{A,b}$ és estimada pel nombre d'elements diferents que
+tenen. Els objectes idèntics obtindrien la mínima puntuació. Anàlogament a la
+similitud, parlant en termes de teoria de conjunts, la dissimilitud es
+calcularia posant amb la unió $(A\cup B)$ o el que seria el mateix amb
+l'operador lògic $OR$. El denominador serà simplement un normalitzador per tenir
+l'índex entre 0 i 1. 
 
-El concepte de semblança normalment s'utilitza per referir-se tan a la semblança com a la diferència, ja que es suposa que si dos objectes són semblants és perquè no són diferents. En matemàtiques i estadística s'utilitzen els conceptes de semblança, proximitat, distància per referir-se al mateix, però en química similitut i dissimilitut poden portar a diferents resultats. Per exemple, considerem dues seqüències de caràcters, F1 i F2, cadascuna té conjunts de 407 caràcters, 402 dels quals són comuns entre ells. F3 i F4, cadascuna té un conjunt de 5 caràcters, dels quals cap d'ells és comú. En els dos casos la distància Euclídia és $10 \over 1024$  o $0.0098$ quan és evident que les dues primeres són més semblants entre elles que la segona parella.
+El concepte de semblança normalment s'utilitza per referir-se tan a la semblança
+com a la diferència, ja que es suposa que si dos objectes són semblants és
+perquè no són diferents. En matemàtiques i estadística s'utilitzen els conceptes
+de semblança, proximitat i distància per referir-se al mateix, però en química
+similitut i dissimilitut poden portar a diferents resultats. Per exemple,
+considerem dues seqüències de caràcters, F1 i F2, cadascuna té conjunts de 407
+caràcters, 402 dels quals són comuns entre ells. F3 i F4, cadascuna té un
+conjunt de 5 caràcters, dels quals cap d'ells és comú. En els dos casos la
+distància Euclídia és $10 \over 1024$  o $0.0098$ quan és evident que les dues
+primeres són més semblants entre elles que la segona parella.
 
+%Continues vs Discretes? bedroc.tex pag 11
+
+Mètriques per a mesurar els potencials i les diferències (o semblances) entre
+ells n'hi ha moltes, unes funcionen millor per a dades qualitatives, altres per
+a quantitatives, i n'hi ha que fins i tot utilitzen la falta d'informació per a
+establir similituds.  Això últim, en el nostre context no ens interessa tant com
+tenir una mesura que ens serveixi per a dades quantitatives, i a ser possible,
+acoti els valors entre dos llindars coneguts.
+
+Hem de tenir en compte el cost de calcular les diferències entre molècules, ja
+que serà un procés a repetir moltes vegades, i en gran número de molècules, i
+hem d'intentar trobar un coeficient que sigui viable de calcular.  Ens hem
+decidit per una variació de Tanimoto, acotada entre -1 i +1 que s'explicarà tot
+seguit.
+
+
+%XAVISTOP
 Tanimotos. Què cony son? %XXX
 
 % subsection hola (end)
@@ -476,23 +513,50 @@ l'anomenat sobreentrenament.  El sobreentrenament és l'efecte que es dóna quan
 utilitzem un conjunt de dades per entrenar un programa, i l'utilitzem tantes
 vegades, que la solució obtinguda és molt bona pel conjunt de dades amb el qual
 ha estat entrenat, però al aplicar la solució obtinguda en altres dades, els
-resultats obtinguts són molt pitjors als esperats.
+resultats obtinguts són molt pitjors als esperats.  Aquest és un problema
+relativament comú a la majoria d'algoritmes pertanyents a la Inteligència
+artificial, com poden ser les xarxes neuronals, els algoritmes evolutius o els
+algoritmes de ``Raonament basat en casos''.
 
-Això es pot donar per diversos motius, però un dels motius més freqüents és quan
-disposem de poques dades en el nostre conjunt d'entrenament.  L'algoritme
-genètic, prepara una solució ``a mida'', donant-nos molt bons resultats en les
-nostres dades, perquè ``estudia'' els casos del conjunt de entrenament un a un,
-creant solucions ad-hoc, no aplicables a altres conjunts de dades.
+Això es pot donar per diverses raons i s'han fet molts estudis sobre la
+matèria, ja que és un dels problemes més importants que se'ls critica als
+algoritmes evolutius, però un dels motius més freqüents és quan
+disposem de poques dades en el nostre conjunt d'entrenament.  Si les dades
+d'entrenament són un conjunt molt petit, l'algoritme genètic, prepara una
+solució ``a mida'', donant-nos molt bons resultats en les nostres dades, perquè
+``estudia'' els casos del conjunt de entrenament un per un, creant solucions
+ad-hoc, no aplicables a altres conjunts de dades.
 
 Per tenir controlat aquest sobreentrenament, s'ha aplicat una tècnica basada en
 ``leave one out'' on fem l'entrenament amb un percentatge determinat de les
 dades, 
+% 10 cross validation?
 
-- Pq no es sobreentreni, conjunt de test i conj de validació.
-- 80 10 10, es fa sobre molecules i despres es deixen passar totes les
-conformacions d'aquestes molecules, fent que les dades finals no siguin 80 10 10
-, pero aixo es correcte pq la flexibilitat d'una molecula es part de la seva
-'qualitat'.
+\begin{itemize}
+	\item Pq no es sobreentreni, conjunt de trainning, conjunt de test i conjunt
+		de validació.
+	\item 80 10 10, es fa sobre molecules i despres es deixen passar totes les
+		conformacions d'aquestes molecules, fent que les dades finals no siguin 80 10 10
+		, pero aixo es correcte pq la flexibilitat d'una molecula es part de la seva
+		'qualitat'.
+	\item aquestes ponderacions que ens dona el algoritme genètic, es
+		\texttt{louegen} i es manté un històric d'elles, per saber quina és la mitja
+		de la població en cada iteració (generació), i la desviació típica.  El que
+		és normal és que la mitja sigui més propera cada cop al màxim, i que la
+		desviació típica sigui cada cop menor.
+	\item Una vegada fet l'entrenament, ``enfrontem'' els millors individuus de
+	cada generació als elements dels nostres conjunts de test i de validació,
+	tenint així un conjunt de punts quantitatius (recordem que el fitness que
+	evaluavem era un valor quantitatiu).
+	\item Si grafiquem els valors que hem obtingut en un eix de 2D, amb 3
+	funcions, representant l'evolució del fitness en el conjunt de trainning, de
+	test i de validació, esperem trobar una figura que sigui (més o menys) així:
+\end{itemize}
+ 
+
+Tot seguit es mostren els resultats obtinguts, i s'explicarà la interpretació
+que se'ls hi ha donat.
+
 
 % subsection sobreentrenament (end)
 
