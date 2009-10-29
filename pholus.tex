@@ -170,7 +170,8 @@ seguit.
 Tanimotos. Què cony son? %XXX
 
 % subsection hola (end)
-\subsubsection{Estereoisomers i conformacions}\label{ssub:estereoisomers i conformacions}
+\subsubsection{Estereoisomers i conformacions}
+\label{ssub:estereoisomers i conformacions}
 
 Una altra particularitat del problema és la varietat de estereoisomers i de
 conformacions que pot tenir una molecula donada.  Una molècula, identificada per
@@ -226,20 +227,66 @@ de la llista (no totes les actives són ``igual'' d'actives).
 \section{Procediment informàtic} % (fold)
 \label{sec:Procediment informatic}
 
-Desde el punt de vista informàtic, el problema es pot descriure de la següent
-manera:
+Desde el punt de vista estrictament informàtic, el problema es pot descriure de
+la següent manera:
 
 Tenim una entrada de dades de un conjunt de molècules (amb un identificador
 únic) amb els seus 22 valors associats a cadascun dels maps escollits, i una
 llista amb les molècules actives (els ids).
 
-Utilitzem un algoritme evolutiu, per trobar els 22 valors als que multiplicar
-cadascun dels maps, que fan que obtinguem una ordenació de les molècules que
-classifica les actives al principi.
+Utilitzem un algoritme evolutiu, per trobar els 22 valors (ponderacions) als que
+multiplicar cadascun dels maps, que fan que obtinguem una ordenació de les
+molècules que classifica les actives al principi.
 
+El procés però, no és tant directe com això, ja que les dades s'han de
+pretractar, per a treure molècules errònies, o bé triar quines de les molècules
+volem que continuin el procés i quines no (hi ha molècules que son molt similars
+entre elles, i no les volem, ja que podrien decantar (bias) l'algoritme genètic cap al
+sobreentrenament al seu favor, quan en realitat pertanyen al mateix grup de
+molècules.  S'han provat diferents tècniques de clústering, però no ens hem
+quedat amb cap , perquè no ens han donat resultats millors amb cap de les
+tècniques que s'han usat (K-means, etc) %XXX : Noms de clusteritzacions
+
+Una vegada fet el core, la interfície amb l'usuari final també s'ha hagut
+de preparar separadament del algoritme genètic, ja que aquest (químics
+generalment), prefereix un entorn amigable (web, GUI, e-mails, excel) abans que
+entorns més austers (però configurables i scriptables) com pot ser una simple
+linia de comandes.  
 
 % subsubsection subsubsection name (end)
 % section inf (end)
+\subsection{Interfície} % (fold)
+\label{sub:Interficie}
+
+Per a la intefície amb l'usuari, s'ha escollit una interfície web, que executará
+l'usuari desde una web corporativa, amb accés restringit i controlat amb
+Autenticació.  Això ens porporciona informació de quin usuari executa cadascun
+dels càlculs, i així podem personalitzar la presentació, segons preferències de
+cadascun (cada maestrillo\dots). 
+
+Les dades que entra un usuari són 3 llistes de molècules:
+
+\begin{itemize}
+	\item \textbf{Llista d'actives}.  Són les molècules de referència que l'usuari sap
+	que tenen activitat positiva davant d'un target concret.
+	\item \textbf{Llista d'inactives}.  Molècules que l'usuari sap que són inactives en
+	aquest mateix target.
+	\item \textbf{Llista de decoys}.  Conjunt de molècules que l'usuari posa ``per
+	omplir'', sabent que son inactives també, però amb certes propietats que
+	blablabla %XXX 
+\end{itemize}
+
+A part de les llistes de molècules, l'usuari també entra els parametres alpha,
+RieMax, i els percentatges de molècules amb els que vol provar l'experiment.  Es
+deixa la opció de no fer participar totes les molècules en l'experiment deixant 
+un conjunt de molècules fora, per després evaluar i validar les dades obtingudes
+(leave one out, 10 fold validation, etc\dots)
+
+El programa proporciona sempre uns parametres estimats per defecte, en funció de
+les característiques de les llistes que hagi entrat l'usuari. 
+%XXX : Explicar alpha?
+
+% subsection Interfície (end)
 \subsection{preparació de dades} % (fold)
 \label{sub:preparacio de dades}
 Una molècula es pot trobar en la natura en diverses formes.  Les clasificacions
@@ -278,21 +325,88 @@ ordenada, ens quedem només amb la millor conformació de cada família.
 \subsubsection{Procés de preparació} % (fold)
 \label{ssub:Proces de preparacio}
 
-Amb un conjunt de molècules, l'hi hem de trobar tots els isomers i les conformacions diferents en
-les que es poden trobar a la natura, és per això que primer, donada una base de dades de molècules
-diferents, hem de generar totes les conformacions possibles de cada molècula.  Una vegada les tenim
-generades, hem de quedar-nos amb la conformació que millors resultats dóna en aquest problema.  Per
-fer això, tenim un seguit de programes de tractament de dades, que ens permeten prepararles d'acord
-amb les nostres necessitats.
+Després que l'usuari entri els paràmetres, la web llança una aplicació en Perl,
+que fa la preparació de les dades, i és la que llança l'algorisme evolutiu.  El
+primer que fa és , recollir les dades, d'una base de dades (la web emmagatzema
+les llistes a una BBDD mysql).
+
+Com s'ha explicat anteriorment, per a fer les validacions, aïllem una part del
+conjunt de molècules del experiment, per a fer validacions a posteriori, i
+assegurar-nos que no hi ha hagut sobreentrenament.
+
+El primer pas que fem és doncs, separar els tres conjunts de molècules, en 3
+subgrups, ajustant-nos als paràmetres desitjats per l'usuari.  Per a fer les
+validacions, el percentatge de molècules actives e inactives, hauria de
+mantenir-se en cadascuna dels tres subgrups. No ens serveix un algoritme que
+deixi lloc a la incertesa (encara que en mitja funcioni), com podria ser, treure
+números aleatoris entre [0,1) i en funció d'on estigui (separem el segment [0,1)
+en tres trossos anteriorment ) colocarlos en un o altre grup, sinó que calculem
+el percentatge d'actives respecte al de inactives, i anem omplint els grups fins
+a cobrir el llindar.  Això, que pot semblar un detall d'implementació
+``despreciable'', no ho és, ja que quan disposem de poques dades (sobretot en
+les actives), deixar lloc al atzar pot provocar canvis dràstics (i tràgics) en
+els resultats finals.
+
+%Posar implementacions de Agafar els numeros aleatoris
+
+El segon pas és fer l'explosió de combinacions de molècules possibles (isomers i
+conformacions).
+
+A un conjunt de molècules, l'hi hem de trobar tots els isomers i les
+conformacions diferents en les que es poden trobar a la natura, és per això que
+primer, donada una base de dades de molècules diferents, hem de generar totes
+les conformacions possibles de cada molècula.  Aquest procés es realitza
+mitjançant un programa existent ja (Corina, NO és OpenSource).
+
+Al generar els diferents isomers i conformacions, afexim identificadors a les
+molècules, per saber de quina molècula inicial provenien però també saber
+exactament quin isomer-conformació és.  Així, si d'una molècula A, generem:
+
+\begin{verbatim}
+A\_i001\_c001
+A\_i001\_c002
+A\_i001\_c003
+A\_i002\_c001
+A\_i002\_c002
+A\_i002\_c003
+\dots
+\end{verbatim}
+
+
+Aquí ens sorgeix un possible problema.  Al fer la explosió de combinacions, ens
+trobem que les bases de dades, ja no estan balancejades amb els percentatges tal
+i com estaven abans, sinó que en funció de les variacions que tinguin les
+molècules que han entrat en cada grup, podem trobar un conjunt molt més poblat
+del que ens esperariem, i que varii també el seu percentatge intern de
+actives/inactives.
+
+Després de consultar amb experts químics, s'ha decidit que això no influiria en
+els resultats finals, ja que si una molècula és més versàtil que una altra, això
+mateix és un tret propi de la molècula, i està bé que es vegi potenciada i
+així, tingui més participació en la llista on pertany.
+
+Una vegada tenim les 6 llistes separades (normalment treballem amb 80\% de
+conjunt d'entrenament, un 10\% de test i un 10\% de validació, i per cada una
+fem una llista d'actives i una de inactives per a cada grup),  hem de filtrar la
+taula d'actives, per tal que no hi hagi els  isomer-conformacions de cada
+molècula, sinó que aparegui només una vegada el nom genèric de les molècules
+actives.  Això ho fem perquè quan sabem que una molècula és activa, sabem que ho
+és la ``família'' de molècules però per una banda, només ho serà en una de les
+conformacions i per altra, no tenim informació de quina és aquesta.  És per això
+que quan després fem els matchings, els fem només amb la part genètica de cada
+molècula.
+
+%PUNT
+
 % subsubsection Procés de preparació (end)
 
-\subsubsection{Massatgeant les dades} % (fold)
-\label{ssub:Massatgeant les dades}
+Una vegada les tenim generades, hem de quedar-nos amb la conformació que millors
+resultats dóna en aquest problema.  Per fer això, tenim un seguit de programes
+de tractament de dades, que ens permeten prepararles d'acord amb les nostres
+necessitats.
 
-% subsubsection Massatgeant les dades (end)
 
 % subsection preparació de dades (end)
-
 \subsection{Algoritme genètic} % (fold)
 \label{sub:genetic}
 
@@ -516,7 +630,7 @@ ha estat entrenat, però al aplicar la solució obtinguda en altres dades, els
 resultats obtinguts són molt pitjors als esperats.  Aquest és un problema
 relativament comú a la majoria d'algoritmes pertanyents a la Inteligència
 artificial, com poden ser les xarxes neuronals, els algoritmes evolutius o els
-algoritmes de ``Raonament basat en casos''.
+algoritmes de \texttt{Raonament basat en casos}.
 
 Això es pot donar per diverses raons i s'han fet molts estudis sobre la
 matèria, ja que és un dels problemes més importants que se'ls critica als
@@ -551,12 +665,11 @@ dades,
 	\item Si grafiquem els valors que hem obtingut en un eix de 2D, amb 3
 	funcions, representant l'evolució del fitness en el conjunt de trainning, de
 	test i de validació, esperem trobar una figura que sigui (més o menys) així:
+	%FIGURA APROXIMADA
 \end{itemize}
  
-
 Tot seguit es mostren els resultats obtinguts, i s'explicarà la interpretació
 que se'ls hi ha donat.
-
 
 % subsection sobreentrenament (end)
 
