@@ -376,14 +376,14 @@ A\_i002\_c003
 Aquí ens sorgeix un possible problema.  Al fer la explosió de combinacions, ens
 trobem que les bases de dades, ja no estan balancejades amb els percentatges tal
 i com estaven abans, sinó que en funció de les variacions que tinguin les
-molècules que han entrat en cada grup, podem trobar un conjunt molt més poblat
-del que ens esperariem, i que varii també el seu percentatge intern de
-actives/inactives.
+molècules que han entrat en cada grup (trainning, test i validació), podem
+trobar un conjunt molt més poblat del que ens esperariem, i que varii també el
+seu percentatge intern de actives/inactives.
 
-Després de consultar amb experts químics, s'ha decidit que això no influiria en
-els resultats finals, ja que si una molècula és més versàtil que una altra, això
-mateix és un tret propi de la molècula, i està bé que es vegi potenciada i
-així, tingui més participació en la llista on pertany.
+Després de consultar amb experts químics, s'ha decidit que això no influiria
+negativament en els resultats finals, ja que si una molècula és més versàtil que
+una altra, això mateix és un tret propi de la molècula, i està bé que es vegi
+potenciada i així, tingui més participació en la llista on pertany.
 
 Una vegada tenim les 6 llistes separades (normalment treballem amb 80\% de
 conjunt d'entrenament, un 10\% de test i un 10\% de validació, i per cada una
@@ -400,7 +400,7 @@ molècula.
 
 % subsubsection Procés de preparació (end)
 
-Una vegada les tenim generades, hem de quedar-nos amb la conformació que millors
+Una cop les tenim generades, hem de quedar-nos amb la conformació que millors
 resultats dóna en aquest problema.  Per fer això, tenim un seguit de programes
 de tractament de dades, que ens permeten prepararles d'acord amb les nostres
 necessitats.
@@ -414,9 +414,12 @@ Els operadors usats en aquest algoritme genètic són dels més clàssics ja que
 donat el problema, tan sols hi ha necessitat d'aplicar operadors ``bàsics'' als
 individus.  Com s'ha explicat anteriorment, no s'ha volgut potenciar la
 dependència entre els diferents gens dels individus, és a dir, que suposem que
-no hi ha epistàcia entre els diferents gens.
+no hi ha epistàcia entre els diferents gens.  És per això que, per exemple, els
+creuaments tallen un cromosoma per un punt aleatori, i barregen el trossos de
+dos cromosomes per a crear-ne de nous.
 
-Parametres
+Tot seguit s'especifiquen els parametres i implementacions utilitzades en aquest
+programa.
 
 \subsubsection{Individu (Cromosoma)}
 \label{ssub:individu (cromosoma)}
@@ -428,6 +431,15 @@ coma flotant (de doble precisió) que es correspon a cadascun dels 22 indicadors
 confiem que no tenen cap relació un amb el següent, hem decidit no utilitzar cap
 representació que tingui en compte l'ordre, ni que afavoreixi la dependència
 dels gens. %XXX GENS es la paraula?
+
+Essent valors en coma flotant, el rang que poden tenir cadascun, és massa gran
+per a les nostres necessitats, donant massa llibertat al algoritme genètic per
+ponderar massa a uns valors, o simplement ponderarlos tots en valors molt alts.
+
+Com que una ponderació competeix contra altres ponderacions, i la funció de
+fitness és una funció additiva, donar un rang tant gran de possibles valors
+provoca una tendència a elevar els valors de les ponderacions, obligant a que
+després del càlcul es normalitzéssin per a tractar amb valors més homogènis.
 
 S'han fet proves sobre acotar els valors possibles entre 0 i $Inf$, però si
 permetem valors negatius, l'Algoritme evolutiu pot jugar amb fer ponderar

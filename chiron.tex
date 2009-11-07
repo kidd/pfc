@@ -4,6 +4,9 @@
 \usepackage[catalan]{babel}
 \usepackage{graphicx}
 \usepackage{marvosym}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[]{color}
 \begin{document}
 \tableofcontents
 \section{Introducció} % (fold) Objectius?
@@ -351,7 +354,9 @@ elecció d'aquesta tecnologia en front a altres bases de dades, o altres
 tècniques per a emmagatzemar dades (com poden ser Tokyo Cabinet/Tyrant, MongoDB
 o altres SGBDs orientats a Documents,o diccionaris clau-valor).
 
-\include{chiron.sql}
+\lstset{language=sql, tabsize=2}
+\lstset{commentstyle=\textit}
+\lstinputlisting[frame=trbl]{chirondb.sql}
 
 Aquesta estructura ens permet tenir un historial de tots els elements que han
 anat construint-se en els diferents experiments per a futurs anàlisis i
@@ -364,7 +369,7 @@ la base de dades, ja tenim un programa funcional, que ens permet fer el que
 volem.  Però encara tenim l'impediment de la interfície.  Un programa amb
 múltiples usuaris, pensat per a solucionar problemes molt diferents entre si
 (sempre pensant amb el drug discovery 'de novo' com a funcionalitat principal,
-però intentant generalitzar i aconseguir la màxima abstracció possible), hauria
+ però intentant generalitzar i aconseguir la màxima abstracció possible), hauria
 de tenir una interfície que permeti la execució del programa des de punts
 diferents de un procés i desde diferents front-end.  
 
@@ -383,91 +388,91 @@ Altres ventatges de utilitzar un model de negoci ``Software as a Service''
 (SaaS) és que el control del software recau sobre el distribuidor, no només en
 termes de actualitzacions i seguretat, sinó que obre noves possiblilitats en
 termes de models de pagament.   Per exemple, al no distribuir un software,
-s'elimina la possibilitat de violacions de contracte o còpies il·legals, ja que
-l'usuari no disposa mai del software, fent impossible la còpia, o l'ús
-fraudulent d'aquest.  Les estadístiques que pot treure el distribuidor (complint
-els contractes de privacitat, és clar), son molt més potents que els clàssics
-``bug reports'', podent acurar molt més el producte a les necessitats dels
-usuaris, ja que sabent quines funcionalitats utilitzen més, o bé quins workflows
-segueixen, podem tenir indicis de què i com s'ha de millorar.
+	   s'elimina la possibilitat de violacions de contracte o còpies il·legals, ja que
+	   l'usuari no disposa mai del software, fent impossible la còpia, o l'ús
+	   fraudulent d'aquest.  Les estadístiques que pot treure el distribuidor (complint
+			   els contractes de privacitat, és clar), son molt més potents que els clàssics
+	   ``bug reports'', podent acurar molt més el producte a les necessitats dels
+	   usuaris, ja que sabent quines funcionalitats utilitzen més, o bé quins workflows
+	   segueixen, podem tenir indicis de què i com s'ha de millorar.
 
-Aquesta tendència del SaaS, està essent molt utilitzada en els darrers anys en
-front al classic software instalat al client ja que, amb l'augment d'importància
-del Cloud computing, i les tecnologies distribuides (Grid, globus, web 2.0), la
-idea és que l'usuari d'un producte, sigui únicament això, un usuari d'un servei,
-però no hagi de tenir cap coneixement ni infrastructura prèvia per a
-utilitzar-lo.
+	   Aquesta tendència del SaaS, està essent molt utilitzada en els darrers anys en
+	   front al classic software instalat al client ja que, amb l'augment d'importància
+	   del Cloud computing, i les tecnologies distribuides (Grid, globus, web 2.0), la
+	   idea és que l'usuari d'un producte, sigui únicament això, un usuari d'un servei,
+	   però no hagi de tenir cap coneixement ni infrastructura prèvia per a
+	   utilitzar-lo.
 
-SaaS també ha despertat dubtes i queixes, bàsicament en dues vessants:
+	   SaaS també ha despertat dubtes i queixes, bàsicament en dues vessants:
 
-Una d'elles és la dependència en el proveïdor de software.  No tenir cap tipus
-d'infrastructura, suposa estar en mans del proveïdor, i per tant, si els
-servidors del proveïdor no funcionen bé, o hi ha problemes d'accés, l'usuari
-no controla les dades, ni pot fer res més que posar-se en contacte amb el
-proveidor del servei.  Aquesta falta d'autosuficiència fa que encara generi
-desconfiança en certs sectors.
+	   Una d'elles és la dependència en el proveïdor de software.  No tenir cap tipus
+	   d'infrastructura, suposa estar en mans del proveïdor, i per tant, si els
+	   servidors del proveïdor no funcionen bé, o hi ha problemes d'accés, l'usuari
+	   no controla les dades, ni pot fer res més que posar-se en contacte amb el
+	   proveidor del servei.  Aquesta falta d'autosuficiència fa que encara generi
+	   desconfiança en certs sectors.
 
-La privacitat també és un altre punt on s'ha generat certa desconfiança.  Les
-dades, tot i que són accessibles per l'usuari, estan emmagatzemades en els
-servidors del proveïdor.  Tot i que la legislació és molt clara al respecte,
-hi ha clients que desconfien.
+	   La privacitat també és un altre punt on s'ha generat certa desconfiança.  Les
+	   dades, tot i que són accessibles per l'usuari, estan emmagatzemades en els
+	   servidors del proveïdor.  Tot i que la legislació és molt clara al respecte,
+	   hi ha clients que desconfien.
 
-%WEB
-Per altra banda, el testing i la automatització de webs és difícil per
-definició (no té estat, i les maneres més ``sofisticades'' per interactuar amb
-elles són macros no gaire inteligents).
+	   %WEB
+	   Per altra banda, el testing i la automatització de webs és difícil per
+	   definició (no té estat, i les maneres més ``sofisticades'' per interactuar amb
+			   elles són macros no gaire inteligents).
 
-Si només proporcionéssim interficie web, Chiron estaria sempre supeditat a la
-utilització interactiva amb un usuari a l'atra banda.  Tot i que per Chiron, ja
-serviria, hem de pensar en linies de futures aplicacions.  És per això que la
-web no es comunica amb Chiron directament, sinó que hem programat una interfície
-per a execució remota, i la web es comunica amb la interfície intermitja.
+	   Si només proporcionéssim interficie web, Chiron estaria sempre supeditat a la
+	   utilització interactiva amb un usuari a l'atra banda.  Tot i que per Chiron, ja
+	   serviria, hem de pensar en linies de futures aplicacions.  És per això que la
+	   web no es comunica amb Chiron directament, sinó que hem programat una interfície
+	   per a execució remota, i la web es comunica amb la interfície intermitja.
 
-Aquesta interfície intermitja ens dóna la funcionalitat de poder accedir al core 
-de Chiron a través de programes, convertint Chiron en un servidor de Algoritmes
-genètics.
+	   Aquesta interfície intermitja ens dóna la funcionalitat de poder accedir al core 
+	   de Chiron a través de programes, convertint Chiron en un servidor de Algoritmes
+	   genètics.
 
-%Client-servidor. explicar una mica de que va el paradigma
-Per a implementar el servidor de aplicacions remotes, s'han estudiat diverses
-opcions, i ens hem decantat per a implementar una interfície SOAP.  Tot seguit
-es discutiran les diferents opcions, i el perquè de la elecció, i en l'apartat
-de implementació, es detallarà més la implementació de SOAP, i el funcionament
-intern d'aquest.
+	   %Client-servidor. explicar una mica de que va el paradigma
+	   Per a implementar el servidor de aplicacions remotes, s'han estudiat diverses
+	   opcions, i ens hem decantat per a implementar una interfície SOAP.  Tot seguit
+	   es discutiran les diferents opcions, i el perquè de la elecció, i en l'apartat
+	   de implementació, es detallarà més la implementació de SOAP, i el funcionament
+	   intern d'aquest.
 
-%Execució remota
-%RMI
-%CORBA
-%REST
-%XML-RPC
-%SOAP
+	   %Execució remota
+	   %RMI
+	   %CORBA
+	   %REST
+	   %XML-RPC
+	   %SOAP
 
-Per a convertir Chiron en un servidor de algorismes genètics, que sigui usable
-tant per persones (a traves de la web) com per aplicacions que conectin una
-funció de fitness definida per elles al algorisme genètic, hem estudiat diverses
-opcions, que analitzarem molt per sobre (donant algunes referències bàsiques).
+	   Per a convertir Chiron en un servidor de algorismes genètics, que sigui usable
+	   tant per persones (a traves de la web) com per aplicacions que conectin una
+	   funció de fitness definida per elles al algorisme genètic, hem estudiat diverses
+	   opcions, que analitzarem molt per sobre (donant algunes referències bàsiques).
 
-L'objectiu és trobar una tecnologia que permeti fer crides remotes a un servidor
-de funcions.  Com que el control del estat del programa el tractem manualment
-(base de dades, etc) no necessitem que el sistema ens guardi la persistència.
-Si utilitzéssim un sistema així també tindriem problemes a la hora de aturar el
-servidor, i hauríem de crear un sistema de backups, amb lo que no ens
-estalviaria la feina.
+	   L'objectiu és trobar una tecnologia que permeti fer crides remotes a un servidor
+	   de funcions.  Com que el control del estat del programa el tractem manualment
+	   (base de dades, etc) no necessitem que el sistema ens guardi la persistència.
+	   Si utilitzéssim un sistema així també tindriem problemes a la hora de aturar el
+	   servidor, i hauríem de crear un sistema de backups, amb lo que no ens
+	   estalviaria la feina.
 
-Necesitem doncs, exposar al exterior un conjunt de funcions aïllades, seguint el
-paradigma client-servidor, que siguin extensibles i interpolables entre
-diferents llenguatges de programació.
+	   Necesitem doncs, exposar al exterior un conjunt de funcions aïllades, seguint el
+	   paradigma client-servidor, que siguin extensibles i interpolables entre
+	   diferents llenguatges de programació.
 
-diferents llenguatges de programació.Figure~\ref{fig:401px-Orb.svg.png}
+	   diferents llenguatges de programació.Figure~\ref{fig:401px-Orb.png}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=13cm,height=7cm]{G:401px-Orb.svg.png}
-\caption{Model de Client-servidor que necesitem}
-\label{fig:401px-Orb.svg.png}
-\end{figure} 
+	   \begin{figure}[h]
+	   \centering
+	   \includegraphics[width=13cm,height=7cm]{401px-Orb.png}
+	   \caption{Model de Client-servidor que necesitem}
+	   \label{fig:401px-Orb.png}
+	   \end{figure} 
 
-Tecnologíes per a executar RPCs (Remote procedure call) n'hi ha moltes
-diferents. Les tecnologies que ens obliguen a utilitzar el mateix llenguatge de
+	   Tecnologíes per a executar RPCs (Remote procedure call) n'hi ha moltes
+	   diferents. Les tecnologies que ens obliguen a utilitzar el mateix llenguatge de
 programació han quedat descartades de bon principi, ja que un dels objectius
 principals és precisament obrir el programa a futures aplicacions que puguem
 crear.  És per això que RMI, que ens lliga a java no pot ser utilitzada.  
