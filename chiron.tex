@@ -242,15 +242,34 @@ Una de les funcions trampa que hem provat, és la de mapejar en un vector de bit
 una valoració determinada per a cada suma de bits.  Per exemple, donat un vector
 de 5 posicions:
 
-\begin{tabular}{c|c}
-bits a 1  & valor
-0 & 1
-1 & 2
-2 & 3
-3 & 4
-4 & 5
-5 & 0
+
+ % theme=Berlin;caption_top=1;caption=Exemple tanimotos
+ % bits a 1 & valor
+ % 0 & 1
+ % 1 & 2
+ % 2 & 3
+ % 3 & 4
+ % 4 & 5
+ % 5 & 0
+
+\begin{table}
+\centering
+\caption{Exemple tanimotos}
+\begin{tabular}{|r|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{bits a 1 }} & \multicolumn{1}{c|}{\textbf{ valor}} \\
+\hline
+\hline
+0 & 1 \\
+1 & 2 \\
+2 & 3 \\
+3 & 4 \\
+4 & 5 \\
+5 & 0 \\
+\hline
 \end{tabular}
+\end{table}
+
 
 L'ideal en aquest cas és trobar un vector que té 4 bits a 1 i un a 0.  Això,
 clarament és una trampa per a l'algorisme genètic, ja que al fer els creuaments
@@ -408,11 +427,50 @@ Aquesta interfície intermitja ens dóna la funcionalitat de poder accedir al co
 de Chiron a través de programes, convertint Chiron en un servidor de Algoritmes
 genètics.
 
+%Client-servidor. explicar una mica de que va el paradigma
 Per a implementar el servidor de aplicacions remotes, s'han estudiat diverses
 opcions, i ens hem decantat per a implementar una interfície SOAP.  Tot seguit
 es discutiran les diferents opcions, i el perquè de la elecció, i en l'apartat
 de implementació, es detallarà més la implementació de SOAP, i el funcionament
-intern d'aquest
+intern d'aquest.
+
+%Execució remota
+%RMI
+%CORBA
+%REST
+%XML-RPC
+%SOAP
+
+Per a convertir Chiron en un servidor de algorismes genètics, que sigui usable
+tant per persones (a traves de la web) com per aplicacions que conectin una
+funció de fitness definida per elles al algorisme genètic, hem estudiat diverses
+opcions, que analitzarem molt per sobre (donant algunes referències bàsiques).
+
+L'objectiu és trobar una tecnologia que permeti fer crides remotes a un servidor
+de funcions.  Com que el control del estat del programa el tractem manualment
+(base de dades, etc) no necessitem que el sistema ens guardi la persistència.
+Si utilitzéssim un sistema així també tindriem problemes a la hora de aturar el
+servidor, i hauríem de crear un sistema de backups, amb lo que no ens
+estalviaria la feina.
+
+Necesitem doncs, exposar al exterior un conjunt de funcions aïllades, seguint el
+paradigma client-servidor, que siguin extensibles i interpolables entre
+diferents llenguatges de programació.
+
+diferents llenguatges de programació.Figure~\ref{fig:401px-Orb.svg.png}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm,height=7cm]{G:401px-Orb.svg.png}
+\caption{Model de Client-servidor que necesitem}
+\label{fig:401px-Orb.svg.png}
+\end{figure} 
+
+Tecnologíes per a executar RPCs (Remote procedure call) n'hi ha moltes
+diferents. Les tecnologies que ens obliguen a utilitzar el mateix llenguatge de
+programació han quedat descartades de bon principi, ja que un dels objectius
+principals és precisament obrir el programa a futures aplicacions que puguem
+crear.  És per això que RMI, que ens lliga a java no pot ser utilitzada.  
 
 
 
@@ -443,6 +501,4 @@ intern d'aquest
 	
 	% subsection treball futur (end)
 % section Resultats (end)
-	\end{document}
-\end{document}
 \end{document}
