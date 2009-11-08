@@ -20,7 +20,7 @@
 	esquelet o \textit{scaffold} que se sap que té certa activitat, però no es
 	disposa amb seguretat de alguns \textit{radicals} , que són les parts de la
 	molècula que, sense canviar la seva estructura general, ni la seva
-	activitat, faran que es pugui 'enganxar' millor en el lligand.  Els radicals
+	activitat, faran que es pugui 'enganxar' millor en el target.  Els radicals
 	que poden anar en cada posició són coneguts (en la majoria de casos).
 
 	En certa manera, podriem dir que és com ``decorar'' un esquelet de la
@@ -101,11 +101,16 @@ possibles variants i combinacions de radicals, i mesurant la energia %XXX (disip
 	condicions son tals com:
 
 	\begin{itemize}
-	\item No toxicitat
-	\item Que es el cos no el rebutgi
-	\item Facilitat d'absorció i estabilitat del nou compost (lligand +
-			receptor)
+		\item No toxicitat
+		\item Que es el cos no el rebutgi
+		\item Facilitat d'absorció i estabilitat del nou compost (lligand +
+				receptor)
 	\end{itemize}
+	
+	Una de les branques del drug discovery és el ``De novo'', que consisteix en
+	descobriment de fàrmacs nous, a partir 
+
+	Aquests trets característics, moltes vegades vénen determinats per 
 
 % section Context Químic (end)
 
@@ -282,7 +287,7 @@ a saber si aquest és prou robust per a trobar un resultat bo.  En aquests casos
 l'elitisme, és molt determinant per a obtenir bons resultats.
 % section section name (end)
 
-%SOAP PUNT
+%SOAP
 Un altre aspecte important de Chiron és la versatilitat que té per a executar-se
 amb diferents funcions de fitness.  Com s'ha explicat en la introducció del
 capítol, Chiron permet evaluar manualment cadascun dels elements.  Donat que una
@@ -477,11 +482,143 @@ programació han quedat descartades de bon principi, ja que un dels objectius
 principals és precisament obrir el programa a futures aplicacions que puguem
 crear.  És per això que RMI, que ens lliga a java no pot ser utilitzada.  
 
+Una altra alternativa que hem estudiat és CORBA, que és un sistema molt extès
+per a tipus d'aplicacions client-servidor en xarxa, i proporciona una capa
+intermitja molt còmoda i extensible.  CORBA és un sistema disenyat per a
+comunicar diferents llenguatges entre si.  Per aquesta part, ens serveix per als
+nostres requeriments, però el protocol de CORBA funciona utilitzant ports TCP
+no estàndars, i fa que no poguem garantir la conectivitat si el client o bé el
+servidor estàn darrere d'un firewall.
 
+La aplicació Chiron ha de funcionar a través d'una interfície web que estarà
+hostejada en un servidor local, i nosaltres controlem la xarxa, però com que
+part de la essència de Chiron és el sistema de algorismes genètics genèric, no
+volem limitarnos a la utilització únicament per web.  Per això, s'han seguit
+buscant alternatives.
+
+Per asegurar que no tenim bloquejos en la xarxa, hi ha sistemes disenyats per a
+treballar només a través de ports coneguts, i normalment oberts en cualsevol
+xarxa amb conexió a internet.  Exemples d'aquestes tecnologies son XML-RPC, REST
+i SOAP.
+
+%Explicar SOAP i XML-RPC SII ES Necessari
 
 \subsection{Algoritme Genètic} % (fold)
 	\label{sub:Algoritme Genetic}
 % subsection Algoritme Genetic (end)
+
+L'algorisme genètic de Chiron, és un algorisme a ``mig implementar'', ja que al
+ser parametritzable en quant a la funció de fitness, li falta una de les parts
+principals dels algorismes genètics.  Tot seguit s'explica la implementació de
+cadascun dels parametres i estructures de dades necessàries per a la
+implementació de Chiron.
+
+\subsubsection{Individu (Cromosoma)}
+\label{ssub:individu (cromosoma)}
+
+En aquest algorisme genètic, els indicis són les diferents combinacions de
+radicals, en cadascuna de les posicions. Com que els canvis entre un al·lel i un
+altre són qualitatius, cada posició del cromosoma és un enter, que representa
+una terminació diferent en funció de la posició on es troba dins el cromosoma.
+
+Així doncs, tenim un vector de N posicions on N és el número de radicals que té
+el scaffold, i cada posició conté un enter, amb limits (bounds) d'acord amb les
+especificacions del usuari al iniciar el projecte. 
+
+Així doncs, els valors de cada posició s'acoten en cada projecte.  Això és un
+altre tret que el diferència de programes més estatics on els límits són
+coneguts a priori, com per exemple Pholus. 
+
+%PUNT
+
+En aquest algoritme genètic, els individus són les ponderacions corresponents a
+cadascun dels maps.  Cada individu de la població és un conjunt de 22 valors de
+coma flotant (de doble precisió) que es correspon a cadascun dels 22 indicadors
+(maps),  Donat que volem saber quines rellevàncies tenen els indicadors, però
+confiem que no tenen cap relació un amb el següent, hem decidit no utilitzar cap
+representació que tingui en compte l'ordre, ni que afavoreixi la dependència
+dels gens. %XXX GENS es la paraula?
+
+
+Essent valors en coma flotant, el rang que poden tenir cadascun, és massa gran
+per a les nostres necessitats, donant massa llibertat al algoritme genètic per
+ponderar massa a uns valors, o simplement ponderarlos tots en valors molt alts.
+
+Com que una ponderació competeix contra altres ponderacions, i la funció de
+fitness és una funció additiva, donar un rang tant gran de possibles valors
+provoca una tendència a elevar els valors de les ponderacions, obligant a que
+després del càlcul es normalitzéssin per a tractar amb valors més homogènis.
+
+S'han fet proves sobre acotar els valors possibles entre 0 i $Inf$, però si
+permetem valors negatius, l'Algoritme evolutiu pot jugar amb fer ponderar
+negativament un tipus de maps, donant més flexibilitat al Algoritme evolutiu per
+trobar una bona ponderació.  Si el mínim valor que pogués asignar fós 0,
+simplement eliminaria un map si no té cap rellevància però d'aquesta manera li
+permetem penalitzar un indicador.
+
+Donar de marge de $-Inf$ a $Inf$, era problemàtic en tant que l'Algoritme
+evolutiu acaba donant molta rellevància a uns quants (pocs) maps, i
+comparativament molt poca a la majoria, donant poca riquesa a la ponderació i
+tendint a sobreentrenar-se per al conjunt de dades que li entrem, però sense
+donar resultats extrapolàbles a altres conjunts de dades.
+
+La següent versió, va ser deixar posar valors entre [-1,1] , però tals que la
+suma de tots fós 1.  Els resultats tampoc van ser concloents (a part que tampoc
+tenia molt de sentit lògic més que el de acotar que tots els individus
+estiguéssin dins d'uns marges).
+
+Al final, s'ha adoptat donar de marge [-1,1], però sense límit en la suma total
+dels valors ja que així acotem els valors i també els hi deixem tenir valors
+negatius, donant més versatilitat al algorisme, que així és capaç de trobar
+relaccions inverses d'algunes ponderacions.
+
+
+\subsubsection{Mutacions} % (fold)
+\label{ssub:Mutacions}
+
+S'apliquen mutacions en un 0.1\% dels individus una vegada fet el creuament.
+Les mutacions en aquesta aplicació consisteixen en modificar una ponderació per
+una altra (al·lel).  La única restricció és que es mantingui dins dels marges
+[-1,+1] .  
+
+Aplicant aquesta mutació, mantenim la diversitat en la població i anem
+introduint sempre material genètic nou.  La mutació, juntament amb els
+creuaments són la font principal de la variació genètica, i en aquest cas en
+particular, la mutació és l'únic operador que introdueoix material genètic nou.
+
+El valor de 0.1\% s'ha utilitzat ja que és un valor estàndard, i les variacions
+que hem aplicat a posteriori sobre aquest valor no han aportat millores
+objectives a les solucions.
+
+Si ens trobéssim amb problemes de convergència prematura, un dels ``trucs''
+utilitzats és augmentar la provabilitat de mutació.  Com que no ens hem trobat
+amb aquest tipus de problemes, el valor de 0.1 s'ha deixat com a bo.
+% subsubsection Mutacions (end)
+
+\subsubsection{Crossover} % (fold)
+\label{ssub:Crossover}
+
+Pel creuament s'ha provat un creuament per un punt, i el creuament per dos
+punts, donant millors resultats el creuament en tant sols un punt.  
+
+Donats dos individus (els que han estat sel·leccionats en el procés de
+sel·lecció per a reproduir-se , amb una provabilitat d'un 0.8 es fa creuament i
+els fills són tan sols una partició formada a partir dels 2 pares, amb un punt
+de tall aleatori.  Donat que no hi ha cap relació entre els diferents indexos
+(estàn ordenats arbitràriament) no ens hem de preocupar de partir el cromosoma
+per lloc ``delicat''. 
+
+Així doncs, el que es busca és interpolar les qualitats de dos individuus ben
+adaptats, per a crear uns descendents amb propietats similars.  És d'esperar que
+si un individu té bon fitness, les ponderacions donades als seus indicadors
+siguin bastant encertades.  Llavors, en interpolar una parella de individuus,
+suposem que el descendent també tindrà un fitness bo, i això farà que a mesura
+que passen les generacions, la població tendeixi a millorar (en mitja).
+
+El creuament per dos punts no ha donat millors resultats que el creuament fet
+per un únic punt, i s'ha decidit quedarse amb el creuament per un sol punt.
+
+% subsubsection crossover (end)
 
 \subsection{Implementació} % (fold)
 	\label{sub:Implementacio}
@@ -507,3 +644,4 @@ crear.  És per això que RMI, que ens lliga a java no pot ser utilitzada.
 	% subsection treball futur (end)
 % section Resultats (end)
 \end{document}
+# vim: set tabstop=4 shiftwidth=4 foldmethod=marker ignorecase : ##
