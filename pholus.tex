@@ -262,7 +262,9 @@ Per a la intefície amb l'usuari, s'ha escollit una interfície web, que executa
 l'usuari desde una web corporativa, amb accés restringit i controlat amb
 Autenticació.  Això ens porporciona informació de quin usuari executa cadascun
 dels càlculs, i així podem personalitzar la presentació, segons preferències de
-cadascun (cada maestrillo\dots). 
+cadascun (cada maestrillo\dots).  Utilitzant la web corporativa, ens estalviem
+haver de gestionar els permisos que té cada usuari, ja que la interfície que se
+li presenta, és adecuada per als seus permisos i les seves tasques.
 
 Les dades que entra un usuari són 3 llistes de molècules:
 
@@ -280,10 +282,12 @@ A part de les llistes de molècules, l'usuari també entra els parametres alpha,
 RieMax, i els percentatges de molècules amb els que vol provar l'experiment.  Es
 deixa la opció de no fer participar totes les molècules en l'experiment deixant 
 un conjunt de molècules fora, per després evaluar i validar les dades obtingudes
-(leave one out, 10 fold validation, etc\dots)
+(leave one out, 10 fold validation, etc\dots).  Més endevant en 
+\ref{sub:sobreentrenament} s'explicarà el sistema de tests i validació.
 
-El programa proporciona sempre uns parametres estimats per defecte, en funció de
-les característiques de les llistes que hagi entrat l'usuari. 
+Per facilitar la usabilitat, el programa proporciona sempre uns parametres
+estimats per defecte, en funció de les característiques de les llistes que hagi
+entrat l'usuari. 
 %XXX : Explicar alpha?
 
 % subsection Interfície (end)
@@ -308,11 +312,12 @@ altra, només canviant els angles dels enllaços i la seva flexibilitat.
 
 Donat un conjunt de molècules que volem utilitzar, hem de saber quina de les
 conformacions triarem per a cada molècula.  Per a fer la \texttt{explosió} de
-combinacions, s'utilitza un sofware especific, que fa la combinatoria i genera
-les possibles variacions sobre una molècula donada. Després de fer aquesta
-explosió de combinacions, tenim diverses entrades per a cadascuna de les
-molècules.  Les molècules que sabem que són actives, sabem que ho són, però no
-sabem quina conformació i isomer és el que la fa activa.
+combinacions, s'utilitza un sofware propietari especific (Corina), que fa la
+combinatòria i genera les possibles variacions sobre una molècula donada.
+Després de fer aquesta explosió de combinacions, tenim diverses entrades per a
+cadascuna de les molècules inicials.  Les molècules que sabem que són actives,
+sabem que ho són, però no sabem quina conformació i isomer és el que la fa
+activa.
 
 Per això, en el llistat d'actives, tenim només una entrada per a cada família de
 molecules actives, tot i que en la taula de tanimotos, aquesta molècula estarà
@@ -327,11 +332,11 @@ ordenada, ens quedem només amb la millor conformació de cada família.
 
 Després que l'usuari entri els paràmetres, la web llança una aplicació en Perl,
 que fa la preparació de les dades, i és la que llança l'algorisme evolutiu.  El
-primer que fa és , recollir les dades, d'una base de dades (la web emmagatzema
-les llistes a una BBDD mysql).
+primer que fa és , recuperar les taules, d'una base de dades (la web emmagatzema
+les llistes a una BBDD MySql).
 
 Com s'ha explicat anteriorment, per a fer les validacions, aïllem una part del
-conjunt de molècules del experiment, per a fer validacions a posteriori, i
+conjunt de molècules del experiment per a fer validacions a posteriori, i
 assegurar-nos que no hi ha hagut sobreentrenament.
 
 El primer pas que fem és doncs, separar els tres conjunts de molècules, en 3
@@ -358,7 +363,7 @@ primer, donada una base de dades de molècules diferents, hem de generar totes
 les conformacions possibles de cada molècula.  Aquest procés es realitza
 mitjançant un programa existent ja (Corina, NO és OpenSource).
 
-Al generar els diferents isomers i conformacions, afexim identificadors a les
+Al generar els diferents isomers i conformacions, afegim identificadors a les
 molècules, per saber de quina molècula inicial provenien però també saber
 exactament quin isomer-conformació és.  Així, si d'una molècula A, generem:
 
@@ -378,7 +383,8 @@ trobem que les bases de dades, ja no estan balancejades amb els percentatges tal
 i com estaven abans, sinó que en funció de les variacions que tinguin les
 molècules que han entrat en cada grup (trainning, test i validació), podem
 trobar un conjunt molt més poblat del que ens esperariem, i que varii també el
-seu percentatge intern de actives/inactives.
+seu percentatge intern de actives/inactives. Per exemple, la molècula A, pot
+tenir 6 ``descendents'', i en canvi, la molècula B pot tenir-ne només 2.
 
 Després de consultar amb experts químics, s'ha decidit que això no influiria
 negativament en els resultats finals, ja que si una molècula és més versàtil que
@@ -393,22 +399,68 @@ molècula, sinó que aparegui només una vegada el nom genèric de les molècule
 actives.  Això ho fem perquè quan sabem que una molècula és activa, sabem que ho
 és la ``família'' de molècules però per una banda, només ho serà en una de les
 conformacions i per altra, no tenim informació de quina és aquesta.  És per això
-que quan després fem els matchings, els fem només amb la part genètica de cada
+que quan després fem els matchings, els fem només amb la part genèrica de cada
 molècula.
 
 %PUNT
 
 % subsubsection Procés de preparació (end)
 
-Una cop les tenim generades, hem de quedar-nos amb la conformació que millors
-resultats dóna en aquest problema.  Per fer això, tenim un seguit de programes
-de tractament de dades, que ens permeten prepararles d'acord amb les nostres
-necessitats.
+En aquest punt, ja es disposen de totes les dades tal i com les volem per a
+executar l'Algoritme genètic.  El procés intern de l'Algoritme genètic, i els
+seus paràmetres en detall s'explicaràn en la secció pertinent ,
+\ref{sub:Algoritme genetic}.  En el cas que l'usuari hagi configurat la execució
+per a fer-se amb test i validació, la execució només es fa utilitzant com a
+dades el conjunt d'entrenament, deixant les taules de testing i validació per a
+un procés posterior.
 
+L'algorisme, dóna com a sortida les diferents poblacions que han anat apareixent
+al llarg de les diferents generacions.  Així es disposa de dades per a saber com
+ha estat el procés evolutiu (per exemple ens permet fer desviacions típiques
+sobre les generacions per a saber la convergència) , i ens proporciona armes per
+a decidir si podem utilitzar menys generacions per a aconseguir resultats
+similars.
+
+Una vegada tenim les ponderacions que han anat apareixent, parsegem aquestes
+dades i n'extraiem els millors individuus de cada generació.  Aquests individuus
+ens serveixen per divèrses coses:
+
+\begin{itemize}
+	\item Poder graficar d'una manera simple la evolució de l'entrenament
+	\item Reduir el volum de dades ``utils''.
+	\item El millor individu de la última generació serà el que agafarem com a
+	resultat final de la aplicació
+\end{itemize}
+
+Si l'usuari ha configurat el procés per a utilitzar testing i validació, en
+aquest moment, enfrontem les millors ponderacions de cada generació amb les
+taules de testing i de validació (per separat).  Aquest procés no implica cap
+algorisme genetic, però s'utilitza \textbf{exactament} la mateixa funció que en
+l'algorisme genètic (el mateix .h i .cpp).  Això es fa perquè les funcions de
+fitness han anat canviat al llarg del temps, afegint petites modificacions sobre
+la inicial, i d'aquesta manera, asegurem la consistència entre les dades.
+
+Una vegada tenim els BedRocs que donen cadascuna de les millors ponderacions
+(segons l'algorisme genètic en el conjunt de trainning), i els seus BedRocs
+enfrontades als conjunts de test i validació (que no s'han utilitzat per al
+procés evolutiu), tenim indicadors sobre si s'està sobreentrenant o no el procés
+d'optimització.
+
+Amb aquestes dades, l'usuari ja disposa de tota la informació que necesita.
+Aquesta informació, se li presenta a través de la web (cuan acaba el procés se'l
+pot avisar amb un mail), o directament al correu electrònic.  Recordem que la
+informació sobre l'usuari la disposem desde el moment que es logueja a la web
+(procés anterior a \texttt{Pholus} en si.
+
+% ?????? ELIMINAR
+%Una cop les tenim generades, hem de quedar-nos amb la conformació que millors
+%resultats dóna en aquest problema.  Per fer això, tenim un seguit de programes
+%de tractament de dades, que ens permeten prepararles d'acord amb les nostres
+%necessitats.
 
 % subsection preparació de dades (end)
 \subsection{Algoritme genètic} % (fold)
-\label{sub:genetic}
+\label{sub:Algoritme genetic}
 
 Els operadors usats en aquest algoritme genètic són dels més clàssics ja que
 donat el problema, tan sols hi ha necessitat d'aplicar operadors ``bàsics'' als
