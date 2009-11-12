@@ -623,9 +623,91 @@ per un únic punt, i s'ha decidit quedarse amb el creuament per un sol punt.
 \subsection{Implementació} % (fold)
 	\label{sub:Implementacio}
 
+Tot seguit es detallen algunes particularitats de la implementació de
+\texttt{Chiron}, amb les seves tecnologíes, i algun codi exemplificador del que
+s'està explicant.
+
+\subsubsection{algorisme genètic} % (fold)
+\label{ssub:algorisme genetic}
+
+En aquest projecte s'han utilitzat les llibreries eodev, igual que en el
+projecte \texttt{Pholus}, ja que ens proporcionen les qualitats suficients per a
+poder treballar per sobre d'elles sense haber de fer gaires modificacions sobre
+el seu codi base.
+
+Eodev proporciona una estructura genèrica per a algorismes genètics, on, si no
+volem massa complicacions, amb un cromosoma de coma flotants, modificant només
+la funció de fitness, podem corre ja el nostre algorisme genètic.  Això no ens
+serveix per a \texttt{Chiron}, ja que necessitem modificar el cromosoma, les
+Mutacions i creuaments per al que volem fer nosaltres.
+
+Hem de crear doncs, una classe per a cada element del algorisme genètic.
+
+%PUNT posar totes les classes
+
+
+% subsubsection algorisme genètic (end)
+
+\subsubsection{Arxius de configuració} % (fold)
+\label{ssub:Arxius de configuracio}
+
+Eodev disposa d'una manera per llançar Execucions amb un arxiu de configuració
+determinat.  El format no respon a cap estàndard (ni .ini, ni .conf\ldots).
+Aquest format és el que fem servir per a llançar procéssos \texttt{Chiron}, amb
+els parametres adecuats, i per altra banda, entre generació i generació, omplim
+els fitness en l'arxiu aquest.  És una manera de colar-se en el procediment de
+Chiron, i permetent-nos modificar el fitness d'un element en una generació
+determinada.
+
+Per a generar aquest arxiu de configuració hem agafat un dels de demostració que
+vénen amb les fonts de Eodev, i hem creat un template o plantilla, utilitzant
+Template Toolkit.
+
+Template Toolkit és una llibreria molt extesa per a la generació de textos
+parametritzats.  En un principi es va crear per a reproduir textos massivament,
+on només canvia una petita part del text (per exemple, circulars), o bé arxius
+que han de complir una certa extructura (Webs corporatives).
+
+Nostres hem usat la implementació en Perl, que a part de ser la primera que va
+sortir (i potser la més sòlida), és el llenguatge en el que hem desenvolupat
+tota la part no-core de la aplicació.  Segueix un exemple de la utilització de
+Template Toolkit en un cas senzill, i la manera en que ens facilita la separació
+de la presentació de la lògica.  És per això que Template Toolkit també
+s'utilitza en molts frameworks web perl.
+
+%codi Template Toolkit
+
+Encara que en aquest exemple, no sembla més que una versió ``maca'' de sprintf,
+Template Toolkit pot afegir lògica en les seves plantilles, processant o no
+processant arxius en subdirectoris, en funció de valors de variables en el
+programa perl que crida les funcions TT.
+
+\subsubsection{DBIx::Class} % (fold)
+\label{ssub:DBIx Class}
+
+Tant l'arxiu de configuració de cada projecte, com la informació dels individuus
+que han aparescut en generacions passades del projecte, i com el propietari de
+cada projecte es mantenen en una base de dades MySql.
+
+La decisió de MySql o bé PosgreSql, no ha estat una decisió on hi hagi hagut un
+clar guanyador.  Pel volum de dades que hem de tenir, tampoc creiem que això
+sigui una decisió critica per al èxit del projecte, però per si de cas, hem
+decidit utilitzar un sistema de ORM \footnote{Object Relational Mapper} .
+
+Els ORMs són llibreries que mapegen taules Sql a objectes del llenguatge, podent
+així fer més directe el tractament amb bases de dades desde llenguatges de
+programació, fent que no s'hagi de fer un canvi de paradigma tant gran al
+canviar de OOP pura a SELECT * FROM \ldots  .
+
+Sabem doncs, que per al projecte, en l'estat actual no és necessari que
+
+% subsubsection DBIx\dots Class (end)
+
+% subsubsection Arxius de configuració (end)
 \begin{itemize}
-	\item Els arxius de configuració de eodev es creen amb Template Toolkit
-	\item La comunicació amb la bbdd es fa amb DBIX\dots Class
+	\item EODEV en c++  DONE
+	\item Els arxius de configuració de eodev es creen amb Template Toolkit DONE
+	\item La comunicació amb la bbdd es fa amb DBIX\dots Class DONE
 	\item la implementacio de SOAP, s'utilitza SOAP\dots Lite i WSDL\dots SOAP.
 		Soap vs REST
 	\item MysQl vs TC vs MongoDB
