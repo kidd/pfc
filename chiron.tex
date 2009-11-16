@@ -525,81 +525,47 @@ Així doncs, tenim un vector de N posicions on N és el número de radicals que 
 el scaffold, i cada posició conté un enter, amb limits (bounds) d'acord amb les
 especificacions del usuari al iniciar el projecte. 
 
-Així doncs, els valors de cada posició s'acoten en cada projecte.  Això és un
+Utilitzem enters per a representar cada al·lel perquè és la forma més comoda que
+tenim per represetar valors qualitatius.
+
+Els valors de cada posició s'acoten en cada projecte.  Això és un
 altre tret que el diferència de programes més estatics on els límits són
-coneguts a priori, com per exemple Pholus. 
+coneguts a priori, com per exemple Pholus.
+
+Si els possibles valors adoptats en cada punt fóssin coneguts en temps de
+desenvolupament del projecte, es podria usar tipus enumerats, per a deixar ben
+clar que els valors són qualitatius i que hi ha la mateixa diferència en un
+al·lel entre el valor 1 i el 2 que entre el 1 i el 5, ja que simplement són
+radicals diferents, i no tenen res a veure un amb l'altre.  Això també ens
+condiciona els creuaments, com s'explica en la següent secció.
 
 %PUNT
-
-En aquest algoritme genètic, els individus són les ponderacions corresponents a
-cadascun dels maps.  Cada individu de la població és un conjunt de 22 valors de
-coma flotant (de doble precisió) que es correspon a cadascun dels 22 indicadors
-(maps),  Donat que volem saber quines rellevàncies tenen els indicadors, però
-confiem que no tenen cap relació un amb el següent, hem decidit no utilitzar cap
-representació que tingui en compte l'ordre, ni que afavoreixi la dependència
-dels gens. %XXX GENS es la paraula?
-
-
-Essent valors en coma flotant, el rang que poden tenir cadascun, és massa gran
-per a les nostres necessitats, donant massa llibertat al algoritme genètic per
-ponderar massa a uns valors, o simplement ponderarlos tots en valors molt alts.
-
-Com que una ponderació competeix contra altres ponderacions, i la funció de
-fitness és una funció additiva, donar un rang tant gran de possibles valors
-provoca una tendència a elevar els valors de les ponderacions, obligant a que
-després del càlcul es normalitzéssin per a tractar amb valors més homogènis.
-
-S'han fet proves sobre acotar els valors possibles entre 0 i $Inf$, però si
-permetem valors negatius, l'Algoritme evolutiu pot jugar amb fer ponderar
-negativament un tipus de maps, donant més flexibilitat al Algoritme evolutiu per
-trobar una bona ponderació.  Si el mínim valor que pogués asignar fós 0,
-simplement eliminaria un map si no té cap rellevància però d'aquesta manera li
-permetem penalitzar un indicador.
-
-Donar de marge de $-Inf$ a $Inf$, era problemàtic en tant que l'Algoritme
-evolutiu acaba donant molta rellevància a uns quants (pocs) maps, i
-comparativament molt poca a la majoria, donant poca riquesa a la ponderació i
-tendint a sobreentrenar-se per al conjunt de dades que li entrem, però sense
-donar resultats extrapolàbles a altres conjunts de dades.
-
-La següent versió, va ser deixar posar valors entre [-1,1] , però tals que la
-suma de tots fós 1.  Els resultats tampoc van ser concloents (a part que tampoc
-tenia molt de sentit lògic més que el de acotar que tots els individus
-estiguéssin dins d'uns marges).
-
-Al final, s'ha adoptat donar de marge [-1,1], però sense límit en la suma total
-dels valors ja que així acotem els valors i també els hi deixem tenir valors
-negatius, donant més versatilitat al algorisme, que així és capaç de trobar
-relaccions inverses d'algunes ponderacions.
-
-
-\subsubsection{Mutacions} % (fold)
-\label{ssub:Mutacions}
-
-S'apliquen mutacions en un 0.1\% dels individus una vegada fet el creuament.
-Les mutacions en aquesta aplicació consisteixen en modificar una ponderació per
-una altra (al·lel).  La única restricció és que es mantingui dins dels marges
-[-1,+1] .  
-
-Aplicant aquesta mutació, mantenim la diversitat en la població i anem
-introduint sempre material genètic nou.  La mutació, juntament amb els
-creuaments són la font principal de la variació genètica, i en aquest cas en
-particular, la mutació és l'únic operador que introdueoix material genètic nou.
-
-El valor de 0.1\% s'ha utilitzat ja que és un valor estàndard, i les variacions
-que hem aplicat a posteriori sobre aquest valor no han aportat millores
-objectives a les solucions.
-
-Si ens trobéssim amb problemes de convergència prematura, un dels ``trucs''
-utilitzats és augmentar la provabilitat de mutació.  Com que no ens hem trobat
-amb aquest tipus de problemes, el valor de 0.1 s'ha deixat com a bo.
-% subsubsection Mutacions (end)
 
 \subsubsection{Crossover} % (fold)
 \label{ssub:Crossover}
 
+Com a operador de creuament entre 2 individuus d'una generació, s'utilitza el
+tall per 1 punt.  La raó d'això és que cadascun dels al·lels té un valor
+cualitatiu, i no té cap sentit fer altres creuaments on el mateix gen (mateixa
+posició del vector) es creua físicament amb el gen de l'altre cromosoma.
+
+Un creuament que involucrés aritmètica no es pot fer servir en aquest cas ja que
+no es poden sumar ``peres i pomes''.
+
+Creuaments que involucrin el canvi de posició en els gens tampoc eren naturals
+per aquest problema, ja que s'hauría de comprovar que cap gen es col·loca en una
+posició on no pot ser-hi ja que supera els límits (bounds) estipulats per la
+posició final.  A part d'aquest fet totalment subjecte a implementació, i per
+tant, solucionable amb una mica més de comprovacions, aquests creuaments no
+tenen sentit químic, ja que l'alternativa $i$ de la posició $n$, no té perquè
+tenir res a veure, ni cap correlació amb l'alternativa $i$ de la posició $m$ on
+$n <> m$.
+
+
 Pel creuament s'ha provat un creuament per un punt, i el creuament per dos
-punts, donant millors resultats el creuament en tant sols un punt.  
+punts, donant resultats similars en els dos casos.  Donat que els experiments
+químics en què s'ha provat (\ref{sec:Resultats}), tenen només tres R's, un
+creuament per diversos punts no tenia gaire sentit.
 
 Donats dos individus (els que han estat sel·leccionats en el procés de
 sel·lecció per a reproduir-se , amb una provabilitat d'un 0.8 es fa creuament i
@@ -615,10 +581,22 @@ siguin bastant encertades.  Llavors, en interpolar una parella de individuus,
 suposem que el descendent també tindrà un fitness bo, i això farà que a mesura
 que passen les generacions, la població tendeixi a millorar (en mitja).
 
-El creuament per dos punts no ha donat millors resultats que el creuament fet
-per un únic punt, i s'ha decidit quedarse amb el creuament per un sol punt.
+En els experiments en formules matemàtiques, ha donat millors resultats el tall
+en 2 punts, que no pas en 1.
 
 % subsubsection crossover (end)
+
+\subsubsection{Mutacions} % (fold)
+\label{ssub:Mutacions}
+
+La única mutació que té sentit en aquest problema és canviar un dels elements
+del cromosoma per un altre, sempre dins del rang que tingui en aquesta posició.
+
+Intercanvis de al·lels de diferents posicions no són possibles ja que les
+diferents posicions del cromosoma tenen rangs diferents, i fa que molts dels
+intercanvis que fariem siguin invàlids.
+% subsubsection Mutacions (end)
+
 
 \subsection{Implementació} % (fold)
 	\label{sub:Implementacio}
@@ -682,6 +660,8 @@ Template Toolkit pot afegir lògica en les seves plantilles, processant o no
 processant arxius en subdirectoris, en funció de valors de variables en el
 programa perl que crida les funcions TT.
 
+% subsubsection Arxius de configuració (end)
+
 \subsubsection{DBIx::Class} % (fold)
 \label{ssub:DBIx Class}
 
@@ -703,7 +683,12 @@ Sabem doncs, que per al projecte, en l'estat actual no és necessari que
 
 % subsubsection DBIx\dots Class (end)
 
-% subsubsection Arxius de configuració (end)
+\subsubsection{Webservices i Soap} % (fold)
+\label{ssub:WS i Soap}
+
+% subsubsection Webservices i Soap(end)
+
+
 \begin{itemize}
 	\item EODEV en c++  DONE
 	\item Els arxius de configuració de eodev es creen amb Template Toolkit DONE
@@ -713,10 +698,12 @@ Sabem doncs, que per al projecte, en l'estat actual no és necessari que
 	\item MysQl vs TC vs MongoDB
 \end{itemize}
 
-
+\subsubsection{Bases de Dades} % (fold)
+\label{ssub:Bases de Dades}
+% subsubsection Bases de Dades (end)
 % subsection Implementació (end)
-
 % section Procediment informàtic (end)
+
 \section{Resultats} % (fold)
 	\label{sec:Resultats}
 	\subsection{treball futur} % (fold)
