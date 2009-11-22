@@ -679,33 +679,120 @@ així fer més directe el tractament amb bases de dades desde llenguatges de
 programació, fent que no s'hagi de fer un canvi de paradigma tant gran al
 canviar de OOP pura a SELECT * FROM \ldots  .
 
-Sabem doncs, que per al projecte, en l'estat actual no és necessari que
+Sabem doncs, que per al projecte, en l'estat actual no és necessari plantejar-se
+quina és la millor base de dades a escollir, si hem fet una bona el·lecció pel
+que fa a les eines i libs, ja que utilitzant DBIx::Class, canviar de SGBD no
+suposa cap modificació en el codi, fent-ho del tot transparent.
 
 % subsubsection DBIx\dots Class (end)
 
 \subsubsection{Webservices i Soap} % (fold)
 \label{ssub:WS i Soap}
 
+Com ja s'ha explicat anteriorment (\ref{sec:Procediment informatic} ), per a la
+comunicació segons el paradigma client-servidor, s'ha utilitzat la tecnologia
+SOAP\footnote{Simple Object Access Protocol}.
+
+Els seus rivals més igualats, per als nostres requeriments, han estat XML-RPC i
+REST, però hem decidit utilitzar SOAP, entre d'altres coses, perquè és l'únic
+que té suport a nivell corporatiu, i no com REST, que son estàndards
+desenvolupats majoritàriament en entorns de comunitats opensource.  Al
+utilitzarlo nosaltres en un entorn corporatiu, hem pensat que SOAP seria més
+adequat pel possible suport que tindría i la interpolabilitat amb altres
+aplicacions que es poden utilitzar en el futur.
+%PUNT . POSAR L'ESTANDARD SOAP, I WSDLs i XMLs d'exemple?
+
 % subsubsection Webservices i Soap(end)
-
-
-\begin{itemize}
-	\item EODEV en c++  DONE
-	\item Els arxius de configuració de eodev es creen amb Template Toolkit DONE
-	\item La comunicació amb la bbdd es fa amb DBIX\dots Class DONE
-	\item la implementacio de SOAP, s'utilitza SOAP\dots Lite i WSDL\dots SOAP.
-		Soap vs REST
-	\item MysQl vs TC vs MongoDB
-\end{itemize}
-
-\subsubsection{Bases de Dades} % (fold)
-\label{ssub:Bases de Dades}
-% subsubsection Bases de Dades (end)
 % subsection Implementació (end)
 % section Procediment informàtic (end)
 
 \section{Resultats} % (fold)
 	\label{sec:Resultats}
+
+	En les proves que hem realitzat, \texttt{Chiron} ha donat bons resultats,
+	però necessitem fer algunes validacions per a assegurar que ha valgut la
+	pena aquest esforç, i també tenir dades objectives sobre la seva utilitat.
+	A nivell comercial, també es vol tenir alguna validació estadística que ens
+	doni seguretat per a ``vendre'' Chiron.
+
+	Per a realitzar les proves inicials, s'han utilitzat funcions típiques de
+	testeig d'algorismes genètics, com la suma de bits (es tracta de maximitzar
+	el número de bits a 1 en un vector), o alguna funció trampa, on el màxim de
+	la funció no està en cap extrem del espai de búsqueda.
+
+	Les proves sobre un escenari real en el que operarà Chiron, s'han fet sobre
+	tres projectes dels quals s'ha realitzat la prova experimental de totes les
+	combinacions de R's possibles (s'han trobat en 
+	%(XXX Ppaper) 
+	)
+
+	En aquests 3 problemes, els autors dels experiments van sintetitzar totes
+	les possibles molècules, obtenint un resultat de activitat en cadascuna
+	d'elles.  És possible que algunes d'elles fóssin impossibles de sintetitzar,
+	i que els hi haguéssin posat un fitness molt baix.  Això ja ens va bé per
+	als nostres propòsits, ja que és el mateix resultat que els hi donaríem
+	nosaltres.
+
+	Per a testejar Chiron, hem usat un programa de test, que analitza totes les
+	dades experimentals, tenint així una resposta per a cada possible individuu
+	que pugui proposar Chiron.
+
+	Aquest programa de prova, ha estat desenvolupat en Perl, atacant directament
+	la llibrería també programada en perl, no pas usant la interfície SOAP, ja
+	que podent fer les proves en local, és molt més ràpid en executar-se.
+
+	S'han fet 25 executions executions de Chiron per a cada projecte, i hem
+	esperat a què convergeixin cadascun dels 3 projectes.  Com que tenim a la
+	nostra disposició totes les dades del espai de búsqueda, hem fet càlculs
+	respecte quantes evaluacions s'han fet fins a trobar el millor element que
+	hem arribat a trobar.  També ens fa falta saber quin és el fitness d'aquest
+	element, i quin és el fitness de la millor combinació de R's que hi ha en
+	tot l'espai de búsqueda. Així arribem a tenir
+
+	%TAULA de resultats.
+
+% theme=Berlin;caption_top=1;caption=Exemple tanimotos
+% BBDD & Fitness & Elements evaluats & relació
+
+%png('file.png')
+%hist(x)
+%dev.off()
+
+	A continuació es mostren les validacions que s'han fet a chiron.  
+
+	%XXX XAVI
+
+	\begin{figure}[tbp]
+		\begin{center}
+			\includegraphics[scale=0.75]{chiron/rgrau1.png}
+		\end{center}
+		\caption{hola Matat}
+		\label{fig:resChir1}
+	\end{figure}
+
+	\begin{figure}[tbp]
+		\begin{center}
+			\includegraphics[scale=0.75]{chiron/rgrau2.png}
+		\end{center}
+		\caption{hola Matat}
+		\label{fig:resChir2}
+	\end{figure}
+
+	\begin{figure}[tbp]
+		\begin{center}
+			\includegraphics[scale=0.75]{chiron/rgrau3.png}
+		\end{center}
+		\caption{hola Matat}
+		\label{fig:resChir3}
+	\end{figure}
+	\begin{figure}[tbp]
+		\begin{center}
+			\includegraphics[scale=0.75]{chiron/rgrau4.png}
+		\end{center}
+		\caption{hola Matat}
+		\label{fig:resChir4}
+	\end{figure}
+
 	\subsection{treball futur} % (fold)
 	\label{sub:treball futur}
 	implementar tècniques de algorisme genètic  interactius
