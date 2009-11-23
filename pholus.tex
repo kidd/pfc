@@ -38,19 +38,20 @@
 \tableofcontents  %%Index
 \section{Objectius} % (fold)
 \label{sec:Objectius}
-Aquest projecte anomenat \texttt{Pholus}, ha estat desenvolupat per a equilibrar (ponderar) pesos dels
-diferents maps, per a veure quins són més rellevants a l'hora de 'enganxar' amb el receptor.  %XXX enganxar
+Aquest projecte anomenat \texttt{Pholus}, ha estat desenvolupat per a equilibrar
+(ponderar) pesos dels diferents maps, per a veure quins són més rellevants a
+l'hora de 'enganxar' amb el receptor.  %XXX enganxar
 
 Es tracta d'un algoritme evolutiu relativament senzill pel que fa al propi algoritme, però més
 complex pel referent a les condicions externes que s'imposen per la natura, i que ens obliguen a
-posar condicions i limitacions al Algoritme Evolutiu (als Algoritmes Evolutius no els agraden les 
-limitacions).
+posar condicions i limitacions al Algoritme Evolutiu (als Algoritmes Evolutius
+no els agraden les limitacions).
 
-Aquest treball forma part de la nova tecnologia desenvolupada per Intelligent Pharma, anomenada HELIOS, que serveix per identificar,a partir d'un compost de referència prèviament donat, nous compostos amb propietats estructurals completament diferents que imiten el comportament d'aquest compost de referència. Per exemple, si el compost de referència ja és conegut (per exemple, un extret d'un producte natural o d'una patent), HELIOS pot trobar compostos no  vinculats estructuralmnt que reprodueixin les seves propietats psico-químiques tridimensionals; per tant, aquests compostos tindran les mateixes característiques biològiques però amb diferent estructura mol·lecular. A aquesta búsqueda se l'anomena "Scaffold hopping" (búsqueda entre diferents famílies químiques).
+Aquest projecte forma part de la nova tecnologia desenvolupada per Intelligent Pharma, anomenada HELIOS, que serveix per identificar,a partir d'un compost de referència prèviament donat, nous compostos amb propietats estructurals completament diferents que imiten el comportament d'aquest compost de referència. Per exemple, si el compost de referència ja és conegut (per exemple, un extret d'un producte natural o d'una patent), HELIOS pot trobar compostos no  vinculats estructuralmnt que reprodueixin les seves propietats psico-químiques tridimensionals; per tant, aquests compostos tindran les mateixes característiques biològiques però amb diferent estructura mol·lecular. A aquesta búsqueda se l'anomena "Scaffold hopping" (búsqueda entre diferents famílies químiques).
 
 La tècnica utilitzada és el Virtual Screening(VS), que normalment s'utilitza per descobrir noves famílies químiques en relació a una activitat biològica desitjada. El VS té mètodes que es basen en l'estructura dels compostos i d'altres que no. Com hem dit, HELIOS té com a objectiu identificar nous compostos que no són anàlegs estructuralment, però sí biològicament. 
 
-HELIOS es basa en la superposició de camps mol·leculars entre qualsevol compost i un lligam de referència. Però HELIOS, no només considera la superposició generada per càrregues formals, sinó també altres tipus relacionades amb el comportament dinàmic; així, es fan diferents superposicions entre parells de mol·lècules es duen a terme a la vegada. 
+HELIOS es basa en la superposició de camps mol·leculars entre qualsevol compost i un lligand de referència. Però HELIOS, no només considera la superposició generada per càrregues formals, sinó també altres tipus relacionades amb el comportament dinàmic; així, es fan diferents superposicions entre parells de mol·lècules es duen a terme a la vegada. 
 L'alineament de camps mol·leculars va ser descrit durant els anys noranta, però no s'ha dut a terme fins aquesta dècada degut a que l'alineament mol·lecular flexible és un problema impossible de resoldre sense les eines de supercomputació. Fins els últims anys, el Virtual Screening basat en els lligams s'ha basat en metodologies per buscar semblances moleculars com l'estructura, farmacòfor, etc. 
 
 HELIOS utilitza alineaments de camps moleculars flexibles per identificar compostos que s'assemblin a un compost de referència. L'alineament molecular e duu a terme mitjançant la metodologia "cloud computing", la qual permet fer-ho en pocs dies. Els compostos amb els quals es fa l'alineament es treuen d'una base de dades que pot variar segons l'objectiu de la búsqueda. 
