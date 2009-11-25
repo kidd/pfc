@@ -1,0 +1,150 @@
+\documentclass[titlepage,a4paper,12pt]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{marvosym}
+\usepackage{amssymb, amsmath} 
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[]{color}
+
+%\lstset{
+	%language=C++,
+	%keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+	%identifierstyle=\ttfamily,
+	%commentstyle=\color[rgb]{0.133,0.545,0.133},
+	%stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+	%showstringspaces=false,
+	%basicstyle=\small,
+	%numberstyle=\footnotesize,
+	%numbers=left,
+	%stepnumber=1,
+	%numbersep=10pt,
+	%tabsize=2,
+	%breaklines=true,
+	%prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	%breakatwhitespace=false,
+	%aboveskip={1.5\baselineskip},
+  %columns=fixed,
+  %upquote=true,
+  %extendedchars=true,
+%% frame=single,
+%% backgroundcolor=\color{lbcolor},
+%}
+
+\begin{document}
+\tableofcontents  %%Index
+
+\section{Introducció} % (fold) Objectius?
+	\label{sec:Introduccio}
+	Tot seguit es presentará un projecte en el que s'ha utilitzat una tècnica
+	molt pionera derivada de la programació genètica anomenada ``Genetic
+	Expression Programming'' (GEP).
+% section Introducció (end)
+
+\section{Context Químic} % (fold)
+	\label{sec:Context Quimic}
+
+\section{Procediment informàtic} % (fold)
+\label{sec:Procediment informatic}
+
+El diseny i implementació  d'aquest projecte és la que s'ha emportat més temps
+proporcionalment, ja que s'ha hagut de fer molta investigació per a ajustar els
+paràmetres del algorisme genètic, i per a implementar els diferents operadors.
+
+Ens enfrontem a un problema on el cromosoma, a diferència Pholus i Chiron, no
+pot ser tractat com un vector d'elements independents, ja que s'ha de mapejar un
+arbre (que representa una fórmula analítica) en un vector, i un gen
+\textit{i} té molta repercusió en els seus gens posteriors.
+
+La manera clàssica d'atacar els problemes de programació genètica, és
+confeccionant una representació d'un arbre en el cromosoma, en preordre,
+inordre, o postordre.  Cadascuna d'aquestes implementacions suposa uns pros i
+uns contres, ja sigui en la construcció, la interpretació (per a executar la
+funció de fitness s'ha d'evaluar el resultat, i per tant, s'ha de reconstruir
+l'arbre), o en els diferents operadors, tant el creuament com la mutació.
+
+Com a primera aproximació, s'ha implementat un arbre en preodre, ja que facilita
+molt la evaluació, una de les parts més costoses i que s'ha de fer més cops al
+llarg del algoritme.
+
+Imaginem que tenim un arbre de la següent manera:
+
+\begin{verbatim}
++ 2 - 3 2
+\end{verbatim}
+
+Aquest arbre, que traduit a inordre és $ 2 + (3 -2) $ , pot ser calculat
+construint un evaluador com una màquna de pila, on apilem els elements a mesura
+que els anem trobant, i evaluem les operacions una vegada tenim els operands
+suficients per a la última operació que hem apilat.
+
+La construcció en preordre deixa les fulles al final dels subarbres, i això és
+convenient en la mesura del possible, ja que per als creuaments, augmenta la
+possibilitat de crear un arbre vàlid. % XXX REF a creuaments
+
+Un dels problemes que es donen en els algorismes de programació genètica, és la
+construcció d'arbres invàlids. Per exemple, suposem que fem un creuament per un
+punt de tall entre dos arbres, com si fós un algorisme evolutiu clàssic.
+
+\begin{verbatim}
++ 3 * 3 | - 4 3
+- Q + * | 5 3 5
+\end{verbatim}
+
+al intercanviar els arbres, un dels 2 arbres que queden (- Q + * - 3 5) no
+disposa de prous operands per a realitzar la evaluació.  Això és un cas senzill
+de tots els problemes que es poden generar al fer creuaments, i és el cas en el
+que utilitzem el creuament més trivial (creuament per un punt). Si utilitzéssim
+creuaments més sofisticats, els casos que hem de tractar particularment per
+creixen molt de pressa.  Només fent un creuament per 2 punts, es generen
+moltíssims més arbres sintacticament incorrectes.
+
+És per això que s'ha adoptat finalment per una aproximació utilitzant una
+representació ideada per Ferreira (XXX bib), on per la pròpia construcció del
+arbre, podem assegurar que \textbf{sempre} generarem arbres sintàcticament
+vàlids.
+
+\subsection{Interfície} % (fold)
+\label{sub:Interficie}
+
+L'usuari, en aquest cas encara no està molt definit, ja que segurament, GEP es
+farà servir com a complement per a Helios 2.0, però les entrades al programa son
+clares:
+
+Es disposa de resultats empírics (o bé per laboratori o bé utilitzant softwares
+de simulació) sobre, per exemple, el volum d'una molècula en funció dels angles
+dels seus enllaços rotables.
+
+En un cas així, les dades d'entrada són els diferents angles i els volums
+obtinguts, i el que es demana a la aplicació, és que a partir d'aquestes dades,
+trobi una fórmula analítica que representi (amb la major fiabilitat possible)
+aquestes dades, per a poder generalitzar les dades empíriques a una fórmula
+tractable matemàticament.
+
+El programa ha d'executar-se d'una tirada, amb el que no tindrà cap component de
+interactivitat, ni es necessitarà cap tipus de emmagatzematge de dades
+intermitges.
+% subsection Interficie (end)
+
+
+% section Procediment informàtic (end)
+
+    %Introducció
+    %Context Químic
+    %Procediment informàtic
+    %+ Algoritme Genètic
+    %+  Individu (Cromosoma)
+    %+  Crossover
+    %+  Mutacions
+    %+ Implementació
+    %+  algorisme genètic
+    %+  Arxius de configuració
+    %+  DBIx::Class
+    %+  Webservices i Soap
+    %Resultats
+    %+ treball futur
+
+\end{document}
