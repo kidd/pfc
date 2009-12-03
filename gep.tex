@@ -42,6 +42,8 @@
 	Tot seguit es presentará un projecte en el que s'ha utilitzat una tècnica
 	molt pionera derivada de la programació genètica anomenada ``Genetic
 	Expression Programming'' (GEP).
+
+
 % section Introducció (end)
 
 \section{Context Químic} % (fold)
@@ -137,8 +139,49 @@ l'apartat de treballs futurs(XXX), s'ha pensat permetre a l'usuari (se'l
 considera un usuari ``expert'', que coneix tant el problema, com té coneixements
 d'algorismes genètics) entrar ``building blocks'' addicionals, o
 activar/desactivar els que ja venen per defecte.
+
+Això suposa un gran repte a causa de les característiques estàtiques del
+llenguatge, però ja s'han estudiat algunes maneres per a poder utilitzar
+tècniques que permeten ``dinamitzar'' el llenguatge (utilitzant plugins o
+llenguatges de scripting acoblats (embeded) al programa c++.
 % subsection Interficie (end)
 
+\subsection{Preparació de les dades} % (fold)
+\label{sub:Preparació de les dades}
+La preparació de dades necessària per a aquest projecte no té massa rellevància,
+ja que disposem a priori dels conjunts de dades d'entrada i resultats.
+
+El programa simplement agafa les dades d'uns arxius que hem tractat amb uns
+petits scripts per a tenir un format realment còmode.
+
+Per a les proves que s'han realitzat per descubrir funcions matemàtiques
+conegudes, la mateixa funció s'ha implementat en la funció d'evaluació, i
+simplement, s'executa amb les dades d'entrada, per a tenir el resultat a
+comparar-lo amb el resultat de la formula que estem evaluant.
+
+% subsection Preparació de les dades (end)
+
+\subsection{Implementació} % (fold)
+\label{sub:Implementacio}
+
+Aquest projecte ha estat el més difícil d'implementar i disenyar, ja que hem
+hagut de fer un treball notable d'investigació (els primers referents en GEP
+daten de 2002 XXX).
+
+El procés general del algoritme evolutiu és, donada una llargada de cromosoma,
+decidida per l'usuari en funció de la complexitat ``intuitiva'' de la formula
+que es vol descubrir, i uns paràmetres de probabilitat de creuaments i
+mutacions, la aplicació ha de retornar una fórmula analítica que s'apropa (o
+clava) la fórmula que estem buscant.
+% subsection Impl (end)
+
+(XXX) fer una seccio dedicada a GP i GEP o posar-ho a la implementació?
+
+
+\section{Algorisme Genètic} % (fold)
+\label{sec:Algorisme Genetic}
+
+% section Algorisme Genètic (end)
 
 % section Procediment informàtic (end)
 

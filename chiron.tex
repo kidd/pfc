@@ -129,8 +129,10 @@ nostres necessitats, i després s'ha vist que no eren del tot adecuades per a le
 nostres necessitats.
 
 Començarem amb el workflow que ha de permetre Chiron perquè l'usuari pugui
-utilitzar-lo fàcilment i n'extraurem els diferents casos d'ús.
+utilitzar-lo fàcilment i n'extraurem els diferents casos d'ús, i després
+s'anirà describint el procés que s'ha realitzat per a implementar-ho.
 
+%subsub
 Un usuari, en començar un projecte, ha de poder crear un experiment nou.  Aquest
 experiment ha d'estar lligat, òbviament a aquest usuari, amb el que ens obliga
 també a poder fer altes, baixes i modificacions dels usuaris que tenen accés a
@@ -726,7 +728,7 @@ aplicacions que es poden utilitzar en el futur.
 	%(XXX Ppaper) 
 	)
 
-	En aquests 3 problemes, els autors dels experiments van sintetitzar totes
+	En aquests tres problemes, els autors dels experiments van sintetitzar totes
 	les possibles molècules, obtenint un resultat de activitat en cadascuna
 	d'elles.  És possible que algunes d'elles fóssin impossibles de sintetitzar,
 	i que els hi haguéssin posat un fitness molt baix.  Això ja ens va bé per
@@ -766,7 +768,7 @@ aplicacions que es poden utilitzar en el futur.
 		\begin{center}
 			\includegraphics[scale=0.75]{chiron/rgrau1.png}
 		\end{center}
-		\caption{hola Matat}
+		\caption{resultat Chiron 1}
 		\label{fig:resChir1}
 	\end{figure}
 
@@ -774,7 +776,7 @@ aplicacions que es poden utilitzar en el futur.
 		\begin{center}
 			\includegraphics[scale=0.75]{chiron/rgrau2.png}
 		\end{center}
-		\caption{hola Matat}
+		\caption{resultat Chiron 2}
 		\label{fig:resChir2}
 	\end{figure}
 
@@ -782,22 +784,53 @@ aplicacions que es poden utilitzar en el futur.
 		\begin{center}
 			\includegraphics[scale=0.75]{chiron/rgrau3.png}
 		\end{center}
-		\caption{hola Matat}
+		\caption{resultat Chiron 3}
 		\label{fig:resChir3}
 	\end{figure}
 	\begin{figure}[tbp]
 		\begin{center}
 			\includegraphics[scale=0.75]{chiron/rgrau4.png}
 		\end{center}
-		\caption{hola Matat}
+		\caption{resultat Chiron 3}
 		\label{fig:resChir4}
 	\end{figure}
 
-	\subsection{treball futur} % (fold)
+	Aquestes gràfiques mostren, de diferents maneres, el nombre de elements
+	evaluats, i l'error absolut que s'ha obtingut en cadascun dels experiments.
+
+	La intenció inicial era utilitzar l'error relatiu, però en aquests
+	experiments, els pitjors fitness tenen un valor de infinit.  Com que els
+	tres experiments sobre els que hem fet les proves són molt similars en quant
+	al millor fitness possible (0, 0.1 i 0.01 XXX), hem pogut disenyar un
+	sistema de tests unificant els resultats dels tres experiments, i així tenir
+	una idea més general del rendiment de \texttt{Chiron}.
+
+	Com ja s'ha dit prèviament, s'han  realitzat 25 execucions de cadascun dels
+	tres experiments, guardant per a cadascun el número d'individuus que s'han
+	evaluat, el número total d'individuus del espai de cerca, el millor fitness
+	de tot l'espai de cerca, i el millor fitness al que hem arribat.
+
+	D'aquesta manera, hem pogut fer un estudi estadístic sobre el funcionament i
+	rendiment de Chiron.
+
+	L'estudi, estadístic, l'hem realitzat utilitzant el software estadístic
+	R(XXX), i ens permet dir coses com per exemple, que \textbf{Evaluant un XXX
+	\% de l'espai de búsqueda, ens quedem a XXX del millor en un XXX dels casos}
+
+
+\subsection{treball futur} % (fold)
 	\label{sub:treball futur}
-	implementar tècniques de algorisme genètic  interactius
-	
+
+	Els resultat de \texttt{Chiron} és satisfactori, però com a projecte futur
+	d'ampliació, està implementar tècniques de algorismes genètics interactius.
+
+	Donat que la evaluació és supervisada per l'usuari, podriem implementar
+	tècniques per a classificar els individuus de cadascuna de les generacions,
+	per a només donar al usuari una part de la població a evaluar, en funció de
+	la semblança entre els individuus.  Es podria utilitzar alguna tècnica de
+	clustering, o eines més particulars d'algorismes genètics interactius, com
+	per exemple (XXX).
 	% subsection treball futur (end)
 % section Resultats (end)
-\end{document}
+	\end{document}
 # vim: set tabstop=4 shiftwidth=4 foldmethod=marker ignorecase : ##
