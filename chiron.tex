@@ -18,39 +18,43 @@
 
 	La situació és la següent.  En determinades situacions, es disposa d'un
 	esquelet o \textit{scaffold} que se sap que té certa activitat, però no es
-	disposa amb seguretat de alguns \textit{radicals} , que són les parts de la
-	molècula que, sense canviar la seva estructura general, ni la seva
-	activitat, faran que es pugui 'enganxar' millor en el target.  Els radicals
-	que poden anar en cada posició són coneguts (en la majoria de casos).
+	disposa amb seguretat de algunes \textit{ramificacions} (R), que són les
+	parts de la molècula que, sense canviar la seva estructura general, ni la
+	seva activitat (si el ``core'' s'assebla, probablement tindrpàn una
+	activitat similar), faran que es pugui ``enganxar'' millor en el target.
+	Les ramificacions que poden anar en cada posició són conegudes (en la
+	majoria de casos).
 
 	En certa manera, podriem dir que és com ``decorar'' un esquelet de la
 	molècula per a fer-lo més apte per a enganxar-se amb el seu target o diana.
 
 	Un dels problemes que tenen els mètodes actuals són els grans costos
 	que es deriven d'aquest procés, ja que el que es fa és sintetitzar TOTES les
-possibles variants i combinacions de radicals, i mesurant la energia %XXX (disipada?)
+possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (disipada?)
 	s'intenta buscar la que minimitza aquesta.
 
-	si tenim un esquelet com el següent, amb 3 Radicals, i 4 posibles ``building
-	blocs'' per a cada R, la (ombinatioria ens dóna que necessitarem sintetitzar
-	aproximadament $4^3 = 64 $, però si el número creix una mica, el creixement
-	és exponencial, fent molt costós el procediment seguint aquest mecanisme.
+	si tenim un esquelet com el següent, amb 3 punts on enganxar Ramificacions,
+	i 4 posibles ``building blocs'' per a cada R, la (combinatiòria ens dóna que
+	necessitarem sintetitzar aproximadament $4^3 = 64 $, però si el número creix
+	una mica, el creixement és exponencial, fent molt costós el procediment
+	seguint aquest mecanisme.
 
-	Si pensem que la qualitat del resultat evaluat és en funció dels Radicals
-	escollits per a cada R1..RN, podem anar una mica més enllà i intentar fer
-	una aplicació que ens aujudi i ens guii a trobar un lligand amb bona
-	activitat explorant només una petita part de l'espai de cerca.
+	Si pensem que la qualitat del resultat evaluat és en funció de les
+	ramificacions escollits per a cada R1..RN, podem anar una mica més enllà i
+	intentar fer una aplicació que ens ajudi i ens guii a trobar un lligand amb
+	bona activitat explorant només una petita part de l'espai de cerca.
 	
 	\texttt{La idea en aquest programa és doncs, construir un algoritme genètic
-	semi-interactiu que ens permeti arribar a la millor tria de radicals (o
-		alguna de molt bona) sintetitzant una petita part del espai de búsqueda.}
+	semi-interactiu que ens permeti arribar a la millor tria de ramificacions (o
+	alguna de molt bona) sintetitzant una petita part del espai de búsqueda.}
 
 	Per a evaluar la qualitat de una combinació, no hi ha més remei que
 	sintetitzar la molècula en qüestió en el laboratori i retornar el resultat.
 	Així doncs, es tracta d'un algorisme genètic interactiu %XXX ref a paper.
 	que ens guiarà les proves que hem de fer a través dels creuaments i les
-	mutacions, trobant ``relacions'' (epistàcia) entre els diferents radicals, i
-	aconseguint resultats bons explorant una petita part del espai de búsqueda.
+	mutacions, trobant ``relacions'' (epistàcia) entre els diferents
+	ramificacions, i aconseguint resultats bons explorant una petita part del
+	espai de búsqueda.
 
 	Una altra objectiu d'aquest programa, ha estat convertir-lo en un
 	``framework'' d'algorismes genètics.  Veient que la funció de fitness és una
@@ -68,7 +72,7 @@ possibles variants i combinacions de radicals, i mesurant la energia %XXX (disip
 
 	Fins a aquest punt, podríem utilitzar algun sistema amb callbacks, on
 	l'usuari simplement entri els fitness als diferents individuus (combinacions
-	de radicals), però com que la evaluació no és instantanea, el programa no
+	de ramificacions), però com que la evaluació no és instantanea, el programa no
 	pot ser interactiu en el sentit clàssic del terme (inici-interacció-fi),
 	sinó que ha de permetre aturar-se i més endevant, tornar a rependre el curs
 	del algoritme evolutiu. 
@@ -94,26 +98,87 @@ possibles variants i combinacions de radicals, i mesurant la energia %XXX (disip
 \section{Context Químic} % (fold)
 	\label{sec:Context Quimic}
 
+	\subsection{Química combinatòria} Típicament es pot dividir el
+	desenvolupament d'un fàrmac en tres grans fases. Una primera \emph{in
+	vitro}, en la qual es treballa exclusivament en laboratoris de síntesi i
+	disseny de biomolècules. Una altra posterior \emph{in vivo}, en la que es
+	treballa amb models biològics o en animals. Finalment, l'última fase que ja
+	és en humans. Cada cop que es passa de fase, la precisió dels models és més
+	acurada i més fidel al pacient final. Malauradament el cost també pateix un
+	gran augment cada cop que s'avança en aquesta escala. Amb la qual cosa això
+	ha propiciat el naixement de filosofies de disseny \emph{in vitro} tals com
+	la química combinatòria.
+
+	La química combinatòria és una tècnica molt emprada en el disseny de nous
+	fàrmacs. La filosofia original consta de dues parts, primer una on es proven
+	milers i fins i tot milions de compostos per veure si algun d'ells
+	aconsegueix mínimament l'objectiu que s'està buscant. Un cop trobat un
+	\emph{core}, s'entra en una segona fase d'optimitzacions d'aquest compost.
+
+	Aquesta filosofia s'ha ajudat molt de la biotecnologia moderna. S'han
+	automatitzat tots els processos que abans es feien manualment, de manera que
+	el rendiment (\emph{throughput}) s'ha multiplicat en variïs ordres de
+	magnitud. Però això no ha evitat que els costos de desenvolupament d'un nou
+	fàrmac també hagen augmentat en varis ordres de magnitud.
+
+	\subsection{Química combinatòria virtual}
+
+	L'augment de costos i de temps de les fases \emph{in vitro}, ha donat lloc
+	al naixement a una fase prèvia, coneguda com \emph{in silico}. En aquesta
+	nova fase, els models emprats fins i tot són més dolents que els models
+	emprats en la fase \emph{in vitro}.  L'avantatge d'aquesta fase rau en que
+	els costos i temps es redueixen, ja que un supercomputador pot provar de
+	forma molt ràpida un gran nombre de compostos.
+
+	Aquest fet ha donat lloc a la química combinatòria virtual, on ara els
+	milions de compostos són provats per via computacional, i sols uns quants
+	centenars o desenes de \emph{leaders} passaran a la fase \emph{in vitro}.
+
+	Aquestes tècniques han començat a establir-se en el disseny de fàrmacs des
+	de fa uns 10 anys. Recentment està sorgint altra tendència més innovadora i
+	prometedora que és introduir elements d'intel·ligència artificial en aquesta
+	fase. La vessant de la intel·ligència artificial que està sent més
+	utilitzada en aquests tipus de problema són els algorismes de cerca, i
+	concretament, algorismes evolutius. Encara que, no es descarten altres àrees
+	de la intel·ligència artificial com l'aprenentatge artificial, etc.  Per
+	exemple, per desenvolupar models biològics virtuals, aprendre les
+	estructures que actuen com a bons fàrmacs, o resolucions d'estructures
+	tridimensionals. El límit, com sempre en la informàtica, és la imaginació
+	humana.
+
+\subsubsection{El nostre problema} % (fold)
+
+	En el nostre cas, posicionem el nostre programa en la fase d'optimització,
+	una vegada es disposa d'un esquelet que presenta certa activitat i tenint
+	uns punts d'on poden penjar seqüències d'atoms, anomenades ramificacions (o
+	R), anar provant d'enganxar els diferents R en cadascun dels punts definits
+	com a inicis de R.
+
 	En el proccés de descobriment de fàrmacs (drug discovery), no només és
-	necessari trobar un compost que reaccioni favorablement en una molècula
-	objectiu, sinó que també ha de reunir certes condicions per tal que un
-	principi actiu es pugui convertir en un fàrmac aplicable.  Aquestes
-	condicions son tals com:
+	necessari trobar un compost que reaccioni favorablement a una molècula
+	objectiu (target), sinó que també ha de reunir certes propietats per tal que
+	un principi actiu es pugui convertir en un fàrmac aplicable.  	
 
-	\begin{itemize}
-		\item No toxicitat
-		\item Que es el cos no el rebutgi
-		\item Facilitat d'absorció i estabilitat del nou compost (lligand +
-				receptor)
-	\end{itemize}
-	
-	Una de les branques del drug discovery és el ``De novo'', que consisteix en
-	descobriment de fàrmacs nous, a partir 
+	Aquestses propietats , moltes vegades vénen determinadess per aquestes
+	Branques o ramificacions, que fan que un mateix esquelet, sigui més o menys
+	absorbible pel cos, o pot donar-li propietats negatives per als nostres
+	objectius.
 
-	Aquests trets característics, moltes vegades vénen determinats per 
+	Quan en un laboratori, se sap sintetitzar un esquelet, la producció de les
+	diferents variants d'aquest esquelet és molt senzilla.  És per això que té
+	sentit explorar les possibles combinacions de Rs una vegada s'ha fet la
+	inversió de desenvolupar el procediment per a sintetitzar aquest scaffold.
 
+	El que hem fet aquí és crear un programa que mitjançant un algorisme
+	genètic permet trobar un conjunt de ramificacions que optimitzen el fàrmac.
+
+	El problema que hem analitzat en un principi és el de %XXX
+	on tenim un espai de búsqueda de 15360 possibles combinacions.
+
+	Com es veurà a durant el capítol, hem volgut anar més enllà i no cenyir-nos
+	només a solucionar aquest problema, però per aquest treball, els resultats
+	presentats sí que seràn respecte a aquest cas.
 % section Context Químic (end)
-
 
 \section{Procediment informàtic} % (fold)
 \label{sec:Procediment informatic}
@@ -148,8 +213,8 @@ La creació de experiments nous sí que és una labor de Chiron, i és a partir
 d'aquest moment on Chiron s'encarrega de registrar els events.
 
 Per a la creació d'un nou experiment, Chiron necessita únicament el número de
-Radicals que conté l'esquelet (R1 \dots RN), el número de al·lels diferents que
-poden estar en cadascun dels Radicals, el tamany de la població, i un booleà
+ramificacions que conté l'esquelet (R1 \dots RN), el número de al·lels diferents que
+poden estar en cadascuna de les ramificacions, el tamany de la població, i un booleà
 indicant si volem que chiron recordi (cachegi) els resultats o no.  Amb aquestes
 dades, Chiron en té prou per començar l'experiment.  És clar que també demanarà
 un nom per al que l'usuari s'hi pugui referir.
@@ -219,7 +284,7 @@ La solució que s'ha adoptat ha estat la de generar una població d'individuus
 nova, sense tenir en compte ĺa generació anterior, com si es comencés un
 experiment nou.  Fent això evitem que l'Algoritme genètic estigui ``viciat'' de
 bon principi, i maximitzem les probabilitats de trobar algun pou d'energia.
-% funcions graduals / punxegudes
+% funcions graduals vs punxegudes
 
 Les proves de correctesa del programa, s'han fet amb funcions matemàtiques
 contínues, per tal de saber del cert que l'algorisme funciona bé.  Els resultats
@@ -519,11 +584,11 @@ implementació de Chiron.
 \label{ssub:individu (cromosoma)}
 
 En aquest algorisme genètic, els indicis són les diferents combinacions de
-radicals, en cadascuna de les posicions. Com que els canvis entre un al·lel i un
+ramificacions, en cadascuna de les posicions. Com que els canvis entre un al·lel i un
 altre són qualitatius, cada posició del cromosoma és un enter, que representa
 una terminació diferent en funció de la posició on es troba dins el cromosoma.
 
-Així doncs, tenim un vector de N posicions on N és el número de radicals que té
+Així doncs, tenim un vector de N posicions on N és el número de ramificacions que té
 el scaffold, i cada posició conté un enter, amb limits (bounds) d'acord amb les
 especificacions del usuari al iniciar el projecte. 
 
@@ -538,10 +603,21 @@ Si els possibles valors adoptats en cada punt fóssin coneguts en temps de
 desenvolupament del projecte, es podria usar tipus enumerats, per a deixar ben
 clar que els valors són qualitatius i que hi ha la mateixa diferència en un
 al·lel entre el valor 1 i el 2 que entre el 1 i el 5, ja que simplement són
-radicals diferents, i no tenen res a veure un amb l'altre.  Això també ens
+ramificacions diferents, i no tenen res a veure un amb l'altre.  Això també ens
 condiciona els creuaments, com s'explica en la següent secció.
 
 %PUNT
+
+\subsubsection{Selecció} % (fold)
+\label{ssub:CSeleccio}
+En aquest problema, hem utilitzat un algorisme de sel·lecció per Torneig
+determinista ($p=1$), on competeixen dos individuus.  Donat que les poblacions
+són relativament petites en la majoria de casos (tenim un espai total de cerca
+de gairebé 16000), hem utilitzat un torneig petit, ja que la presió evolutiva
+que implica pujar el torneig en un és molt gran, i de seguida ens estanca en
+problemes de convergència prematura.
+
+% subsubsection Selecció (end)
 
 \subsubsection{Crossover} % (fold)
 \label{ssub:Crossover}
@@ -562,7 +638,6 @@ tant, solucionable amb una mica més de comprovacions, aquests creuaments no
 tenen sentit químic, ja que l'alternativa $i$ de la posició $n$, no té perquè
 tenir res a veure, ni cap correlació amb l'alternativa $i$ de la posició $m$ on
 $n <> m$.
-
 
 Pel creuament s'ha provat un creuament per un punt, i el creuament per dos
 punts, donant resultats similars en els dos casos.  Donat que els experiments
