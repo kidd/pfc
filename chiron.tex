@@ -17,15 +17,15 @@
 	prèviament cap lligand a imitar.
 
 	La situació és la següent.  En determinades situacions, es disposa d'un
-	esquelet o \textit{scaffold} que se sap que té certa activitat, però no es
-	disposa amb seguretat de algunes \textit{ramificacions} (R), que són les
-	parts de la molècula que, sense canviar la seva estructura general, ni la
-	seva activitat (si el ``core'' s'assebla, probablement tindrpàn una
-	activitat similar), faran que es pugui ``enganxar'' millor en el target.
-	Les ramificacions que poden anar en cada posició són conegudes (en la
-	majoria de casos).
+	esquelet o \textit{scaffold} d'una molècula que se sap que té certa
+	activitat, però no es disposa amb seguretat de algunes
+	\textit{ramificacions} (R), que són les parts de la molècula que, sense
+	canviar la seva estructura general, ni la seva activitat (si el ``core''
+	s'assembla, probablement tindrpàn una activitat similar), faran que es pugui
+	``enganxar'' millor en el target.  Les ramificacions que poden anar en cada
+	posició són conegudes (en la majoria de casos).
 
-	En certa manera, podriem dir que és com ``decorar'' un esquelet de la
+	En certa manera, podríem dir que és com ``decorar'' un esquelet de la
 	molècula per a fer-lo més apte per a enganxar-se amb el seu target o diana.
 
 	Un dels problemes que tenen els mètodes actuals són els grans costos
@@ -63,7 +63,7 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	pugui ser utilitzada no només en aquest context, sinó en cualsevol que ens
 	podem trobar en un futur, sempre i quan requereixi uns operadors similars.
 
-	Una altra manera d'imaginarse aquest enfoc \texttt{meta} és pensar-ho com si
+	Una altra manera d'imaginar-se aquest enfoc \emph{meta} és pensar-ho com si
 	separéssim la funció fitness de la resta del procés d'algoritme genètic.
 	L'únic que necesita el algoritme genètic és un receptor de dades, que
 	donada una entrada, hi doni una sortida.  Si es mira d'aquesta manera, no
@@ -72,8 +72,8 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 
 	Fins a aquest punt, podríem utilitzar algun sistema amb callbacks, on
 	l'usuari simplement entri els fitness als diferents individuus (combinacions
-	de ramificacions), però com que la evaluació no és instantanea, el programa no
-	pot ser interactiu en el sentit clàssic del terme (inici-interacció-fi),
+	de ramificacions), però com que la evaluació no és instantànea, el programa no
+	només ha de ser interactiu en el sentit clàssic del terme (inici-interacció-fi),
 	sinó que ha de permetre aturar-se i més endevant, tornar a rependre el curs
 	del algoritme evolutiu. 
 
@@ -91,23 +91,24 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	convertir-se en un programa molt més potent, ja que ara abarca un espectre
 	molt més gran de problemes pels quals està capacitat resoldre.
 
-	Tot seguit s'expliquen els detalls d'implementació.
+	Tot seguit s'explica més a fons algun concepte de la química combinatòria,
+	seguit dels detalls d'implementació de la aplicació.
 
 % section Introducció (end)
 
 \section{Context Químic} % (fold)
 	\label{sec:Context Quimic}
 
-	\subsection{Química combinatòria} Típicament es pot dividir el
-	desenvolupament d'un fàrmac en tres grans fases. Una primera \emph{in
-	vitro}, en la qual es treballa exclusivament en laboratoris de síntesi i
-	disseny de biomolècules. Una altra posterior \emph{in vivo}, en la que es
-	treballa amb models biològics o en animals. Finalment, l'última fase que ja
-	és en humans. Cada cop que es passa de fase, la precisió dels models és més
-	acurada i més fidel al pacient final. Malauradament el cost també pateix un
-	gran augment cada cop que s'avança en aquesta escala. Amb la qual cosa això
-	ha propiciat el naixement de filosofies de disseny \emph{in vitro} tals com
-	la química combinatòria.
+	\subsection{Química combinatòria}
+	Típicament es pot dividir el desenvolupament d'un fàrmac en tres grans
+	fases. Una primera \emph{in vitro}, en la qual es treballa exclusivament en
+	laboratoris de síntesi i disseny de biomolècules. Una altra posterior
+	\emph{in vivo}, en la que es treballa amb models biològics o en animals.
+	Finalment, l'última fase que ja és en humans. Cada cop que es passa de fase,
+	la precisió dels models és més acurada i més fidel al pacient final.
+	Malauradament el cost també pateix un gran augment cada cop que s'avança en
+	aquesta escala. Amb la qual cosa això ha propiciat el naixement de
+	filosofies de disseny \emph{in vitro} tals com la química combinatòria.
 
 	La química combinatòria és una tècnica molt emprada en el disseny de nous
 	fàrmacs. La filosofia original consta de dues parts, primer una on es proven
@@ -189,9 +190,9 @@ flexible i accessible des de tot arreu (web, consola).
 
 El diseny de \texttt{Chiron}, ha hagut de estar molt pensat, i de fet, s'ha vist
 modificat a mesura que avançava la seva implementació per problemes que s'han
-trobat en tecnologies que pensàvem que serien suficienment flexibles per a les
-nostres necessitats, i després s'ha vist que no eren del tot adecuades per a les
-nostres necessitats.
+trobat en tecnologies que pensàvem que serien suficientment flexibles per a les
+nostres necessitats, i després s'ha vist que no eren del tot adecuades per a
+complir els requeriments.
 
 Començarem amb el workflow que ha de permetre Chiron perquè l'usuari pugui
 utilitzar-lo fàcilment i n'extraurem els diferents casos d'ús, i després
@@ -267,17 +268,17 @@ En el cas que en la primera generació no hi hagi cap molècula que presenti la
 més mínima activitat (no superen un llindar donat), Chiron no segueix el curs
 normal de mutacions i creuaments, ja que això ens dóna lloc a un intent de
 convergència que no ens interessa.  Per exemple, si tenim una població de 30
-individuus i tots tenen fitness ~0, Chiron intentarà fer creuaments entre ells
+individuus i tots tenen fitness 0, Chiron intentarà fer creuaments entre ells
 aleatoris (ja que cap d'ells guanya sobre els altres).  No només això sinó que
 al fer això, molts dels individuus de la següent generació seran iguals als ja
 evaluats, ja que hem reduit molt l'espai de búsqueda sobre el que ataquem.
 
-Si evaluéssim funcions matemàtiques contínues i amb un gradient clar fins al
+Si avaluéssim funcions matemàtiques contínues i amb un gradient clar fins al
 millor resultat (o els millors resultats), no tindríem aquest problema, però els
 nostres casos són, en la gran majoría, casos molt difícils, on tenim un espai de
-búsqueda molt gran però els pous amb activitat són molt pocs, i hem d'intentar
-arribar a aquests pous primer, i després optimitzar per les vies del algoritme
-genètic.
+búsqueda molt gran però els pous amb activitat són molt pocs (i estrets), i hem
+d'intentar arribar a aquests pous primer, i després optimitzar per les vies del
+algoritme genètic.
 %figura de la funcio amb pics
 
 La solució que s'ha adoptat ha estat la de generar una població d'individuus
@@ -317,7 +318,6 @@ Una de les funcions trampa que hem provat, és la de mapejar en un vector de bit
 una valoració determinada per a cada suma de bits.  Per exemple, donat un vector
 de 5 posicions:
 
-
  % theme=Berlin;caption_top=1;caption=Exemple tanimotos
  % bits a 1 & valor
  % 0 & 1
@@ -329,7 +329,7 @@ de 5 posicions:
 
 \begin{table}
 \centering
-\caption{Exemple tanimotos}
+\caption{Funció trampa}
 \begin{tabular}{|r|r|}
 \hline
 \multicolumn{1}{|c|}{\textbf{bits a 1 }} & \multicolumn{1}{c|}{\textbf{ valor}} \\
