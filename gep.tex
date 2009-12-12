@@ -181,6 +181,87 @@ clava) la fórmula que estem buscant.
 
 \subsubsection{Arbres} % (fold)
 \label{ssub:Arbres}
+
+Com s'ha explicat en \ref{introGEP i Procinf}, en GEP, la interpretació dels
+cromosomes com a arbres a l'hora d'avaluar-se, fa que necessitem poder passar
+del fenotip(lineal) al genotip (arbre) amb facilitat, i aquest genotip sigui
+tractable com a tal, avaluant les seves característiques en l'entorn (calculant
+l'arbre) de manera còmode, ràpida i eficient.
+
+Per això s'ha desenvolupat un conjunt de classes per a tractar amb arbres, que
+ens permeten construir i avaluar aquests arbres a partir d'un cromosoma (vector
+de símbols).
+
+Aquesta estructura, s'ha programat el més flexiblement possible, deixant la
+possibilitat de ser extesa en un futur, afegint nous tipus d'operacions, i amb
+diferents aritats, més grans de les que hem tingut necessitat fins al moment.
+
+Nosaltres hem tractat només amb aritats 0,1 i dos (a € {0,1,2} ) ja que els
+operands tenien un màxim de aritat 2.
+
+
+ % theme=Berlin;caption_top=1;caption=Exemple tanimotos
+ % simbol & aritat
+ % + & 2
+ % - & 2
+ % * & 2
+ % / & 2
+ % sin & 1
+ % cos & 1
+ % sqrt (arrel quadrada) & 1
+ % terminals (x,y,z..) & 0
+
+\begin{table}
+\centering
+\caption{Exemple tanimotos}
+\begin{tabular}{|l|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{simbol }} & \multicolumn{1}{c|}{\textbf{ aritat}} \\
+\hline
+\hline
++                     & 2 \\
+-                     & 2 \\
+*                     & 2 \\
+/                     & 2 \\
+sin                   & 1 \\
+cos                   & 1 \\
+sqrt (arrel quadrada) & 1 \\
+terminals (x,y,z..)   & 0 \\
+\hline
+\end{tabular}
+\end{table}
+
+Per a poder construir un arbre complet, i avaluar-lo, a partir d'un vector de
+simbols (implementats com a caràcters, donada la manca de símbols en c++ com a
+tipus bàsic), i poder-ho fer amb la màxima robustesa i flexibilitat, s'ha
+implemntat una estructura amb nodes, i un arbre tipus template.
+
+Tot seguit es mostra el diagrama de classes d'aquesta part GEP.
+
+%figura estructura de classes
+
+Com es pot veure en la figura anterior (XXX ref fig), s'ha implementat una
+classe abstracte Node de la que ``pengen'' les diferents especialitzacions, que
+son les diferents operacions que suporta GEP, o bé els terminals. Els terminals,
+com és d'esperar, tenen aritat zero, i al ser evaluats, retornen el valor del
+terminal en aquest moment com a resultat.  Els operadors (aritat > 0),
+requereixen d'altres nodes per a calcular el seu resultat.  D'això es deriva que
+en un cromosoma donat, al transformarlo a genotip, les fulles seran totes
+terminals, ja que son l'únic tipus de node que poden evaluar a un valor sense
+necessitat de cap altre resultat precalculat.
+
+Al haver-se de crear nodes dinàmicament (i intensament) durant cada execució,
+s'ha utilitzat un patró \emph{Factory}, per facilitar la creació de nodes amb
+una sintaxis extensible, per quan es vulguin afegir operadors, i per a fer més
+còmode la seva utilització.
+
+Després de implementar-se aquesta part, hem descobert una manera tant o més
+elegant de fer-se aquest procés:  Utilitzant les llibreries Boost (XXX ref), que
+ofereixen, entre d'altres, funcionalitatsl pròpies de llenguatges funcionals,
+com per exemple Boost::Functional, que permet la programació de c++ retornant
+funcions com a valor de retorn de una funció (programació d'ordre superior).  
+D'aquesta manera, encara podem delegar un pas més avall la creació de nodes, 
+
 arbres, nodes, evaluacio, etc.
 patro estrategia + factory
 Parlar de BOOST::Functional
