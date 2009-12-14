@@ -467,9 +467,115 @@ que s'ha utilitzat en \texttt{GEP}.
 \subsection{Principis Bàsics} % (fold)
 \label{sub:Principis Basics}
 
+En GEP, els principals elements son els cromosomes i els arbres d'expressions,
+on els segons són la expresió del la informació ogenètica codificada en els
+cromosomes.  Com en la natura, el procés de decodificació s'anomena
+\emph{traducció}.
+
+La correspondència d'un a l'altre ha de ser únivoca i hi ha unes regles que ens
+permeten passar d'un a l'altra.  En la natura, aquesta traducció no és pas tant
+fàcil, ja que no se sap gairebé res del genotip, si tenim només un fenotip, però
+per a tenir una traducció fàcil dins de GEP, es disposa d'una notació anomenada
+\emph{Karva Notation} que ens permet fer les traduccions en les dues direccions
+fàcilment \ref{ssub:Notacio Karva}.
+
+
+%http://www.gene-expression-programming.com/Tutorial002.asp
+\subsubsection{Notació Karva} % (fold)
+\label{ssub:Notacio Karva}
+
+La notació Karva, és una manera de representar qualsevol expressió matemàtica o
+lògica de manera que es pugui traslladar a un arbre.\cite{ferreira:2001}
+
+Les estructures lineals que conformen els individuus són els cromosomes, i cada
+cromosoma té un o més gens, que aquí prenen un altre significat més ampli, no
+referint-se als ``àtoms'' indivisibles (com en els AE que hem vist fins ara)
+sinó que cada gen està associat a una K-expression. \cite{ferreira:2007}
+
+Tot seguit es mostra un exemple d'un gen, i en \ref{fig:expression tree1} el seu Arbre d'expresió equivalent
+
+\begin{center}
+0123456    
++/*abcd
+\end{center}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics{intro/et1.png}
+\end{center}
+\caption{ET}
+\label{fig:expression tree1}
+\end{figure}
+
+La traducció d'un a l'altre és directe.  El primer element en el gen (posició
+0) correspon a la arrel del arbre.  Llavors, sota d'aquest node, s'enganxen
+tants nodes fills com arguments tingui la funció representada pel node arrel
+(dos en aquest cas). Els nodes fills es van omplint recursivament, consumint
+simbols del cromosoma, fins que un nivell del arbre queda només omplert per
+nodes terminals, que no son més que nodes on el símbol que contenen té aritat
+zero.
+
+Més formalment, tant el gen com l'arbre \ref{fig:expression tree1} poden ser
+representats per la expresió matemàtica:
+
+	$\frac{a}{b}+c \times d$
+
+Per assegurar que els arbres que es crein siguin sintacticament vàlids,
+es divideix un gen en dues parts, amb mides que segueixen unes normes
+determinades.  Un gen es composa de la primera part (\emph{head}) que conté
+funcions i terminals, i d'una segona part (\emph{tail}) que només conté
+terminals (aritat zero). Si el tail és suficientment llarg com per omplir la
+última capa del arbre que genera el propi gen, sempre hi haurà prous operands
+per a donar a les funcions.
+
+% subsubsection Notació Karva (end)
+
 \subsubsection{individus} % (fold)
 \label{ssub:individus}
 % subsubsection individus (end)
+Usually the genes evolved by GEP are more interesting than the gene presented above, not only with noncoding regions at their ends but also with more diverse branching patterns.
+
+Consider another gene:
+
+01234567890123456 	 
+
+Q/a*+b-cbabaccbac
+	
+
+(2)
+
+where "Q" represents the square root function. This gene has a head (from position 0 through 7 and shown in blue) of length 8 and a tail (from position 8 through 16) of length 9. Note that the head contains both functions (which may take 1, 2,..., n arguments) and terminals (the variables and constants in a problem), whereas the tail contains exclusively terminals (this structural organization is indeed the cornerstone of GEP as it ensures that all the programs encoded in the genes are syntactically correct). The translation of such genes is done exactly as shown for gene (1), giving:
+
+Note that, in this case, not all the elements in the gene were used to construct the ET, as the translation ends whenever a line containing only terminals is formed. In this particular case, the gene ends at position 16 whereas the K-expression ends at position 9.
+
+The beauty and elegance of the gene/ET system of Gene Expression Programming by itself is rather amazing, but most importantly it's that this is only the beginning and, indeed, this elegant genotype/phenotype system is at the heart of systems much more complex and also more efficient. In one such system the chromosomes contain more than one gene, and they are obviously called multigenic systems. In these systems, the chromosomes consist of multiple genes, and each gene codes for a sub-ET or sub-program. After translation, the sub-ETs are linked by special functions, the so called linking functions. These functions link the sub-ETs together one after the other in an orderly fashion. For example, the following chromosome composed of three genes (position 0 indicates the beginning of each gene):
+
+012345678012345678012345678 	 
+
+*aQ+abbaa/Q*/aababa*+Qaabba
+	
+
+(3)
+
+codes for the three following sub-ETs:
+
+Then the sub-ETs are afterwards linked by one of the available linking functions. For instance, if the linking function were addition, then the following program would be obtained (the linking function is shown in gray):
+
+Note that the final program represented in the Figure above could be linearly encoded as a single K-expression:
+
+01234567890123456 	 
+
+++a*/aQQ*+/aaabba
+	
+
+(4)
+
+However, the use of multigenic chromosomes is more appropriate to evolve solutions to complex problems, for they permit the modular construction of complex, hierarchical structures, where each gene codes for a smaller and simpler building block. These smaller building blocks are separated from one another and are therefore free to evolve independently, allowing for the creation of concrete new units that might prove handy in a new situation.
+
+So, what is the use of Karva notation and why is it so important? The answer is that it allows adaptation or, in other words, learning: you replicate the linear strings of GEP, change a few bits, and you end up with new strings that encode slightly better programs. This is the basis for learning and evolution, and the plasticity of GEP genes with their noncoding regions allows the totally unconstrained exploration of the solution space, therefore increasing the odds of finding very good solutions to the problem at hand. No other programming system is as unconstrained as the genotype/phenotype GEP system in terms of the mechanisms used to create genetic variation (the Genetic Programming system is restricted to an inefficient tree-crossover and it's so complicated structurally that it never even developed beyond a single tree system [2]).
+
+Furthermore, no other system has as much growth potential as GEP in the sense that the basic GEP system can give rise to other, more complex systems. We've already encountered here two GEP systems: the unigenic system and the multigenic system. But both these systems can be used as the starting point to create yet more complex systems: from simple GEP systems that elegantly handle random numerical constants to more sophisticated systems that can evolve highly complex structures such as neural networks, decision trees, automatically defined functions and polynomial networks. You can learn all about these and other GEP systems in Ferreira's book
+
 
 \subsubsection{Esquema Bàsic} % (fold)
 \label{ssub:Esquema Basic}
@@ -500,7 +606,7 @@ que s'ha utilitzat en \texttt{GEP}.
 % subsubsection Mutació (end)
 
 \subsubsection{Reemplaçament} % (fold)
-\label{ssub:Reemplaçament}
+\label{ssub:Reemplacament}
 % subsubsection Reemplaçament (end)
 
 % subsection Operadors (end)
