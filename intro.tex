@@ -293,6 +293,17 @@ tal que $p<1$, hi haura un numero de casos $1-p$ on no guanyarà el millor.
 Aquesta tècnica redueix la presió evolutiva permetent que individuus pitjors,
 passin el seu codi genètic a següents generacions, augmentant la diversitat.
 
+L'algorisme esquematitzat (tant per p=1 com per p<1) és el següent:
+
+\begin{itemize}
+	\item S'escullen $N$ individuus de la població aleatòriament.
+	\item S'agafa el millor individu amb probabilitat $p$.
+	\item S'agafa el segon millor individu amb probabilitat $p \times (1-p)$
+	\item S'agafa el tercer millor individu amb probabilitat $p \times (1-p)^2$
+	\item \ldots
+\end{itemize}
+
+
 En aquest projecte s'ha utilitzat una selecció \emph{stochastic
 universal samplig} \cite{B87a} amb \emph{rank selection} \cite{B87b} i una
 tècnica d'especiació coneguda com \emph{sharing} \cite{33}.
@@ -534,22 +545,40 @@ per a donar a les funcions.
 \label{ssub:individus}
 % subsubsection individus (end)
 
-Un individu o cromosoma està format per un o més gens.  En la versió més primaria, un cromosoma conté només un gen, però es poden combinar diversos gen, creant cromosomes multigen.
+COm s'ha explicat en \ref{ssub:Notacio Karva}, els individus son representats en
+una tira de simbols (genotip), però al interpretar-los i evaluar-los, tenen una
+representació en forma d'arbre d'expressió similar a un AST.
 
-Usually the genes evolved by GEP are more interesting than the gene presented above, not only with noncoding regions at their ends but also with more diverse branching patterns.
+Un individu o cromosoma està format per un o més gens.  En la versió més
+primaria, un cromosoma conté només un gen, però es poden combinar diversos gens,
+creant cromosomes multigen, com s'explicarà més endavant.
 
-Consider another gene:
+En aquest tipus de notació, existeixen el que denominem ``zones
+no-codificadores'', que són parts del gen, que per diversos motius formen part
+del genotip, però no tenen representació, ni es mostren en el fenotip.  Un
+exemple d'això és
+
 
 01234567890123456 	 
 
 Q/a*+b-cbabaccbac
 	
+On la Q representa l'arrel quadrada.  En aquest gen, té el i\emph{head} (que ocupa
+de la posició 0 a la 7) de llargada, i el tail (de la 8 a la 16) de llargada 9.
+El head té tant funcions com terminals, i el tail, només té terminals.
 
-(2)
+La codificació d'aquest gen es mostra en XXX (\ref{}) mostra com en aquest cas,
+no han fet falta tots els elements del gen per a construir l'arbre.  Això és
+perquè la fórmula que en assegura tenir prou tail, preveu el pitjor dels casos,
+éssent tots els elements del head funcions amb la màxima aritat.  Com que en
+aquest cas, tenim una arrel quadrada (i en l'arrel del arbre), deixem de
+necessitar gairebé la meitat del gen per a fer la traducció.
 
-where "Q" represents the square root function. This gene has a head (from position 0 through 7 and shown in blue) of length 8 and a tail (from position 8 through 16) of length 9. Note that the head contains both functions (which may take 1, 2,..., n arguments) and terminals (the variables and constants in a problem), whereas the tail contains exclusively terminals (this structural organization is indeed the cornerstone of GEP as it ensures that all the programs encoded in the genes are syntactically correct). The translation of such genes is done exactly as shown for gene (1), giving:
-
-Note that, in this case, not all the elements in the gene were used to construct the ET, as the translation ends whenever a line containing only terminals is formed. In this particular case, the gene ends at position 16 whereas the K-expression ends at position 9.
+Aquests trossos de cromosoma que no s'utilitzen, participen igualment en els
+creuaments (es fan a nivell de vector de símbols), i fan que una mutació en una
+zona del \emph{head} ``activi'' una zona prèviament inactiva.  Això dona tant
+als creuaments com a les mutacions molta més versatilitat que en els algorismes
+clàssics.
 
 The beauty and elegance of the gene/ET system of Gene Expression Programming by itself is rather amazing, but most importantly it's that this is only the beginning and, indeed, this elegant genotype/phenotype system is at the heart of systems much more complex and also more efficient. In one such system the chromosomes contain more than one gene, and they are obviously called multigenic systems. In these systems, the chromosomes consist of multiple genes, and each gene codes for a sub-ET or sub-program. After translation, the sub-ETs are linked by special functions, the so called linking functions. These functions link the sub-ETs together one after the other in an orderly fashion. For example, the following chromosome composed of three genes (position 0 indicates the beginning of each gene):
 
