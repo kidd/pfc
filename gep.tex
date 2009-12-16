@@ -200,7 +200,7 @@ Nosaltres hem tractat només amb aritats 0,1 i dos (a € {0,1,2} ) ja que els
 operands tenien un màxim de aritat 2.
 
 
- % theme=Berlin;caption_top=1;caption=Exemple tanimotos
+ % theme=Berlin;caption_top=1;caption=Relació funció-aritat
  % simbol & aritat
  % + & 2
  % - & 2
@@ -213,7 +213,7 @@ operands tenien un màxim de aritat 2.
 
 \begin{table}
 \centering
-\caption{Exemple tanimotos}
+\caption{Relació funció-aritat}
 \begin{tabular}{|l|r|}
 \hline
 \multicolumn{1}{|c|}{\textbf{simbol }} & \multicolumn{1}{c|}{\textbf{ aritat}} \\
@@ -272,8 +272,74 @@ Parlar de BOOST::Functional
 
 \subsubsection{Individu (Cromosoma)} % (fold)
 \label{ssub:Individu (Cromosoma}
-% subsubsection Individu (Cromosoma (end)
 
+Per aquest s'han utilitzat els cromosomes representats com s'ha explicat en
+l'apartat \ref{issub:individus}, però no només s'han utilitzat cromosomes amb un
+gen, sinó que hem seguit dues altres maneres, més sofisticades per a representar
+les nostres fórmules matemàtiques.
+
+Aquests mètodes \cite (XXX) es basen en complicar una mica més el cromosoma,
+però sempre fent servir la notacio karva \ref{XXX}.
+
+Una de les millores, és encabir més d'un gen en un cromosoma. Fent això, el que
+aconseguim és evolucionar dos subarbres, que en el moment de la avaluació,
+s'uneixen d'alguna manera.
+
+Si apliquem aquesta tècnica, es facilita la creació de subarbres que conformen
+el que s'anomenen ``building blocks'', o blocks constructors que representen una
+petita part (però significativa) de la fórmula que es vol acabar trobant.
+
+EXEMPLE
+
+Una de les maneres de combinar els diferents gens és utilitzant \emph{Link
+functions} o funcions d'enllaç, que son operadors que decidim a priori, i
+seràn els nodes arrel de l'arbre final.
+
+En \ref{figXXX} es mostra com s'avaluarà el cromosoma mostrat abans amb funcions
+d'enllaç suma.
+
+Aquesta millora, dona molta flexibilitat al algorisme genètic, ja que li dona
+poder per a fer combinacions entre diferents cromosomes (en el creuament), només
+cambiant una part del arbre, i no fent cambis molt radicals al fenotip.  Aquest
+procés de linkatge està també inspirat amb els procediments de la naturalesa per
+a ensamblar proteïnes a partir de components més petites.
+
+La següent implementació i millora és construir un gen una mica diferent en un
+dels extrems del cromosoma, que contingui informació codificada sobre el propi
+cromosoma.  Aquest tipus de metainformació és molt valuosa, i ens permet que el
+propi cromosoma sàpiga com ensamblar-se i a més, ho pugui fer d'una manera
+variable, que vagi evolucionant al mateix temps que evoluciona tot el propi gen.
+
+El caire recursiu d'aquesta millora és una de les claus del bon funcionament de
+GEP, ja que permet guardar una espècie d'``estat'', que ens dona dades sobre com
+organitzar la pròpia informació que conté.
+
+La manera de codificar-se, però, és molt similar a la que ja coneixem fins ara,
+i gràcies a aquesta homogenietat, no s'han de fer tractaments especifics per a
+aquesta metainformació ja que es codifica també amb forma d'un arbre amb notació
+Karva, que en comptes d'utilitzar els terminals com a elements d'aritat zero, el
+que s'utilitza com a elements ``de finalització'' són identificadors que es
+refereixen als anteriors gens o ADT.
+
+Com tots els gens, aquest gen especial, té un head i un tail, i en el seu head
+es poden utilitzar els mateixos operadors que en la resta de heads.  Tot i així,
+nosaltres hem reduit el nombre d'operadors a només $+,-,*,/$, descartant
+operands com el sinus, cosinus i la arrel quadrada.
+
+Com que el número de terminals diferents que pot tenir aquest meta-gen vé
+determinat per el número total de gens amb els que configurem els cromosomes (el
+número de terminals serà N-1 on N és el número total de gens), el número de gens
+s'ha de saber al principi de la execució del programa, i no pot ser modificat
+durant la execució (també violariem tota la homoiconicitat  d'un cromosoma respecte
+els altres).
+
+Per codificar aquests ``punters'' als ADTs, utilitzem números del 0..N-2
+(seguint la mateixa notació anterior).
+
+A continuació es mostra com un cromosoma multigènic homeòtic es codifica i
+s'evalua.
+
+% subsubsection Individu (Cromosoma (end)
 
 \subsubsection{Inicialització} % (fold)
 \label{ssub:Inicialitzacio}
