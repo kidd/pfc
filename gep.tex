@@ -368,11 +368,22 @@ individual en el genotip.
 
 \begin{itemize}
 	\item Unigen : En cada cromosoma, només hi ha un gen.  Això vol dir que hi
-	ha un \emph{head} i un \emph{tail}.
-	\item Multigen-AD:
-	\item Multigen homoiconic
-
+	ha un \emph{head} i un \emph{tail}. És la versió ``clàssica'', que s'ha
+	explicat en \ref{XXX} (intro)
+	\item Multigen-AD: Cromosoma multigen amb funcions de linkatge.
+	\item Multigen homeòtic: Cromosoma multigen amb l'últim gen contenint
+	informació sobre com s'organitzen els altres gens, en forma de arbre
+	(notació Karva)
 \end{itemize}
+
+En funció de quina variant executem, el mòdul  d'inicialització té una relació
+dels rangs del cromosoma amb col·leccions de símbols que poden anar en cada
+rang.  Sabent això la inicialització es fa triant aleatòriament un símbol dins
+de la col·lecció per a cada posició.
+
+Com que per definició, els cromosomes construits en Karva notation sempre són
+sintàcticament correctes no ens hem de preocupar de validar que en les
+avaluacions donin errors d'aquest tipus.
 % subsubsection Inicialització (end)
 
 \subsubsection{Sel·lecció} % (fold)
@@ -381,7 +392,43 @@ torneig?
 % subsubsection Sel·lecció (end)
 
 \subsubsection{Creuament} % (fold)
-\label{ssub:Creuament}
+\label{Gssub:Creuament}
+
+Els creuaments en GEP funcionen d'una manera similar als Algorismes Genètics
+clàssics, en tant que no hem de tenir present la futura traducció del genotip al
+fenotip.  Entre les tres formes de creuament, s'arriba a un 0.8 de probabilitat
+de creuament.
+
+La única cosa que faria que un creuament donés lloc a un cromosoma invàlid,
+sería canviar de posicions els elements que creuem a menys que movem gens
+sencers.
+
+\paragraph{Creuament per un punt} % (fold)
+\label{par:Creuament per un punt}
+És el creuament que ja hem vist en els Algorismes Evolutius, on es tria
+aleatòriament un punt de tall per cada parella de pares, i d'allà en surten dos
+cromosomes nous, que contenen informació dels dos pares, l'un tenint la primera
+part del p1 i la segona del p2 i l'altre fill l'invers.  Aquesta tècnica de
+recombinació ofereix molta variabilitat a l'algorisme, éssent després de la
+mutació l'operador que n'aporta més.
+% paragraph Creuament per Un punt (end)
+\paragraph{Creuament per dos punts} % (fold)
+\label{par:Creuament per dos punts}
+En aquest creuament, donats dos cromosomes a creuar, es trien dos punts (quedant
+cadascun d'ells dividit en tres parts), i s'intercanva la part central.
+D'aquest creuament cal notar que es beneficia molt de les parts que podien
+quedar ocultes en els seus progenitors, activant-les de nou.  Aquest material
+genètic amagat en forma de regió no-codificadora, que s'ha anat creuant i mutant
+al llarg de les generacions, pot ara prendre protagonista i ajudar (o no) a
+millorar el fitness d'un element.
+% paragraph Creuament per dos punts (end)
+\paragraph{Creuament per recombinació de gen} % (fold)
+\label{par:Creuament per recombinacio de gen}
+
+L'últim creuament que hem aplicat exitosament és el de la recombinació de gens.
+En aquest procés, es separen els gens dels dos cromosomes pares, i en el procés
+de recombinació, es reordenen els gens
+% paragraph Creuament per translació de gen (end)
 
 Creuaments, arbres subarbres blablba
 
@@ -389,7 +436,63 @@ tipus de creuaments
 % subsubsection Creuament (end)
 
 \subsubsection{Mutacions} % (fold)
-\label{ssub:Mutacions}
+\label{Gssub:Mutacions}
+
+Les mutacions són els operadors que proporcionen més variabilitat genètica al
+algorisme, i que eviten la convergència, ajudant-nos a explorar el màxim espai
+de búsqueda possible.
+
+Igual que en el cas dels creuaments \ref{Gssub:Creuament}, també en tenim de
+tres tipus, però a diferència del creuament, aquí si que hem de tenir un control
+més estricte de quins símbols cambien, i a què cambien, ja que no totes les
+posicions tenen un mateix conjunt de possibles valors, i hem de tenir en compte
+quina posició estem tocant per a aplicar una mutació.
+
+Les mutacions no tant sols muten un símbol, sinó que normalment muten un
+conjunt de símbols consecutius o no.
+
+\paragraph{IS} % (fold)
+\label{par:IS}
+Aquesta és la mutació més simple de totes, i s'ha implementat només per a
+usarla en la fase de prototipatge, quan s'utilitzàven cromosomes unigen.  Donat
+un cromosoma, s'escull una posició, i una llargada, normalment no superior a la
+tercera part de la mida total del gen, i es ``puja'' cap a una posició anterior
+en el gen.  La zona font pot ser qualsevol posició del gen, però la zona destí,
+té com a restricció no poder començar en l'arrel del arbre (primera posició en
+el cromosoma).  Aquesta restricció té la seva explicació en què si tenim un
+cromosoma amb un sol gen, i pujem un terminal a la posició arrel, el que fem és
+anular tot l'arbre, ja que els terminals tenen aritat zero.
+
+XXX imatge d'un cromosoma ``capat''.
+% paragraph IS (end)
+
+\paragraph{RIS} % (fold)
+\label{par:RIS}
+En els cromosomes multigen, aquest no és un problema, ja que eliminant un sol
+gen no eliminarem la flexibilitat del cromosoma complet, ja que probablement hi
+haurà alguna altra part en un altre gen, que continuarà éssent funcional.  En el
+cas dels multigen homeòtics, desactivem aquest creuament per al meta-gen.
+% paragraph RIS (end)
+
+\paragraph{Translació de gen} % (fold)
+\label{par:Translacio de gen}
+
+Aquesta mutació consisteix, com el seu nom sugereix, en moure un dels ADTs a una
+altra posició.  Si les relacions entre gens estan en el gen especial (que hem
+anomenat meta-gen), en cambiar dos gens de posició, la estructura del arbre
+construit per la part de l'arrel es mantindrà, però els gens que actuen de
+terminals en aquest meta-gen, cambiaràn, donant lloc a un fenotip totalment
+diferent.  Cal notar que aquest tipus de mutació, només es pot aplicar si
+utilitzem individuus multigen, i que en el cas dels multigen homeòtics, no podem
+fer participar el meta-gen en aquestes traslacions, ja que els seus terminals no
+son de la mateixa classe que els de la resta de gens.  La possibilitat de
+simplement intercanviar els identificadors en el meta-gen, tampoc serveix ja
+que, tot i donar el mateix resultat (al menys en un principi), varia el
+contingut del meta-gen, fent que varii la seva descendència (si es que en té) de
+la que donaria lloc amb l'altre procediment.
+
+% paragraph Translació de gen (end)
+TRans
 
 es mante la simplicitat gracies a karva notation\ldots
 
