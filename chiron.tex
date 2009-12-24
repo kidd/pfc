@@ -13,7 +13,7 @@
 	\label{sec:Introduccio}
 	Un altre problema on hem aplicat Algoritmes evolutius és en el descobriment
 	de fàrmacs \texttt{de novo}.  \texttt{De novo} és el nom que es dóna a les
-	tècniques relacionades amb el descobriment de 0, és a dir, on no es té
+	tècniques relacionades amb el descobriment des de zero , és a dir, on no es té
 	prèviament cap lligand a imitar.
 
 	La situació és la següent.  En determinades situacions, es disposa d'un
@@ -39,7 +39,7 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	una mica, el creixement és exponencial, fent molt costós el procediment
 	seguint aquest mecanisme.
 
-	Si pensem que la qualitat del resultat evaluat és en funció de les
+	Si pensem que la qualitat del resultat avaluat és en funció de les
 	ramificacions escollits per a cada R1..RN, podem anar una mica més enllà i
 	intentar fer una aplicació que ens ajudi i ens guii a trobar un lligand amb
 	bona activitat explorant només una petita part de l'espai de cerca.
@@ -48,7 +48,7 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	semi-interactiu que ens permeti arribar a la millor tria de ramificacions (o
 	alguna de molt bona) sintetitzant una petita part del espai de búsqueda.}
 
-	Per a evaluar la qualitat de una combinació, no hi ha més remei que
+	Per a avaluar la qualitat de una combinació, no hi ha més remei que
 	sintetitzar la molècula en qüestió en el laboratori i retornar el resultat.
 	Així doncs, es tracta d'un algorisme genètic interactiu %XXX ref a paper.
 	que ens guiarà les proves que hem de fer a través dels creuaments i les
@@ -67,19 +67,19 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	separéssim la funció fitness de la resta del procés d'algoritme genètic.
 	L'únic que necesita el algoritme genètic és un receptor de dades, que
 	donada una entrada, hi doni una sortida.  Si es mira d'aquesta manera, no
-	estem fent més que desacoblar la evaluació del procés de creuaments,
+	estem fent més que desacoblar la avaluació del procés de creuaments,
 	mutacions i reproducció.
 
 	Fins a aquest punt, podríem utilitzar algun sistema amb callbacks, on
 	l'usuari simplement entri els fitness als diferents individuus (combinacions
-	de ramificacions), però com que la evaluació no és instantànea, el programa no
+	de ramificacions), però com que l'avaluació no és instantànea, el programa no
 	només ha de ser interactiu en el sentit clàssic del terme (inici-interacció-fi),
 	sinó que ha de permetre aturar-se i més endevant, tornar a rependre el curs
 	del algoritme evolutiu. 
 
 	Una vegada estem en aquest punt, la següent evolució lògica és la
 	deslocalització també espaial de les 2 parts.  Donat que el procés
-	d'evaluació d'una combinació de erres donada pot trigar dies, el coll
+	d'avaluació d'una combinació de erres donada pot trigar dies, el coll
 	d'ampolla serà clarament aquest, permetent-nos així separar algorisme
 	genètic i Fitness a través d'una xarxa, i permetent convertir el sistema en
 	un servei web, accessible des d'arreu del món.
@@ -233,7 +233,7 @@ els perquès:
 	\item \textbf{Perquè decidir si guardem els resultats previs?}.
 	Aparentment, sempre que calculem un individuu nou, haurñiem de guardar-nos
 	els resultats obtinguts per si més endevant surt el mateix element.  El fet
-	que ens fa donar-li la opció al usuari és que l'evaluació de la activitat
+	que ens fa donar-li la opció al usuari és que l'avaluació de la activitat
 	d'una molècula, es fa en un laboratori, i segons el tipus d'experiments que
 	es fan, els resultats només tenen valor uns en relació amb els altres.  Si
 	és així, al usuari no li interessa que es guardin els valors ja calculats,
@@ -242,18 +242,18 @@ els perquès:
 \end{itemize}
 
 Una vegada l'usuari ha creat el nou experiment, se li proposa unes quantes
-molècules a evaluar (tantes com hagi decidit l'usuari com a tamany de la
+molècules a avaluar (tantes com hagi decidit l'usuari com a tamany de la
 població).
 
-Al cap d'un temps, quan l'usuari ha evaluat les molècules proposades per Chiron,
+Al cap d'un temps, quan l'usuari ha avaluat les molècules proposades per Chiron,
 aquest retornarà a la interfície de Chiron, identificarà l'experiment, i posarà
-valors a cadascuna de les molècules evaluades.  Una vegada les tingui TOTES
-evaluades (sinó estan totes, Chiron no deixarà passar d'aquest punt), s'activarà
+valors a cadascuna de les molècules avaluades.  Una vegada les tingui TOTES
+avaluades (sinó estan totes, Chiron no deixarà passar d'aquest punt), s'activarà
 la opció de \texttt{fer una altra iteració}.  
 
 En aquest punt, a partir de les dades que tenim, Chiron fa una iteració i
 presentarà al usuari una nova generació de molècules, fent creuaments i
-mutacions sobre les molècules que tinguem evaluades.
+mutacions sobre les molècules que tinguem avaluades.
 
 Com que el workflow d'aquest programa no és ``continuu'' en el sentit que el
 programa es manté viu durant tot el procés, les dades que volem guardar (encara
@@ -271,7 +271,7 @@ convergència que no ens interessa.  Per exemple, si tenim una població de 30
 individuus i tots tenen fitness 0, Chiron intentarà fer creuaments entre ells
 aleatoris (ja que cap d'ells guanya sobre els altres).  No només això sinó que
 al fer això, molts dels individuus de la següent generació seran iguals als ja
-evaluats, ja que hem reduit molt l'espai de búsqueda sobre el que ataquem.
+avaluats, ja que hem reduit molt l'espai de búsqueda sobre el que ataquem.
 
 Si avaluéssim funcions matemàtiques contínues i amb un gradient clar fins al
 millor resultat (o els millors resultats), no tindríem aquest problema, però els
@@ -357,43 +357,43 @@ l'elitisme, és molt determinant per a obtenir bons resultats.
 %SOAP
 Un altre aspecte important de Chiron és la versatilitat que té per a executar-se
 amb diferents funcions de fitness.  Com s'ha explicat en la introducció del
-capítol, Chiron permet evaluar manualment cadascun dels elements.  Donat que una
-evaluació d'una molècula pot portar hores o dies, l'algorisme genètic ha de ser
+capítol, Chiron permet avaluar manualment cadascun dels elements.  Donat que una
+avaluació d'una molècula pot portar hores o dies, l'algorisme genètic ha de ser
 capaç de mantenir l'estat i congelarse a cada iteració.
 
 Les llibreries usades (eodev), estan preparades per a mantenir l'estat en arxius
 de text pla, però ho fan en el moment que s'ha acabat de executar la funció
-evaluació de tots els individuus d'una generació.  Per a poder aturar la
+avaluació de tots els individuus d'una generació.  Per a poder aturar la
 execució abans (a nivell lògic), el que hem disenyat és un sistema per a
 recollir i posar dades automàticament en els arxius de estat.  eodev està
 programat en c++, i per tant, la funció de fitness ha de ser sempre la mateixa
 ja que només volem tenir una instància de pholus per executar, i no pas una per
 a cada projecte que es faci.  El que hem fet per a solucionar aquesta qüestió és
 ``anul·lar'' la funció de fitness fent que sigui una stub, que dona fitness zero
-a tots els individuus que evalua.  Configurant Chiron per a què faci una sola
+a tots els individuus que avalua.  Configurant Chiron per a què faci una sola
 generació, aconseguim guardar l'estat en un arxiu, amb els paràmetres del
 algorisme genètic, les llavors (seed), i els individuus de la generació actual.
 Llavors, el programa que executa el core de Chiron pot parsejar l'arxiu, i
 insertar els elements en una base de dades (ens interessa tenir un històric de
-tots els elements evaluats en generacions prèvies).  Aquests resultats són els
+tots els elements avaluats en generacions prèvies).  Aquests resultats són els
 que es presenten al usuari, que pot recuperar cuan vulgui ja que la recuperació
 de les dades es fa desde la base de dades MySql.
 
 Quan l'usuari disposa de dades sobre les molècules, les pot introduir a través
 d'una interfície, i tornar a executar una generació.
 
-Si l'usuari ha configurat el projecte perquè mantingui els valors d'evaluacions
-passades, en el moment que Chiron detecta una molècula que ja ha estat evaluada,
+Si l'usuari ha configurat el projecte perquè mantingui els valors d'avaluacions
+passades, en el moment que Chiron detecta una molècula que ja ha estat avaluada,
 no li presenta al usuari, i és Chiron qui s'encarrgarà de afegir el resultat en
 el moment de la següent generació.
 
 %subsub?  PRoblemes d'inicialització.
 
 En  molts casos reals, ens trobem que tenim una immensa majoria de valors iguals
-com a resultat de les evaluacions.  Aquests resultats són per les molècules que
+com a resultat de les avaluacions.  Aquests resultats són per les molècules que
 o bé no poden ser sintetitzades, o bé no superen un llindar mínim d'activitat.
 
-Això ens ha suposat un gran problema perquè si evaluem la primera generació i
+Això ens ha suposat un gran problema perquè si avaluem la primera generació i
 tots els elements tenen el mateix fitness (0), la següent població que Chiron
 suggerirà serà una població tal que haurà sortit de creuar i mutar la primera
 població aleatoriament entre ella.  Aquest procediment ens provoca una
@@ -411,7 +411,7 @@ característiques (que sumin 3), i tots els elements que ho compleixen tenen
 fitness 1 i els que no, tenen fitness 0, ens trobariem amb problemes similars.
 
 Aquest problema, l'hem solucionat provocant que Chiron resetegi l'experiment
-(recordant les molècules evaluades en la base de dades), i torni a donar una
+(recordant les molècules avaluades en la base de dades), i torni a donar una
 població d'individuus aleatòria.  Així maximitzem les probabilitats de trobar un
 o més pous energètics, que son les àrees del espai de búsqueda (normalment
 contígues) on es troben els elements amb fitness superiors al llindar.  En el
@@ -821,7 +821,7 @@ aplicacions que es poden utilitzar en el futur.
 	S'han fet 25 executions executions de Chiron per a cada projecte, i hem
 	esperat a què convergeixin cadascun dels 3 projectes.  Com que tenim a la
 	nostra disposició totes les dades del espai de búsqueda, hem fet càlculs
-	respecte quantes evaluacions s'han fet fins a trobar el millor element que
+	respecte quantes avaluacions s'han fet fins a trobar el millor element que
 	hem arribat a trobar.  També ens fa falta saber quin és el fitness d'aquest
 	element, i quin és el fitness de la millor combinació de R's que hi ha en
 	tot l'espai de búsqueda. Així arribem a tenir
@@ -829,7 +829,7 @@ aplicacions que es poden utilitzar en el futur.
 	%TAULA de resultats.
 
 % theme=Berlin;caption_top=1;caption=Exemple tanimotos
-% BBDD & Fitness & Elements evaluats & relació
+% BBDD & Fitness & Elements avaluats & relació
 
 %png('file.png')
 %hist(x)
@@ -871,7 +871,7 @@ aplicacions que es poden utilitzar en el futur.
 	\end{figure}
 
 	Aquestes gràfiques mostren, de diferents maneres, el nombre de elements
-	evaluats, i l'error absolut que s'ha obtingut en cadascun dels experiments.
+	avaluats, i l'error absolut que s'ha obtingut en cadascun dels experiments.
 
 	La intenció inicial era utilitzar l'error relatiu, però en aquests
 	experiments, els pitjors fitness tenen un valor de infinit.  Com que els
@@ -882,14 +882,14 @@ aplicacions que es poden utilitzar en el futur.
 
 	Com ja s'ha dit prèviament, s'han  realitzat 25 execucions de cadascun dels
 	tres experiments, guardant per a cadascun el número d'individuus que s'han
-	evaluat, el número total d'individuus del espai de cerca, el millor fitness
+	avaluat, el número total d'individuus del espai de cerca, el millor fitness
 	de tot l'espai de cerca, i el millor fitness al que hem arribat.
 
 	D'aquesta manera, hem pogut fer un estudi estadístic sobre el funcionament i
 	rendiment de Chiron.
 
 	L'estudi, estadístic, l'hem realitzat utilitzant el software estadístic
-	R(XXX), i ens permet dir coses com per exemple, que \textbf{Evaluant un XXX
+	R(XXX), i ens permet dir coses com per exemple, que \textbf{avaluant un XXX
 	\% de l'espai de búsqueda, ens quedem a XXX del millor en un XXX dels casos}
 
 
@@ -899,13 +899,13 @@ aplicacions que es poden utilitzar en el futur.
 	Els resultat de \texttt{Chiron} és satisfactori, però com a projecte futur
 	d'ampliació, està implementar tècniques de algorismes genètics interactius.
 
-	Donat que la evaluació és supervisada per l'usuari, podriem implementar
+	Donat que la avaluació és supervisada per l'usuari, podriem implementar
 	tècniques per a classificar els individuus de cadascuna de les generacions,
-	per a només donar al usuari una part de la població a evaluar, en funció de
+	per a només donar al usuari una part de la població a avaluar, en funció de
 	la semblança entre els individuus.  Es podria utilitzar alguna tècnica de
 	clustering, o eines més particulars d'algorismes genètics interactius, com
 	per exemple (XXX).
 	% subsection treball futur (end)
 % section Resultats (end)
 	\end{document}
-# vim: set tabstop=4 shiftwidth=4 foldmethod=marker ignorecase : ##
+%# vim: set tabstop=4 shiftwidth=4 tw=80 foldmethod=marker ignorecase : ##
