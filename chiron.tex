@@ -6,6 +6,7 @@
 \usepackage{marvosym}
 \usepackage{listings}
 \usepackage{textcomp}
+\usepackage[]{url}
 \usepackage[]{color}
 \begin{document}
 \tableofcontents
@@ -30,8 +31,9 @@
 
 	Un dels problemes que tenen els mètodes actuals són els grans costos
 	que es deriven d'aquest procés, ja que el que es fa és sintetitzar TOTES les
-possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (disipada?)
-	s'intenta buscar la que minimitza aquesta.
+	possibles variants i combinacions de ramificacions, i mesurant l'activitat
+	de cadascuna d'elles, buscant la que dona major activitat
+	%la energia XXX (disipada?) s'intenta buscar la que minimitza aquesta.
 
 	si tenim un esquelet com el següent, amb 3 punts on enganxar Ramificacions,
 	i 4 posibles ``building blocs'' per a cada R, la (combinatiòria ens dóna que
@@ -40,7 +42,7 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	seguint aquest mecanisme.
 
 	Si pensem que la qualitat del resultat avaluat és en funció de les
-	ramificacions escollits per a cada R1..RN, podem anar una mica més enllà i
+	ramificacions escollits per a cada $R1..RN$, podem anar una mica més enllà i
 	intentar fer una aplicació que ens ajudi i ens guii a trobar un lligand amb
 	bona activitat explorant només una petita part de l'espai de cerca.
 	
@@ -50,7 +52,7 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 
 	Per a avaluar la qualitat de una combinació, no hi ha més remei que
 	sintetitzar la molècula en qüestió en el laboratori i retornar el resultat.
-	Així doncs, es tracta d'un algorisme genètic interactiu %XXX ref a paper.
+	Així doncs, es tracta d'un algorisme genètic interactiu 
 	que ens guiarà les proves que hem de fer a través dels creuaments i les
 	mutacions, trobant ``relacions'' (epistàcia) entre els diferents
 	ramificacions, i aconseguint resultats bons explorant una petita part del
@@ -60,15 +62,15 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	``framework'' d'algorismes genètics.  Veient que la funció de fitness és una
 	funció que executa l'usuari, i ell és qui puntúa cadascuna de les
 	combinacions, s'ha intentat anar més enllà i aconseguir una aplicació que
-	pugui ser utilitzada no només en aquest context, sinó en cualsevol que ens
+	pugui ser utilitzada no només en aquest context, sinó en qualsevol que ens
 	podem trobar en un futur, sempre i quan requereixi uns operadors similars.
 
 	Una altra manera d'imaginar-se aquest enfoc \emph{meta} és pensar-ho com si
 	separéssim la funció fitness de la resta del procés d'algoritme genètic.
-	L'únic que necesita el algoritme genètic és un receptor de dades, que
-	donada una entrada, hi doni una sortida.  Si es mira d'aquesta manera, no
-	estem fent més que desacoblar la avaluació del procés de creuaments,
-	mutacions i reproducció.
+	L'únic que necesita el algoritme genètic és un receptor de dades (en el
+	nostre cas inicial és l'usuari), que donada una entrada, doni una
+	sortida (fitness).  Si es mira d'aquesta manera, no estem fent més que
+	desacoblar la avaluació del procés de creuaments, mutacions i reproducció.
 
 	Fins a aquest punt, podríem utilitzar algun sistema amb callbacks, on
 	l'usuari simplement entri els fitness als diferents individuus (combinacions
@@ -87,12 +89,12 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	Tot i que la gestió d'això només ens implica implementar el sistema com a
 	servei web (SOAP) i tenir una bona gestió d'usuaris i projectes, es veu
 	clarament que el que comença essent una aplicació per a solucionar un
-	problema concret, s'ha anat abstraient i generalitzat fins al punt de
+	problema concret, s'ha anat abstraient i generalitzant fins al punt de
 	convertir-se en un programa molt més potent, ja que ara abarca un espectre
 	molt més gran de problemes pels quals està capacitat resoldre.
 
-	Tot seguit s'explica més a fons algun concepte de la química combinatòria,
-	seguit dels detalls d'implementació de la aplicació.
+	Tot seguit s'explica més a fons algun concepte bàsic de la química
+	combinatòria, seguit dels detalls d'implementació de la aplicació.
 
 % section Introducció (end)
 
@@ -144,8 +146,7 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	de la intel·ligència artificial com l'aprenentatge artificial, etc.  Per
 	exemple, per desenvolupar models biològics virtuals, aprendre les
 	estructures que actuen com a bons fàrmacs, o resolucions d'estructures
-	tridimensionals. El límit, com sempre en la informàtica, és la imaginació
-	humana.
+	tridimensionals. 
 
 \subsubsection{El nostre problema} % (fold)
 
@@ -173,7 +174,7 @@ possibles variants i combinacions de ramificacions, i mesurant la energia %XXX (
 	El que hem fet aquí és crear un programa que mitjançant un algorisme
 	genètic permet trobar un conjunt de ramificacions que optimitzen el fàrmac.
 
-	El problema que hem analitzat en un principi és el de %XXX
+	El problema que hem analitzat en un principi és el de XXX
 	on tenim un espai de búsqueda de 15360 possibles combinacions.
 
 	Com es veurà a durant el capítol, hem volgut anar més enllà i no cenyir-nos
@@ -277,12 +278,28 @@ individuus de la següent generació seran iguals als ja evaluats, ja que hem
 reduit molt l'espai de búsqueda sobre el que ataquem.
 
 Si avaluéssim funcions matemàtiques contínues i amb un gradient clar fins al
-millor resultat (o els millors resultats), no tindríem aquest problema, però els
-nostres casos són, en la gran majoría, casos molt difícils, on tenim un espai de
-búsqueda molt gran però els pous amb activitat són molt pocs (i estrets), i hem
-d'intentar arribar a aquests pous primer, i després optimitzar per les vies del
-algoritme genètic.
-%figura de la funcio amb pics
+millor resultat (o els millors resultats), com en la Figura \ref{fig:normal}, no
+tindríem aquest problema, però els nostres casos són, en la gran majoría, casos
+molt difícils, on tenim un espai de búsqueda molt gran però els pous amb
+activitat són molt pocs (i estrets), i hem d'intentar arribar a aquests pous
+primer, i després optimitzar per les vies del algoritme genètic (Figura
+\ref{fig:dificil}).
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics{chiron/normal.png}
+	\end{center}
+	\caption{normal}
+	\label{fig:normal}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics{chiron/pics.png}
+	\end{center}
+	\caption{Funció difícil de trobar per un AE}
+	\label{fig:dificil}
+\end{figure} 
 
 La solució que s'ha adoptat ha estat la de generar una població d'individuus
 nova, sense tenir en compte ĺa generació anterior, com si es comencés un
@@ -291,9 +308,11 @@ bon principi, i maximitzem les probabilitats de trobar algun pou d'energia.
 % funcions graduals vs punxegudes
 
 Les proves de correctesa del programa, s'han fet amb funcions matemàtiques
-contínues, per tal de saber del cert que l'algorisme funciona bé.  Els resultats
-obtinguts d'aquestes funcions també seràn exposats més endevant en l'apartat de
-resultats. 
+contínues, per tal de saber del cert que l'algorisme funciona bé i més endevant
+s'ha provat amb el cas real de química combinatiòria.
+
+%Els resultats obtinguts d'aquestes funcions també seràn exposats més endevant
+%en l'apartat de resultats. 
 
 \subsubsection{Testeig} % (fold)
 \label{ssub:Testeig}
@@ -429,8 +448,8 @@ normal.
 % subsubsection Funció fitness configurable (end)
 
 %BBDD
-\subsubsection{Emmagatematge de les dades} % (fold)
-\label{ssub:Emmagatematge de les dades}
+\subsubsection{Emmagatzematge de les dades} % (fold)
+\label{ssub:Emmagatzematge de les dades}
 
 Per a guardar l'estat del procés, hem creat una base de dades que ens permet
 accedir i modificar la informació de un projecte.  La implementació d'aquesta
@@ -584,8 +603,28 @@ Per asegurar que no tenim bloquejos en la xarxa, hi ha sistemes disenyats per a
 treballar només a través de ports coneguts, i normalment oberts en cualsevol
 xarxa amb conexió a internet.  Exemples d'aquestes tecnologies son XML-RPC, REST
 i SOAP.
-% subsection Funcionament General (end)
 % subsubsection Webservice d'Algorismes genètics (end)
+
+\subsubsection{Diseny global} % (fold)
+\label{ssub:Diseny global}
+
+Després de diverses iteracions sobre el diseny, la estructura global que ha
+quedat del projecte chiron és la mostrada en la Figura \ref{fig:disenyChiron}.
+
+Chiron es pot integrar en altres programes ja existents, donant suport amb els
+Algoritmes Evolutius.  (XXX: El diagrama s'ha de fer més específic per a
+Chiron).
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=0.4]{chiron/arquitectura_global_chiron.jpg}
+	\end{center}
+	\caption{Es}
+	\label{fig:disenyChiron}
+\end{figure}
+% subsubsection Diseny global (end)
+
+% subsection Funcionament General (end)
 
 \subsection{Algoritme Genètic} % (fold)
 	\label{sub:Algoritme Genetic}
@@ -849,9 +888,7 @@ aplicacions que es poden utilitzar en el futur.
 
 	Les proves sobre un escenari real en el que operarà Chiron, s'han fet sobre
 	tres projectes dels quals s'ha realitzat la prova experimental de totes les
-	combinacions de R's possibles (s'han trobat en 
-	%(XXX Ppaper) 
-	)
+	combinacions de R's possibles (s'han trobat en (XXX Ppaper) )
 
 	En aquests tres problemes, els autors dels experiments van sintetitzar totes
 	les possibles molècules, obtenint un resultat de activitat en cadascuna
@@ -939,7 +976,7 @@ aplicacions que es poden utilitzar en el futur.
 	rendiment de Chiron.
 
 	L'estudi, estadístic, l'hem realitzat utilitzant el software estadístic
-	R(XXX), i ens permet dir coses com per exemple, que \textbf{avaluant un XXX
+	R(\url{http://www.r-project.org/}), i ens permet dir coses com per exemple, que \textbf{avaluant un XXX
 	\% de l'espai de búsqueda, ens quedem a XXX del millor en un XXX dels casos}
 
 
@@ -954,7 +991,7 @@ aplicacions que es poden utilitzar en el futur.
 	per a només donar al usuari una part de la població a avaluar, en funció de
 	la semblança entre els individuus.  Es podria utilitzar alguna tècnica de
 	clustering, o eines més particulars d'algorismes genètics interactius, com
-	per exemple (XXX).
+	per exemple (XXX paper company natxo).
 	% subsection treball futur (end)
 % section Resultats (end)
 	\end{document}
