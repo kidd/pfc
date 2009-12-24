@@ -198,7 +198,9 @@ Començarem amb el workflow que ha de permetre Chiron perquè l'usuari pugui
 utilitzar-lo fàcilment i n'extraurem els diferents casos d'ús, i després
 s'anirà describint el procés que s'ha realitzat per a implementar-ho.
 
-%subsub
+\subsection{Funcionament} % (fold)
+\label{sub:Funcionament}
+
 Un usuari, en començar un projecte, ha de poder crear un experiment nou.  Aquest
 experiment ha d'estar lligat, òbviament a aquest usuari, amb el que ens obliga
 també a poder fer altes, baixes i modificacions dels usuaris que tenen accés a
@@ -264,14 +266,15 @@ perden la informació d'execució en execució, i no funcionarien en aquest cas.
 Per a aquesta tasca s'ha utilitzat un servidor remot MySql.
 %estructura de taules
 
-En el cas que en la primera generació no hi hagi cap molècula que presenti la
-més mínima activitat (no superen un llindar donat), Chiron no segueix el curs
-normal de mutacions i creuaments, ja que això ens dóna lloc a un intent de
-convergència que no ens interessa.  Per exemple, si tenim una població de 30
-individuus i tots tenen fitness 0, Chiron intentarà fer creuaments entre ells
-aleatoris (ja que cap d'ells guanya sobre els altres).  No només això sinó que
-al fer això, molts dels individuus de la següent generació seran iguals als ja
-avaluats, ja que hem reduit molt l'espai de búsqueda sobre el que ataquem.
+La inicialització de la primera generació és aleatoria. En el cas que en la
+primera generació no hi hagi cap molècula que presenti la més mínima activitat
+(no superen un llindar donat), Chiron no segueix el curs normal de mutacions i
+creuaments, ja que això ens dóna lloc a un intent de convergència que no ens
+interessa.  Per exemple, si tenim una població de 30 individuus i tots tenen
+fitness 0, Chiron intentarà fer creuaments entre ells aleatoris (ja que cap
+d'ells guanya sobre els altres).  No només això sinó que al fer això, molts dels
+individuus de la següent generació seran iguals als ja evaluats, ja que hem
+reduit molt l'espai de búsqueda sobre el que ataquem.
 
 Si avaluéssim funcions matemàtiques contínues i amb un gradient clar fins al
 millor resultat (o els millors resultats), no tindríem aquest problema, però els
@@ -291,6 +294,9 @@ Les proves de correctesa del programa, s'han fet amb funcions matemàtiques
 contínues, per tal de saber del cert que l'algorisme funciona bé.  Els resultats
 obtinguts d'aquestes funcions també seràn exposats més endevant en l'apartat de
 resultats. 
+
+\subsubsection{Testeig} % (fold)
+\label{ssub:Testeig}
 
 Hi ha un conjunt de funcions matemàtiques que es consideren ``típiques'' per a
 usarles com a toy problems, per exemple, s'ha provat l'algoritme evolutiu
@@ -352,9 +358,12 @@ entre dos cromosomes que tenen una bona puntuació, fa que els resultants, sigui
 molt dolents. És una manera d'enganyar al algoritme evolutiu que ens serveix per
 a saber si aquest és prou robust per a trobar un resultat bo.  En aquests casos,
 l'elitisme, és molt determinant per a obtenir bons resultats.
-% section section name (end)
+% subsubsection Testeig (end)
 
 %SOAP
+\subsubsection{Funció fitness configurable} % (fold)
+\label{ssub:Funcio fitness configurable}
+
 Un altre aspecte important de Chiron és la versatilitat que té per a executar-se
 amb diferents funcions de fitness.  Com s'ha explicat en la introducció del
 capítol, Chiron permet avaluar manualment cadascun dels elements.  Donat que una
@@ -417,8 +426,12 @@ o més pous energètics, que son les àrees del espai de búsqueda (normalment
 contígues) on es troben els elements amb fitness superiors al llindar.  En el
 moment que trobem molècules amb activitat, l'algorisme segueix el procediment
 normal.
+% subsubsection Funció fitness configurable (end)
 
 %BBDD
+\subsubsection{Emmagatematge de les dades} % (fold)
+\label{ssub:Emmagatematge de les dades}
+
 Per a guardar l'estat del procés, hem creat una base de dades que ens permet
 accedir i modificar la informació de un projecte.  La implementació d'aquesta
 base de dades la hem fet amb MySql (més endevant es discutirà el perquè de la
@@ -433,6 +446,10 @@ o altres SGBDs orientats a Documents,o diccionaris clau-valor).
 Aquesta estructura ens permet tenir un historial de tots els elements que han
 anat construint-se en els diferents experiments per a futurs anàlisis i
 visualitzacions.
+% subsubsection Emmagatematge de les dades (end)
+
+\subsubsection{Webservice d'Algorismes genètics} % (fold)
+\label{ssub:Webservice d'Algorismes genetics}
 
 %SaaS WEB i SOAP
 Una vegada tenim desacoplats el Core (algoritme evolutiu), de la base de dades,
@@ -567,8 +584,8 @@ Per asegurar que no tenim bloquejos en la xarxa, hi ha sistemes disenyats per a
 treballar només a través de ports coneguts, i normalment oberts en cualsevol
 xarxa amb conexió a internet.  Exemples d'aquestes tecnologies son XML-RPC, REST
 i SOAP.
-
-%Explicar SOAP i XML-RPC SII ES Necessari
+% subsection Funcionament General (end)
+% subsubsection Webservice d'Algorismes genètics (end)
 
 \subsection{Algoritme Genètic} % (fold)
 	\label{sub:Algoritme Genetic}
@@ -579,6 +596,40 @@ ser parametritzable en quant a la funció de fitness, li falta una de les parts
 principals dels algorismes genètics.  Tot seguit s'explica la implementació de
 cadascun dels parametres i estructures de dades necessàries per a la
 implementació de Chiron.
+
+\subsubsection{Inicialització} % (fold)
+\label{ssub:Inicialitzacio}
+
+En  molts casos reals, ens trobem que tenim una immensa majoria de valors iguals
+com a resultat de les evaluacions.  Aquests resultats són per les molècules que
+o bé no poden ser sintetitzades, o bé no superen un llindar mínim d'activitat.
+
+Això ens ha suposat un gran problema perquè si evaluem la primera generació i
+tots els elements tenen el mateix fitness (0), la següent població que Chiron
+suggerirà serà una població tal que haurà sortit de creuar i mutar la primera
+població aleatoriament entre ella.  Aquest procediment ens provoca una
+convergència prematura que no desitgem, ja que el que passa en realitat és que
+encara no hem mostrejat cap molècula que ens doni un mínim d'activitat amb el
+que poder ``jugar''.
+
+Problemes d'aquestes característiques només es donen en casos on l'espai de
+búsqueda és molt gran comparat amb el número de elements que tenen resultats
+diferents de 0.
+
+Per exemple, si volguéssim trobar, en el problema de la suma de bits una
+configuració concreta (10101), o bé trobar elements amb unes certes
+característiques (que sumin 3), i tots els elements que ho compleixen tenen
+fitness 1 i els que no, tenen fitness 0, ens trobariem amb problemes similars.
+
+Aquest problema, l'hem solucionat provocant que Chiron resetegi l'experiment
+(recordant les molècules evaluades en la base de dades), i torni a donar una
+població d'individuus aleatòria.  Així maximitzem les probabilitats de trobar un
+o més pous energètics, que son les àrees del espai de búsqueda (normalment
+contígues) on es troben els elements amb fitness superiors al llindar.  En el
+moment que trobem molècules amb activitat, l'algorisme segueix el procediment
+normal.
+
+% subsubsection Inicialització (end)
 
 \subsubsection{Individu (Cromosoma)}
 \label{ssub:individu (cromosoma)}
@@ -699,7 +750,6 @@ Mutacions i creuaments per al que volem fer nosaltres.
 Hem de crear doncs, una classe per a cada element del algorisme genètic.
 
 %PUNT posar totes les classes
-
 
 % subsubsection algorisme genètic (end)
 

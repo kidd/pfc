@@ -750,5 +750,191 @@ que se'ls hi ha donat.
 \section{Resultats} % (fold)
 \label{sec:Resultats}
 
+\subsection{Testeig} % (fold)
+\label{sub:Testeig}
+
+Una vegada testejat el programa ``a ull'', i quan assegurem que el sistema
+funciona tal i com estava previst en els requeriments, s'ha de testejar que
+Pholus, no tan sols funcioni bé, sinó que solucioni el problema químic que se li
+demana.
+
+Per a testejar-l'ho ho hem fet en un experiment on busquem una molècula que
+bloqueja l'acció d'una proteïna de la cèl·lula.
+
+La validació s'ha fet executant \emph{Pholus} deu vegades, i traient
+dades detallades sobre el valor del fitness del millor element en cada
+generació, i graficant els millors fitness de cada generació.
+
+%En aquest problema, teniem 68 molècules acives, 
+En la taula \ref{qrpholustest} expliquem les característiques principals d'aquest problema.
+
+ % theme=Berlin;caption=Pholus test
+ % Molècules actives & 64
+ % Molècules inactives & 2653
+ % alpha & 20
+ % repeticions & 10
+ % generacions per execució & 120
+ % provabilitat de creuament & 0.8
+ % provabilitat de mutació & 0.1
+
+\begin{table}
+\centering
+\begin{tabular}{|l|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Molècules actives }} & \multicolumn{1}{c|}{\textbf{ 64}} \\
+\hline
+\hline
+Molècules inactives      & 2653 \\
+alpha                     & 20   \\
+repeticions               & 10   \\
+generacions per execució & 120  \\
+provabilitat de creuament & 0.8  \\
+provabilitat de mutació  & 0.1  \\
+\hline
+\end{tabular}
+\caption{Pholus test} \label{qrpholustest}
+\end{table}
+
+S'ha de tenir en compte les dades d'aquest experiment, per a donar una
+interpretació correcte als resultats.
+
+En les següents gràfiques, es mostren les dades de les deu repeticions que s'han
+fet de la execució.  A priori, les dades que podriem esperar, son gràfiques com
+la Figura \ref{figura log,normal,normal2}.  La línia amb forma logarítmica, és
+el fitness del conjunt amb el què entrenem el algoritme genètic.  Aquest, será
+estrictament creixent, ja que utilitzem elitisme, i el creixement del fitness té
+forma logarítmica.  El conjunt de test, serà el que utilitzarem per a saber el
+punt on l'algorisme genètic comença a sobreentrenar la solució pel conjunt de
+training.  Al no fer participar aquest conjunt més que en aquesta gràfica, podem
+saber quin es el moment on, tot i que el fitness pel conjunt de trainning millori,
+comencem a empitjorar el fitness per al conjunt test.  En aquest punt màxim de
+la gràfica de test, és on agafarem la solució.
+
+Si agafem com a valor millor individu el que tenim en el punt on maximitza el
+resultat del conjunt de test, podria ser que el que estiguem fent sigui
+sobreentrenar l'algoritme per al conjunt de test.  Es per això que tenim un
+altre 10\% de les dades totals en el conjunt que anomenem \emph{de validació}. 
+
+Aquest conjunt de dades ens serveix per a asegurar que no estem cometent el
+mateix error del sobreentrenament però aquesta vegada, maximitzant el conjunt de
+test.  
+
+En la figura XXX veiem un esbós del que esperem que surti, si és que s'està
+sobreentrenant.
+
+Sabrem si sobreentrenem la solució en funció del grau de 
+% subsection Testeig (end)
+
+\subsection{Anàlisi de Resultats} % (fold)
+\label{sub:Analisi de Resultats}
+
+Els resultats obtinguts, han estat satisfactoris, i hem deduit que no hi ha
+hagut sobreentrenament, ja que en les deu execucions, no s'observa el patró que
+hem comentat del sobreentrenament.
+
+De les observacions que hem fet, podem concloure que no hi ha sobreentrenament,
+ja que , en general les grafiques de testing i validació, són bastant estables,
+i validació no cau a partir d'arribar al maxim de testing.
+
+En gairebé tots els casos observem que no el testing si que té el màxim en un
+punt cap a les 60-80 generacions, pero la devallada de després tampoc és molt
+pronunciada, com per entendre que s'està donant un cas de sobreentrenament.
+
+Un factor a tenir en compte és el número tant petit de molècules actives, que fa
+que al dividir-les en 3 grups, algun dels conjunts de dades, es quedin amb molt
+poques molècules, i al llarg de la execució del AE, un petit canvi en la
+ordenació, provoca un canvi alt en el fitness del individuu, ja que canvia el
+Bedroc molt ràpidament.  Un conjunt amb més molècules actives, com pot ser el de
+trainning, normalment és molt més consistent i els canvis en la ordenació,
+provoquen canvis en el fitness més graduals.
+
+Un altre factor que hem de tenir en compte per a evaluar aquests resultats, és
+que les molècules actives, no són totes igual de difícils de classificar, sinó
+que poden agrupar-se en clusters de similitud entre elles.  Amb aquests grups
+podem classificar les 68 molècules en 11 clusters o grups,  Al agafar un 10\% de
+les dades, queden molt poques molècules en cada conjunt, i depenent de la
+agrupació amb la que quedin aquestes actives, poden fer que, per exemple, com es
+veu en la Taula \ref{fig:pholusResult1} i \ref{fig:pholusResult4}
+
+\begin{figure}[h] \begin{center}
+\includegraphics[scale=0.75]{pholus/pholus1.png}
+\end{center}
+\caption{càlcul 1}
+\label{fig:pholusResult1}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.75]{pholus/pholus2.png}
+\end{center}
+\caption{càlcul 2}
+\label{fig:pholusResult2}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.75]{pholus/pholus3.png}
+\end{center}
+\caption{càlcul 3}
+\label{fig:pholusResult3}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.75]{pholus/pholus4.png}
+\end{center}
+\caption{càlcul 4}
+\label{fig:pholusResult4}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.75]{pholus/pholus5.png}
+\end{center}
+\caption{càlcul 5}
+\label{fig:pholusResult5}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.75]{pholus/pholus6.png}
+\end{center}
+\caption{càlcul 6}
+\label{fig:pholusResult6}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.75]{pholus/pholus7.png}
+\end{center}
+\caption{càlcul 7}
+\label{fig:pholusResult7}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.75]{pholus/pholus8.png}
+\end{center}
+\caption{càlcul 8}
+\label{fig:pholusResult8}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.75]{pholus/pholus9.png}
+\end{center}
+\caption{càlcul 9}
+\label{fig:pholusResult9}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.75]{pholus/pholus10.png}
+\end{center}
+\caption{càlcul 10}
+\label{fig:pholusResult10}
+\end{figure}
+
+% subsection Anàlisi de Resultats (end)
 % section Resultats (end)
 \end{document}
