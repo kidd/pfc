@@ -41,7 +41,21 @@
 	\label{sec:Introduccio}
 	Tot seguit es presentará un projecte en el que s'ha utilitzat una tècnica
 	molt pionera derivada de la programació genètica anomenada ``Genetic
-	Expression Programming'' (GEP).
+	Expression Programming'' (GEP).  A falta d'un nom millor hem tractat el
+	problema amb el nom de \texttt{GEP}.
+
+	En aquest projecte apliquem Genetic Expression Programming per a descobrir
+	fórmules analítiques a partir de resultats empírics o bé mostrejos que tenim
+	a priori de característiques que tenen les molècules en funció de parametres
+	de configuració de les mateixes molècules.  És a dir, per exemple, en funció
+	dels angles en els punts on hi ha angles rotables, una molècula es diu que
+	té un volum diferent, en tant que la seva zona d'acció canvia.  Segons com
+	siguin aquests angles, la molècula pot estar ``arreplegada'' sobre si
+	mateixa, donannt lloc a un volum més petit que no pas si està extesa en
+	l'espai, havent-hi molt més espai entre els seus àtoms consecutius.
+
+	Aquesta informació és necessita per a poder tractar més còmodament amb
+	aquesta informació, i forma part d'un procés més complex relacionat amb XXX
 
 
 % section Introducció (end)
@@ -112,8 +126,9 @@ vàlids.
 \subsection{Interfície} % (fold)
 \label{sub:Interficie}
 
-L'usuari, en aquest cas encara no està molt definit, ja que segurament, GEP es
-farà servir com a complement per a Helios 2.0, però les entrades al programa son
+Pel que fa al usuari, en aquest cas encara no està molt definit com utilitzarà
+el programa una vegada estigui en producció, ja que segurament, GEP es farà
+servir com a complement per a Helios 2.0, però les entrades al programa son
 clares:
 
 Es disposa de resultats empírics (o bé per laboratori o bé utilitzant softwares
