@@ -663,20 +663,65 @@ Furthermore, no other system has as much growth potential as GEP in the sense th
 \subsection{Operadors} % (fold)
 \label{sub:Operadors}
 
+Tot seguit es descriuràn els operadors usats en GEP, sense concretar la seva
+implementació, sinó explicant com varien els individuus.  Per a veure els
+detalls sobre la aplicació en aquest projecte, les explicacions i
+imlpementacions més complertes estàn a (\ref{XXX Capitol GEP})
+
 \subsubsection{Inicialització} % (fold)
 \label{ssub:Inicialitzacio}
+Donades les particularitats de la notació Karva, la inicialització d'arbres
+aleatòris, consisteix en omplir head i tail amb simbols aleatoris permesos en
+cadascuna de les zones.  Normalment, el head tindrà símbols operadors i
+variables terminals i el tail, únicament contindrà variables terminals.  La
+aritat zero dels terminals ens garantitza que l'arbre serà sintàcticament
+correcte.
+
+La població inicial es genera aplicant aquest algorisme a cadascunt dels
+individuus.
 % subsubsection Inicialització (end)
 
 \subsubsection{Sel·lecció} % (fold)
 \label{ssub:Seleccio}
+
 % subsubsection Sel·lecció (end)
 
 \subsubsection{Creuament} % (fold)
 \label{ssub:Creuament}
+
+El creuament, juntament amb la mutació és l'element que dóna la major part de la
+riquesa als algorismes GEP.  Els creuaments en GEP són uns operadors que, a
+diferència de la programació genètica, donen molta llibertat per a la
+experimentació, ja que només s'han de mantenir unes certes regles molt bàsiques,
+i es pot assegurar que es generaràn arbres sintàcticament correctes.
+
+Per exemple, en GEP es poden aplicar creuaments típics dels algorismes evolutius
+clàssics, com el \texttt{creuament per un punt}, o els \texttt{creuaments per
+diversos punts}, ja que si no variem la mida de la descendència, sempre es
+mantindran certes les regles de què el tail no contingui mai operands (nodes
+d'aritat >0).
+
+A més a més, GEP té uns creuaments particulars, anomenats \texttt{recombinació
+de gens}, que es basen en separar els dos individuus a creuar en els seus
+diferents gens, i fer el creuament ajustant els punts de tall als limits dels
+gens.  Aquest creuament només és aplicable si implementem individuus multigen.
 % subsubsection Creuament (end)
 
 \subsubsection{Mutació} % (fold)
 \label{ssub:Mutacio}
+Les mutacions, igual que els creuaments, també es poden dividir en dos
+subconjunts, els que són totalment portables del món dels AE clàssics, i els
+particulars de GEP.
+
+Una mutació dels AE clàssics pot ser, per exemple, l'alteració d'un símbol
+aleatori.  L'únic que s'ha de tenir en compte, és quina posició del gen s'està
+mutant, per a no incloure en el tail símbols que estan restringits a usar-los
+només en el head.
+
+Per altra banda, GEP disposa de tres mutacions pròpies, anomenades IS,RIS i
+``traslació de gen'', que es basen en desplaçaments de conjunts de simbols al
+llarg del gen.  Aquests operadors estàn explicats més en detall a \ref{par:IS},
+\ref{par:RIS} i \ref{par:Translacio de gen}
 % subsubsection Mutació (end)
 
 \subsubsection{Reemplaçament} % (fold)
