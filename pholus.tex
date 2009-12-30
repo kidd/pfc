@@ -550,12 +550,12 @@ fitness és una funció additiva, donar un rang tant gran de possibles valors
 provoca una tendència a elevar els valors de les ponderacions, obligant a que
 després del càlcul es normalitzéssin per a tractar amb valors més homogènis.
 
-S'han fet proves sobre acotar els valors possibles entre 0 i $Inf$, però si
+S'han fet proves d'acotar els valors possibles entre 0 i $Inf$, però si
 permetem valors negatius, l'Algoritme evolutiu pot jugar amb fer ponderar
-negativament un tipus de potencial, donant més flexibilitat al Algoritme evolutiu per
-trobar una bona ponderació.  Si el mínim valor que pogués asignar fós 0,
-simplement eliminaria un map si no té cap rellevància però d'aquesta manera li
-permetem penalitzar un indicador.
+negativament un tipus de potencial, donant més flexibilitat al Algoritme
+evolutiu per trobar una bona ponderació.  Si el mínim valor que pogués asignar
+fós 0, simplement eliminaria un map si no té cap rellevància però d'aquesta
+manera li permetem penalitzar un indicador.
 
 Donar de marge de $-Inf$ a $Inf$, era problemàtic en tant que l'Algoritme
 evolutiu acaba donant molta rellevància a uns quants (pocs) potencials, i
@@ -986,4 +986,24 @@ veu en la Taula \ref{fig:pholusResult1} i \ref{fig:pholusResult4}
 
 % subsection Anàlisi de Resultats (end)
 % section Resultats (end)
+\section{Conclusions i treball futur} % (fold)
+\label{sec:PConclusions i treball futur}
+En aquest projecte hem desenvolupat exitosament un programari que ha permès ser
+més eficients en un procés que ja existia, però nosaltres l'hem millorat, no
+només en sentit d'aproximació química, sinó aprofitant-nos de les aventatges que
+ens ofereixen els algorismes genètics, permetent-nos explorar un espai de
+possibles solucions immens, en un temps raonable (entre 2 i 8 hores segons el
+tamany del problema).
+
+La exploració d'aquest problema ens ha servit per aprendre una mica sobre
+les unions entre lligands i dianes i també les maneres de agrupar molècules per
+famílies, però sobretot ha servit per a provar que els algorismes genètics poden
+donar solucions reals i viables a problemes que són molt difícils de solucionar
+amb altres tècniques.
+
+Pholus, però no és un projecte tancat, i de fet, ja s'ha ampliat i millorat
+respecte al que es presenta aquí, amb una interfície web i un sistema de mails
+per a reportar la finalització dels càlculs als usuaris.
+
+% section Conclusions i treball futur (end)
 \end{document}
