@@ -257,12 +257,12 @@ de la llista (no totes les actives són ``igual'' d'actives).
 Desde el punt de vista estrictament informàtic, el problema es pot descriure de
 la següent manera:
 
-Tenim una entrada de dades de un conjunt de molècules (amb un identificador
-únic) amb els seus 22 valors associats a cadascun dels maps escollits, i una
+Tenim una entrada de dades d'un conjunt de molècules (amb un identificador
+únic) amb els seus 22 valors associats a cadascuna de les sondes escollides, i una
 llista amb les molècules actives (els ids).
 
 Utilitzem un algoritme evolutiu, per trobar els 22 valors (ponderacions) als que
-multiplicar cadascun dels maps, que fan que obtinguem una ordenació de les
+multiplicar cadascun dels potencials, que fan que obtinguem una ordenació de les
 molècules que classifica les actives al principi.
 
 El procés però, no és tant directe com això, ja que les dades s'han de
@@ -270,15 +270,15 @@ pretractar, per a treure molècules errònies, o bé triar quines de les molècu
 volem que continuin el procés i quines no (hi ha molècules que son molt similars
 entre elles, i no les volem, ja que podrien decantar (bias) l'algoritme genètic cap al
 sobreentrenament al seu favor, quan en realitat pertanyen al mateix grup de
-molècules.  S'han provat diferents tècniques de clústering, però no ens hem
+molècules.  S'han provat diferents tècniques d'agrupament (clustering), però no ens hem
 quedat amb cap , perquè no ens han donat resultats millors amb cap de les
 tècniques que s'han usat (K-means, etc) %XXX : Noms de clusteritzacions
 
-Una vegada fet el core, la interfície amb l'usuari final també s'ha hagut
-de preparar separadament del algoritme genètic, ja que aquest (químics
-generalment), prefereix un entorn amigable (web, GUI, e-mails, excel) abans que
-entorns més austers (però configurables i scriptables) com pot ser una simple
-linia de comandes.  
+Una vegada fet el nucli, la interfície amb l'usuari final també s'ha hagut
+de preparar separadament del algoritme genètic, ja que el nostre usuari,
+prefereix un entorn amigable (web, GUI, e-mails, excel) abans que entorns més
+austers (però configurables i scriptables) com pot ser una simple linia de
+comandes.  
 
 % subsubsection subsubsection name (end)
 % section inf (end)
@@ -289,9 +289,9 @@ Per a la intefície amb l'usuari, s'ha escollit una interfície web, que executa
 l'usuari desde una web corporativa, amb accés restringit i controlat amb
 Autenticació.  Això ens porporciona informació de quin usuari executa cadascun
 dels càlculs, i així podem personalitzar la presentació, segons preferències de
-cadascun (cada maestrillo\dots).  Utilitzant la web corporativa, ens estalviem
-haver de gestionar els permisos que té cada usuari, ja que la interfície que se
-li presenta, és adecuada per als seus permisos i les seves tasques.
+cadascun.  Utilitzant la web corporativa, ens estalviem haver de gestionar els
+permisos que té cada usuari, ja que la interfície que se li presenta, és
+adecuada per als seus permisos i les seves tasques a realitzar.
 
 Les dades que entra un usuari són 3 llistes de molècules:
 
@@ -309,10 +309,10 @@ A part de les llistes de molècules, l'usuari també entra els parametres alpha,
 RieMax, i els percentatges de molècules amb els que vol provar l'experiment.  Es
 deixa la opció de no fer participar totes les molècules en l'experiment deixant 
 un conjunt de molècules fora, per després evaluar i validar les dades obtingudes
-(leave one out, 10 fold validation, etc\dots).  Més endevant en 
+(l'usuari pot fer manualment 10 fold validation, etc\dots).  Més endevant en 
 \ref{sub:sobreentrenament} s'explicarà el sistema de tests i validació.
 
-Per facilitar la usabilitat, el programa proporciona sempre uns parametres
+Per facilitar la usabilitat, el programa proporciona sempre uns paràmetres
 estimats per defecte, en funció de les característiques de les llistes que hagi
 entrat l'usuari. 
 %XXX : Explicar alpha?
@@ -326,13 +326,12 @@ isomers, i cada isomer es pot trobar en  diverses conformacions.
 
 És a dir, que per un nom (o id), en la natura existeixen diverses estructures, que
 comparteixen nom, i elements, però poden estar organitzats de forma diferent en
-l'espai. Aquestes organitzacions son simètriques en l'espai 3D, donant lloc a
+l'espai. Aquestes organitzacions són simètriques en l'espai 3D, donant lloc a
 molècules similars, però que en l'espai 3D, no es superposen de la mateixa
-forma. (exemple, les mans, que no es poden superposar en 3D).
-
-Les conformacions, en canvi, són variacions de la posició dels àtoms en l'espai,
-però mantenint els enllaços entre àtoms.
-
+forma. (exemple, les mans, que no es poden superposar en 3D tot i ser
+simètriques).  Les conformacions, en canvi, són variacions de la posició dels àtoms en l'espai,
+però mantenint els enllaços entre àtoms. En les conformacions, el que canvia és
+l'obertura en els angles rotables de la molècula.  
 Per passar d'un estereoisomer a un altre, s'han de trencar enllaços, i tornar-se
 a formar.  En les conformacions no passa això, i es pot passar d'una a una
 altra, només canviant els angles dels enllaços i la seva flexibilitat. 
@@ -344,11 +343,9 @@ combinatòria i genera les possibles variacions sobre una molècula donada.
 Després de fer aquesta explosió de combinacions, tenim diverses entrades per a
 cadascuna de les molècules inicials.  Les molècules que sabem que són actives,
 sabem que ho són, però no sabem quina conformació i isomer és el que la fa
-activa.
-
-Per això, en el llistat d'actives, tenim només una entrada per a cada família de
-molecules actives, tot i que en la taula de tanimotos, aquesta molècula estarà
-representada en diverses entrades. 
+activa.  És per això, que en el llistat d'actives, tenim només una entrada per a
+cada família de molècules actives, tot i que en la taula de tanimotos, aquesta
+molècula estarà representada en diverses entrades. 
 
 Durant la execució del programa, el que fem, és ordenar la llista de tanimotos,
 amb molècules ``repetides'', i al moment de fer la puntuació de la llista
@@ -395,12 +392,12 @@ molècules, per saber de quina molècula inicial provenien però també saber
 exactament quin isomer-conformació és.  Així, si d'una molècula A, generem:
 
 \begin{verbatim}
-A\_i001\_c001
-A\_i001\_c002
-A\_i001\_c003
-A\_i002\_c001
-A\_i002\_c002
-A\_i002\_c003
+A_i001_c001
+A_i001_c002
+A_i001_c003
+A_i002_c001
+A_i002_c002
+A_i002_c003
 \dots
 \end{verbatim}
 
@@ -501,7 +498,8 @@ individus.  Com s'ha explicat anteriorment, no s'ha volgut potenciar la
 dependència entre els diferents gens dels individus, és a dir, que suposem que
 no hi ha epistàcia entre els diferents gens.  És per això que, per exemple, els
 creuaments tallen un cromosoma per un punt aleatori, i barregen el trossos de
-dos cromosomes per a crear-ne de nous.
+dos cromosomes per a crear-ne de nous sense tenir en compte en quin punt tallen,
+o quins veïns hi ha en el punt de tall.
 
 Tot seguit s'especifiquen els parametres i implementacions utilitzades en aquest
 programa.
@@ -510,16 +508,18 @@ programa.
 \label{ssub:individu (cromosoma)}
 
 En aquest algoritme genètic, els individus són les ponderacions corresponents a
-cadascun dels maps.  Cada individu de la població és un conjunt de 22 valors de
+cadascun dels potencials.  Cada individu de la població és un conjunt de 22 valors de
 coma flotant (de doble precisió) que es correspon a cadascun dels 22 indicadors
-(maps),  Donat que volem saber quines rellevàncies tenen els indicadors, però
+(potencials),  Donat que volem saber quines rellevàncies tenen els indicadors, però
 confiem que no tenen cap relació un amb el següent, hem decidit no utilitzar cap
 representació que tingui en compte l'ordre, ni que afavoreixi la dependència
 dels gens. %XXX GENS es la paraula?
 
 Essent valors en coma flotant, el rang que poden tenir cadascun, és massa gran
 per a les nostres necessitats, donant massa llibertat al algoritme genètic per
-ponderar massa a uns valors, o simplement ponderarlos tots en valors molt alts.
+ponderar massa a uns valors, o simplement ponderant-los alguns en valors molt alts
+i fent despreciable molts dels 22 potencials.  Aquestes solucions normalment ens
+porten a resultats sobreentrenats i, és clar, no ens interessa.
 
 Com que una ponderació competeix contra altres ponderacions, i la funció de
 fitness és una funció additiva, donar un rang tant gran de possibles valors
@@ -528,13 +528,13 @@ després del càlcul es normalitzéssin per a tractar amb valors més homogènis
 
 S'han fet proves sobre acotar els valors possibles entre 0 i $Inf$, però si
 permetem valors negatius, l'Algoritme evolutiu pot jugar amb fer ponderar
-negativament un tipus de maps, donant més flexibilitat al Algoritme evolutiu per
+negativament un tipus de potencial, donant més flexibilitat al Algoritme evolutiu per
 trobar una bona ponderació.  Si el mínim valor que pogués asignar fós 0,
 simplement eliminaria un map si no té cap rellevància però d'aquesta manera li
 permetem penalitzar un indicador.
 
 Donar de marge de $-Inf$ a $Inf$, era problemàtic en tant que l'Algoritme
-evolutiu acaba donant molta rellevància a uns quants (pocs) maps, i
+evolutiu acaba donant molta rellevància a uns quants (pocs) potencials, i
 comparativament molt poca a la majoria, donant poca riquesa a la ponderació i
 tendint a sobreentrenar-se per al conjunt de dades que li entrem, però sense
 donar resultats extrapolàbles a altres conjunts de dades.
@@ -544,7 +544,7 @@ suma de tots fós 1.  Els resultats tampoc van ser concloents (a part que tampoc
 tenia molt de sentit lògic més que el de acotar que tots els individus
 estiguéssin dins d'uns marges).
 
-Al final, s'ha adoptat donar de marge [-1,1], però sense límit en la suma total
+Al final, s'ha adoptat donar un rang de [-1,1], però sense límit en la suma total
 dels valors ja que així acotem els valors i també els hi deixem tenir valors
 negatius, donant més versatilitat al algorisme, que així és capaç de trobar
 relaccions inverses d'algunes ponderacions.
