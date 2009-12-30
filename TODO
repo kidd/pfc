@@ -13,10 +13,10 @@ pholus - Explicar perquè AE i no uns altres algorismes
 
 PHOLUS
 ------
-pcross 0.85
-pmut  0.1
-sel DetTour(2)
-elitism = 1
+DONE pcross 0.85
+DONE pmut  0.1
+DONE sel DetTour(2)
+DONE elitism = 1
 
 
 CHIRON

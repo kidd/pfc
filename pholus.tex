@@ -574,6 +574,18 @@ negatius, donant més versatilitat al algorisme, que així és capaç de trobar
 relaccions inverses d'algunes ponderacions.
 
 
+
+\subsubsection{Inicialització} % (fold)
+\label{ssub:Inicialitzacio}
+Com s'ha explicat en XXX, la inicialització dels individuus és totalment
+aleatòria, amb numeros en coma flotant entre 0 i 1.  L'algorisme genètic no ens
+imposa cap altra restricció, ja que en totes les posicions son vàlids els
+mateixos valors (dins del mateix rang), i aquests valors, seràn usats únicament
+com a dades (valors als que multiplicar els potencials).  Al no tenir cap
+significat sintàctic (al contrari que en GP, i fins a cert punt en GEP), podem
+deixar la inicialització al atzar totalment.
+% subsubsection Inicialització (end)
+
 \subsubsection{Mutacions} % (fold)
 \label{ssub:Mutacions}
 
@@ -596,6 +608,14 @@ utilitzats és augmentar la provabilitat de mutació.  Com que no ens hem trobat
 amb aquest tipus de problemes, el valor de 0.1 s'ha deixat com a bo.
 % subsubsection Mutacions (end)
 
+\subsubsection{Selecció} % (fold)
+\label{ssub:Seleccio}
+El procés de sel·lecció de candidats es segueix utilitzant un Torneig
+Determinista de mida 2, és a dir, s'escullen parelles d'individuus
+aleatòriament i enfrontem un individu amb l'altre. Del torneig surt ``viu'' el
+que millor fitness té.
+% subsubsection Selecció (end)
+
 \subsubsection{Crossover} % (fold)
 \label{ssub:Crossover}
 
@@ -603,7 +623,7 @@ Pel creuament s'ha provat un creuament per un punt, i el creuament per dos
 punts, donant millors resultats el creuament en tant sols un punt.  
 
 Donats dos individus (els que han estat sel·leccionats en el procés de
-sel·lecció per a reproduir-se , amb una provabilitat d'un 0.8 es fa creuament i
+sel·lecció per a reproduir-se , amb una provabilitat d'un 0.85 es fa creuament i
 els fills són tan sols una partició formada a partir dels 2 pares, amb un punt
 de tall aleatori.  Donat que no hi ha cap relació entre els diferents indexos
 (estàn ordenats arbitràriament) no ens hem de preocupar de partir el cromosoma
@@ -618,7 +638,6 @@ que passen les generacions, la població tendeixi a millorar (en mitja).
 
 El creuament per dos punts no ha donat millors resultats que el creuament fet
 per un únic punt, i s'ha decidit quedarse amb el creuament per un sol punt.
-
 % subsubsection crossover (end)
 
 \subsubsection{Fitness} % (fold)
