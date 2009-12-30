@@ -4,3 +4,31 @@ Explicar i definir Multigen Homeòtic
 Consultar a la feina els paràmetres de cadascun dels algorismes:
 	Percentatges dels operadors,
 	Seleccio (torneig, ruleta...)
+
+PHOLUS
+------
+pcross 0.85
+pmut  0.1
+sel DetTour(2)
+elitism = 1
+
+
+CHIRON
+------
+
+pcross 0.85
+pmut  0.1
+sel DetTour(2)
+elitism = 1
+
+Genetic Expression Programming
+------------------------------
+
+NOSE:
+pcross 0.8
+pmut  0.1
+sel DetTour(2)
+elitism = 1
+
+
+

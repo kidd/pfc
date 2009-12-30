@@ -125,8 +125,8 @@ Tanimotos, conformacions, y tal
 El problema al que ens enfrontem és el de, donat un \texttt{receptor} i un conjunt de %glossari
 \texttt{lligands}, deduir quins són els factors que fan que la unió sigui millor
 o pitjor.  Els factors que intervenen en aquesta unió són molts, però a nivell
-pràctic, utilitzem ``només'' 22 indicadors, que són els que podem quantificar
-amb facilitat, i que hem cregut que tenen més rellevància en aquest procés.
+pràctic, utilitzem ``només'' 22 indicadors de potencial, que són els que podem quantificar amb
+facilitat, i que hem cregut que tenen més rellevància en aquest procés.
 
 Aquests indicadors són:
 
@@ -156,12 +156,15 @@ trobar alguna altra formació on ``es troben més còmodes'' i desfan la unió q
 tenien.
 
 % XAVISTART
-En general, semblança $S_{A,B}$ entre dos objectes és estimada pel nombre
-d'elements iguals que tenen. Els objectes que són iguals, haurien de tenir la
-màxima puntuació. Per tant, una expressió de la semblança seria en termes de la
-teoria de conjunts, la intersecció $(A\cap B)$ que en lògica seria l'operador
-$AND$. La dissimilitud $D_{A,b}$ és estimada pel nombre d'elements diferents que
-tenen. Els objectes idèntics obtindrien la mínima puntuació. Anàlogament a la
+
+Per començar, hem d'imaginar una molècula com un graf en un espai de tres
+dimensions, on els nodes són els àtoms, i les arestes són enllaços.  En general,
+semblança $S_{A,B}$ entre dos objectes és estimada pel nombre d'elements iguals
+que tenen. Els objectes que són iguals, haurien de tenir la màxima puntuació.
+Per tant, una expressió de la semblança sería en termes de la teoria de
+conjunts, la intersecció $(A\cap B)$ que en lògica seria l'operador $AND$. La
+dissimilitud $D_{A,b}$ és estimada pel nombre d'elements diferents que tenen.
+Els objectes idèntics obtindrien la mínima puntuació. Anàlogament a la
 similitud, parlant en termes de teoria de conjunts, la dissimilitud es
 calcularia posant amb la unió $(A\cup B)$ o el que seria el mateix amb
 l'operador lògic $OR$. El denominador serà simplement un normalitzador per tenir
@@ -170,7 +173,7 @@ l'índex entre 0 i 1.
 El concepte de semblança normalment s'utilitza per referir-se tan a la semblança
 com a la diferència, ja que es suposa que si dos objectes són semblants és
 perquè no són diferents. En matemàtiques i estadística s'utilitzen els conceptes
-de semblança, proximitat i distància per referir-se al mateix, però en química
+de semblança, proximitat i distància per referir-se al mateix, però en química,
 similitut i dissimilitut poden portar a diferents resultats. Per exemple,
 considerem dues seqüències de caràcters, F1 i F2, cadascuna té conjunts de 407
 caràcters, 402 dels quals són comuns entre ells. F3 i F4, cadascuna té un
@@ -193,10 +196,32 @@ hem d'intentar trobar un coeficient que sigui viable de calcular.  Ens hem
 decidit per una variació de Tanimoto, acotada entre -1 i +1 que s'explicarà tot
 seguit.
 
-%XAVISTOP
-Tanimotos. Què cony son? %XXX
+%XAVISTOP  XXX
 
-% subsection hola (end)
+Per a calcular els valors dels 22 potencials de cada lligand, es resten els
+potencials de la molècula de referència amb els del lligand.  El format en el
+que estàn ambdues molècules, és el mateix, però pot ser que estiguin situades en
+un espai diferent respecte el 0 del eix de coordenades (recordem que estan
+mapejades en un espai 3D).  Per a ajustar les dues molècules, es passen per un
+procés de docking (autodock), que el que fa es ajuntarles de la millor manera que pot
+(també utilitza algoritmes genètics per a fer-ho) simulant la seva unió. Una
+vegada tenim els dos grafs ``superposats'' de la millor manera, calculem les
+diferències entre els potencials d'una i de l'altre estructura en cada punt, i
+després podem fer una resta dels valors punt a punt.  Això ho podem fer gràcies
+a què hem reduit les dues molècules a ocupar el màxim espai comú, i els
+potencials en cada punt $i$ de la matriu de la molècula de referència, pot ser
+relacionat i comparat amb el punt $i$ de la matriu d'un lligand.
+
+Després de fer tots els calculs i restes pels 22 diferents tipus de potencials,
+podem donar un número de semblança ``total'' per dos molècules i un tipus de
+potencial.
+
+Tanimotos. Què cony son? %XXX
+\subsubsection{Tanimoto} % (fold)
+\label{ssub:Tanimoto}
+
+% subsubsection Tanimoto (end)
+
 \subsubsection{Estereoisomers i conformacions}
 \label{ssub:estereoisomers i conformacions}
 
@@ -248,7 +273,6 @@ aconseguit trobar unes ponderacions que situen la majoria de molecules actives
 en les primeres posicions, però el procés és manual, i no assegura ni la
 ordenació actives/inactives, ni la propia ordenació de les actives al principi
 de la llista (no totes les actives són ``igual'' d'actives).
-
 % section Context Químic (end)
 
 \section{Procediment informàtic} % (fold)
