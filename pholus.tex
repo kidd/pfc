@@ -83,27 +83,26 @@ conformació extesa. De la mateixa manera la capsa ha d'incloure aquells punts a
 molècules que tenen valors significatius. Diferents representacions dels camps moleculars, que donen
 diferent informació sobre la densitat electrònica, són construits amb sondes atòmiques. Una sonda
 atòmica és una partícula amb característiques químiques particulars que s'assemblen a propietats
-atòmiques en ambients electrònics particulars. 
+atòmiques en ambients electrònics particulars.  Podem veure les 22 sondes atòmiques
+implementades en HELIOS en la taula \ref{table:maps}.
 
-Les 22 sondes atòmiques que són implementades en HELIOS són les que  es veuen a la taula \ref{table:maps} 
-
-\begin{table}
-\centering
-\begin{tabular}{|ccc|}
-\hline
-aromatic carbon &aliphatic carbon&non-hydrogen bonding sulfur\\
-non-hydrogen bonding phosphor&phosphor&non-hydrogen bonding nitrogen\\
-hydrogen donor&oxygen acceptor&nitrogen acceptor\\
-sulfur acceptor&spherical nitrogen acceptor&spherical oxygen acceptor\\
-fluorine&chlorine&bromine\\
-iodine&iron&manganese\\
-calcium&magnesium&zinc\\
-positive charge&& \\
-\hline
-\end{tabular}
-\caption{The 22 atom probes implemented in HELIOS.}
-\label{table:maps}
-\end{table}
+%\begin{table}
+%\centering
+%\begin{tabular}{|ccc|}
+%\hline
+%aromatic carbon &aliphatic carbon&non-hydrogen bonding sulfur\\
+%non-hydrogen bonding phosphor&phosphor&non-hydrogen bonding nitrogen\\
+%hydrogen donor&oxygen acceptor&nitrogen acceptor\\
+%sulfur acceptor&spherical nitrogen acceptor&spherical oxygen acceptor\\
+%fluorine&chlorine&bromine\\
+%iodine&iron&manganese\\
+%calcium&magnesium&zinc\\
+%positive charge&& \\
+%\hline
+%\end{tabular}
+%\caption{The 22 atom probes implemented in HELIOS.}
+%\label{table:maps}
+%\end{table}
 
 %El camp molecular definit per una sonda en un punt donat és calculat amb la
 %següent equació % XXX : TREURE-HO, no?
@@ -868,7 +867,7 @@ interpretació correcte als resultats.
 
 En les següents gràfiques, es mostren les dades de les deu repeticions que s'han
 fet de la execució.  A priori, les dades que podriem esperar, son gràfiques com
-la Figura \ref{figura log,normal,normal2}.  La línia amb forma logarítmica, és
+la Figura \ref{fig:sobreent}.  La línia amb forma logarítmica, és
 el fitness del conjunt amb el què entrenem el algoritme genètic.  Aquest, será
 estrictament creixent, ja que utilitzem elitisme, i el creixement del fitness té
 forma logarítmica.  El conjunt de test, serà el que utilitzarem per a saber el
