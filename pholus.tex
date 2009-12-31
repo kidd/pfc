@@ -887,11 +887,18 @@ Aquest conjunt de dades ens serveix per a asegurar que no estem cometent el
 mateix error del sobreentrenament però aquesta vegada, maximitzant el conjunt de
 test.  
 
-En la figura XXX veiem un esbós del que esperem que surti, si és que s'està
-sobreentrenant.
-
-Sabrem si sobreentrenem la solució en funció del grau de 
+En la figura \ref{fig:sobreent} veiem un esbós del que esperem que surti, si és que s'està
+sobreentrenant. Sabrem si sobreentrenem la solució en funció del grau de similitud entre els nostres
+resultats i la figura \ref{fig:sobreent}
 % subsection Testeig (end)
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics{pholus/sobreentrenament.jpg}
+	\end{center}
+	\caption{Resultats esperats en cas de sobreentrenament}
+	\label{fig:sobreent}
+\end{figure}
 
 \subsection{Anàlisi de Resultats} % (fold)
 \label{sub:Analisi de Resultats}
@@ -901,8 +908,11 @@ hagut sobreentrenament, ja que en les deu execucions, no s'observa el patró que
 hem comentat del sobreentrenament.
 
 De les observacions que hem fet, podem concloure que no hi ha sobreentrenament,
-ja que , en general les grafiques de testing i validació, són bastant estables,
-i validació no cau a partir d'arribar al maxim de testing.
+ja que , en general les gràfiques de testing i validació, són bastant estables,
+i la validació no cau a partir d'arribar al maxim de testing (Figures \ref{fig:pholusResult1},
+\ref{fig:pholusResult2}, \ref{fig:pholusResult3}, \ref{fig:pholusResult4}, \ref{fig:pholusResult5},
+\ref{fig:pholusResult6}, \ref{fig:pholusResult7}, \ref{fig:pholusResult8}, \ref{fig:pholusResult9},
+\ref{fig:pholusResult10}).
 
 En gairebé tots els casos observem que no el testing si que té el màxim en un
 punt cap a les 60-80 generacions, pero la devallada de després tampoc és molt
