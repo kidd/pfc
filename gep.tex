@@ -534,4 +534,90 @@ repla
     %+ treball futur
 
 
+\subsubsection{Fitness} % (fold)
+\label{ssub:Fitness}
+La funció de fitness en GEP, es basa en diversos mostrejos empírics que es tenen sobre uns valors
+com a entrades d'un sistema, que donen lloc a unes sortides.  És per això, que en el nostre cas,
+en la fase de proves, hem fet servir funcions matemàtiques que coneixem i volem que GEP descobreixi.
+
+Així doncs, per a cada individuu, a partir del genotip, el transformem al arbre corresponent, i
+l'evaluem 50 vegades per a valors de les entrades aleatoris.  Se'ls hi ha posat limits en el rang de
+valors possibles, per no patir desbordaments de rang en els resultats.  Tenim en compte que GEP
+evalua molts arbres, i molts d'ells poden donar lloc a operacions equivalents a $x^15$.
+
+Si es disposen només d'uns valors concrets per unes entrades concretes, s'utilitzaríen aquests per
+avaluar cada individuu %XXX
+
+
+% subsubsection Fitness (end)
+\subsection{Resultats} % (fold)
+\label{sub:GResultats}
+
+Per testejar GEP s'han fet proves per descobrir funcions matemàtiques amb diferents graus de
+dificulat.  S'han triat dues vies diferents per augmentar la dificultat, una d'elles provant
+diferent número d'incògnites, i una altra provant funcions desde les més simples com podria ser
+$f(x)=x$, i augmentant el grau de dificultat ``intuitiva'', com podria ser $f(x)=x^2$, provant
+funcions discontínues, etc.
+
+Hem tingut èxit en funcions de grau sis, com per exemple, el cas que analitzarem més a fons:
+
+\begin{center}
+	\label{fun1} 
+	$f(x)=x^6-2x^4+x^2$
+\end{center}
+
+
+En aquesta funció, hem pogut comprovar com GEP va agrupant els blocs de construcció, i, gairebé
+``sense voler'', troba les arrels, aconseguint formar un arbre que respon exactament a la funció
+desitjada. Un possible arbre que ens dóna una diferència zero, comença construint-se a partir de
+blocs petits, com per exemple , $x$, $x+1$ o $x^2$.
+
+
+És curiós veure com GEP aconssegueix factoritzar una funció, per exemple, trobar la següent funció:
+
+\begin{center}
+	$f(x) = (x^3 + x)^2 $
+\end{center}
+
+Aquesta funció, evidentment, és la mateixa que la anterior (\ref{fun1}), però a GEP li va molt
+millor trobar-la a partir de la formula factoritzada, ja que minimitza el número de nodes
+necessaris.
+
+En el cas de no disposar de la operació d'elevar (s'han disenyat operadors ad-hoc per a alguns
+problemes, com podrien ser el de elevar al quadrat), GEP, arribaría a trobar la mateixa formula a
+través de:
+
+\begin{center}
+	$f(x) = (x^3 + x) * (x^3 + x) $
+\end{center}
+
+
+Però si utilitzem individuus multigen, es poden generar fàcilment operadors equivalents a la
+potència:
+
+\begin{center}
+	$g(x) = (x^3 + x)$
+	$f(x) = g(x) * g(x)$
+\end{center}
+
+Aquí es fa clara la millora que suposa utilitzar individuus multigen, ja que li dona a l'algorisme
+la possibilitat de reaprofitar estructures vàlides per a formar part d'un arbre més gran.
+
+On no s'ha trobat solucions, ha estat en funcions periòdiques, que és pel que s'havia concebut
+aquest projecte.  Els intents que s'han fet per al descubriment de funcions periòdiques, no han
+sigut efectius, probablement per a la dificultat d'establir un ordre entre quina funció està més a
+prop d'una funció objectiu.  Al tenir periodicitat, a partir dels punts de mostreig (aleatoris en
+el nostre cas), GEP no és capaç de trobar el patró de la periodicitat.
+
+En principi, es pensava que GEP, podria trobar les funcions fins a cert punt d'exactitut, trobant
+maneres per a representar una funció periòdica a partir de polinòmis no periòdics, com per exemple,
+polinomis de Taylor. GEP, però no ens ha donat els resultats esperats.
+
+Un altre intent per ``ajudar'' a GEP a trobar funcions periòdiques ha estat crear operadors ad-hoc
+per al problema, com $sin(x)$ i $cos(x)$.  Tot i que amb aquests operadors, GEP era capaç de trobar
+funcions periòdiques simples, com per exemple $sin(x)+cos(x)$, en casos més complexos, com els
+nostres casos reals de molècules, ni tan sols s'acosta a trobar una fórmula fidel al model.
+
+% subsection Resultats (end)
+
 \end{document}

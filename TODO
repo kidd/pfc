@@ -10,7 +10,12 @@ pholus /diana
 pholus /dianes
 pholus - Explicar les millores com a part del projecte?
 pholus - Explicar perquè AE i no uns altres algorismes
+GEP - explicar la funcio de fitness, els quadrats de la suma de diferències.
+GEP - Programa per a mostrejar arbres.
+Operadors ad-hoc
 
+
+GEP
 PHOLUS
 ------
 DONE pcross 0.85
@@ -35,6 +40,7 @@ pcross 0.8
 pmut  0.1
 sel DetTour(2)
 elitism = 1
+
 
 
 
