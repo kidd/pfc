@@ -20,7 +20,8 @@ create table Individual (
 	n_gen integer NOT NULL,
 	appears integer NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id_exp) references Experiment(id) on delete cascade
+	FOREIGN KEY (id_exp) references 
+			Experiment(id) on delete cascade
 ) engine = INNODB DEFAULT CHARSET=utf8 ;
 
 create table Bound (
@@ -29,7 +30,8 @@ create table Bound (
 	pos integer not null,
 	value integer,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id_exp) references Experiment(id) on delete cascade
+	FOREIGN KEY (id_exp) references 
+			Experiment(id) on delete cascade
 ) engine = INNODB DEFAULT CHARSET=utf8 ;
 
 create table Element(
@@ -39,6 +41,7 @@ create table Element(
 	n_gen integer NOT NULL,
 	valor integer NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id_individual) references Individual(id) on delete cascade
+	FOREIGN KEY (id_individual) references 
+			Individual(id) on delete cascade
 ) engine = INNODB DEFAULT CHARSET=utf8 ;
 

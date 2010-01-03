@@ -26,39 +26,40 @@
 	``enganxar'' millor en el target.  Les ramificacions que poden anar en cada
 	posició són conegudes (en la majoria de casos).
 
-	En certa manera, podríem dir que és com ``decorar'' un esquelet de la
-	molècula per a fer-lo més apte per a enganxar-se amb el seu target o diana.
+	En certa manera, podríem dir que és com ``decorar'' l'esquelet de la
+	molècula per a fer-lo més apte per a la unió amb la seva diana (o target).
 
 	Un dels problemes que tenen els mètodes actuals són els grans costos
 	que es deriven d'aquest procés, ja que el que es fa és sintetitzar TOTES les
-	possibles variants i combinacions de ramificacions, i mesurant l'activitat
-	de cadascuna d'elles, buscant la que dona major activitat
+	possibles variants i combinacions de substituients, i mesurant
+	experimentalment l'activitat de cadascun d'ells, buscant la que dona major
+	activitat.
 	%la energia XXX (disipada?) s'intenta buscar la que minimitza aquesta.
 
-	si tenim un esquelet com el següent, amb 3 punts on enganxar Ramificacions,
-	i 4 posibles ``building blocs'' per a cada R, la (combinatiòria ens dóna que
-	necessitarem sintetitzar aproximadament $4^3 = 64 $, però si el número creix
-	una mica, el creixement és exponencial, fent molt costós el procediment
-	seguint aquest mecanisme.
+	si tenim un esquelet com el següent, amb 3 punts on unir substituients,
+	i 4 posibles ``blocs de construcció'' (building blocs) per a cada R, la
+	combinatiòria ens dóna que necessitarem sintetitzar aproximadament $4^3 =
+	64 $, però si el número creix una mica, el creixement és exponencial, fent
+	molt costós el procediment.
 
-	Si pensem que la qualitat del resultat avaluat és en funció de les
-	ramificacions escollits per a cada $R1..RN$, podem anar una mica més enllà i
+	Si pensem que la qualitat del resultat final depèn de les
+	ramificacions escollides per a cada $R1..RN$, podem anar una mica més enllà i
 	intentar fer una aplicació que ens ajudi i ens guii a trobar un lligand amb
 	bona activitat explorant només una petita part de l'espai de cerca.
 	
 	\texttt{La idea en aquest programa és doncs, construir un algoritme genètic
-	semi-interactiu que ens permeti arribar a la millor tria de ramificacions (o
-	alguna de molt bona) sintetitzant una petita part del espai de búsqueda.}
+	interactiu que ens permeti arribar a la millor tria de ramificacions (o
+	alguna de molt bona) sintetitzant només una petita part del espai de búsqueda.}
 
 	Per a avaluar la qualitat de una combinació, no hi ha més remei que
-	sintetitzar la molècula en qüestió en el laboratori i retornar el resultat.
-	Així doncs, es tracta d'un algorisme genètic interactiu 
-	que ens guiarà les proves que hem de fer a través dels creuaments i les
+	sintetitzar la molècula en qüestió en el laboratori i retornar el resultat
+	al programa.  Així doncs, es tracta d'un algorisme genètic interactiu que
+	ens guiarà les proves que hem de fer a través dels creuaments i les
 	mutacions, trobant ``relacions'' (epistàcia) entre els diferents
-	ramificacions, i aconseguint resultats bons explorant una petita part del
-	espai de búsqueda.
+	ramificacions, i aconseguint resultats bons explorant només una petita part
+	del espai de búsqueda.
 
-	Una altra objectiu d'aquest programa, ha estat convertir-lo en un
+	Una altre objectiu d'aquest programa, ha estat convertir-lo en un
 	``framework'' d'algorismes genètics.  Veient que la funció de fitness és una
 	funció que executa l'usuari, i ell és qui puntúa cadascuna de les
 	combinacions, s'ha intentat anar més enllà i aconseguir una aplicació que
@@ -70,9 +71,9 @@
 	L'únic que necesita el algoritme genètic és un receptor de dades (en el
 	nostre cas inicial és l'usuari), que donada una entrada, doni una
 	sortida (fitness).  Si es mira d'aquesta manera, no estem fent més que
-	desacoblar la avaluació del procés de creuaments, mutacions i reproducció.
+	desacoblar l'avaluació del procés de creuaments, mutacions i reproducció.
 
-	Fins a aquest punt, podríem utilitzar algun sistema amb callbacks, on
+	Fins a aquest punt, podríem utilitzar algun sistema amb ``callbacks'', on
 	l'usuari simplement entri els fitness als diferents individuus (combinacions
 	de ramificacions), però com que l'avaluació no és instantànea, el programa no
 	només ha de ser interactiu en el sentit clàssic del terme (inici-interacció-fi),
@@ -81,9 +82,9 @@
 
 	Una vegada estem en aquest punt, la següent evolució lògica és la
 	deslocalització també espaial de les 2 parts.  Donat que el procés
-	d'avaluació d'una combinació de erres donada pot trigar dies, el coll
-	d'ampolla serà clarament aquest, permetent-nos així separar algorisme
-	genètic i Fitness a través d'una xarxa, i permetent convertir el sistema en
+	d'avaluació d'una combinació de substituients donada pot trigar dies, el coll
+	d'ampolla és clarament aquest, permetent-nos així separar algorisme
+	genètic i fitness a través d'una xarxa, i permetent convertir el sistema en
 	un servei web, accessible des d'arreu del món.
 
 	Tot i que la gestió d'això només ens implica implementar el sistema com a
@@ -116,7 +117,7 @@
 	fàrmacs. La filosofia original consta de dues parts, primer una on es proven
 	milers i fins i tot milions de compostos per veure si algun d'ells
 	aconsegueix mínimament l'objectiu que s'està buscant. Un cop trobat un
-	\emph{core}, s'entra en una segona fase d'optimitzacions d'aquest compost.
+	\emph{hit}, s'entra en una segona fase d'optimitzacions d'aquest compost.
 
 	Aquesta filosofia s'ha ajudat molt de la biotecnologia moderna. S'han
 	automatitzat tots els processos que abans es feien manualment, de manera que
@@ -128,7 +129,7 @@
 
 	L'augment de costos i de temps de les fases \emph{in vitro}, ha donat lloc
 	al naixement a una fase prèvia, coneguda com \emph{in silico}. En aquesta
-	nova fase, els models emprats fins i tot són més dolents que els models
+	nova fase, els models emprats fins i tot són de menor qualitat que els models
 	emprats en la fase \emph{in vitro}.  L'avantatge d'aquesta fase rau en que
 	els costos i temps es redueixen, ja que un supercomputador pot provar de
 	forma molt ràpida un gran nombre de compostos.
@@ -153,31 +154,33 @@
 	En el nostre cas, posicionem el nostre programa en la fase d'optimització,
 	una vegada es disposa d'un esquelet que presenta certa activitat i tenint
 	uns punts d'on poden penjar seqüències d'atoms, anomenades ramificacions (o
-	R), anar provant d'enganxar els diferents R en cadascun dels punts definits
-	com a inicis de R.
+	substituients), anar provant d'enganxar els diferents substituients en
+	cadascun dels punts definits com a inicis dels substituients.
 
-	En el proccés de descobriment de fàrmacs (drug discovery), no només és
+	En el proccés de descobriment de fàrmacs, no només és
 	necessari trobar un compost que reaccioni favorablement a una molècula
-	objectiu (target), sinó que també ha de reunir certes propietats per tal que
+	objectiu, sinó que també ha de reunir certes propietats per tal que
 	un principi actiu es pugui convertir en un fàrmac aplicable.  	
 
-	Aquestes propietats , moltes vegades vénen determinadess per aquestes
+	Aquestes propietats , moltes vegades vénen determinades per aquestes
 	branques o ramificacions, que fan que un mateix esquelet, sigui més o menys
 	absorbible pel cos, o pot donar-li propietats negatives per als nostres
 	objectius.
 
-	Quan en un laboratori, se sap sintetitzar un esquelet, la producció de les
-	diferents variants d'aquest esquelet és molt senzilla.  És per això que té
-	sentit explorar les possibles combinacions de Rs una vegada s'ha fet la
-	inversió de desenvolupar el procediment per a sintetitzar aquest scaffold.
+	Quan en un laboratori, se sap sintetitzar un esquelet (scaffold), la
+	producció de les diferents variants d'aquest esquelet és molt senzilla.  És
+	per això que té sentit explorar les possibles combinacions de Rs una vegada
+	s'ha fet la inversió de desenvolupar el procediment per a sintetitzar aquest
+	esquelet.
 
 	El que hem fet aquí és crear un programa que mitjançant un algorisme
-	genètic permet trobar un conjunt de ramificacions que optimitzen el fàrmac.
+	genètic ens ajuda a trobar un conjunt de ramificacions que optimitzen el
+	fàrmac.
 
 	El problema que hem analitzat en un principi és el de XXX
 	on tenim un espai de búsqueda de 15360 possibles combinacions.
 
-	Com es veurà a durant el capítol, hem volgut anar més enllà i no cenyir-nos
+	Com es veurà a durant el capítol, hem volgut anar més enllà i no limitar-nos
 	només a solucionar aquest problema, però per aquest treball, els resultats
 	presentats sí que seràn respecte a aquest cas.
 % section Context Químic (end)
@@ -186,7 +189,7 @@
 \label{sec:Procediment informatic}
 
 En aquesta aplicació, no ha estat tant complex d'implementar l'algorisme genètic
-com tot l'entorn (framework) que permet fer del \texttt{core} una part molt
+com tot l'entorn (framework) que permet fer del \texttt{nucli} una part molt
 flexible i accessible des de tot arreu (web, consola).
 
 El diseny de \texttt{Chiron}, ha hagut de estar molt pensat, i de fet, s'ha vist
@@ -195,9 +198,9 @@ trobat en tecnologies que pensàvem que serien suficientment flexibles per a les
 nostres necessitats, i després s'ha vist que no eren del tot adecuades per a
 complir els requeriments.
 
-Començarem amb el workflow que ha de permetre Chiron perquè l'usuari pugui
-utilitzar-lo fàcilment i n'extraurem els diferents casos d'ús, i després
-s'anirà describint el procés que s'ha realitzat per a implementar-ho.
+Començarem amb el workflow que facilita l'us de Chiron i n'extraurem els
+diferents casos d'ús, i després s'anirà describint el procés que s'ha realitzat
+per a implementar-ho.
 
 \subsection{Funcionament} % (fold)
 \label{sub:Funcionament}
@@ -217,9 +220,9 @@ La creació de experiments nous sí que és una labor de Chiron, i és a partir
 d'aquest moment on Chiron s'encarrega de registrar els events.
 
 Per a la creació d'un nou experiment, Chiron necessita únicament el número de
-ramificacions que conté l'esquelet (R1 \dots RN), el número de al·lels diferents que
-poden estar en cadascuna de les ramificacions, el tamany de la població, i un booleà
-indicant si volem que chiron recordi (cachegi) els resultats o no.  Amb aquestes
+ramificacions que conté l'esquelet (R1 \dots RN), el número d'al·lels diferents que
+poden estar en cadascuna de les ramificacions, la mida de la població, i un booleà
+indicant si volem que Chiron recordi (cachegi) els resultats o no.  Amb aquestes
 dades, Chiron en té prou per començar l'experiment.  És clar que també demanarà
 un nom per al que l'usuari s'hi pugui referir.
 
@@ -233,19 +236,19 @@ els perquès:
 	que el programa, tot i guardar-se'l per a futura referència, no l'usa en tot
 	el procés per a fer càlculs.
 
-	\item \textbf{Perquè decidir si guardem els resultats previs?}.
-	Aparentment, sempre que calculem un individuu nou, haurñiem de guardar-nos
+	\item \textbf{Perquè decidir si guardem els resultats previs?}
+	Aparentment, sempre que calculem un individuu nou, hauríem de guardar-nos
 	els resultats obtinguts per si més endevant surt el mateix element.  El fet
 	que ens fa donar-li la opció al usuari és que l'avaluació de la activitat
 	d'una molècula, es fa en un laboratori, i segons el tipus d'experiments que
 	es fan, els resultats només tenen valor uns en relació amb els altres.  Si
 	és així, al usuari no li interessa que es guardin els valors ja calculats,
 	ja que si en properes generacions del algorisme genètic torna a apareixer la
-	mateixa combinació de erres, s'haurà de calcular de nou.
+	mateixa combinació de substituients, s'haurà de calcular de nou.
 \end{itemize}
 
-Una vegada l'usuari ha creat el nou experiment, se li proposa unes quantes
-molècules a avaluar (tantes com hagi decidit l'usuari com a tamany de la
+Una vegada l'usuari ha creat el nou experiment, se li proposen unes quantes
+molècules a avaluar (tantes com hagi decidit l'usuari com a mida de la
 població).
 
 Al cap d'un temps, quan l'usuari ha avaluat les molècules proposades per Chiron,
@@ -258,7 +261,7 @@ En aquest punt, a partir de les dades que tenim, Chiron fa una iteració i
 presentarà al usuari una nova generació de molècules, fent creuaments i
 mutacions sobre les molècules que tinguem avaluades.
 
-Com que el workflow d'aquest programa no és ``continuu'' en el sentit que el
+Com que el workflow d'aquest programa no és ``continu'' en el sentit que el
 programa es manté viu durant tot el procés, les dades que volem guardar (encara
 que siguin només temporals o internes per a un experiment determinat), s'han
 d'emmagatzemar en una base de dades, ja que les tècniques de memoizing %apartat pholus
@@ -275,12 +278,12 @@ interessa.  Per exemple, si tenim una població de 30 individuus i tots tenen
 fitness 0, Chiron intentarà fer creuaments entre ells aleatoris (ja que cap
 d'ells guanya sobre els altres).  No només això sinó que al fer això, molts dels
 individuus de la següent generació seran iguals als ja evaluats, ja que hem
-reduit molt l'espai de búsqueda sobre el que ataquem.
+reduit molt l'espai de búsqueda sobre el que explorem.
 
 Si avaluéssim funcions matemàtiques contínues i amb un gradient clar fins al
 millor resultat (o els millors resultats), com en la Figura \ref{fig:normal}, no
 tindríem aquest problema, però els nostres casos són, en la gran majoría, casos
-molt difícils, on tenim un espai de búsqueda molt gran però els pous amb
+hiperdimensionals, on tenim un espai de búsqueda molt gran però els pous amb
 activitat són molt pocs (i estrets), i hem d'intentar arribar a aquests pous
 primer, i després optimitzar per les vies del algoritme genètic (Figura
 \ref{fig:dificil}).
@@ -303,9 +306,9 @@ primer, i després optimitzar per les vies del algoritme genètic (Figura
 
 La solució que s'ha adoptat ha estat la de generar una població d'individuus
 nova, sense tenir en compte ĺa generació anterior, com si es comencés un
-experiment nou.  Fent això evitem que l'Algoritme genètic estigui ``viciat'' de
+experiment nou.  Fent això evitem que l'algoritme genètic estigui ``viciat'' de
 bon principi, i maximitzem les probabilitats de trobar algun pou d'energia.
-% funcions graduals vs punxegudes
+%XXX : Convergencia prematura
 
 Les proves de correctesa del programa, s'han fet amb funcions matemàtiques
 contínues, per tal de saber del cert que l'algorisme funciona bé i més endevant
@@ -318,14 +321,14 @@ s'ha provat amb el cas real de química combinatiòria.
 \label{ssub:Testeig}
 
 Hi ha un conjunt de funcions matemàtiques que es consideren ``típiques'' per a
-usarles com a toy problems, per exemple, s'ha provat l'algoritme evolutiu
-representant una funció on cada al·lel només té dos possibles valors , 0 i 1, i
-la funció únicament suma els bits dels cromosomes.  El que es busca en aquesta
-funció, és maximitzar o bé minimitzar el resultat de la suma de bits.  Aquest,
-tot i ser un exemple gairebé trivial, ens serveix per saber si l'algorisme
-evolutiu funciona correctament.  Aquest exemple també ens serveix perquè les
-mutacions i creuaments utilitzats són els mateixos que utilitzem en la versió
-final de la aplicació.
+usarles com a ``problemes joguina'' (toy problems), per exemple, s'ha provat
+l'algoritme evolutiu representant una funció on cada al·lel només té dos
+possibles valors , 0 i 1, i la funció únicament suma els bits dels cromosomes.
+El que es busca en aquesta funció, és maximitzar o bé minimitzar el resultat de
+la suma de bits.  Aquest, tot i ser un exemple trivial, ens serveix per
+saber si l'algorisme evolutiu funciona correctament.  Aquest exemple també ens
+serveix perquè les mutacions i creuaments utilitzats són els mateixos que
+utilitzem en la versió final de la aplicació.
 
 Els resultats obtinguts són bons, arribant al millor resultat (tot uns) o a un
 dels millors explorant només un percentatge de aproximadament el  10\% de
@@ -333,15 +336,14 @@ l'espai de búsqueda.
 
 La funció de la suma de bits és una funció trivial per a cualsevol algorisme
 evolutiu, donada la seva simplicitat.  És per això que després de provar amb
-aquesta funció, hem provat funcions més complicades de trobar, fins a arribar a
-les conegudes com a ``funcions trampa''.  Les funcions trampa són funcions que
-creem nosaltres, que tenen canvis de pendent, tenint el millor resultat no pas
-en un extrem (tot uns o tot zeros), sinó que hi ha una posició del vector que
-val més que les altres, o alguna que penalitza.
-
-Una de les funcions trampa que hem provat, és la de mapejar en un vector de bits
-una valoració determinada per a cada suma de bits.  Per exemple, donat un vector
-de 5 posicions:
+aquesta funció, hem provat funcions més complicades d'optimitzar, fins a arribar a
+les conegudes com a ``funcions trampa''(\ref{EU2009}).  Les funcions trampa són funcions que
+tenen característiques que fan molt difícil als AE trobar el màxim/mínim global,
+tenint el millor resultat global envoltat de resultats molt dolents, i tenint un
+màxim/mínim local ``fàcil'' d'arribar-hi en un extrem, apartant les solucions de
+l'òptim global.  Una de les funcions trampa que hem provat, és la de mapejar en
+un vector de bits una valoració determinada per a cada suma de bits.  Per
+exemple, donat un vector de 5 posicions:
 
  % theme=Berlin;caption_top=1;caption=Exemple tanimotos
  % bits a 1 & valor
@@ -371,12 +373,13 @@ de 5 posicions:
 \end{table}
 
 
-L'ideal en aquest cas és trobar un vector que té 4 bits a 1 i un a 0.  Això,
-clarament és una trampa per a l'algorisme genètic, ja que al fer els creuaments
-entre dos cromosomes que tenen una bona puntuació, fa que els resultants, siguin
-molt dolents. És una manera d'enganyar al algoritme evolutiu que ens serveix per
-a saber si aquest és prou robust per a trobar un resultat bo.  En aquests casos,
-l'elitisme, és molt determinant per a obtenir bons resultats.
+L'ideal en aquest cas és trobar el vector que té 5 bits a 1, és a dir, busquem
+minimitzar la funció.  Això, clarament és una trampa per a l'algorisme genètic,
+ja que al fer els creuaments entre dos cromosomes que tenen una bona puntuació,
+fa que els resultants, siguin molt dolents. És una manera d'enganyar al
+algoritme evolutiu que ens serveix per a saber si aquest és prou robust per a
+trobar un resultat bo.  En aquests casos, l'elitisme, és molt determinant per a
+obtenir bons resultats.
 % subsubsection Testeig (end)
 
 %SOAP
@@ -386,26 +389,26 @@ l'elitisme, és molt determinant per a obtenir bons resultats.
 Un altre aspecte important de Chiron és la versatilitat que té per a executar-se
 amb diferents funcions de fitness.  Com s'ha explicat en la introducció del
 capítol, Chiron permet avaluar manualment cadascun dels elements.  Donat que una
-avaluació d'una molècula pot portar hores o dies, l'algorisme genètic ha de ser
+avaluació d'una molècula pot portar dies o setmanes, l'algorisme genètic ha de ser
 capaç de mantenir l'estat i congelarse a cada iteració.
 
 Les llibreries usades (eodev), estan preparades per a mantenir l'estat en arxius
 de text pla, però ho fan en el moment que s'ha acabat de executar la funció
-avaluació de tots els individuus d'una generació.  Per a poder aturar la
+avaluació de tots els individus d'una generació.  Per a poder aturar la
 execució abans (a nivell lògic), el que hem disenyat és un sistema per a
 recollir i posar dades automàticament en els arxius de estat.  eodev està
 programat en c++, i per tant, la funció de fitness ha de ser sempre la mateixa
-ja que només volem tenir una instància de pholus per executar, i no pas una per
-a cada projecte que es faci.  El que hem fet per a solucionar aquesta qüestió és
-``anul·lar'' la funció de fitness fent que sigui una stub, que dona fitness zero
-a tots els individuus que avalua.  Configurant Chiron per a què faci una sola
-generació, aconseguim guardar l'estat en un arxiu, amb els paràmetres del
-algorisme genètic, les llavors (seed), i els individuus de la generació actual.
-Llavors, el programa que executa el core de Chiron pot parsejar l'arxiu, i
-insertar els elements en una base de dades (ens interessa tenir un històric de
-tots els elements avaluats en generacions prèvies).  Aquests resultats són els
-que es presenten al usuari, que pot recuperar cuan vulgui ja que la recuperació
-de les dades es fa desde la base de dades MySql.
+ja que només volem tenir una instància de \texttt{Chiron} per executar, i no pas
+una per a cada projecte que es faci.  El que hem fet per a solucionar aquesta
+qüestió és ``anul·lar'' la funció de fitness fent que sigui una stub, que dona
+fitness zero a tots els individus que avalua.  Configurant Chiron per a què
+faci una sola generació, aconseguim guardar l'estat en un arxiu, amb els
+paràmetres del algorisme genètic, les llavors (seed), i els individus de la
+generació actual.  Llavors, el programa que executa el nucli de Chiron pot
+parsejar l'arxiu, i insertar els elements en una base de dades (ens interessa
+tenir un històric de tots els elements avaluats en generacions prèvies).
+Aquests resultats són els que es presenten al usuari, que pot recuperar cuan
+vulgui ja que la recuperació de les dades es fa desde la base de dades MySql.
 
 Quan l'usuari disposa de dades sobre les molècules, les pot introduir a través
 d'una interfície, i tornar a executar una generació.
@@ -467,120 +470,119 @@ anat construint-se en els diferents experiments per a futurs anàlisis i
 visualitzacions.
 % subsubsection Emmagatematge de les dades (end)
 
-\subsubsection{Webservice d'Algorismes genètics} % (fold)
-\label{ssub:Webservice d'Algorismes genetics}
+\subsubsection{Webservice d'algorismes genètics} % (fold)
+\label{ssub:Webservice d'algorismes genetics}
 
 %SaaS WEB i SOAP
-Una vegada tenim desacoplats el Core (algoritme evolutiu), de la base de dades,
-i del wrapper que va executant el Core sobre els diferents projectes, i gestiona
+Una vegada tenim desacoplats el nucli (algoritme evolutiu), de la base de dades,
+i del wrapper que va executant el nucli sobre els diferents projectes, i gestiona
 la base de dades, ja tenim un programa funcional, que ens permet fer el que
 volem.  Però encara tenim l'impediment de la interfície.  Un programa amb
 múltiples usuaris, pensat per a solucionar problemes molt diferents entre si
-(sempre pensant amb el drug discovery 'de novo' com a funcionalitat principal,
+(sempre pensant amb la química combinatoòria com a funcionalitat principal,
  però intentant generalitzar i aconseguir la màxima abstracció possible), hauria
 de tenir una interfície que permeti la execució del programa des de punts
-diferents de un procés i desde diferents front-end.  
+diferents de un procés i desde diferents interfícies (front-ends).
 
-Pensant amb el descobriment de fàrmacs de novo, la aplicació s'ha pensat des
+Pensant amb la química combinatòria, la aplicació s'ha pensat des
 d'un principi amb una interfície web en ment.  Per això, com a objectiu
 principal, la interfície que fem a Chiron ha de permetre l'accés web.  Una
 interfície web permet al usuari conectar-se desde on vulgui, sempre i quan
-tingui accés a la xarxa, i un usuari habilitat.  Una ventatge clara de les
-interfícies web és que l'usuari no haurà d'instalar cap software per a executar
+tingui accés a la xarxa, i un usuari habilitat.  Un avantatge clar de les
+interfícies web és que l'usuari no haurà d'instalar cap programari per a executar
 Chiron.  Per als interessos comercials d'Intelligent Pharma, també ha estat un
 punt important, ja que l'usuari  final (client), pot rebre actualitzacions i
 millores sense haver de fer res en absolut, sinó que tot el control recau sobre
-el distribuidor del software.
+el distribuidor del programa.
 
-Altres ventatges de utilitzar un model de negoci ``Software as a Service''
+Altres avantatges d'utilitzar un model de negoci ``Software as a Service''
 (SaaS) és que el control del software recau sobre el distribuidor, no només en
 termes de actualitzacions i seguretat, sinó que obre noves possiblilitats en
 termes de models de pagament.   Per exemple, al no distribuir un software,
-	   s'elimina la possibilitat de violacions de contracte o còpies il·legals, ja que
-	   l'usuari no disposa mai del software, fent impossible la còpia, o l'ús
-	   fraudulent d'aquest.  Les estadístiques que pot treure el distribuidor (complint
-			   els contractes de privacitat, és clar), son molt més potents que els clàssics
-	   ``bug reports'', podent acurar molt més el producte a les necessitats dels
-	   usuaris, ja que sabent quines funcionalitats utilitzen més, o bé quins workflows
-	   segueixen, podem tenir indicis de què i com s'ha de millorar.
+s'elimina la possibilitat de violacions de contracte o còpies il·legals, ja que
+l'usuari no disposa mai del software, fent impossible la còpia, o l'ús
+fraudulent d'aquest.  Les estadístiques que pot treure el distribuidor (complint
+els contractes de privacitat, és clar), son molt més potents que els clàssics
+``bug reports'', podent acurar molt més el producte a les necessitats dels
+usuaris, ja que sabent quines funcionalitats utilitzen més, o bé quins workflows
+segueixen, podem tenir indicis de què i com s'ha de millorar.
 
-	   Aquesta tendència del SaaS, està essent molt utilitzada en els darrers anys en
-	   front al classic software instalat al client ja que, amb l'augment d'importància
-	   del Cloud computing, i les tecnologies distribuides (Grid, globus, web 2.0), la
-	   idea és que l'usuari d'un producte, sigui únicament això, un usuari d'un servei,
-	   però no hagi de tenir cap coneixement ni infrastructura prèvia per a
-	   utilitzar-lo.
+Aquesta tendència del SaaS, està essent molt utilitzada en els darrers anys en
+front al classic software instalat al client ja que, amb l'augment d'importància
+del Cloud computing, i les tecnologies distribuides (Grid, globus, web 2.0), la
+idea és que l'usuari d'un producte, sigui únicament això, un usuari d'un servei,
+però no hagi de tenir cap coneixement ni infrastructura prèvia per a
+utilitzar-lo.
 
-	   SaaS també ha despertat dubtes i queixes, bàsicament en dues vessants:
+SaaS també ha despertat dubtes i queixes, bàsicament en dues vessants:
 
-	   Una d'elles és la dependència en el proveïdor de software.  No tenir cap tipus
-	   d'infrastructura, suposa estar en mans del proveïdor, i per tant, si els
-	   servidors del proveïdor no funcionen bé, o hi ha problemes d'accés, l'usuari
-	   no controla les dades, ni pot fer res més que posar-se en contacte amb el
-	   proveidor del servei.  Aquesta falta d'autosuficiència fa que encara generi
-	   desconfiança en certs sectors.
+Una d'elles és la dependència en el proveïdor de software.  No tenir cap tipus
+d'infrastructura, suposa estar en mans del proveïdor, i per tant, si els
+servidors del proveïdor no funcionen bé, o hi ha problemes d'accés, l'usuari
+no controla les dades, ni pot fer res més que posar-se en contacte amb el
+proveidor del servei.  Aquesta falta d'autosuficiència fa que encara generi
+desconfiança en certs sectors.
 
-	   La privacitat també és un altre punt on s'ha generat certa desconfiança.  Les
-	   dades, tot i que són accessibles per l'usuari, estan emmagatzemades en els
-	   servidors del proveïdor.  Tot i que la legislació és molt clara al respecte,
-	   hi ha clients que desconfien.
+La privacitat també és un altre punt on s'ha generat certa desconfiança.  Les
+dades, tot i que són accessibles per l'usuari, estan emmagatzemades en els
+servidors del proveïdor.  Tot i que la legislació és molt clara al respecte,
+hi ha clients que desconfien.
 
-	   %WEB
-	   Per altra banda, el testing i la automatització de webs és difícil per
-	   definició (no té estat, i les maneres més ``sofisticades'' per interactuar amb
-			   elles són macros no gaire inteligents).
+%WEB
+Per altra banda, el testeig i la automatització de proocediments a través de la
+web és difícil per definició (no té estat, i les maneres més ``sofisticades''
+per interactuar amb elles són macros no gaire inteligents).
 
-	   Si només proporcionéssim interficie web, Chiron estaria sempre supeditat a la
-	   utilització interactiva amb un usuari a l'atra banda.  Tot i que per Chiron, ja
-	   serviria, hem de pensar en linies de futures aplicacions.  És per això que la
-	   web no es comunica amb Chiron directament, sinó que hem programat una interfície
-	   per a execució remota, i la web es comunica amb la interfície intermitja.
+Si només proporcionéssim interficie web, Chiron estaria sempre supeditat a la
+utilització interactiva amb un usuari a l'atra banda.  Tot i que per Chiron, ja
+serviria, hem de pensar en linies de futures aplicacions.  És per això que la
+web no es comunica amb Chiron directament, sinó que hem programat una interfície
+per a execució remota, i la web es comunica amb la interfície intermitja.
 
-	   Aquesta interfície intermitja ens dóna la funcionalitat de poder accedir al core 
-	   de Chiron a través de programes, convertint Chiron en un servidor de Algoritmes
-	   genètics.
+Aquesta interfície intermitja ens dóna la funcionalitat de poder accedir al
+nucli de Chiron a través de programes, convertint Chiron en un servidor 
+d'algoritmes genètics.
 
-	   %Client-servidor. explicar una mica de que va el paradigma
-	   Per a implementar el servidor de aplicacions remotes, s'han estudiat diverses
-	   opcions, i ens hem decantat per a implementar una interfície SOAP.  Tot seguit
-	   es discutiran les diferents opcions, i el perquè de la elecció, i en l'apartat
-	   de implementació, es detallarà més la implementació de SOAP, i el funcionament
-	   intern d'aquest.
+%Client-servidor. explicar una mica de que va el paradigma
+Per a implementar el servidor de aplicacions remotes, s'han estudiat diverses
+opcions, i ens hem decantat per a implementar una interfície SOAP.  Tot seguit
+es discutiran les diferents opcions, i el perquè de la elecció, i en l'apartat
+de implementació, es detallarà més la implementació de SOAP, i el funcionament
+intern d'aquest.
 
-	   %Execució remota
-	   %RMI
-	   %CORBA
-	   %REST
-	   %XML-RPC
-	   %SOAP
+%Execució remota
+%RMI
+%CORBA
+%REST
+%XML-RPC
+%SOAP
 
-	   Per a convertir Chiron en un servidor de algorismes genètics, que sigui usable
-	   tant per persones (a traves de la web) com per aplicacions que conectin una
-	   funció de fitness definida per elles al algorisme genètic, hem estudiat diverses
-	   opcions, que analitzarem molt per sobre (donant algunes referències bàsiques).
+Per a convertir Chiron en un servidor de algorismes genètics, que sigui usable
+tant per persones (a traves de la web) com per aplicacions que conectin una
+funció de fitness definida per elles al algorisme genètic, hem estudiat diverses
+opcions, que analitzarem per sobre (donant algunes referències bàsiques).
 
-	   L'objectiu és trobar una tecnologia que permeti fer crides remotes a un servidor
-	   de funcions.  Com que el control del estat del programa el tractem manualment
-	   (base de dades, etc) no necessitem que el sistema ens guardi la persistència.
-	   Si utilitzéssim un sistema així també tindriem problemes a la hora de aturar el
-	   servidor, i hauríem de crear un sistema de backups, amb lo que no ens
-	   estalviaria la feina.
+L'objectiu és trobar una tecnologia que permeti fer crides remotes a un servidor
+de funcions.  Com que el control del estat del programa el tractem manualment
+(base de dades, etc) no necessitem que el sistema ens guardi la persistència.
+Si utilitzéssim un sistema així també tindriem problemes a la hora de aturar el
+servidor, i hauríem de crear un sistema de backups, amb lo que no ens
+estalviaria la feina.
 
-	   Necesitem doncs, exposar al exterior un conjunt de funcions aïllades, seguint el
-	   paradigma client-servidor, que siguin extensibles i interpolables entre
-	   diferents llenguatges de programació.
+Necesitem doncs, exposar al exterior un conjunt de funcions aïllades, seguint el
+paradigma client-servidor, que siguin extensibles i interpolables entre
+diferents llenguatges de programació. Es pot veure la estructura de la
+comunicació entre els processos en la figura \ref{fig:401px-Orb.png}.
 
-	   diferents llenguatges de programació.Figure~\ref{fig:401px-Orb.png}
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm,height=7cm]{401px-Orb.png}
+\caption{Model de Client-servidor que necesitem}
+\label{fig:401px-Orb.png}
+\end{figure} 
 
-	   \begin{figure}[h]
-	   \centering
-	   \includegraphics[width=13cm,height=7cm]{401px-Orb.png}
-	   \caption{Model de Client-servidor que necesitem}
-	   \label{fig:401px-Orb.png}
-	   \end{figure} 
-
-	   Tecnologíes per a executar RPCs (Remote procedure call) n'hi ha moltes
-	   diferents. Les tecnologies que ens obliguen a utilitzar el mateix llenguatge de
+Tecnologíes per a executar RPCs (Remote procedure call) n'hi ha moltes
+diferents. Les tecnologies que ens obliguen a utilitzar el mateix llenguatge de
 programació han quedat descartades de bon principi, ja que un dels objectius
 principals és precisament obrir el programa a futures aplicacions que puguem
 crear.  És per això que RMI, que ens lliga a java no pot ser utilitzada.  
@@ -591,12 +593,12 @@ intermitja molt còmoda i extensible.  CORBA és un sistema disenyat per a
 comunicar diferents llenguatges entre si.  Per aquesta part, ens serveix per als
 nostres requeriments, però el protocol de CORBA funciona utilitzant ports TCP
 no estàndars, i fa que no poguem garantir la conectivitat si el client o bé el
-servidor estàn darrere d'un firewall.
+servidor estàn darrere d'un tallafocs (firewall).
 
 La aplicació Chiron ha de funcionar a través d'una interfície web que estarà
-hostejada en un servidor local, i nosaltres controlem la xarxa, però com que
+allotjada en un servidor local, i nosaltres controlem la xarxa, però com que
 part de la essència de Chiron és el sistema de algorismes genètics genèric, no
-volem limitarnos a la utilització únicament per web.  Per això, s'han seguit
+volem limitar-nos a la utilització únicament per web.  Per això, s'han seguit
 buscant alternatives.
 
 Per asegurar que no tenim bloquejos en la xarxa, hi ha sistemes disenyats per a
@@ -609,11 +611,11 @@ i SOAP.
 \label{ssub:Diseny global}
 
 Després de diverses iteracions sobre el diseny, la estructura global que ha
-quedat del projecte chiron és la mostrada en la Figura \ref{fig:disenyChiron}.
+quedat del projecte \texttt{Chiron} és la mostrada en la Figura \ref{fig:disenyChiron}.
 
-Chiron es pot integrar en altres programes ja existents, donant suport amb els
-Algoritmes Evolutius.  (XXX: El diagrama s'ha de fer més específic per a
-Chiron).
+Chiron es pot integrar en altres programes ja existents de l'empresa, donant
+suport amb els algoritmes evolutius.  (XXX: El diagrama s'ha de fer més
+específic per a Chiron).
 
 \begin{figure}[h]
 	\begin{center}
@@ -630,11 +632,12 @@ Chiron).
 	\label{sub:Algoritme Genetic}
 % subsection Algoritme Genetic (end)
 
-L'algorisme genètic de Chiron, és un algorisme a ``mig implementar'', ja que al
-ser parametritzable en quant a la funció de fitness, li falta una de les parts
-principals dels algorismes genètics.  Tot seguit s'explica la implementació de
-cadascun dels parametres i estructures de dades necessàries per a la
-implementació de Chiron.
+L'algorisme genètic de Chiron, és un algorisme a ``mig implementar'', en el
+sentit que  al ser parametritzable en quant a la funció de fitness, li falta una
+de les parts principals dels algorismes genètics.  Això no vol dir que no haguem
+implementat la funció de fitness, sinó queda externalitzada respecte el nucli de
+\texttt{Chiron}.  Tot seguit s'explica la implementació de cadascun dels
+parametres i estructures de dades necessàries per a la implementació de Chiron.
 
 \subsubsection{Inicialització} % (fold)
 \label{ssub:Inicialitzacio}
@@ -679,15 +682,14 @@ altre són qualitatius, cada posició del cromosoma és un enter, que representa
 una terminació diferent en funció de la posició on es troba dins el cromosoma.
 
 Així doncs, tenim un vector de N posicions on N és el número de ramificacions que té
-el scaffold, i cada posició conté un enter, amb limits (bounds) d'acord amb les
+l'esquelet, i cada posició conté un enter, amb limits d'acord amb les
 especificacions del usuari al iniciar el projecte. 
 
 Utilitzem enters per a representar cada al·lel perquè és la forma més comoda que
-tenim per represetar valors qualitatius.
-
-Els valors de cada posició s'acoten en cada projecte.  Això és un
-altre tret que el diferència de programes més estatics on els límits són
-coneguts a priori, com per exemple Pholus.
+tenim per represetar valors qualitatius o categòrics.  A més, els valors límit
+de cada posició s'acoten en cada projecte.  Això és un altre tret que el
+diferència de programes més estatics on els límits són coneguts a priori, com
+per exemple Pholus (\ref{cha:Pholus}).
 
 Si els possibles valors adoptats en cada punt fóssin coneguts en temps de
 desenvolupament del projecte, es podria usar tipus enumerats, per a deixar ben
@@ -722,7 +724,7 @@ no es poden sumar ``peres i pomes''.
 
 Creuaments que involucrin el canvi de posició en els gens tampoc eren naturals
 per aquest problema, ja que s'hauría de comprovar que cap gen es col·loca en una
-posició on no pot ser-hi ja que supera els límits (bounds) estipulats per la
+posició on no pot ser-hi ja que supera els límits estipulats per la
 posició final.  A part d'aquest fet totalment subjecte a implementació, i per
 tant, solucionable amb una mica més de comprovacions, aquests creuaments no
 tenen sentit químic, ja que l'alternativa $i$ de la posició $n$, no té perquè
@@ -731,8 +733,8 @@ $n <> m$.
 
 Pel creuament s'ha provat un creuament per un punt, i el creuament per dos
 punts, donant resultats similars en els dos casos.  Donat que els experiments
-químics en què s'ha provat (\ref{sec:Resultats}), tenen només tres R's, un
-creuament per diversos punts no tenia gaire sentit.
+químics en què s'ha provat (\ref{sec:Resultats}), tenen només tres llocs per a
+substituients, un creuament per diversos punts no tenia gaire sentit.
 
 Donats dos individus (els que han estat sel·leccionats en el procés de
 sel·lecció per a reproduir-se , amb una provabilitat d'un 0.8 es fa creuament i
@@ -772,7 +774,7 @@ Tot seguit es detallen algunes particularitats de la implementació de
 \texttt{Chiron}, amb les seves tecnologíes, i algun codi exemplificador del que
 s'està explicant.
 
-\subsubsection{algorisme genètic} % (fold)
+\subsubsection{Algorisme genètic} % (fold)
 \label{ssub:algorisme genetic}
 
 En aquest projecte s'han utilitzat les llibreries eodev, igual que en el
@@ -784,7 +786,7 @@ Eodev proporciona una estructura genèrica per a algorismes genètics, on, si no
 volem massa complicacions, amb un cromosoma de coma flotants, modificant només
 la funció de fitness, podem corre ja el nostre algorisme genètic.  Això no ens
 serveix per a \texttt{Chiron}, ja que necessitem modificar el cromosoma, les
-Mutacions i creuaments per al que volem fer nosaltres.
+mutacions i creuaments per al que volem fer nosaltres.
 
 Hem de crear doncs, una classe per a cada element del algorisme genètic.
 
@@ -795,7 +797,7 @@ Hem de crear doncs, una classe per a cada element del algorisme genètic.
 \subsubsection{Arxius de configuració} % (fold)
 \label{ssub:Arxius de configuracio}
 
-Eodev disposa d'una manera per llançar Execucions amb un arxiu de configuració
+Eodev disposa d'una manera per llançar execucions amb un arxiu de configuració
 determinat.  El format no respon a cap estàndard (ni .ini, ni .conf\ldots).
 Aquest format és el que fem servir per a llançar procéssos \texttt{Chiron}, amb
 els parametres adecuats, i per altra banda, entre generació i generació, omplim
@@ -805,25 +807,30 @@ determinada.
 
 Per a generar aquest arxiu de configuració hem agafat un dels de demostració que
 vénen amb les fonts de Eodev, i hem creat un template o plantilla, utilitzant
-Template Toolkit.
+Template Toolkit (TT\footnote{\url{http://template-toolkit.org/}}).
+%XXX http://oreilly.com/catalog/9780596004767/
 
 Template Toolkit és una llibreria molt extesa per a la generació de textos
 parametritzats.  En un principi es va crear per a reproduir textos massivament,
 on només canvia una petita part del text (per exemple, circulars), o bé arxius
-que han de complir una certa extructura (Webs corporatives).
+que han de complir una certa extructura (webs corporatives).
 
 Nostres hem usat la implementació en Perl, que a part de ser la primera que va
 sortir (i potser la més sòlida), és el llenguatge en el que hem desenvolupat
-tota la part no-core de la aplicació.  Segueix un exemple de la utilització de
-Template Toolkit en un cas senzill, i la manera en que ens facilita la separació
-de la presentació de la lògica.  És per això que Template Toolkit també
-s'utilitza en molts frameworks web perl.
+tota la part que no forma part del nucli de la aplicació.  Segueix un exemple de
+la utilització de Template Toolkit en un cas senzill, i la manera en que ens
+facilita la separació de la presentació de la lògica.  És per això que Template
+Toolkit també s'utilitza en molts frameworks web perl\footnote{Catalyst.
+http://www.catalystframework.org/}.
 
 %codi Template Toolkit
+\lstset{language=perl, tabsize=2}
+\lstset{commentstyle=\textit}
+\lstinputlisting[frame=trbl]{tt.pl}
 
-Encara que en aquest exemple, no sembla més que una versió ``maca'' de sprintf,
-Template Toolkit pot afegir lògica en les seves plantilles, processant o no
-processant arxius en subdirectoris, en funció de valors de variables en el
+Encara que en aquest exemple, no sembla més que una versió ``més elegant'' de
+sprintf, Template Toolkit pot afegir lògica en les seves plantilles, processant
+o no processant arxius en subdirectoris, en funció de valors de variables en el
 programa perl que crida les funcions TT.
 
 % subsubsection Arxius de configuració (end)
@@ -840,14 +847,14 @@ clar guanyador.  Pel volum de dades que hem de tenir, tampoc creiem que això
 sigui una decisió critica per al èxit del projecte, però per si de cas, hem
 decidit utilitzar un sistema de ORM \footnote{Object Relational Mapper} .
 
-Els ORMs són llibreries que mapegen taules Sql a objectes del llenguatge, podent
+Els ORMs són llibreries que mapegen taules SQL a objectes del llenguatge, podent
 així fer més directe el tractament amb bases de dades desde llenguatges de
 programació, fent que no s'hagi de fer un canvi de paradigma tant gran al
 canviar de OOP pura a SELECT * FROM \ldots  .
 
 Sabem doncs, que per al projecte, en l'estat actual no és necessari plantejar-se
 quina és la millor base de dades a escollir, si hem fet una bona el·lecció pel
-que fa a les eines i libs, ja que utilitzant DBIx::Class, canviar de SGBD no
+que fa a les eines i llibreries, ja que utilitzant DBIx::Class, canviar de SGBD no
 suposa cap modificació en el codi, fent-ho del tot transparent.
 
 % subsubsection DBIx\dots Class (end)
@@ -862,7 +869,7 @@ SOAP\footnote{Simple Object Access Protocol}.
 Els seus rivals més igualats, per als nostres requeriments, han estat XML-RPC i
 REST, però hem decidit utilitzar SOAP, entre d'altres coses, perquè és l'únic
 que té suport a nivell corporatiu, i no com REST, que son estàndards
-desenvolupats majoritàriament en entorns de comunitats opensource.  Al
+desenvolupats majoritàriament en entorns de comunitats Opensource.  Al
 utilitzarlo nosaltres en un entorn corporatiu, hem pensat que SOAP seria més
 adequat pel possible suport que tindría i la interpolabilitat amb altres
 aplicacions que es poden utilitzar en el futur.
@@ -888,7 +895,7 @@ aplicacions que es poden utilitzar en el futur.
 
 	Les proves sobre un escenari real en el que operarà Chiron, s'han fet sobre
 	tres projectes dels quals s'ha realitzat la prova experimental de totes les
-	combinacions de R's possibles (s'han trobat en (XXX Ppaper) )
+	combinacions de substituients possibles (s'han trobat en (XXX Ppaper) )
 
 	En aquests tres problemes, els autors dels experiments van sintetitzar totes
 	les possibles molècules, obtenint un resultat de activitat en cadascuna
@@ -910,8 +917,8 @@ aplicacions que es poden utilitzar en el futur.
 	nostra disposició totes les dades del espai de búsqueda, hem fet càlculs
 	respecte quantes avaluacions s'han fet fins a trobar el millor element que
 	hem arribat a trobar.  També ens fa falta saber quin és el fitness d'aquest
-	element, i quin és el fitness de la millor combinació de R's que hi ha en
-	tot l'espai de búsqueda. Així arribem a tenir
+	element, i quin és el fitness de la millor combinació de substituients que
+	hi ha en tot l'espai de búsqueda. 
 
 	%TAULA de resultats.
 
@@ -930,7 +937,7 @@ aplicacions que es poden utilitzar en el futur.
 		\begin{center}
 			\includegraphics[scale=0.75]{chiron/rgrau1.png}
 		\end{center}
-		\caption{resultat Chiron 1}
+		\caption{Resultat Chiron 1}
 		\label{fig:resChir1}
 	\end{figure}
 
@@ -938,7 +945,7 @@ aplicacions que es poden utilitzar en el futur.
 		\begin{center}
 			\includegraphics[scale=0.75]{chiron/rgrau2.png}
 		\end{center}
-		\caption{resultat Chiron 2}
+		\caption{Resultat Chiron 2}
 		\label{fig:resChir2}
 	\end{figure}
 
@@ -946,14 +953,14 @@ aplicacions que es poden utilitzar en el futur.
 		\begin{center}
 			\includegraphics[scale=0.75]{chiron/rgrau3.png}
 		\end{center}
-		\caption{resultat Chiron 3}
+		\caption{Resultat Chiron 3}
 		\label{fig:resChir3}
 	\end{figure}
 	\begin{figure}[tbp]
 		\begin{center}
 			\includegraphics[scale=0.75]{chiron/rgrau4.png}
 		\end{center}
-		\caption{resultat Chiron 3}
+		\caption{Resultat Chiron 3}
 		\label{fig:resChir4}
 	\end{figure}
 
