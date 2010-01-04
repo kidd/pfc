@@ -12,22 +12,22 @@
 
 \section{Introducció} % (fold) Objectius?
 	\label{sec:Introduccio}
-	Un altre problema on hem aplicat Algoritmes evolutius és en el descobriment
-	de fàrmacs \texttt{de novo}.  \texttt{De novo} és el nom que es dóna a les
-	tècniques relacionades amb el descobriment des de zero , és a dir, on no es té
-	prèviament cap lligand a imitar.
+	Un altre problema on hem aplicat algoritmes evolutius és en l'optimització
+	molecular.  És a dir, situacions on es disposa d'un esquelet o
+	\textit{scaffold} d'una molècula que se sap que té certa activitat biològica
+	i, donat aquell esquelet, es volen identificar quins son els substituients
+	(R) que maximitzen l'activitat biològica d'aquell esquelet.	
+	%, però no es disposa amb seguretat de algunes
+	%\textit{ramificacions} (R), que són les parts de la molècula que, sense
+	%canviar la seva estructura general, ni la seva activitat (si el ``core''
+	%s'assembla, probablement tindràn una activitat similar), faran que es pugui
+	%``enganxar'' millor en el target.  Les ramificacions que poden anar en cada
+	%posició són conegudes (en la majoria de casos).
 
-	La situació és la següent.  En determinades situacions, es disposa d'un
-	esquelet o \textit{scaffold} d'una molècula que se sap que té certa
-	activitat, però no es disposa amb seguretat de algunes
-	\textit{ramificacions} (R), que són les parts de la molècula que, sense
-	canviar la seva estructura general, ni la seva activitat (si el ``core''
-	s'assembla, probablement tindrpàn una activitat similar), faran que es pugui
-	``enganxar'' millor en el target.  Les ramificacions que poden anar en cada
-	posició són conegudes (en la majoria de casos).
-
-	En certa manera, podríem dir que és com ``decorar'' l'esquelet de la
-	molècula per a fer-lo més apte per a la unió amb la seva diana (o target).
+	Per exemple, si volem optimitzar un esquelet per a que s'uneixi a una diana
+	terapèutica, en certa manera, podríem dir que és com ``decorar'' l'esquelet
+	de la molècula per a fer-lo més apte per a la unió amb la seva diana (o
+	target).
 
 	Un dels problemes que tenen els mètodes actuals són els grans costos
 	que es deriven d'aquest procés, ja que el que es fa és sintetitzar TOTES les
@@ -929,7 +929,8 @@ aplicacions que es poden utilitzar en el futur.
 %hist(x)
 %dev.off()
 
-	A continuació es mostren les validacions que s'han fet a chiron.  
+	En les figures \ref{fig:resChir1},\ref{fig:resChir2} i \ref{fig:resChir2} es
+	mostren les validacions que s'han fet a Chiron.  
 
 	%XXX XAVI
 
@@ -990,7 +991,8 @@ aplicacions que es poden utilitzar en el futur.
 \subsection{Conclusions i treball futur} % (fold)
 	\label{sub:CConclusions i treball futur}
 
-	Els resultat de \texttt{Chiron} és satisfactori, però com a projecte futur
+	Amb tot el desenvolupament i proves realitzades, hem assolit l'objectiu
+	d'aquesta part del PFC.  Tot i això com a projecte futur
 	d'ampliació, està implementar tècniques de algorismes genètics interactius.
 
 	Donat que la avaluació és supervisada per l'usuari, podriem implementar
