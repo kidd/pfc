@@ -1,4 +1,3 @@
-
 all: memoria
 
 memoria: memoria.tex 
