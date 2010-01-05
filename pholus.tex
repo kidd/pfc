@@ -38,16 +38,16 @@ Aaquesta búsqueda se l'anomena ``\emph{scaffold hopping}'' (salts entre diferen
 
 Aquest concepte és el que tècnicament es coneix com \emph{Virtual Screening} (VS) o cribatge virtual,
 el qual, normalment s'utilitza per descobrir noves famílies químiques en relació a una activitat biològica
-desitjada. Hi ha diversos mètodes de VS que es basen en l'estructura dels compostos (VS basat en lligams) i d'altres que no
+desitjada. Hi ha diversos mètodes de VS que es basen en l'estructura dels compostos (VS basat en lligands) i d'altres que no
 (VS basat en receptor). Com hem dit, Helios té com a objectiu identificar nous compostos que no són anàlegs estructuralment,
-però sí biològicament i per tant és un VS basat en lligams.
+però sí biològicament i per tant és un VS basat en lligands.
 
-Helios es basa en la superposició de camps mol·leculars entre qualsevol compost i un lligam de
+Helios es basa en la superposició de camps mol·leculars entre qualsevol compost i un lligand de
 referència. Però Helios, no només considera la superposició generada per càrregues formals, sinó
 també altres tipus relacionades amb el comportament dinàmic; així, es fan diferents superposicions
 entre parells de mol·lècules es duen a terme a la vegada. L'alineament de camps mol·leculars va ser descrit durant els anys noranta \ref{WHW04},
 però no s'ha dut a terme fins aquesta dècada degut a que l'alineament mol·lecular flexible és un problema que requereix
-grans capacitats supercomputacionals. Fins els últims anys, el problema del VS basat en lligams s'ha hagut de simplificar
+grans capacitats supercomputacionals. Fins els últims anys, el problema del VS basat en lligands s'ha hagut de simplificar
 focalitzat-se en tècniques d'identificació de semblances moleculars com l'estructura, farmacòfor, etc. 
 
 Usant ``cloud computing'', Helios realitza alineaments de camps moleculars flexibles per identificar els compostos que s'assemblin
@@ -108,7 +108,7 @@ entre parells de mol·lècules es duen a terme a la vegada.
 L'alineament de camps mol·leculars va ser descrit durant els anys noranta, però no s'ha dut a terme
 fins aquesta dècada degut a que l'alineament mol·lecular flexible és un problema impossible de
 resoldre sense les eines de supercomputació. Fins els últims anys, el Virtual Screening basat en els
-lligams s'ha basat en metodologies per buscar semblances moleculars com l'estructura, farmacòfor,
+lligands s'ha basat en metodologies per buscar semblances moleculars com l'estructura, farmacòfor,
 etc. 
 
 HELIOS utilitza alineaments de camps moleculars flexibles per identificar compostos que s'assemblin
@@ -161,7 +161,7 @@ resultats a part del propi algorisme evolutiu.
 Tanimotos, conformacions, y tal 
 
 El problema al que ens enfrontem és el de, donat un \texttt{receptor} i un conjunt de %glossari
-\texttt{lligands}, deduir quins són els factors que fan que la unió sigui millor
+lligands, deduir quins són els factors que fan que la unió sigui millor
 o pitjor.  Els factors que intervenen en aquesta unió són molts, però a nivell
 pràctic, utilitzem ``només'' 22 indicadors de potencial, que són els que podem quantificar amb
 facilitat, i que hem cregut que tenen més rellevància en aquest procés.
@@ -323,7 +323,7 @@ potencial.
 Una vegada sabem com hem de calcular la distància entre dues molècules, necesitem 
 
 ''Virtual Screening'' és un terme que s'aplica a un tipus de problema
-que conceptualment és l'equivalent computacional de ....... screening,
+que conceptualment és l'equivalent computacional de ....... screening, %XXX
 o sigui, a on un gran nombre de mostres (mol·lècules en aquest cas)
 estan disposades per ser discriminades entre actives i inactives. Per
 Intelligent Pharma evaluar l'execució del VS és una pràctica
@@ -376,7 +376,7 @@ respecte la altra, fa que no puguem superposarles.
 
 Cada estereoisomer pot tenir diverses conformacions.  Amb això ens referim a què
 en la natura, no sempre trobem la molècula amb els mateixos angles entre atoms,
-tipus d'enllassos, etc. Per exemple, una molècula pot trobarse en la natura
+tipus d'enllaços, etc. Per exemple, una molècula pot trobarse en la natura
 enrotllada sobre ella mateixa, o bé estirada (és bastant comú trobar aquests
 tipus de conformacions).
 
@@ -392,16 +392,15 @@ empíricament que la activitat d'un lligand amb un receptor.
 %les que busquem
 
 
-El que utilitzem és la informació de molecules que sabem que són actives,
+El que utilitzem és la informació de molècules que sabem que són actives,
 i elaborem tot el procediment per a descobrir quines condicions compleixen entre
 elles que les pot fer actives.
 
-Així doncs, les dades que tenim com a entrada són simplement els 22 valors per a
-cada molecula (isomer X conformació), i una llista de quines d'elles sabem del
-cert que presenten activitat contra un receptor donat.  El que volem aconseguir
-és doncs, 22 factors, pels que multiplicar els 22 \textbf{tanimotos} i que al
-sumar-los, ens donin una ordenació de les molècules, situant les actives en
-les primeres posicions (un index de activitat?).
+Així doncs, les dades que tenim com a entrada són simplement els 22 valors per a cada isomer i
+conformació de cada molècula, i una llista de quines d'elles sabem del cert que presenten activitat
+contra un receptor donat.  El que volem aconseguir és doncs, 22 factors, pels que multiplicar els 22
+\textbf{tanimotos} i que al sumar-los, ens donin una ordenació de les molècules, situant les actives
+en les primeres posicions (un index de activitat?).
 
 % XXX Formula
 
@@ -459,15 +458,16 @@ Les dades que entra un usuari són 3 llistes de molècules:
 
 \begin{itemize}
 	\item \textbf{Llista d'actives}.  Són les molècules de referència que l'usuari sap
-	que tenen activitat positiva davant d'un target concret.
+	que tenen activitat positiva davant d'una diana concreta.
 	\item \textbf{Llista d'inactives}.  Molècules que l'usuari sap que són inactives en
-	aquest mateix target.
-	\item \textbf{Llista de decoys}.  Conjunt de molècules que l'usuari posa ``per
-	omplir'', sabent que son inactives també, però amb certes propietats que
-	blablabla %XXX 
+	aquest mateixa diana.
+	\item \textbf{Llista d'esquers}.  Conjunt de molècules que l'usuari posa ``per
+	omplir'', sabent que son inactives també, però amb certes propietats que ens interessa provar en
+	l'experiment.   Per al nostre problema, les tractem exactament igual que les inactives.
+
 \end{itemize}
 
-A part de les llistes de molècules, l'usuari també entra els parametres alpha,
+A part de les llistes de molècules, l'usuari també entra els parametres $\alpha$,
 RieMax, i els percentatges de molècules amb els que vol provar l'experiment.  Es
 deixa la opció de no fer participar totes les molècules en l'experiment deixant 
 un conjunt de molècules fora, per després evaluar i validar les dades obtingudes
@@ -486,28 +486,28 @@ Una molècula es pot trobar en la natura en diverses formes.  Les clasificacions
 es divideixen en isomers i conformacions.  Una molècula pot tenir diversos
 isomers, i cada isomer es pot trobar en  diverses conformacions.
 
-És a dir, que per un nom (o id), en la natura existeixen diverses estructures, que
-comparteixen nom, i elements, però poden estar organitzats de forma diferent en
-l'espai. Aquestes organitzacions són simètriques en l'espai 3D, donant lloc a
-molècules similars, però que en l'espai 3D, no es superposen de la mateixa
-forma. (exemple, les mans, que no es poden superposar en 3D tot i ser
-simètriques).  Les conformacions, en canvi, són variacions de la posició dels àtoms en l'espai,
-però mantenint els enllaços entre àtoms. En les conformacions, el que canvia és
-l'obertura en els angles rotables de la molècula.  
-Per passar d'un estereoisomer a un altre, s'han de trencar enllaços, i tornar-se
-a formar.  En les conformacions no passa això, i es pot passar d'una a una
-altra, només canviant els angles dels enllaços i la seva flexibilitat. 
+És a dir, que per un nom (que serveix d'identificador), en la natura existeixen
+diverses estructures, que comparteixen nom, i elements, però poden estar
+organitzats de forma diferent en l'espai. Aquestes organitzacions són
+simètriques en l'espai 3D, donant lloc a molècules similars, però que en l'espai
+3D, no es superposen de la mateixa forma.  Les conformacions, en canvi, són
+variacions de la posició dels àtoms en l'espai, però mantenint els enllaços
+entre àtoms. En les conformacions, el que canvia és l'obertura en els angles
+rotables de la molècula.  Per passar d'un estereoisomer a un altre, s'han de
+trencar enllaços, i tornar-se a formar.  En les conformacions no passa això, i
+es pot passar d'una a una altra, només canviant els angles dels enllaços i la
+seva flexibilitat. 
 
 Donat un conjunt de molècules que volem utilitzar, hem de saber quina de les
 conformacions triarem per a cada molècula.  Per a fer la \texttt{explosió} de
-combinacions, s'utilitza un sofware propietari especific (Corina), que fa la
-combinatòria i genera les possibles variacions sobre una molècula donada.
-Després de fer aquesta explosió de combinacions, tenim diverses entrades per a
-cadascuna de les molècules inicials.  Les molècules que sabem que són actives,
-sabem que ho són, però no sabem quina conformació i isomer és el que la fa
-activa.  És per això, que en el llistat d'actives, tenim només una entrada per a
-cada família de molècules actives, tot i que en la taula de tanimotos, aquesta
-molècula estarà representada en diverses entrades. 
+combinacions, s'utilitza un sofware especific, que fa la combinatòria i genera
+les possibles variacions sobre una molècula donada.  Un cop feta aquesta
+explosió de combinacions, tenim diverses entrades per a cadascuna de les
+molècules inicials.  Les molècules que sabem que són actives, sabem que ho són,
+però no sabem quina conformació i isomer és el que la fa activa.  És per això,
+que en el llistat d'actives, tenim només una entrada per a cada família de
+molècules actives, tot i que en la taula de tanimotos, aquesta molècula estarà
+representada en diverses entrades. 
 
 Durant la execució del programa, el que fem, és ordenar la llista de tanimotos,
 amb molècules ``repetides'', i al moment de fer la puntuació de la llista
@@ -518,7 +518,7 @@ ordenada, ens quedem només amb la millor conformació de cada família.
 
 Després que l'usuari entri els paràmetres, la web llança una aplicació en Perl,
 que fa la preparació de les dades, i és la que llança l'algorisme evolutiu.  El
-primer que fa és , recuperar les taules, d'una base de dades (la web emmagatzema
+primer que fa és, recuperar les taules, d'una base de dades (la web emmagatzema
 les llistes a una BBDD MySql).
 
 Com s'ha explicat anteriorment, per a fer les validacions, aïllem una part del
@@ -534,7 +534,7 @@ números aleatoris entre [0,1) i en funció d'on estigui (separem el segment [0,
 en tres trossos anteriorment ) colocarlos en un o altre grup, sinó que calculem
 el percentatge d'actives respecte al de inactives, i anem omplint els grups fins
 a cobrir el llindar.  Això, que pot semblar un detall d'implementació
-``despreciable'', no ho és, ja que quan disposem de poques dades (sobretot en
+``menyspreable'', no ho és, ja que quan disposem de poques dades (sobretot en
 les actives), deixar lloc al atzar pot provocar canvis dràstics (i tràgics) en
 els resultats finals.
 
@@ -560,14 +560,14 @@ A_i001_c003
 A_i002_c001
 A_i002_c002
 A_i002_c003
-\dots
+... 
 \end{verbatim}
 
 
 Aquí ens sorgeix un possible problema.  Al fer la explosió de combinacions, ens
 trobem que les bases de dades, ja no estan balancejades amb els percentatges tal
 i com estaven abans, sinó que en funció de les variacions que tinguin les
-molècules que han entrat en cada grup (trainning, test i validació), podem
+molècules que han entrat en cada grup (entrenament, test i validació), podem
 trobar un conjunt molt més poblat del que ens esperariem, i que varii també el
 seu percentatge intern de actives/inactives. Per exemple, la molècula A, pot
 tenir 6 ``descendents'', i en canvi, la molècula B pot tenir-ne només 2.
@@ -597,13 +597,13 @@ executar l'Algoritme genètic.  El procés intern de l'Algoritme genètic, i els
 seus paràmetres en detall s'explicaràn en la secció pertinent ,
 \ref{sub:Algoritme genetic}.  En el cas que l'usuari hagi configurat la execució
 per a fer-se amb test i validació, la execució només es fa utilitzant com a
-dades el conjunt d'entrenament, deixant les taules de testing i validació per a
+dades el conjunt d'entrenament, deixant les taules de test i validació per a
 un procés posterior.
 
 L'algorisme, dóna com a sortida les diferents poblacions que han anat apareixent
 al llarg de les diferents generacions.  Així es disposa de dades per a saber com
 ha estat el procés evolutiu (per exemple ens permet fer desviacions típiques
-sobre les generacions per a saber la convergència) , i ens proporciona armes per
+sobre les generacions per a saber la convergència) , i ens proporciona eines per
 a decidir si podem utilitzar menys generacions per a aconseguir resultats
 similars.
 
@@ -613,21 +613,21 @@ ens serveixen per divèrses coses:
 
 \begin{itemize}
 	\item Poder graficar d'una manera simple la evolució de l'entrenament
-	\item Reduir el volum de dades ``utils''.
+	\item Reduir el volum de dades ``útils''.
 	\item El millor individu de la última generació serà el que agafarem com a
 	resultat final de la aplicació
 \end{itemize}
 
-Si l'usuari ha configurat el procés per a utilitzar testing i validació, en
+Si l'usuari ha configurat el procés per a utilitzar test i validació, en
 aquest moment, enfrontem les millors ponderacions de cada generació amb les
-taules de testing i de validació (per separat).  Aquest procés no implica cap
+taules de test i de validació (per separat).  Aquest procés no implica cap
 algorisme genetic, però s'utilitza \textbf{exactament} la mateixa funció que en
 l'algorisme genètic (el mateix .h i .cpp).  Això es fa perquè les funcions de
 fitness han anat canviat al llarg del temps, afegint petites modificacions sobre
 la inicial, i d'aquesta manera, asegurem la consistència entre les dades.
 
 Una vegada tenim els BedRocs que donen cadascuna de les millors ponderacions
-(segons l'algorisme genètic en el conjunt de trainning), i els seus BedRocs
+(segons l'algorisme genètic en el conjunt d'entrenament), i els seus BedRocs
 enfrontades als conjunts de test i validació (que no s'han utilitzat per al
 procés evolutiu), tenim indicadors sobre si s'està sobreentrenant o no el procés
 d'optimització.
@@ -635,8 +635,8 @@ d'optimització.
 Amb aquestes dades, l'usuari ja disposa de tota la informació que necesita.
 Aquesta informació, se li presenta a través de la web (cuan acaba el procés se'l
 pot avisar amb un mail), o directament al correu electrònic.  Recordem que la
-informació sobre l'usuari la disposem desde el moment que es logueja a la web
-(procés anterior a \texttt{Pholus} en si.
+informació sobre l'usuari la disposem desde el moment que s'autentifica a la web
+(procés anterior a \texttt{Pholus} en si).
 
 La informació de com vol cada usuari rebre les dades, i els seus correus
 electrònics, es reben per paràmetre en la execució del programa i, per tant, no
@@ -672,7 +672,7 @@ programa.
 En aquest algoritme genètic, els individus són les ponderacions corresponents a
 cadascun dels potencials.  Cada individu de la població és un conjunt de 22 valors de
 coma flotant (de doble precisió) que es correspon a cadascun dels 22 indicadors
-(potencials),  Donat que volem saber quines rellevàncies tenen els indicadors, però
+(potencials),  donat que volem saber quines rellevàncies tenen els indicadors, però
 confiem que no tenen cap relació un amb el següent, hem decidit no utilitzar cap
 representació que tingui en compte l'ordre, ni que afavoreixi la dependència
 dels gens. %XXX GENS es la paraula?
@@ -680,7 +680,7 @@ dels gens. %XXX GENS es la paraula?
 Essent valors en coma flotant, el rang que poden tenir cadascun, és massa gran
 per a les nostres necessitats, donant massa llibertat al algoritme genètic per
 ponderar massa a uns valors, o simplement ponderant-los alguns en valors molt alts
-i fent despreciable molts dels 22 potencials.  Aquestes solucions normalment ens
+i fent menyspreable molts dels 22 potencials.  Aquestes solucions normalment ens
 porten a resultats sobreentrenats i, és clar, no ens interessa.
 
 Com que una ponderació competeix contra altres ponderacions, i la funció de
@@ -716,7 +716,7 @@ relaccions inverses d'algunes ponderacions.
 \subsubsection{Inicialització} % (fold)
 \label{ssub:Inicialitzacio}
 Com s'ha explicat en XXX, la inicialització dels individuus és totalment
-aleatòria, amb numeros en coma flotant entre 0 i 1.  L'algorisme genètic no ens
+aleatòria, amb numeros en coma flotant entre -1 i 1.  L'algorisme genètic no ens
 imposa cap altra restricció, ja que en totes les posicions son vàlids els
 mateixos valors (dins del mateix rang), i aquests valors, seràn usats únicament
 com a dades (valors als que multiplicar els potencials).  Al no tenir cap
@@ -781,9 +781,9 @@ per un únic punt, i s'ha decidit quedarse amb el creuament per un sol punt.
 \subsubsection{Fitness} % (fold)
 \label{ssub:Fitness}
 En aquest problema, la funció que ens indica com de bò és un individu (funció
-\texttt{fitness}) és el resultat de evaluar la ordenació que dóna la ponderació
+\texttt{fitness}) és el resultat d'avaluar la ordenació que dóna la ponderació
 indicada per l'individu, respecte els nostres coneixements de activitat. Aquesta
-evaluació la fem mitjançant un dels diferents algoritmes de evaluació d'ordenacions.
+avaluació la fem mitjançant un dels diferents algoritmes d'avaluació d'ordenacions.
 
 %XXX : enchufar bedroc, ROC, tanimotos, i tota la merda
 
@@ -810,16 +810,15 @@ Per a utilitzar la memoització tal i com es va definir en els inicis
 \texttt{C++0x}) %XXX
 i aprofitant que les llibreries utilitzades utilitzen ja una emulació de
 closures anomenat functors, hem pogut guardar l'estat de les funcions sense
-molta difucultat. 
+molta dificultat. 
 
 Functors és la tècnica utilitzada en c++ per emular una funció amb estat privat,
 que es manté de crida a crida d'aquesta.  Per a fer això es crea un objecte, amb
-l'operador ``()'' sobrecarregat.  D'aquesta manera, podem simular que l'objecte
+l'operador ``\textbf{()}'' sobrecarregat.  D'aquesta manera, podem simular que l'objecte
 creat, és en realitat una funció, amb la particularitat que la hem de crear
 anteriorment amb un \texttt{new}.  Segueix un exemple en pseudo-c++.
 
 %\lstlistoflistings
-
 
 \lstset{language=c++,
 	tabsize=2}
@@ -843,7 +842,6 @@ public:
 		return resultat;
 	}
 }
-
 \end{lstlisting}
 
 
@@ -863,7 +861,7 @@ Posarem un exemple per tal de fer més fàcil la comprensió de la funció de
 fitness.
 
 Suposem una taula amb els identificadors i tanimotos d'un seguit de molècules,
-unes d'elles actives i altres inactives (o decoys).
+unes d'elles actives i altres inactives (esquers o decoys).
 
 
  % theme=Berlin;caption_top=1;caption=Exemple tanimotos
@@ -925,7 +923,7 @@ dades,
 % 10 cross validation?
 
 \begin{itemize}
-	\item Pq no es sobreentreni, conjunt de trainning, conjunt de test i conjunt
+	\item Pq no es sobreentreni, conjunt d'entrenament, conjunt de test i conjunt
 		de validació.
 	\item 80 10 10, es fa sobre molecules i despres es deixen passar totes les
 		conformacions d'aquestes molecules, fent que les dades finals no siguin 80 10 10
@@ -941,7 +939,7 @@ dades,
 	tenint així un conjunt de punts quantitatius (recordem que el fitness que
 	evaluavem era un valor quantitatiu).
 	\item Si grafiquem els valors que hem obtingut en un eix de 2D, amb 3
-	funcions, representant l'evolució del fitness en el conjunt de trainning, de
+	funcions, representant l'evolució del fitness en el conjunt d'entrenament, de
 	test i de validació, esperem trobar una figura que sigui (més o menys) així:
 	%FIGURA APROXIMADA
 \end{itemize}
@@ -1010,9 +1008,9 @@ la Figura \ref{fig:sobreent}.  La línia amb forma logarítmica, és
 el fitness del conjunt amb el què entrenem el algoritme genètic.  Aquest, será
 estrictament creixent, ja que utilitzem elitisme, i el creixement del fitness té
 forma logarítmica.  El conjunt de test, serà el que utilitzarem per a saber el
-punt on l'algorisme genètic comença a sobreentrenar la solució pel conjunt de
-training.  Al no fer participar aquest conjunt més que en aquesta gràfica, podem
-saber quin es el moment on, tot i que el fitness pel conjunt de trainning millori,
+punt on l'algorisme genètic comença a sobreentrenar la solució pel conjunt
+d'entrenament.  Al no fer participar aquest conjunt més que en aquesta gràfica, podem
+saber quin es el moment on, tot i que el fitness pel conjunt d'entrenament millori,
 comencem a empitjorar el fitness per al conjunt test.  En aquest punt màxim de
 la gràfica de test, és on agafarem la solució.
 
@@ -1060,8 +1058,8 @@ Un factor a tenir en compte és el número tant petit de molècules actives, que
 que al dividir-les en 3 grups, algun dels conjunts de dades, es quedin amb molt
 poques molècules, i al llarg de la execució del AE, un petit canvi en la
 ordenació, provoca un canvi alt en el fitness del individuu, ja que canvia el
-Bedroc molt ràpidament.  Un conjunt amb més molècules actives, com pot ser el de
-trainning, normalment és molt més consistent i els canvis en la ordenació,
+Bedroc molt ràpidament.  Un conjunt amb més molècules actives, com pot ser el
+d'entrenament, normalment és molt més consistent i els canvis en la ordenació,
 provoquen canvis en el fitness més graduals.
 
 Un altre factor que hem de tenir en compte per a evaluar aquests resultats, és
