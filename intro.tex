@@ -1,13 +1,13 @@
-%\documentclass[titlepage,a4paper,12pt]{book}
-%\usepackage[utf8]{inputenc}
-%\usepackage[catalan]{babel}
-%\usepackage{graphicx}
-%\usepackage{marvosym}
-%\usepackage{listings}
-%\usepackage{textcomp}
-%\usepackage[]{color}
-%\begin{document}
-%\tableofcontents
+\documentclass[titlepage,a4paper,12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{graphicx}
+\usepackage{marvosym}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[]{color}
+\begin{document}
+\tableofcontents
 
 \chapter{Algorismes Evolutius\label{GA}}
 
@@ -537,14 +537,17 @@ fàcilment \ref{ssub:Notacio Karva}.
 \label{ssub:Notacio Karva}
 
 La notació Karva, és una manera de representar qualsevol expressió matemàtica o
-lògica de manera que es pugui traslladar a un arbre.\cite{ferreira:2001}
+lògica en una estructura lineal de manera que es pugui traslladar a un arbre
+fàcilment.\cite{ferreira:2001}
 
-Les estructures lineals que conformen els individuus són els cromosomes, i cada
-cromosoma té un o més gens, que aquí prenen un altre significat més ampli, no
-referint-se als ``àtoms'' indivisibles (com en els AE que hem vist fins ara)
-sinó que cada gen està associat a una K-expression. \cite{ferreira:2007}
+Les estructures lineals que conformen els individuus en GEP són els cromosomes,
+i cada cromosoma té un o més gens, que aquí prenen un altre significat més
+ampli, no referint-se als ``àtoms'' indivisibles (com en els AE que hem vist
+fins ara) sinó que cada gen està associat a una K-expression.
+\cite{ferreira:2007}
 
-Tot seguit es mostra un exemple d'un gen, i en \ref{fig:expression tree1} el seu Arbre d'expresió equivalent
+Tot seguit es mostra un exemple d'un gen, i en \ref{fig:expression tree1} el seu
+\texttt{Arbre d'expresió} equivalent
 
 \begin{center}
 0123456    
@@ -627,37 +630,48 @@ sí impressionant, però a més a més, és la clau del funcionament de GEP.
 La codificació Karva és el nucli del bon funcionament de GEP, però és només el
 principi.  És a dir, existeixen mètodes més avançats que parteixen d'aquesta
 base, i aconsegueixen millorar els resultats del GEP estàndard, com per exemple,
-codificar més d'un gen en un cromosoma. Són els anomenats cromosomes multigen
-%XXX
+codificar més d'un gen en un cromosoma. Són els anomenats cromosomes multigen.
+En aquests sistemes, els cromosomes estàn codificats a partir de diversos gens,
+i cadascun d'ells formen un subarbre o subprograma.  Una vegada traduits
+cadascun dels subarbres, aquests poden ser connectats entre ells de diferents
+maneres.  Una de les més utilitzades és usant funcions especials, anomenades
+d'enllaç. Aquestes funcions uneixen linealment els diferents subarbres per ordre
+d'aparició en el gen.  Per exemple, observem el següent cromosoma, composat per
+tres sub-gens.
+	%XXX
 
-The beauty and elegance of the gene/ET system of Gene Expression Programming by itself is rather amazing, but most importantly it's that this is only the beginning and, indeed, this elegant genotype/phenotype system is at the heart of systems much more complex and also more efficient. In one such system the chromosomes contain more than one gene, and they are obviously called multigenic systems. In these systems, the chromosomes consist of multiple genes, and each gene codes for a sub-ET or sub-program. After translation, the sub-ETs are linked by special functions, the so called linking functions. These functions link the sub-ETs together one after the other in an orderly fashion. For example, the following chromosome composed of three genes (position 0 indicates the beginning of each gene):
+	\begin{center}
+	\begin{verbatim}
+	012345678012345678012345678 	 
+	*aQ+abbaa/Q*/aababa*+Qaabba
+	\end{verbatim}
+	\end{center}
 
-012345678012345678012345678 	 
 
-*aQ+abbaa/Q*/aababa*+Qaabba
-	
+Aquest cromosoma codifica tres arbres de la Figura \ref{fig:tres sub-et}
 
-(3)
+\begin{figure}[h!]
+\begin{center}
+\includegraphics{pt03a.png}
+\end{center}
+\caption{Cromosoma representant tres sub-arbres}
+\label{fig:tres sub-et}
+\end{figure}
 
-codes for the three following sub-ETs:
+Si s'utilitzen funcions d'enllaç, per exemple, la suma, la evaluació del
+cromosoma complet passaria a ser:
 
-Then the sub-ETs are afterwards linked by one of the available linking functions. For instance, if the linking function were addition, then the following program would be obtained (the linking function is shown in gray):
+\begin{figure}[h!]
+\begin{center}
+\includegraphics{pt03b.png}
+\end{center}
+\caption{Representació dels tres sub-arbres enllaçats amb la operació suma}
+\label{fig:tres sub-et amb link}
+\end{figure}
 
-Note that the final program represented in the Figure above could be linearly encoded as a single K-expression:
-
-01234567890123456 	 
-
-++a*/aQQ*+/aaabba
-	
-
-(4)
-
-However, the use of multigenic chromosomes is more appropriate to evolve solutions to complex problems, for they permit the modular construction of complex, hierarchical structures, where each gene codes for a smaller and simpler building block. These smaller building blocks are separated from one another and are therefore free to evolve independently, allowing for the creation of concrete new units that might prove handy in a new situation.
-
-So, what is the use of Karva notation and why is it so important? The answer is that it allows adaptation or, in other words, learning: you replicate the linear strings of GEP, change a few bits, and you end up with new strings that encode slightly better programs. This is the basis for learning and evolution, and the plasticity of GEP genes with their noncoding regions allows the totally unconstrained exploration of the solution space, therefore increasing the odds of finding very good solutions to the problem at hand. No other programming system is as unconstrained as the genotype/phenotype GEP system in terms of the mechanisms used to create genetic variation (the Genetic Programming system is restricted to an inefficient tree-crossover and it's so complicated structurally that it never even developed beyond a single tree system [2]).
 
 Furthermore, no other system has as much growth potential as GEP in the sense that the basic GEP system can give rise to other, more complex systems. We've already encountered here two GEP systems: the unigenic system and the multigenic system. But both these systems can be used as the starting point to create yet more complex systems: from simple GEP systems that elegantly handle random numerical constants to more sophisticated systems that can evolve highly complex structures such as neural networks, decision trees, automatically defined functions and polynomial networks. You can learn all about these and other GEP systems in Ferreira's book
-
+%XXX
 
 \subsubsection{Esquema Bàsic} % (fold)
 \label{ssub:Esquema Basic}
@@ -674,7 +688,7 @@ Furthermore, no other system has as much growth potential as GEP in the sense th
 Tot seguit es descriuràn els operadors usats en GEP, sense concretar la seva
 implementació, sinó explicant com varien els individuus.  Per a veure els
 detalls sobre la aplicació en aquest projecte, les explicacions i
-imlpementacions més complertes estàn a (\ref{XXX Capitol GEP})
+imlpementacions més complertes consultar a (\ref{XXX Capitol GEP})
 
 \subsubsection{Inicialització} % (fold)
 \label{ssub:Inicialitzacio}
