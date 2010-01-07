@@ -39,6 +39,38 @@ aquesta informació, i forma part d'un procés més complex relacionat amb XXX
 \section{Context Químic} % (fold)
 \label{sec:Context Quimic}
 
+En el món de la farmacología, és molt important trobar característiques de les
+molècules que permetin classificar-les segons diferents paràmetres.  Ún exemple
+és saber si una molècula és tòxica, si disposem d'una base de dades amb
+característiques sobre moltes molècules i tenim la seva informació sobre la
+toxicitat, podríem desenvolupar un sistema expert utilitzar màquines de suport
+vectorial, o algun altre software d'intel·ligència artificial per a inferir
+regles sobre la toxicitat d'aquesta nova molècula.
+
+Aquest procediment, però té problemes degut a una limitació bàsica.  Les regles
+treballen amb informació estàtica, i les molècules, com ja s'ha vist en
+\ref{cha:Pholus}, no son pas rígides ni estàtiques, sinó que poden ser
+flexibles.  Aquest fet fa que l'anàlisi de dades estàtiques sigui només una
+petita part de les dades reals que ``conté'' una molècula.
+
+Aquestes dades ``dinàmiques'', com per exemple el volum d'una molècula, són
+dades funcionals XXX(funcionals?), és a dir que no són valors concrets 
+(ser el número d'àtoms, el pes molecular o el número d'enllaços rotables),
+aportaríen informació molt més valuosa, no només perquè no es pot tractar avui
+en dia, sinó que també obre les portes a tractar dades molt més riques i que ens
+poden fer entendre molt millor el comportament de les molècules en la natura.
+
+Per tractar dades com el volum molecular en un sistema d'aprenentatge, o un
+sistema expert, hauríem d'aconseguir una fórmula analítica que descrigués el
+comportament dinàmic de la molècula.   
+
+XXX Falta tela
+
+Aquest projecte el situem en aquesta fase prèvia al sistema de classificació,
+creant un software que permeti, davant d'unes dades experimentals com per
+exemple, dels angles de rotació dels enllaços d'una molècula, trobar una fórmula
+analítica que respongui el més fiablement possible a aquests resultats.
+
 \section{Procediment informàtic} % (fold)
 \label{sec:Procediment informatic}
 
