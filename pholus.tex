@@ -16,7 +16,7 @@
 -------------------ININATXO-------------------
 Aquest projecte anomenat \texttt{Pholus}, és el mòdul que aporta la ``intel·ligència'' d'una tecnologia
 molt més general desenvolupada a Intelligent Pharma, anomenada \texttt{Helios}. A continuació descriurem
-en linies generals Helios, tot i que estrictament no forma part del present PFC, i un cop explicat es detallarà
+en línies generals Helios, tot i que estrictament no forma part del present PFC, i un cop explicat es detallarà
 la necessitat tecnològica que ha originat el desenvolupament de Pholus.
 
 %ha estat desenvolupat per a equilibrar
@@ -32,9 +32,9 @@ la necessitat tecnològica que ha originat el desenvolupament de Pholus.
 Helios és una tecnologia que serveix per identificar, a partir d'una molècula de referència prèviament donada,
 noves molècules amb propietats estructurals completament diferents que imitin el comportament de la molècula de
 referència. D'aquesta manera, si el compost de referència ja és conegut (per exemple, un extret d'un
-producte natural o d'una patent), Helios pot trobar altres composts no vinculats estructuralmnt que
-reprodueixin les seves propietats biològiques i farmacològuiques però amb una estructura mol·lecular completament diferent.
-Aaquesta búsqueda se l'anomena ``\emph{scaffold hopping}'' (salts entre diferents famílies d'estructures químiques).
+producte natural o d'una patent), Helios pot trobar altres composts no vinculats estructuralment que
+reprodueixin les seves propietats biològiques i farmacològiques però amb una estructura mol·lecular completament diferent.
+Aquesta cerca se l'anomena ``\emph{scaffold hopping}'' (salts entre diferents famílies d'estructures químiques).
 
 Aquest concepte és el que tècnicament es coneix com \emph{Virtual Screening} (VS) o cribatge virtual,
 el qual, normalment s'utilitza per descobrir noves famílies químiques en relació a una activitat biològica
@@ -48,27 +48,27 @@ també altres tipus relacionades amb el comportament dinàmic; així, es fan dif
 entre parells de mol·lècules es duen a terme a la vegada. L'alineament de camps mol·leculars va ser descrit durant els anys noranta \ref{WHW04},
 però no s'ha dut a terme fins aquesta dècada degut a que l'alineament mol·lecular flexible és un problema que requereix
 grans capacitats supercomputacionals. Fins els últims anys, el problema del VS basat en lligands s'ha hagut de simplificar
-focalitzat-se en tècniques d'identificació de semblances moleculars com l'estructura, farmacòfor, etc. 
+focalitzant-se en tècniques d'identificació de semblances moleculars com l'estructura, farmacòfor, etc. 
 
 Usant ``cloud computing'', Helios realitza alineaments de camps moleculars flexibles per identificar els compostos que s'assemblin
-al compost de referència. Els compostos amb els quals es fa l'alineament es treuen d'una base de dades que pot variar segons l'objectiu de la búsqueda, i
+al compost de referència. Els compostos amb els quals es fa l'alineament es treuen d'una base de dades que pot variar segons l'objectiu de la cerca, i
 poden anar des de uns pocs milers de composts fins a milions. En aquests moments, usant la infraestructura MareNostrum (192 elements de procés, per càlcul)
 una base de dades de 10.000 composts triga en ser analitzada, aproximadament, unes 15 hores.
 
-Els camps moleculars són discretitzats dins d'una caixa en forma de xarxa (grid) de punts. Concretament, Helios processa 22 camps de potencials diferents (veure taula \ref{table:maps}), els quals són representacions que donen informació sobre la densitat electrònica i són construits amb sondes atòmiques. Una sonda atòmica és una partícula amb
+Els camps moleculars són discretitzats dins d'una caixa en forma de xarxa (grid) de punts. Concretament, Helios processa 22 camps de potencials diferents (veure taula \ref{table:maps}), els quals són representacions que donen informació sobre la densitat electrònica i són construïts amb sondes atòmiques. Una sonda atòmica és una partícula amb
 característiques químiques particulars que s'assemblen a propietats atòmiques en ambients electrònics particulars. 
 
-Amb això obtenim per a cada mol·lècula de la base de dades 22 vectors on hi ha els valors per cadascún dels punts ordenats del grid de les 22 sondes moleculars
-alinieades amb la molècula de referència. A partir d'aquí hem de trobar la manera d'evaluar la similitud entre ambdúes mol·lècules. Per fer-ho, Helios utilitza una mètrica
-basada en la distància de Tanimoto (explicada més endavant), però s'ha de trobar com pondera cadascuna de les similituts (o distàncies) de Tanimoto dels 22 camps de
+Amb això obtenim per a cada mol·lècula de la base de dades 22 vectors on hi ha els valors per cadascun dels punts ordenats del grid de les 22 sondes moleculars
+alineades amb la molècula de referència. A partir d'aquí hem de trobar la manera d'avaluar la similitud entre ambdues mol·lècules. Per fer-ho, Helios utilitza una mètrica
+basada en la distància de Tanimoto (explicada més endavant), però s'ha de trobar com pondera cadascuna de les similituds (o distàncies) de Tanimoto dels 22 camps de
 potencials per a calcular la similitud final, ja que els 22 mapes de potencials calculats no tenen la mateixa importància de cara a determinar si dues molècules tenen
 la mateixa activitat biològica o no.
 
 Per tant, l'{\bf objectiu del projecte Pholus és dissenyar, implementar i validar un sistema intel·ligent que pugui calibrar el pes de cadascuna de les 22 distàncies de
 Tanimoto en el còmput final de la puntuació de similitud entre dues molècules determinades}, o, en altres paraules, que el sistema pugui determinar, per a cada problema
-biomèdi concret, la importància de cadascuna de les 22 propietats fisico-químiques per tenir una ponderació final en el càlcul de similituts entre les parelles de molècules.
-Per fer-ho, cal que per a cada execució (o problema biomèdic diferent) l'úsuari proporcioni al sistema un conjunt de molècules amb activitats biològiques conegudes
-(tant actives, inactives com d'activitat desconeguda) per a que Pholus pugui determinar el pés de les 22 propietats fisico-químiques en aquell problema en concret.
+biomèdic concret, la importància de cadascuna de les 22 propietats fisico-químiques per tenir una ponderació final en el càlcul de similituds entre les parelles de molècules.
+Per fer-ho, cal que per a cada execució (o problema biomèdic diferent) l'usuari proporcioni al sistema un conjunt de molècules amb activitats biològiques conegudes
+(tant actives, inactives com d'activitat desconeguda) per a que Pholus pugui determinar el pes de les 22 propietats fisico-químiques en aquell problema en concret.
 
 Per abordar aquest objectiu científic s'ha analitzat la viabilitat de dues tecnologies molt diferents, com són la anàlisi de components principals (PCA) i algoritmes evolutius.
 Després de fer les corresponents comparatives (no incloses en el present PFC) es va triar implementar algorismes evolutius per a resoldre el problema. Finalment, també
@@ -114,13 +114,13 @@ etc.
 HELIOS utilitza alineaments de camps moleculars flexibles per identificar compostos que s'assemblin
 a un compost de referència. L'alineament molecular e duu a terme mitjançant tècniques de "cloud
 computing", la qual permet fer-ho en pocs dies. Els compostos amb els quals es fa l'alineament es
-treuen d'una base de dades que pot variar segons l'objectiu de la búsqueda. 
+treuen d'una base de dades que pot variar segons l'objectiu de la cerca. 
 
 Els camps moleculars són discretitzats dins d'una caixa en forma de grid de punts. Idealment, la
-caixa hauria de ser suficientment gran per introduir-hi tots els lligans de la base de dades en una
-conformació extesa. De la mateixa manera la capsa ha d'incloure aquells punts al voltant de les
+caixa hauria de ser suficientment gran per introduir-hi tots els lligands de la base de dades en una
+conformació estesa. De la mateixa manera la capsa ha d'incloure aquells punts al voltant de les
 molècules que tenen valors significatius. Diferents representacions dels camps moleculars, que donen
-diferent informació sobre la densitat electrònica, són construits amb sondes atòmiques. Una sonda
+diferent informació sobre la densitat electrònica, són construïts amb sondes atòmiques. Una sonda
 atòmica és una partícula amb característiques químiques particulars que s'assemblen a propietats
 atòmiques en ambients electrònics particulars.  Podem veure les 22 sondes atòmiques
 implementades en HELIOS en la taula \ref{table:maps}.
@@ -148,7 +148,7 @@ implementades en HELIOS en la taula \ref{table:maps}.
 
 L'alineament múltiple de camps moleculars flexibles és una taxa complexa que requereix de tècniques i recursos computacionals avançats. El procés implementat per HELIOS fixa el camp molecular del compost de referència i utilitza algoritmes evolutius en un sistems de "cloud-computing" per duu a terme l'alineament flexible múltiple dels camps moleculars de cadascún dels diferents compostos que hi ha dins la base de dades.
 
-Amb això obtenim per a cada mol·lècula de la base de dades 22 vectors on hi ha els valors per cadascún dels punts ordenats del grid de les 22 sondes moleculars. A partir d'aquí hem de trobar alguna manera d'evaluar la similitud entre mol·lècules.
+Amb això obtenim per a cada mol·lècula de la base de dades 22 vectors on hi ha els valors per cadascún dels punts ordenats del grid de les 22 sondes moleculars. A partir d'aquí hem de trobar alguna manera d'avaluar la similitud entre mol·lècules.
 
 Com es mostrarà en les següents seccions, hi ha una part important de feina
 realitzada en la preparació de les dades, i en la corresponent validació dels
@@ -212,7 +212,7 @@ El concepte de semblança normalment s'utilitza per referir-se tan a la semblan�
 com a la diferència, ja que es suposa que si dos objectes són semblants és
 perquè no són diferents. En matemàtiques i estadística s'utilitzen els conceptes
 de semblança, proximitat i distància per referir-se al mateix, però en química,
-similitut i dissimilitut poden portar a diferents resultats. Per exemple,
+similitud i dissimilitud poden portar a diferents resultats. Per exemple,
 considerem dues seqüències de caràcters, F1 i F2, cadascuna té conjunts de 407
 caràcters, 402 dels quals són comuns entre ells. F3 i F4, cadascuna té un
 conjunt de 5 caràcters, dels quals cap d'ells és comú. En els dos casos la
@@ -242,7 +242,7 @@ viable de calcular.  Ens hem decidit per una variació de Tanimoto
 
 Com hem dit a l'apartat anterior, hem seleccionat el coeficient de
 Tanimoto. El coeficient de Tanimoto és definit com la mida de la
-interesecció dividida per la mida de la unió dels conjunts de
+intersecció dividida per la mida de la unió dels conjunts de
 mostra. Si A i B són dos conjunts, en termes de la teoria de conjunts
 el coeficient de Tanimoto és igual a
 
@@ -256,8 +256,8 @@ Els vectors de dades (de potencials) amb què treballem nosaltres
 pertanyen a $\Re^{N}$ on N són el nombre de punts que s'han considerat
 dins el grid. L'adaptació que fem nosaltres és convertir-los a vectors
 binaris de manera que només es consideren potencials rellevants. La
-unió de dos camps moleculars alineats són totes aquells punts de
-l'espai on qualsevol dels dos camps presentet potencials de Van del
+unió de dos camps moleculars alineats són tots aquells punts de
+l'espai on qualsevol dels dos camps presenta potencials de Van der
 Waals menors de -0.1 i el valor absolut del potencial electrostàtic és
 més gran que 0.5 o amb potencials de desolvatació més grans que
 0.25(C'). La intersecció són tots aquells punts de la unió que
@@ -268,7 +268,7 @@ definit com:
 $$T'_{j}(A_{j},B_{j})={C_{j} \over C'_{j}}$$
 
 on j és un camp molecular donat. Un cop $T'_{j}$ és calculat per
-cadascún dels 22 camps moleculars, el coeficient de Tanimoto final,
+cadascun dels 22 camps moleculars, el coeficient de Tanimoto final,
 $T'_{i}$ (compost de referència i), és calculat amb una mitjana
 aritmètica ponderada:
 
@@ -294,19 +294,19 @@ ponderació obtinguda per anàlisi de components principals.
 
 Per a calcular els valors dels 22 potencials de cada lligand, es resten els
 potencials de la molècula de referència amb els del lligand.  El format en el
-que estàn ambdues molècules, és el mateix, però pot ser que estiguin situades en
+que estan ambdues molècules, és el mateix, però pot ser que estiguin situades en
 un espai diferent respecte el 0 del eix de coordenades (recordem que estan
 mapejades en un espai 3D).  Per a ajustar les dues molècules, es passen per un
-procés de docking (autodock), que el que fa és ajuntarles de la millor manera que pot
+procés de docking (autodock), que el que fa és ajuntar-les de la millor manera que pot
 (també utilitza algoritmes genètics per a fer-ho) simulant la seva unió. Una
 vegada tenim els dos grafs ``superposats'' de la millor manera, calculem les
 diferències entre els potencials d'una i de l'altre estructura en cada punt, i
 després podem fer una resta dels valors punt a punt.  Això ho podem fer gràcies
-a què hem reduit les dues molècules a ocupar el màxim espai comú, i els
+a què hem reduït les dues molècules a ocupar el màxim espai comú, i els
 potencials en cada punt $i$ de la matriu de la molècula de referència, pot ser
 relacionat i comparat amb el punt $i$ de la matriu d'un lligand.
 
-Després de fer tots els calculs i restes pels 22 diferents tipus de potencials,
+Després de fer tots els càlculs i restes pels 22 diferents tipus de potencials,
 podem donar un número de semblança ``total'' per dos molècules i un tipus de
 potencial.
 
@@ -320,15 +320,15 @@ potencial.
 
 \subsubsection{Bedroc}
 \label{ssub:Bedroc}
-Una vegada sabem com hem de calcular la distància entre dues molècules, necesitem 
+Una vegada sabem com hem de calcular la distància entre dues molècules, necessitem 
 
 ''Virtual Screening'' és un terme que s'aplica a un tipus de problema
 que conceptualment és l'equivalent computacional de ....... screening, %XXX
 o sigui, a on un gran nombre de mostres (mol·lècules en aquest cas)
 estan disposades per ser discriminades entre actives i inactives. Per
-Intelligent Pharma evaluar l'execució del VS és una pràctica
+Intelligent Pharma avaluar l'execució del VS és una pràctica
 necessària, ja que és una forma de seleccionar quin mètode ordena
-millor. Com hem indicat en l'apartat anterior evaluar el VS ens
+millor. Com hem indicat en l'apartat anterior avaluar el VS ens
 servirà per comparar entre diferents ponderacions, o sigui, per
 determinar quina ponderació discrimina millor entre mol·lècules
 actives i inactives.
@@ -346,7 +346,7 @@ per tal de poder comparar diferents coeficients i diferents
 ponderacions. De fet, això no es restringeix només al ''Virtual
 Screening'', és un problema universal de tots els exercicis de
 predicció. Això ens pot ajudar a l'hora de trobar aproximacions de la
-bondad de l'ordenació. El problema és que el Virtual Screening té una
+bondat de l'ordenació. El problema és que el Virtual Screening té una
 particularitat, i és que la proporció d'actius a posar a d'alt de tot
 de la llista és molt petita, i pot provocar molt biaix a l'hora de fer
 la predicció. Aquest problema en la literatura és conegut com el
@@ -355,7 +355,7 @@ molts àmbits tan acadèmics com de la indústria farmacèutica en els
 últims anys. En aquest apartat estudiarem diferents maneres de tractar
 el problema presentat.
 
-Maneres d'evaluar ordenacions n'hi ha moltes(AUAC,ROC,Enrichment
+Maneres d'avaluar ordenacions n'hi ha moltes(AUAC,ROC,Enrichment
 Factor, RIE, BEDROC), i s'han analitzat unes quantes, però només
 s'explicarà la utilitzada finalment
 % subsubsection Bedroc (end)
@@ -364,7 +364,7 @@ s'explicarà la utilitzada finalment
 \label{ssub:estereoisomers i conformacions}
 
 Una altra particularitat del problema és la varietat de estereoisomers i de
-conformacions que pot tenir una molecula donada.  Una molècula, identificada per
+conformacions que pot tenir una molècula donada.  Una molècula, identificada per
 un nom i una composició pot tenir diverses maneres de mapejar-se en un espai
 tridimensional.
 
@@ -372,11 +372,11 @@ Quan diem que una molècula pot tenir varis estereoisomers, ens referim a que
 dues molècules, poden ser simètriques, però no superposables.  Un exemple al que
 podem estar més acostumats, per entendre el concepte són les mans.  La mà dreta
 i la esquerra, tindrien la mateixa composició, però al ser simètriques una
-respecte la altra, fa que no puguem superposarles.
+respecte la altra, fa que no puguem superposar-les.
 
 Cada estereoisomer pot tenir diverses conformacions.  Amb això ens referim a què
-en la natura, no sempre trobem la molècula amb els mateixos angles entre atoms,
-tipus d'enllaços, etc. Per exemple, una molècula pot trobarse en la natura
+en la natura, no sempre trobem la molècula amb els mateixos angles entre àtoms,
+tipus d'enllaços, etc. Per exemple, una molècula pot trobar-se en la natura
 enrotllada sobre ella mateixa, o bé estirada (és bastant comú trobar aquests
 tipus de conformacions).
 
@@ -387,7 +387,7 @@ d'energia (és una feina costosa, i no podem controlar tots els agents externs
 presents en l'entorn), sinó que podem, simplement refiar-nos de que sabem
 empíricament que la activitat d'un lligand amb un receptor.
 
-%XXX quan tenim molecules actives, no tenim la conf ni isomer, i hem de buscar
+%XXX quan tenim molècules actives, no tenim la conf ni isomer, i hem de buscar
 %d'entre totes, la millor, i fiarnos que aquella es la bona, per comparar amb
 %les que busquem
 
@@ -404,23 +404,23 @@ en les primeres posicions (un index de activitat?).
 
 % XXX Formula
 
-Inicialment, hem provat la intuició química, per decidir quin tipus de
+Inicialment, hem provat la intuïció química, per decidir quin tipus de
 indicadors són els més rellevants, i ajudats amb eines estadístiques, hem
-aconseguit trobar unes ponderacions que situen la majoria de molecules actives
+aconseguit trobar unes ponderacions que situen la majoria de molècules actives
 en les primeres posicions, però el procés és manual, i no assegura ni la
-ordenació actives/inactives, ni la propia ordenació de les actives al principi
+ordenació actives/inactives, ni la pròpia ordenació de les actives al principi
 de la llista (no totes les actives són ``igual'' d'actives).
 % section Context Químic (end)
 
 \section{Procediment informàtic} % (fold)
 \label{sec:Procediment informatic}
 
-Desde el punt de vista estrictament informàtic, el problema es pot descriure de
+Des de el punt de vista estrictament informàtic, el problema es pot descriure de
 la següent manera:
 
 Tenim una entrada de dades d'un conjunt de molècules (amb un identificador
 únic) amb els seus 22 valors associats a cadascuna de les sondes escollides, i una
-llista amb les molècules actives (els ids).
+llista amb les molècules actives (els identificadors).
 
 Utilitzem un algoritme evolutiu, per trobar els 22 valors (ponderacions) als que
 multiplicar cadascun dels potencials, que fan que obtinguem una ordenació de les
@@ -428,7 +428,7 @@ molècules que classifica les actives al principi.
 
 El procés però, no és tant directe com això, ja que les dades s'han de
 pretractar, per a treure molècules errònies, o bé triar quines de les molècules
-volem que continuin el procés i quines no (hi ha molècules que son molt similars
+volem que continuïn el procés i quines no (hi ha molècules que son molt similars
 entre elles, i no les volem, ja que podrien decantar (bias) l'algoritme genètic cap al
 sobreentrenament al seu favor, quan en realitat pertanyen al mateix grup de
 molècules.  S'han provat diferents tècniques d'agrupament (clustering), però no ens hem
@@ -438,7 +438,7 @@ tècniques que s'han usat (K-means, etc) %XXX : Noms de clusteritzacions
 Una vegada fet el nucli, la interfície amb l'usuari final també s'ha hagut
 de preparar separadament del algoritme genètic, ja que el nostre usuari,
 prefereix un entorn amigable (web, GUI, e-mails, excel) abans que entorns més
-austers (però configurables i scriptables) com pot ser una simple linia de
+austers (però configurables i scriptables) com pot ser una simple línia de
 comandes.  
 
 % subsubsection subsubsection name (end)
@@ -446,13 +446,13 @@ comandes.
 \subsection{Interfície} % (fold)
 \label{sub:Interficie}
 
-Per a la intefície amb l'usuari, s'ha escollit una interfície web, que executará
-l'usuari desde una web corporativa, amb accés restringit i controlat amb
-Autenticació.  Això ens porporciona informació de quin usuari executa cadascun
+Per a la interfície amb l'usuari, s'ha escollit una interfície web, que executarà
+l'usuari des de una web corporativa, amb accés restringit i controlat amb
+Autenticació.  Això ens proporciona informació de quin usuari executa cadascun
 dels càlculs, i així podem personalitzar la presentació, segons preferències de
 cadascun.  Utilitzant la web corporativa, ens estalviem haver de gestionar els
 permisos que té cada usuari, ja que la interfície que se li presenta, és
-adecuada per als seus permisos i les seves tasques a realitzar.
+adequada per als seus permisos i les seves tasques a realitzar.
 
 Les dades que entra un usuari són 3 llistes de molècules:
 
@@ -467,11 +467,11 @@ Les dades que entra un usuari són 3 llistes de molècules:
 
 \end{itemize}
 
-A part de les llistes de molècules, l'usuari també entra els parametres $\alpha$,
+A part de les llistes de molècules, l'usuari també entra els paràmetres $\alpha$,
 RieMax, i els percentatges de molècules amb els que vol provar l'experiment.  Es
 deixa la opció de no fer participar totes les molècules en l'experiment deixant 
-un conjunt de molècules fora, per després evaluar i validar les dades obtingudes
-(l'usuari pot fer manualment 10 fold validation, etc\dots).  Més endevant en 
+un conjunt de molècules fora, per després avaluar i validar les dades obtingudes
+(l'usuari pot fer manualment 10 fold validation, etc\dots).  Més endavant en 
 \ref{sub:sobreentrenament} s'explicarà el sistema de tests i validació.
 
 Per facilitar la usabilitat, el programa proporciona sempre uns paràmetres
@@ -482,7 +482,7 @@ entrat l'usuari.
 % subsection Interfície (end)
 \subsection{preparació de dades} % (fold)
 \label{sub:preparacio de dades}
-Una molècula es pot trobar en la natura en diverses formes.  Les clasificacions
+Una molècula es pot trobar en la natura en diverses formes.  Les classificacions
 es divideixen en isomers i conformacions.  Una molècula pot tenir diversos
 isomers, i cada isomer es pot trobar en  diverses conformacions.
 
@@ -500,7 +500,7 @@ seva flexibilitat.
 
 Donat un conjunt de molècules que volem utilitzar, hem de saber quina de les
 conformacions triarem per a cada molècula.  Per a fer la \texttt{explosió} de
-combinacions, s'utilitza un sofware especific, que fa la combinatòria i genera
+combinacions, s'utilitza un software especific, que fa la combinatòria i genera
 les possibles variacions sobre una molècula donada.  Un cop feta aquesta
 explosió de combinacions, tenim diverses entrades per a cadascuna de les
 molècules inicials.  Les molècules que sabem que són actives, sabem que ho són,
@@ -531,14 +531,14 @@ validacions, el percentatge de molècules actives e inactives, hauria de
 mantenir-se en cadascuna dels tres subgrups. No ens serveix un algoritme que
 deixi lloc a la incertesa (encara que en mitja funcioni), com podria ser, treure
 números aleatoris entre [0,1) i en funció d'on estigui (separem el segment [0,1)
-en tres trossos anteriorment ) colocarlos en un o altre grup, sinó que calculem
+en tres trossos anteriorment ) colocar-los en un o altre grup, sinó que calculem
 el percentatge d'actives respecte al de inactives, i anem omplint els grups fins
 a cobrir el llindar.  Això, que pot semblar un detall d'implementació
 ``menyspreable'', no ho és, ja que quan disposem de poques dades (sobretot en
 les actives), deixar lloc al atzar pot provocar canvis dràstics (i tràgics) en
 els resultats finals.
 
-%Posar implementacions de Agafar els numeros aleatoris
+%Posar implementacions de Agafar els números aleatoris
 
 El segon pas és fer l'explosió de combinacions de molècules possibles (isomers i
 conformacions).
@@ -547,7 +547,8 @@ A un conjunt de molècules, l'hi hem de trobar tots els isomers i les
 conformacions diferents en les que es poden trobar a la natura, és per això que
 primer, donada una base de dades de molècules diferents, hem de generar totes
 les conformacions possibles de cada molècula.  Aquest procés es realitza
-mitjançant un programa existent ja (Corina, NO és OpenSource).
+mitjançant un programa ja existent especialitzat en trobar isomers i conformacions,
+analitzant enllaços rotables vs no-rotables, etc.
 
 Al generar els diferents isomers i conformacions, afegim identificadors a les
 molècules, per saber de quina molècula inicial provenien però també saber
@@ -568,7 +569,7 @@ Aquí ens sorgeix un possible problema.  Al fer la explosió de combinacions, en
 trobem que les bases de dades, ja no estan balancejades amb els percentatges tal
 i com estaven abans, sinó que en funció de les variacions que tinguin les
 molècules que han entrat en cada grup (entrenament, test i validació), podem
-trobar un conjunt molt més poblat del que ens esperariem, i que varii també el
+trobar un conjunt molt més poblat del que ens esperaríem, i que varii també el
 seu percentatge intern de actives/inactives. Per exemple, la molècula A, pot
 tenir 6 ``descendents'', i en canvi, la molècula B pot tenir-ne només 2.
 
@@ -593,8 +594,8 @@ molècula.
 % subsubsection Procés de preparació (end)
 
 En aquest punt, ja es disposen de totes les dades tal i com les volem per a
-executar l'Algoritme genètic.  El procés intern de l'Algoritme genètic, i els
-seus paràmetres en detall s'explicaràn en la secció pertinent ,
+executar l'algorisme genètic.  El procés intern de l'algorisme genètic, i els
+seus paràmetres en detall s'explicaran en la secció pertinent ,
 \ref{sub:Algoritme genetic}.  En el cas que l'usuari hagi configurat la execució
 per a fer-se amb test i validació, la execució només es fa utilitzant com a
 dades el conjunt d'entrenament, deixant les taules de test i validació per a
@@ -608,8 +609,8 @@ a decidir si podem utilitzar menys generacions per a aconseguir resultats
 similars.
 
 Una vegada tenim les ponderacions que han anat apareixent, parsegem aquestes
-dades i n'extraiem els millors individuus de cada generació.  Aquests individuus
-ens serveixen per divèrses coses:
+dades i n'extraiem els millors individus de cada generació.  Aquests individus
+ens serveixen per diverses coses:
 
 \begin{itemize}
 	\item Poder graficar d'una manera simple la evolució de l'entrenament
@@ -621,10 +622,10 @@ ens serveixen per divèrses coses:
 Si l'usuari ha configurat el procés per a utilitzar test i validació, en
 aquest moment, enfrontem les millors ponderacions de cada generació amb les
 taules de test i de validació (per separat).  Aquest procés no implica cap
-algorisme genetic, però s'utilitza \textbf{exactament} la mateixa funció que en
+algorisme genètic, però s'utilitza \textbf{exactament} la mateixa funció que en
 l'algorisme genètic (el mateix .h i .cpp).  Això es fa perquè les funcions de
 fitness han anat canviat al llarg del temps, afegint petites modificacions sobre
-la inicial, i d'aquesta manera, asegurem la consistència entre les dades.
+la inicial, i d'aquesta manera, assegurem la consistència entre les dades.
 
 Una vegada tenim els BedRocs que donen cadascuna de les millors ponderacions
 (segons l'algorisme genètic en el conjunt d'entrenament), i els seus BedRocs
@@ -632,10 +633,10 @@ enfrontades als conjunts de test i validació (que no s'han utilitzat per al
 procés evolutiu), tenim indicadors sobre si s'està sobreentrenant o no el procés
 d'optimització.
 
-Amb aquestes dades, l'usuari ja disposa de tota la informació que necesita.
-Aquesta informació, se li presenta a través de la web (cuan acaba el procés se'l
+Amb aquestes dades, l'usuari ja disposa de tota la informació que necessita.
+Aquesta informació, se li presenta a través de la web (quan acaba el procés se'l
 pot avisar amb un mail), o directament al correu electrònic.  Recordem que la
-informació sobre l'usuari la disposem desde el moment que s'autentifica a la web
+informació sobre l'usuari la disposem des de el moment que s'autentifica a la web
 (procés anterior a \texttt{Pholus} en si).
 
 La informació de com vol cada usuari rebre les dades, i els seus correus
@@ -663,7 +664,7 @@ creuaments tallen un cromosoma per un punt aleatori, i barregen el trossos de
 dos cromosomes per a crear-ne de nous sense tenir en compte en quin punt tallen,
 o quins veïns hi ha en el punt de tall.
 
-Tot seguit s'especifiquen els parametres i implementacions utilitzades en aquest
+Tot seguit s'especifiquen els paràmetres i implementacions utilitzades en aquest
 programa.
 
 \subsubsection{Individu (Cromosoma)}
@@ -686,39 +687,39 @@ porten a resultats sobreentrenats i, és clar, no ens interessa.
 Com que una ponderació competeix contra altres ponderacions, i la funció de
 fitness és una funció additiva, donar un rang tant gran de possibles valors
 provoca una tendència a elevar els valors de les ponderacions, obligant a que
-després del càlcul es normalitzéssin per a tractar amb valors més homogènis.
+després del càlcul es normalitzessin per a tractar amb valors més homogenis.
 
 S'han fet proves d'acotar els valors possibles entre 0 i $Inf$, però si
-permetem valors negatius, l'Algoritme evolutiu pot jugar amb fer ponderar
+permetem valors negatius, l'algorisme evolutiu pot jugar amb fer ponderar
 negativament un tipus de potencial, donant més flexibilitat al Algoritme
-evolutiu per trobar una bona ponderació.  Si el mínim valor que pogués asignar
-fós 0, simplement eliminaria un map si no té cap rellevància però d'aquesta
+evolutiu per trobar una bona ponderació.  Si el mínim valor que pogués assignar
+fos 0, simplement eliminaria un map si no té cap rellevància però d'aquesta
 manera li permetem penalitzar un indicador.
 
-Donar de marge de $-Inf$ a $Inf$, era problemàtic en tant que l'Algoritme
+Donar de marge de $-Inf$ a $Inf$, era problemàtic en tant que l'algorisme
 evolutiu acaba donant molta rellevància a uns quants (pocs) potencials, i
 comparativament molt poca a la majoria, donant poca riquesa a la ponderació i
 tendint a sobreentrenar-se per al conjunt de dades que li entrem, però sense
-donar resultats extrapolàbles a altres conjunts de dades.
+donar resultats extrapolables a altres conjunts de dades.
 
 La següent versió, va ser deixar posar valors entre [-1,1] , però tals que la
-suma de tots fós 1.  Els resultats tampoc van ser concloents (a part que tampoc
+suma de tots fóra 1.  Els resultats tampoc van ser concloents (a part que tampoc
 tenia molt de sentit lògic més que el de acotar que tots els individus
-estiguéssin dins d'uns marges).
+estiguessin dins d'uns marges).
 
 Al final, s'ha adoptat donar un rang de [-1,1], però sense límit en la suma total
 dels valors ja que així acotem els valors i també els hi deixem tenir valors
 negatius, donant més versatilitat al algorisme, que així és capaç de trobar
-relaccions inverses d'algunes ponderacions.
+relacions inverses d'algunes ponderacions.
 
 
 
 \subsubsection{Inicialització} % (fold)
 \label{ssub:Inicialitzacio}
-Com s'ha explicat en XXX, la inicialització dels individuus és totalment
-aleatòria, amb numeros en coma flotant entre -1 i 1.  L'algorisme genètic no ens
+Com s'ha explicat en XXX, la inicialització dels individus és totalment
+aleatòria, amb números en coma flotant entre -1 i 1.  L'algorisme genètic no ens
 imposa cap altra restricció, ja que en totes les posicions son vàlids els
-mateixos valors (dins del mateix rang), i aquests valors, seràn usats únicament
+mateixos valors (dins del mateix rang), i aquests valors, seran usats únicament
 com a dades (valors als que multiplicar els potencials).  Al no tenir cap
 significat sintàctic (al contrari que en GP, i fins a cert punt en GEP), podem
 deixar la inicialització al atzar totalment.
@@ -735,21 +736,21 @@ una altra (al·lel).  La única restricció és que es mantingui dins dels marge
 Aplicant aquesta mutació, mantenim la diversitat en la població i anem
 introduint sempre material genètic nou.  La mutació, juntament amb els
 creuaments són la font principal de la variació genètica, i en aquest cas en
-particular, la mutació és l'únic operador que introdueoix material genètic nou.
+particular, la mutació és l'únic operador que introdueix material genètic nou.
 
 El valor de 0.1\% s'ha utilitzat ja que és un valor estàndard, i les variacions
 que hem aplicat a posteriori sobre aquest valor no han aportat millores
 objectives a les solucions.
 
 Si ens trobéssim amb problemes de convergència prematura, un dels ``trucs''
-utilitzats és augmentar la provabilitat de mutació.  Com que no ens hem trobat
+utilitzats és augmentar la probabilitat de mutació.  Com que no ens hem trobat
 amb aquest tipus de problemes, el valor de 0.1 s'ha deixat com a bo.
 % subsubsection Mutacions (end)
 
 \subsubsection{Selecció} % (fold)
 \label{ssub:Seleccio}
 El procés de sel·lecció de candidats es segueix utilitzant un Torneig
-Determinista de mida 2, és a dir, s'escullen parelles d'individuus
+Determinista de mida 2, és a dir, s'escullen parelles d'individus
 aleatòriament i enfrontem un individu amb l'altre. Del torneig surt ``viu'' el
 que millor fitness té.
 % subsubsection Selecció (end)
@@ -761,26 +762,26 @@ Pel creuament s'ha provat un creuament per un punt, i el creuament per dos
 punts, donant millors resultats el creuament en tant sols un punt.  
 
 Donats dos individus (els que han estat sel·leccionats en el procés de
-sel·lecció per a reproduir-se , amb una provabilitat d'un 0.85 es fa creuament i
+sel·lecció per a reproduir-se , amb una probabilitat d'un 0.85 es fa creuament i
 els fills són tan sols una partició formada a partir dels 2 pares, amb un punt
 de tall aleatori.  Donat que no hi ha cap relació entre els diferents indexos
-(estàn ordenats arbitràriament) no ens hem de preocupar de partir el cromosoma
+(estan ordenats arbitràriament) no ens hem de preocupar de partir el cromosoma
 per lloc ``delicat''. 
 
-Així doncs, el que es busca és interpolar les qualitats de dos individuus ben
+Així doncs, el que es busca és interpolar les qualitats de dos individus ben
 adaptats, per a crear uns descendents amb propietats similars.  És d'esperar que
 si un individu té bon fitness, les ponderacions donades als seus indicadors
-siguin bastant encertades.  Llavors, en interpolar una parella de individuus,
+siguin bastant encertades.  Llavors, en interpolar una parella de individus,
 suposem que el descendent també tindrà un fitness bo, i això farà que a mesura
 que passen les generacions, la població tendeixi a millorar (en mitja).
 
 El creuament per dos punts no ha donat millors resultats que el creuament fet
-per un únic punt, i s'ha decidit quedarse amb el creuament per un sol punt.
+per un únic punt, i s'ha decidit quedar-se amb el creuament per un sol punt.
 % subsubsection crossover (end)
 
 \subsubsection{Fitness} % (fold)
-\label{ssub:Fitness}
-En aquest problema, la funció que ens indica com de bò és un individu (funció
+\label{ssub:PFitness}
+En aquest problema, la funció que ens indica com de bo és un individu (funció
 \texttt{fitness}) és el resultat d'avaluar la ordenació que dóna la ponderació
 indicada per l'individu, respecte els nostres coneixements de activitat. Aquesta
 avaluació la fem mitjançant un dels diferents algoritmes d'avaluació d'ordenacions.
@@ -788,11 +789,11 @@ avaluació la fem mitjançant un dels diferents algoritmes d'avaluació d'ordena
 %XXX : enchufar bedroc, ROC, tanimotos, i tota la merda
 
 És així, una funció que pondera ordenacions.  Per tant, la funció té un cost
-elevat per a ser cridada per cada evaluació d'un individu.  S'han utilitzat
+elevat per a ser cridada per cada avaluació d'un individu.  S'han utilitzat
 algunes tècniques d'optimització per a evitar recalcular ponderacions ja fetes,
 com per exemple, catxejar els resultats (memoize).  Com que l'algorisme
 s'executa ``d'una sola tacada'', la caché pot ser totalment mapejada a memòria,
-sense haver de volcar-la en cap moment a disc.  Això és de vital importància, ja
+sense haver de bolcar-la en cap moment a disc.  Això és de vital importància, ja
 que segons com haguéssim d'emmagatzemar les dades en disc, el cost d'accés a les
 dades seria superior al de recalcular. 
 
@@ -855,7 +856,7 @@ Per a calcular la qualitat d'una ordenació, hi ha diverses maneres de fer-ho.
 \end{itemize}
 
 
-En qualsevol d'aquests procediments, es tracta d'evaluar com està de ben ordenada una llista, en funció d'unes regles.
+En qualsevol d'aquests procediments, es tracta d'avaluar com està de ben ordenada una llista, en funció d'unes regles.
 
 Posarem un exemple per tal de fer més fàcil la comprensió de la funció de
 fitness.
@@ -889,7 +890,7 @@ m3\_i001\_c001 & 0.1 & 0  \\
 
 De totes elles, sabem que les actives son, per exemple m1 i m2, però no sabem
 en quina de les conformacions i estereoisomer ho son.  Per tant, agafem només el
-nom genèric, i cada cop escollirem la millor de cada familia en funció de quina
+nom genèric, i cada cop escollirem la millor de cada família en funció de quina
 quedi millor posicionada.
 
 % subsubsection Fitness (end)
@@ -904,7 +905,7 @@ utilitzem un conjunt de dades per entrenar un programa, i l'utilitzem tantes
 vegades, que la solució obtinguda és molt bona pel conjunt de dades amb el qual
 ha estat entrenat, però al aplicar la solució obtinguda en altres dades, els
 resultats obtinguts són molt pitjors als esperats.  Aquest és un problema
-relativament comú a la majoria d'algoritmes pertanyents a la Inteligència
+relativament comú a la majoria d'algoritmes pertanyents a la Intel·ligència
 artificial, com poden ser les xarxes neuronals, els algoritmes evolutius o els
 algoritmes de \texttt{Raonament basat en casos}.
 
@@ -925,19 +926,19 @@ dades,
 \begin{itemize}
 	\item Pq no es sobreentreni, conjunt d'entrenament, conjunt de test i conjunt
 		de validació.
-	\item 80 10 10, es fa sobre molecules i despres es deixen passar totes les
-		conformacions d'aquestes molecules, fent que les dades finals no siguin 80 10 10
-		, pero aixo es correcte pq la flexibilitat d'una molecula es part de la seva
+	\item 80 10 10, es fa sobre molècules i després es deixen passar totes les
+		conformacions d'aquestes molècules, fent que les dades finals no siguin 80 10 10
+		, però això es correcte perquè la flexibilitat d'una molècula es part de la seva
 		'qualitat'.
 	\item aquestes ponderacions que ens dona el algoritme genètic, es
-		\texttt{louegen} i es manté un històric d'elles, per saber quina és la mitja
+		\texttt{loguegen} i es manté un històric d'elles, per saber quina és la mitja
 		de la població en cada iteració (generació), i la desviació típica.  El que
 		és normal és que la mitja sigui més propera cada cop al màxim, i que la
 		desviació típica sigui cada cop menor.
-	\item Una vegada fet l'entrenament, ``enfrontem'' els millors individuus de
+	\item Una vegada fet l'entrenament, ``enfrontem'' els millors individus de
 	cada generació als elements dels nostres conjunts de test i de validació,
 	tenint així un conjunt de punts quantitatius (recordem que el fitness que
-	evaluavem era un valor quantitatiu).
+	avaluàvem era un valor quantitatiu).
 	\item Si grafiquem els valors que hem obtingut en un eix de 2D, amb 3
 	funcions, representant l'evolució del fitness en el conjunt d'entrenament, de
 	test i de validació, esperem trobar una figura que sigui (més o menys) així:
@@ -969,7 +970,7 @@ La validació s'ha fet executant \emph{Pholus} deu vegades, i traient
 dades detallades sobre el valor del fitness del millor element en cada
 generació, i graficant els millors fitness de cada generació.
 
-%En aquest problema, teniem 68 molècules acives, 
+%En aquest problema, teníem 68 molècules actives, 
 En la taula \ref{qrpholustest} expliquem les característiques principals d'aquest problema.
 
  % theme=Berlin;caption=Pholus test
@@ -978,8 +979,8 @@ En la taula \ref{qrpholustest} expliquem les característiques principals d'aque
  % alpha & 20
  % repeticions & 10
  % generacions per execució & 120
- % provabilitat de creuament & 0.8
- % provabilitat de mutació & 0.1
+ % probabilitat de creuament & 0.8
+ % probabilitat de mutació & 0.1
 
 \begin{table}
 \centering
@@ -992,8 +993,8 @@ Molècules inactives      & 2653 \\
 alpha                     & 20   \\
 repeticions               & 10   \\
 generacions per execució & 120  \\
-provabilitat de creuament & 0.8  \\
-provabilitat de mutació  & 0.1  \\
+probabilitat de creuament & 0.8  \\
+probabilitat de mutació  & 0.1  \\
 \hline
 \end{tabular}
 \caption{Pholus test} \label{qrpholustest}
@@ -1003,9 +1004,9 @@ S'ha de tenir en compte les dades d'aquest experiment, per a donar una
 interpretació correcte als resultats.
 
 En les següents gràfiques, es mostren les dades de les deu repeticions que s'han
-fet de la execució.  A priori, les dades que podriem esperar, son gràfiques com
+fet de la execució.  A priori, les dades que podríem esperar, son gràfiques com
 la Figura \ref{fig:sobreent}.  La línia amb forma logarítmica, és
-el fitness del conjunt amb el què entrenem el algoritme genètic.  Aquest, será
+el fitness del conjunt amb el què entrenem el algoritme genètic.  Aquest, serà
 estrictament creixent, ja que utilitzem elitisme, i el creixement del fitness té
 forma logarítmica.  El conjunt de test, serà el que utilitzarem per a saber el
 punt on l'algorisme genètic comença a sobreentrenar la solució pel conjunt
@@ -1019,7 +1020,7 @@ resultat del conjunt de test, podria ser que el que estiguem fent sigui
 sobreentrenar l'algoritme per al conjunt de test.  Es per això que tenim un
 altre 10\% de les dades totals en el conjunt que anomenem \emph{de validació}. 
 
-Aquest conjunt de dades ens serveix per a asegurar que no estem cometent el
+Aquest conjunt de dades ens serveix per a assegurar que no estem cometent el
 mateix error del sobreentrenament però aquesta vegada, maximitzant el conjunt de
 test.  
 
@@ -1039,19 +1040,19 @@ resultats i la figura \ref{fig:sobreent}
 \subsection{Anàlisi de Resultats} % (fold)
 \label{sub:Analisi de Resultats}
 
-Els resultats obtinguts, han estat satisfactoris, i hem deduit que no hi ha
+Els resultats obtinguts, han estat satisfactoris, i hem deduït que no hi ha
 hagut sobreentrenament, ja que en les deu execucions, no s'observa el patró que
 hem comentat del sobreentrenament.
 
 De les observacions que hem fet, podem concloure que no hi ha sobreentrenament,
 ja que , en general les gràfiques de testing i validació, són bastant estables,
-i la validació no cau a partir d'arribar al maxim de testing (Figures \ref{fig:pholusResult1},
+i la validació no cau a partir d'arribar al màxim de testing (Figures \ref{fig:pholusResult1},
 \ref{fig:pholusResult2}, \ref{fig:pholusResult3}, \ref{fig:pholusResult4}, \ref{fig:pholusResult5},
 \ref{fig:pholusResult6}, \ref{fig:pholusResult7}, \ref{fig:pholusResult8}, \ref{fig:pholusResult9},
 \ref{fig:pholusResult10}).
 
 En gairebé tots els casos observem que no el testing si que té el màxim en un
-punt cap a les 60-80 generacions, pero la devallada de després tampoc és molt
+punt cap a les 60-80 generacions, però la davallada de després tampoc és molt
 pronunciada, com per entendre que s'està donant un cas de sobreentrenament.
 
 Un factor a tenir en compte és el número tant petit de molècules actives, que fa
@@ -1062,10 +1063,10 @@ Bedroc molt ràpidament.  Un conjunt amb més molècules actives, com pot ser el
 d'entrenament, normalment és molt més consistent i els canvis en la ordenació,
 provoquen canvis en el fitness més graduals.
 
-Un altre factor que hem de tenir en compte per a evaluar aquests resultats, és
+Un altre factor que hem de tenir en compte per a avaluar aquests resultats, és
 que les molècules actives, no són totes igual de difícils de classificar, sinó
-que poden agrupar-se en clusters de similitud entre elles.  Amb aquests grups
-podem classificar les 68 molècules en 11 clusters o grups,  Al agafar un 10\% de
+que poden agrupar-se en clústers de similitud entre elles.  Amb aquests grups
+podem classificar les 68 molècules en 11 clústers o grups,  Al agafar un 10\% de
 les dades, queden molt poques molècules en cada conjunt, i depenent de la
 agrupació amb la que quedin aquestes actives, poden fer que, per exemple, com es
 veu en la Taula \ref{fig:pholusResult1} i \ref{fig:pholusResult4}
@@ -1155,10 +1156,10 @@ veu en la Taula \ref{fig:pholusResult1} i \ref{fig:pholusResult4}
 \label{sec:PConclusions i treball futur}
 En aquest projecte hem desenvolupat exitosament un programari que ha permès ser
 més eficients en un procés que ja existia, però nosaltres l'hem millorat, no
-només en sentit d'aproximació química, sinó aprofitant-nos de les aventatges que
+només en sentit d'aproximació química, sinó aprofitant-nos de les avantatges que
 ens ofereixen els algorismes genètics, permetent-nos explorar un espai de
-possibles solucions immens, en un temps raonable (entre 2 i 8 hores segons el
-tamany del problema).
+possibles solucions immens, en un temps raonable (entre 2 i 8 hores segons la
+mida del problema).
 
 La exploració d'aquest problema ens ha servit per aprendre una mica sobre
 les unions entre lligands i dianes i també les maneres de agrupar molècules per

@@ -15,19 +15,19 @@
 
 \section{Introducció} % (fold) Objectius?
 \label{sec:Introduccio}
-Tot seguit es presentará un projecte en el que s'ha utilitzat una tècnica
+Tot seguit es presentarà un projecte en el que s'ha utilitzat una tècnica
 molt pionera derivada de la programació genètica anomenada ``Genetic
 Expression Programming'' (GEP).  A falta d'un nom millor hem tractat el
 problema amb el nom de \texttt{GEP}.
 
 En aquest projecte apliquem Genetic Expression Programming per a descobrir
 fórmules analítiques a partir de resultats empírics o bé mostrejos que tenim
-a priori de característiques que tenen les molècules en funció de parametres
+a priori de característiques que tenen les molècules en funció de paràmetres
 de configuració de les mateixes molècules.  És a dir, per exemple, en funció
 dels angles en els punts on hi ha angles rotables, una molècula es diu que
 té un volum diferent, en tant que la seva zona d'acció canvia.  Segons com
 siguin aquests angles, la molècula pot estar ``arreplegada'' sobre si
-mateixa, donannt lloc a un volum més petit que no pas si està extesa en
+mateixa, donant lloc a un volum més petit que no pas si està estesa en
 l'espai, havent-hi molt més espai entre els seus àtoms consecutius.
 
 Aquesta informació és necessita per a poder tractar més còmodament amb
@@ -42,24 +42,24 @@ aquesta informació, i forma part d'un procés més complex relacionat amb XXX
 \section{Procediment informàtic} % (fold)
 \label{sec:Procediment informatic}
 
-El diseny i implementació  d'aquest projecte és la que s'ha emportat més temps
+El disseny i implementació  d'aquest projecte és la que s'ha emportat més temps
 proporcionalment, ja que s'ha hagut de fer molta investigació per a ajustar els
 paràmetres del algorisme genètic, i per a implementar els diferents operadors.
 
 Ens enfrontem a un problema on el cromosoma, a diferència Pholus i Chiron, no
 pot ser tractat com un vector d'elements independents, ja que s'ha de mapejar un
 arbre (que representa una fórmula analítica) en un vector, i un gen
-\textit{i} té molta repercusió en els seus gens posteriors.
+\textit{i} té molta repercussió en els seus gens posteriors.
 
 La manera clàssica d'atacar els problemes de programació genètica, és
 confeccionant una representació d'un arbre en el cromosoma, en preordre,
 inordre, o postordre.  Cadascuna d'aquestes implementacions suposa uns pros i
 uns contres, ja sigui en la construcció, la interpretació (per a executar la
-funció de fitness s'ha d'evaluar el resultat, i per tant, s'ha de reconstruir
+funció de fitness s'ha d'avaluar el resultat, i per tant, s'ha de reconstruir
 l'arbre), o en els diferents operadors, tant el creuament com la mutació.
 
-Com a primera aproximació, s'ha implementat un arbre en preodre, ja que facilita
-molt la evaluació, una de les parts més costoses i que s'ha de fer més cops al
+Com a primera aproximació, s'ha implementat un arbre en preordre, ja que facilita
+molt la avaluació, una de les parts més costoses i que s'ha de fer més cops al
 llarg del algoritme.
 
 Imaginem que tenim un arbre de la següent manera:
@@ -68,9 +68,9 @@ Imaginem que tenim un arbre de la següent manera:
 + 2 - 3 2
 \end{verbatim}
 
-Aquest arbre, que traduit a inordre és $ 2 + (3 -2) $ , pot ser calculat
-construint un evaluador com una màquna de pila, on apilem els elements a mesura
-que els anem trobant, i evaluem les operacions una vegada tenim els operands
+Aquest arbre, que traduït a inordre és $ 2 + (3 -2) $ , pot ser calculat
+construint un avaluador com una màquina de pila, on apilem els elements a mesura
+que els anem trobant, i avaluem les operacions una vegada tenim els operands
 suficients per a la última operació que hem apilat.
 
 La construcció en preordre deixa les fulles al final dels subarbres, i això és
@@ -79,7 +79,7 @@ possibilitat de crear un arbre vàlid. % XXX REF a creuaments
 
 Un dels problemes que es donen en els algorismes de programació genètica, és la
 construcció d'arbres invàlids. Per exemple, suposem que fem un creuament per un
-punt de tall entre dos arbres, com si fós un algorisme evolutiu clàssic.
+punt de tall entre dos arbres, com si fos un algorisme evolutiu clàssic.
 
 \begin{verbatim}
 + 3 * 3 | - 4 3
@@ -87,12 +87,12 @@ punt de tall entre dos arbres, com si fós un algorisme evolutiu clàssic.
 \end{verbatim}
 
 al intercanviar els arbres, un dels 2 arbres que queden (- Q + * - 3 5) no
-disposa de prous operands per a realitzar la evaluació.  Això és un cas senzill
+disposa de prous operands per a realitzar la avaluació.  Això és un cas senzill
 de tots els problemes que es poden generar al fer creuaments, i és el cas en el
 que utilitzem el creuament més trivial (creuament per un punt). Si utilitzéssim
 creuaments més sofisticats, els casos que hem de tractar particularment per
 creixen molt de pressa.  Només fent un creuament per 2 punts, es generen
-moltíssims més arbres sintacticament incorrectes.
+moltíssims més arbres sintàcticament incorrectes.
 
 És per això que s'ha adoptat finalment per una aproximació utilitzant una
 representació ideada per Cândida Ferreira (XXX bib), on per la pròpia construcció del
@@ -147,28 +147,28 @@ ja que disposem a priori dels conjunts de dades d'entrada i resultats.
 El programa simplement agafa les dades d'uns arxius que hem tractat amb uns
 petits scripts per a tenir un format realment còmode.
 
-Per a les proves que s'han realitzat per descubrir funcions matemàtiques
-conegudes, la mateixa funció s'ha implementat en la funció d'evaluació, i
+Per a les proves que s'han realitzat per descobrir funcions matemàtiques
+conegudes, la mateixa funció s'ha implementat en la funció d'avaluació, i
 simplement, s'executa amb les dades d'entrada, per a tenir el resultat a
-comparar-lo amb el resultat de la formula que estem evaluant.
+comparar-lo amb el resultat de la formula que estem avaluant.
 
 % subsection Preparació de les dades (end)
 
 \subsection{Implementació} % (fold)
 \label{sub:GImplementacio}
 
-Aquest projecte ha estat el més difícil d'implementar i disenyar, ja que hem
+Aquest projecte ha estat el més difícil d'implementar i dissenyar, ja que hem
 hagut de fer un treball notable d'investigació (els primers referents en GEP
 daten de 2002 XXX).
 
 El procés general del algoritme evolutiu és, donada una llargada de cromosoma,
 decidida per l'usuari en funció de la complexitat ``intuitiva'' de la formula
-que es vol descubrir, i uns paràmetres de probabilitat de creuaments i
+que es vol descobrir, i uns paràmetres de probabilitat de creuaments i
 mutacions, la aplicació ha de retornar una fórmula analítica que s'apropa (o
 clava) la fórmula que estem buscant.
 % subsection Impl (end)
 
-(XXX) fer una seccio dedicada a GP i GEP o posar-ho a la implementació?
+(XXX) fer una secció dedicada a GP i GEP o posar-ho a la implementació?
 
 \subsubsection{Arbres} % (fold)
 \label{ssub:Arbres}
@@ -183,8 +183,8 @@ Per això s'ha desenvolupat un conjunt de classes per a tractar amb arbres, que
 ens permeten construir i avaluar aquests arbres a partir d'un cromosoma (vector
 de símbols).
 
-Aquesta estructura, s'ha programat el més flexiblement possible, deixant la
-possibilitat de ser extesa en un futur, afegint nous tipus d'operacions, i amb
+Aquesta estructura, s'ha programat el més flexible possible, deixant la
+possibilitat de ser estesa en un futur, afegint nous tipus d'operacions, i amb
 diferents aritats, més grans de les que hem tingut necessitat fins al moment.
 
 Nosaltres hem tractat només amb aritats 0,1 i dos (a € {0,1,2} ) ja que els
@@ -207,7 +207,7 @@ operands tenien un màxim de aritat 2.
 \caption{Relació funció-aritat}
 \begin{tabular}{|l|r|}
 \hline
-\multicolumn{1}{|c|}{\textbf{simbol }} & \multicolumn{1}{c|}{\textbf{ aritat}} \\
+\multicolumn{1}{|c|}{\textbf{símbol }} & \multicolumn{1}{c|}{\textbf{ aritat}} \\
 \hline
 \hline
 +                     & 2 \\
@@ -223,9 +223,9 @@ terminals (x,y,z..)   & 0 \\
 \end{table}
 
 Per a poder construir un arbre complet, i avaluar-lo, a partir d'un vector de
-simbols (implementats com a caràcters, donada la manca de símbols en c++ com a
+símbols (implementats com a caràcters, donada la manca de símbols en c++ com a
 tipus bàsic), i poder-ho fer amb la màxima robustesa i flexibilitat, s'ha
-implemntat una estructura amb nodes, i un arbre tipus template.
+implementat una estructura amb nodes, i un arbre tipus template.
 
 Tot seguit es mostra el diagrama de classes d'aquesta part GEP.
 
@@ -234,11 +234,11 @@ Tot seguit es mostra el diagrama de classes d'aquesta part GEP.
 Com es pot veure en la figura anterior (XXX ref fig), s'ha implementat una
 classe abstracte Node de la que ``pengen'' les diferents especialitzacions, que
 son les diferents operacions que suporta GEP, o bé els terminals. Els terminals,
-com és d'esperar, tenen aritat zero, i al ser evaluats, retornen el valor del
+com és d'esperar, tenen aritat zero, i al ser avaluats, retornen el valor del
 terminal en aquest moment com a resultat.  Els operadors (aritat > 0),
 requereixen d'altres nodes per a calcular el seu resultat.  D'això es deriva que
-en un cromosoma donat, al transformarlo a genotip, les fulles seran totes
-terminals, ja que son l'únic tipus de node que poden evaluar a un valor sense
+en un cromosoma donat, al transformar-lo a genotip, les fulles seran totes
+terminals, ja que son l'únic tipus de node que poden avaluar a un valor sense
 necessitat de cap altre resultat precalculat.
 
 Al haver-se de crear nodes dinàmicament (i intensament) durant cada execució,
@@ -248,13 +248,13 @@ còmode la seva utilització.
 
 Després de implementar-se aquesta part, hem descobert una manera tant o més
 elegant de fer-se aquest procés:  Utilitzant les llibreries Boost (XXX ref), que
-ofereixen, entre d'altres, funcionalitatsl pròpies de llenguatges funcionals,
+ofereixen, entre d'altres, funcionalitats pròpies de llenguatges funcionals,
 com per exemple Boost::Functional, que permet la programació de c++ retornant
 funcions com a valor de retorn de una funció (programació d'ordre superior).  
 D'aquesta manera, encara podem delegar un pas més avall la creació de nodes, 
 
-XXX arbres, nodes, evaluacio, etc.
-patro estrategia + factory
+XXX arbres, nodes, avaluació, etc.
+patró estratègia + factory
 Parlar de BOOST::Functional
 % subsubsection Arbres (end)
 
@@ -277,27 +277,27 @@ aconseguim és evolucionar dos subarbres, que en el moment de la avaluació,
 s'uneixen d'alguna manera.
 
 Si apliquem aquesta tècnica, es facilita la creació de subarbres que conformen
-el que s'anomenen ``building blocks'', o blocks constructors que representen una
+el que s'anomenen ``building blocks'', o blocs constructors que representen una
 petita part (però significativa) de la fórmula que es vol acabar trobant.
 
 EXEMPLE
 
 Una de les maneres de combinar els diferents gens és utilitzant \emph{Link
 functions} o funcions d'enllaç, que son operadors que decidim a priori, i
-seràn els nodes arrel de l'arbre final.
+seran els nodes arrel de l'arbre final.
 
 En \ref{figXXX} es mostra com s'avaluarà el cromosoma mostrat abans amb funcions
 d'enllaç suma.
 
 Aquesta millora, dona molta flexibilitat al algorisme genètic, ja que li dona
 poder per a fer combinacions entre diferents cromosomes (en el creuament), només
-cambiant una part del arbre, i no fent cambis molt radicals al fenotip.  Aquest
+cambiant una part del arbre, i no fent canvis molt radicals al fenotip.  Aquest
 procés de linkatge està també inspirat amb els procediments de la naturalesa per
 a ensamblar proteïnes a partir de components més petites.
 
 La següent implementació i millora és construir un gen una mica diferent en un
 dels extrems del cromosoma, que contingui informació codificada sobre el propi
-cromosoma.  Aquest tipus de metainformació és molt valuosa, i ens permet que el
+cromosoma.  Aquest tipus de meta-informació és molt valuosa, i ens permet que el
 propi cromosoma sàpiga com ensamblar-se i a més, ho pugui fer d'una manera
 variable, que vagi evolucionant al mateix temps que evoluciona tot el propi gen.
 
@@ -306,29 +306,29 @@ GEP, ja que permet guardar una espècie d'``estat'', que ens dona dades sobre co
 organitzar la pròpia informació que conté.
 
 La manera de codificar-se, però, és molt similar a la que ja coneixem fins ara,
-i gràcies a aquesta homogenietat, no s'han de fer tractaments especifics per a
-aquesta metainformació ja que es codifica també amb forma d'un arbre amb notació
+i gràcies a aquesta homogenietat, no s'han de fer tractaments específics per a
+aquesta meta-informació ja que es codifica també amb forma d'un arbre amb notació
 Karva, que en comptes d'utilitzar els terminals com a elements d'aritat zero, el
 que s'utilitza com a elements ``de finalització'' són identificadors que es
-refereixen als anteriors gens que actúen com a subarbres.
+refereixen als anteriors gens que actuen com a subarbres.
 
 Com tots els gens, aquest gen especial, té un head i un tail, i en el seu head
 es poden utilitzar els mateixos operadors que en la resta de heads.  Tot i així,
-nosaltres hem reduit el nombre d'operadors a només $+,-,*,/$, descartant
+nosaltres hem reduït el nombre d'operadors a només $+,-,*,/$, descartant
 operands com el sinus, cosinus i la arrel quadrada.
 
 Com que el número de terminals diferents que pot tenir aquest meta-gen vé
 determinat per el número total de gens amb els que configurem els cromosomes (el
 número de terminals serà N-1 on N és el número total de gens), el número de gens
 s'ha de saber al principi de la execució del programa, i no pot ser modificat
-durant la execució (també violariem tota la homoiconicitat  d'un cromosoma respecte
+durant la execució (també violaríem tota la homoiconicitat  d'un cromosoma respecte
 els altres).
 
 Per codificar aquests ``punters'' als subarbres, utilitzem números del 0..N-2
 (seguint la mateixa notació anterior).
 
 A continuació es mostra com un cromosoma multigènic homeòtic es codifica i
-s'evalua.
+s'avalua.
 
 % subsubsection Individu (Cromosoma (end)
 
@@ -345,7 +345,7 @@ La mida de la primera part es pot calcular de la següent manera:
 
 Per a cada problema, es tria la llargada del head $h$.  Per a aquest head, la
 llargada del \emph{tail} vé donada per una funció amb entrades $h$, i la major
-aritat de tots els operadors que poden apareixer en el head $n$.
+aritat de tots els operadors que poden aparèixer en el head $n$.
 
 \begin{math}
 t =  h (n-1) + 1
@@ -372,7 +372,7 @@ dels rangs del cromosoma amb col·leccions de símbols que poden anar en cada
 rang.  Sabent això la inicialització es fa triant aleatòriament un símbol dins
 de la col·lecció per a cada posició.
 
-Com que per definició, els cromosomes construits en Karva notation sempre són
+Com que per definició, els cromosomes construïts en Karva notation sempre són
 sintàcticament correctes no ens hem de preocupar de validar que en les
 avaluacions donin errors d'aquest tipus.
 % subsubsection Inicialització (end)
@@ -391,7 +391,7 @@ fenotip.  Entre les tres formes de creuament, s'arriba a un 0.8 de probabilitat
 de creuament.
 
 La única cosa que faria que un creuament donés lloc a un cromosoma invàlid,
-sería canviar de posicions els elements que creuem a menys que movem gens
+seria canviar de posicions els elements que creuem a menys que movem gens
 sencers.
 
 \paragraph{Creuament per un punt} % (fold)
@@ -400,13 +400,13 @@ sencers.
 aleatòriament un punt de tall per cada parella de pares, i d'allà en surten dos
 cromosomes nous, que contenen informació dels dos pares, l'un tenint la primera
 part del p1 i la segona del p2 i l'altre fill l'invers.  Aquesta tècnica de
-recombinació ofereix molta variabilitat a l'algorisme, éssent després de la
+recombinació ofereix molta variabilitat a l'algorisme, essent després de la
 mutació l'operador que n'aporta més.
 % paragraph Creuament per Un punt (end)
 \paragraph{Creuament per dos punts} % (fold)
 \label{par:Creuament per dos punts}
 En aquest creuament, donats dos cromosomes a creuar, es trien dos punts (quedant
-cadascun d'ells dividit en tres parts), i s'intercanva la part central.
+cadascun d'ells dividit en tres parts), i s'intercanvia la part central.
 D'aquest creuament cal notar que es beneficia molt de les parts que podien
 quedar ocultes en els seus progenitors, activant-les de nou.  Aquest material
 genètic amagat en forma de regió no-codificadora, que s'ha anat creuant i mutant
@@ -431,11 +431,11 @@ tipus de creuaments
 
 Les mutacions són els operadors que proporcionen més variabilitat genètica al
 algorisme, i que eviten la convergència, ajudant-nos a explorar el màxim espai
-de búsqueda possible.
+de cerca possible.
 
 Igual que en el cas dels creuaments \ref{Gssub:Creuament}, també en tenim de
 tres tipus, però a diferència del creuament, aquí si que hem de tenir un control
-més estricte de quins símbols cambien, i a què cambien, ja que no totes les
+més estricte de quins símbols canvien, i a què canvien, ja que no totes les
 posicions tenen un mateix conjunt de possibles valors, i hem de tenir en compte
 quina posició estem tocant per a aplicar una mutació.
 
@@ -445,13 +445,13 @@ conjunt de símbols consecutius o no.
 \paragraph{IS} % (fold)
 \label{par:IS}
 Aquesta és la mutació més simple de totes, i s'ha implementat només per a
-usarla en la fase de prototipatge, quan s'utilitzàven cromosomes unigen.  Donat
+usar-la en la fase de prototipatge, quan s'utilitzaven cromosomes unigen.  Donat
 un cromosoma, s'escull una posició, i una llargada, normalment no superior a la
 tercera part de la mida total del gen, i es ``puja'' cap a una posició anterior
 en el gen.  La zona font pot ser qualsevol posició del gen, però la zona destí,
 té com a restricció no poder començar en l'arrel del arbre (primera posició en
 el cromosoma).  Aquesta restricció té la seva explicació en què si tenim un
-cromosoma amb un sol gen, i pujem un terminal a la posició arrel, el que fem és
+cromosoma amb un sol gen, i pugem un terminal a la posició arrel, el que fem és
 anular tot l'arbre, ja que els terminals tenen aritat zero.
 
 XXX imatge d'un cromosoma ``capat''.
@@ -461,21 +461,21 @@ XXX imatge d'un cromosoma ``capat''.
 \label{par:RIS}
 En els cromosomes multigen, aquest no és un problema, ja que eliminant un sol
 gen no eliminarem la flexibilitat del cromosoma complet, ja que probablement hi
-haurà alguna altra part en un altre gen, que continuarà éssent funcional.  En el
+haurà alguna altra part en un altre gen, que continuarà essent funcional.  En el
 cas dels multigen homeòtics, desactivem aquest creuament per al meta-gen.
 % paragraph RIS (end)
 
 \paragraph{Translació de gen} % (fold)
 \label{par:Translacio de gen}
 
-Aquesta mutació consisteix, com el seu nom sugereix, en moure un dels gens a una
+Aquesta mutació consisteix, com el seu nom suggereix, en moure un dels gens a una
 altra posició.  Si les relacions entre gens estan en el gen especial (que hem
-anomenat meta-gen), en cambiar dos gens de posició, la estructura del arbre
-construit per la part de l'arrel es mantindrà, però els gens que actuen de
-terminals en aquest meta-gen, cambiaràn, donant lloc a un fenotip totalment
+anomenat meta-gen), en canviar dos gens de posició, la estructura del arbre
+construït per la part de l'arrel es mantindrà, però els gens que actuen de
+terminals en aquest meta-gen, canviaran, donant lloc a un fenotip totalment
 diferent.  Cal notar que aquest tipus de mutació, només es pot aplicar si
-utilitzem individuus multigen, i que en el cas dels multigen homeòtics, no podem
-fer participar el meta-gen en aquestes traslacions, ja que els seus terminals no
+utilitzem individus multigen, i que en el cas dels multigen homeòtics, no podem
+fer participar el meta-gen en aquestes translacions, ja que els seus terminals no
 son de la mateixa classe que els de la resta de gens.  La possibilitat de
 simplement intercanviar els identificadors en el meta-gen, tampoc serveix ja
 que, tot i donar el mateix resultat (al menys en un principi), varia el
@@ -485,7 +485,7 @@ la que donaria lloc amb l'altre procediment.
 % paragraph Translació de gen (end)
 TRans
 
-es mante la simplicitat gracies a karva notation\ldots
+es manté la simplicitat gracies a Karva notation\ldots
 
 transp
 repla
@@ -518,24 +518,24 @@ sobre uns valors com a entrades d'un sistema, que donen lloc a unes sortides.
 matemàtiques que coneixem i volem que GEP descobreixi.
 
 Així doncs, per a cada individuu, a partir del genotip, el transformem al arbre
-corresponent, i l'evaluem 50 vegades per a valors de les entrades aleatoris.
-Se'ls hi ha posat limits en el rang de valors possibles, per no patir
-desbordaments de rang en els resultats.  Tenim en compte que GEP evalua molts
+corresponent, i l'avaluem 50 vegades per a valors de les entrades aleatoris.
+Se'ls hi ha posat límits en el rang de valors possibles, per no patir
+desbordaments de rang en els resultats.  Tenim en compte que GEP avalua molts
 arbres, i molts d'ells poden donar lloc a operacions equivalents a $x^15$.
 
 Si es disposen només d'uns valors concrets per unes entrades concretes,
-s'utilitzaríen aquests per
+s'utilitzarien aquests per
 avaluar cada individuu %XXX
 
 
 % subsubsection Fitness (end)
-\subsection{Resultats} % (fold)
-\label{sub:GResultats}
+\section{Resultats} % (fold)
+\label{sec:GResultats}
 
 Per testejar GEP s'han fet proves per descobrir funcions matemàtiques amb
-diferents graus de dificulat.  S'han triat dues vies diferents per augmentar la
+diferents graus de dificultat.  S'han triat dues vies diferents per augmentar la
 dificultat, una d'elles provant diferent número d'incògnites, i una altra
-provant funcions desde les més simples com podria ser $f(x)=x$, i augmentant el
+provant funcions des de les més simples com podria ser $f(x)=x$, i augmentant el
 grau de dificultat ``intuitiva'', com podria ser $f(x)=x^2$, provant funcions
 discontínues, etc.
 
@@ -554,7 +554,7 @@ dóna una diferència zero, comença construint-se a partir de blocs petits, com
 per exemple , $x$, $x+1$ o $x^2$.
 
 
-És curiós veure com GEP aconssegueix factoritzar una funció, per exemple, trobar
+És curiós veure com GEP aconsegueix factoritzar una funció, per exemple, trobar
 la següent funció:
 
 \begin{center}
@@ -565,16 +565,16 @@ Aquesta funció, evidentment, és la mateixa que la anterior (\ref{fun1}), però
 GEP li va molt millor trobar-la a partir de la formula factoritzada, ja que
 minimitza el número de nodes necessaris.
 
-En el cas de no disposar de la operació d'elevar (s'han disenyat operadors
+En el cas de no disposar de la operació d'elevar (s'han dissenyat operadors
 ad-hoc per a alguns problemes, com podrien ser el de elevar al quadrat), GEP,
-arribaría a trobar la mateixa formula a través de:
+arribaria a trobar la mateixa formula a través de:
 
 \begin{center}
 	$f(x) = (x^3 + x) * (x^3 + x) $
 \end{center}
 
 
-Però si utilitzem individuus multigen, es poden generar fàcilment operadors equivalents a la
+Però si utilitzem individus multigen, es poden generar fàcilment operadors equivalents a la
 potència:
 
 \begin{center}
@@ -583,20 +583,20 @@ potència:
 	$f(x) = g(x) * g(x)$
 \end{center}
 
-Aquí es fa clara la millora que suposa utilitzar individuus multigen, ja que li
+Aquí es fa clara la millora que suposa utilitzar individus multigen, ja que li
 dona a l'algorisme la possibilitat de reaprofitar estructures vàlides per a
 formar part d'un arbre més gran.
 
 On no s'ha trobat solucions, ha estat en funcions periòdiques, que és pel que
-s'havia concebut aquest projecte.  Els intents que s'han fet per al descubriment
+s'havia concebut aquest projecte.  Els intents que s'han fet per al descobriment
 de funcions periòdiques, no han sigut efectius, probablement per a la dificultat
 d'establir un ordre entre quina funció està més a prop d'una funció objectiu.
 Al tenir periodicitat, a partir dels punts de mostreig (aleatoris en el nostre
 cas), GEP no és capaç de trobar el patró de la periodicitat.
 
 En principi, es pensava que GEP, podria trobar les funcions fins a cert punt
-d'exactitut, trobant maneres per a representar una funció periòdica a partir de
-polinòmis no periòdics, com per exemple, polinomis de Taylor. GEP, però no ens
+d'exactitud, trobant maneres per a representar una funció periòdica a partir de
+polinomis no periòdics, com per exemple, polinomis de Taylor. GEP, però no ens
 ha donat els resultats esperats.
 
 Un altre intent per ``ajudar'' a GEP a trobar funcions periòdiques ha estat
