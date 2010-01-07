@@ -468,19 +468,20 @@ i fenotip.
 Estrictament parlant, però, no hi ha cap altra diferència entre els GA clàssics
 i GP o GEP.  Simplement, aquí interpretem els cromosomes com a arbres.
 
-A continuació es farà una breu introducció a GP, per saber els antecesors de
+A continuació es farà una breu introducció a GP, per saber els orígens de
 GEP, i seguirà una explicació una mica més detallada de GEP, que és la tècnica
 que s'ha utilitzat en \texttt{GEP}.
 
 \subsection{Antecessors: Programació Genètica} % (fold)
 \label{sub:Ant. Programacio Genetica}
 La programació genètica és una de les diferents disciplines dins dels Algorismes
-evolutius, inventat per Cramer en el 1085 (\cite{XX}) i després millorat per
-John Koza en 1992 (\cite{XXX}) basat en la solució de problemes amb genotips de
+evolutius, inventat per Cramer en el 1985 (\cite{C85}) i després millorat per
+Goldberg (\cite{Goldberg:89})
+John Koza en 1992 (\cite{koza:92}) basat en la solució de problemes amb genotips de
 llargada fixe, però interpretats de forma no lineal (arbres) de tamany i formes.
 
 Els individuus en GP, normalment tenen un alfabet més ric que els AE classics,
-però aquesta riquesta que ofereix tractar els cromosomes amb una interpretació
+però aquesta riquesa que ofereix tractar els cromosomes amb una interpretació
 no lineal, fa que aquests individuus no siguin autònoms, i no poden funcionar
 com a genotip i fenotip alhora, ja que han de passar per una fase de
 ``traducció''.
@@ -510,7 +511,35 @@ però, la programació dels operadors.
 
 Per exemple, en el cas d'interpretar els genotips com a arbres amb formules
 matemàtiques, al fer creuaments podem fer-los per subarbres, agafant l'arrel i
-el fill esquerra del arbre d'un dels dos progenitors, i el fill dret de l'altre. 
+el fill esquerra del arbre d'un dels dos progenitors, i el fill dret de l'altre.
+Tot seguit es comenten els dos operadors més interessants en programació
+genètica.
+
+\paragraph{Mutacions} % (fold)
+\label{par:Mutacions}
+Les mutacions en programació genètica són similars conceptualment a les que
+trobem en els altres algorismes evolutius, canviant un subarbre aleatòri del
+cromosoma per un altre subarbre generat aleatòriament.  Veiem aquí la diferència
+necessària en la implementació, ja que la mutació té lloc en l'espai del fenotip
+(arbre) i no pas en el genotip (vector de símbols).  Hi ha hagut controversia
+sobre la aplicació de mutacions en programació genètica desde els seus inicis.
+Koza en \cite{koza:92} aconsellava desactivar per complet la mutació.   Més
+endavant, s'ha anat donant una mica més importància, però sense ser mai un
+operador fonamental, donat que el creuament també actua en certa manera
+d'operador de mutació però a més gran escala.  Aquestes mutacions cambien la
+mida dels cromosomes.
+% paragraph Mutacions (end)
+
+\paragraph{Creuament} % (fold)
+\label{par:Creuament}
+El creuament de cromosomes en programació genètica és un operador binari que
+consisteix en intercanviar dos subarbres entre dos cromosomes d'una població.
+Una altra vegada, perquè el creuament no doni lloc a elements sintàcticament
+incorrectes, el creuament s'ha de realitzar a nivell d'arbre, provocant també
+canvis en la mida dels cromosomes.
+
+% paragraph Creuament (end)
+
 % subsubsection operadors (end)
 % subsection Ant. Programació Genètica (end)
 
@@ -538,7 +567,7 @@ fàcilment \ref{ssub:Notacio Karva}.
 
 La notació Karva, és una manera de representar qualsevol expressió matemàtica o
 lògica en una estructura lineal de manera que es pugui traslladar a un arbre
-fàcilment.\cite{ferreira:2001}
+fàcilment \cite{ferreira:2001} i \cite{ferreira:2006}.
 
 Les estructures lineals que conformen els individuus en GEP són els cromosomes,
 i cada cromosoma té un o més gens, que aquí prenen un altre significat més
@@ -659,7 +688,8 @@ Aquest cromosoma codifica tres arbres de la Figura \ref{fig:tres sub-et}
 \end{figure}
 
 Si s'utilitzen funcions d'enllaç, per exemple, la suma, la evaluació del
-cromosoma complet passaria a ser:
+cromosoma complet passaria a ser el mostrat en la figura 
+\ref{fig:tres sub-et amb link}
 
 \begin{figure}[h!]
 \begin{center}

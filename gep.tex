@@ -310,7 +310,7 @@ i gràcies a aquesta homogenietat, no s'han de fer tractaments especifics per a
 aquesta metainformació ja que es codifica també amb forma d'un arbre amb notació
 Karva, que en comptes d'utilitzar els terminals com a elements d'aritat zero, el
 que s'utilitza com a elements ``de finalització'' són identificadors que es
-refereixen als anteriors gens o ADT.
+refereixen als anteriors gens que actúen com a subarbres.
 
 Com tots els gens, aquest gen especial, té un head i un tail, i en el seu head
 es poden utilitzar els mateixos operadors que en la resta de heads.  Tot i així,
@@ -324,7 +324,7 @@ s'ha de saber al principi de la execució del programa, i no pot ser modificat
 durant la execució (també violariem tota la homoiconicitat  d'un cromosoma respecte
 els altres).
 
-Per codificar aquests ``punters'' als ADTs, utilitzem números del 0..N-2
+Per codificar aquests ``punters'' als subarbres, utilitzem números del 0..N-2
 (seguint la mateixa notació anterior).
 
 A continuació es mostra com un cromosoma multigènic homeòtic es codifica i
@@ -468,7 +468,7 @@ cas dels multigen homeòtics, desactivem aquest creuament per al meta-gen.
 \paragraph{Translació de gen} % (fold)
 \label{par:Translacio de gen}
 
-Aquesta mutació consisteix, com el seu nom sugereix, en moure un dels ADTs a una
+Aquesta mutació consisteix, com el seu nom sugereix, en moure un dels gens a una
 altra posició.  Si les relacions entre gens estan en el gen especial (que hem
 anomenat meta-gen), en cambiar dos gens de posició, la estructura del arbre
 construit per la part de l'arrel es mantindrà, però els gens que actuen de
