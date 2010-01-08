@@ -9,7 +9,6 @@
 %\begin{document}
 %\tableofcontents
 
-\chapter{Algorismes Evolutius\label{GA}}
 
 En aquest capítol es farà una repàs de que es coneix com algorismes evolutius
 \cite{H75}. S'explicarà una de les dos filosofies existents,
@@ -34,7 +33,7 @@ individus d'una població, tal i com es veurà més endavant. Posteriorment,
 simulant les diferents fases per la que passa la reproducció natural, i aplicant
 tècniques que provoquen un cert grau de pressió selectiva (supervivència dels
 més forts), aquestes van evolucionant cap a solucions al problema més bones.
-Els primers fonaments dels GA van ser proposats per Holland \cite{H75} al 1975.
+Els primers fonaments dels algorismes genètics van ser proposats per Holland \cite{H75} al 1975.
 Aquests algorismes aconsegueixen evolucionar els individus de tal manera que el
 grau d'adaptació a l'entorn (avaluació o \emph{fitness}) va augmentant de
 generació en generació.
@@ -45,15 +44,15 @@ Els algorismes genètics Darwinistes segueixen l'esquema de funcionament clàssi
 dels algorismes genètics. En aquests, s'intenta imitar els processos de la
 evolució natural sense cap altra modificació conceptual. Normalment, quan es
 parla del terme algorisme genètic es refereix a aquest primer model de
-funcionament. En l'actualitat els GA han estat molt utilitzats en gairebé tots
-els àmbits de la ciència com a eina per optimitzar o buscar bones solucions
-comparables a les actualment disponibles. En l'àmbit de la bioinformàtica és una
-de les àrees d'aplicacions reals on més s'han utilitzat
+funcionament. En l'actualitat els algorismes genètics han estat molt utilitzats
+en gairebé tots els àmbits de la ciència com a eina per optimitzar o buscar
+bones solucions comparables a les actualment disponibles. En l'àmbit de la
+bioinformàtica és una de les àrees d'aplicacions reals on més s'han utilitzat
 \cite{PSBE01,D96,wgl:2000,WWBG95}.
 
 \subsection{Principis bàsics}
 
-Els GA es recolzen en tres pilars bàsics: el primer d'ells és la selecció
+Els algorismes genètics es recolzen en tres pilars bàsics: el primer d'ells és la selecció
 d'individus de la població, el segon el creuament d'individus i el tercer la
 funció d'avaluació. La selecció és important perquè és el mètode per escollir
 els individus que generaran descendència, seria bo que normalment aquests
@@ -63,7 +62,7 @@ seleccionades, progressivament fa evolucionar la població de solucions. La
 funció d'avaluació és el mecanisme amb el qual es computa el grau d'adaptació de
 cada individu a l'entorn.
 
-Del paràgraf anterior es pot deduir que els GA són algorismes no deterministes.
+Del paràgraf anterior es pot deduir que els algorismes genètics són algorismes no deterministes.
 Això és el resultat dels mecanismes estocàstics emprats. I això pot comportar
 que no sempre s'assegura l'obtenició del màxim global de la funció que es vol
 optimitzar, la qual cosa és certa, però el que sí que s'ha demostrat
@@ -94,7 +93,7 @@ cas la realitat s'entén com la simulació necessària per avaluar un cromosoma)
 
 \subsubsection{Esquema bàsic}
 
-Com s'ha comentat anteriorment, un GA imita el cicle de la evolució natural
+Com s'ha comentat anteriorment, un algorisme genètic imita el cicle de la evolució natural
 proposat per Darwin. Aquest cicle bàsicament es pot resumir en cinc fases:
 inicialització, avaluació, selecció, creuament i mutació. Cadascuna de les quals
 es descomposa en altres subfases que seran explicades en la secció
@@ -735,6 +734,7 @@ individuus.
 
 \subsubsection{Sel·lecció} % (fold)
 \label{ssub:Seleccio}
+ruleta
 
 % subsubsection Sel·lecció (end)
 
@@ -778,256 +778,69 @@ llarg del gen.  Aquests operadors estàn explicats més en detall a \ref{par:IS}
 
 \subsubsection{Reemplaçament} % (fold)
 \label{ssub:Reemplacament}
+
 % subsubsection Reemplaçament (end)
-
 % subsection Operadors (end)
-
-
-
-
 % section Programació d'expressions genètiques (end)
 
-----END----
+\section{Estat de l'art} % (fold)
+\label{sec:Estat de l'art}
 
-%\section{Algorismes genètics Lamarkians} Aquests algorismes en realitat són una
-%combinació entre les teories evolutives Darwinistes i les Lamarkianes. Les
-%teories evolutives Darwinistes han estat exposades en la secció anterior, i a
-%grans trets aquestes es basen en la selecció natural. En canvi, les teories
-%evolutives de Lamark que es recullen en el seu llibre \emph{Philosophie
-%zoologique}, es basen en el fet de que les qualitats apreses al llarg de la vida
-%d'un individu es transmeten per via genètica als seus descendents.
+Actualment, els algorismes genètics estan essent més i més utilitzats no sols en
+el món acadèmic, sinó també en el món de l'empresa.  Per exemplificar això, es
+presenten les dades d'un article publicat a 
+%XXX 
 
-%Així doncs, en termes computacionals, els algorismes Lamarkians són uns
-%algorismes genètics que fan evolucionar les poblacions mitjançant la selecció
-%natural, però que just abans de generar nova descendència, cada individu pateix
-%una serie de canvis individuals, que podrien ser vistes com una metàfora de la
-%vida. És dir, que a cada individu se'l deixa viure i aprendre, i les bones
-%qualitats apreses en aquest procés es transmetran als seus possibles
-%descendents. D'aquesta manera un LGA funciona recoltzant-se en aquestes dues
-%teories de l'evolució natural, i és per això que també son coneguts, com
-%algorismes genètics híbrids, o fins i tot com \emph{memetic algorithms}.
+Les últimes publicacions referents a algorismes genètics tendeixen cap a
+optimitzacions de la convergència.  Els algorismes genètics són processos
+estocàstics (la durada o nombre d'iteracions fins a aturarse no és un valor
+conegut a priori).  Així doncs, el que s'intenta és aconseguir ``guiar''
+l'algorisme perquè avanci de pressa cap a un estat convergent (s'aturi), sense
+perjudicar això a la eficàcia.Molts dels estudis de tècniques per millorar
+l'eficiència dels algorismes genètics estan relacionats amb l'aprofitament de la
+paralelització de processos, aprofitant sistemes distribuits, o fins i tot en
+cloud.  
 
-%Aquest procés d'evolució individual s'intenta que sigui una optimització local.
-%De tal manera que l'algorisme genètic realitza optimitzacions globals per
-%l'espai de cerca, mentre que l'optimització individual es basa en una cerca molt
-%local, i la combinació de les dues cerques fa que l'evolució de les solucions es
-%realitzi de forma molt ràpida. En els annexos \ref{provesLGA} i \ref{provesEDA}
-%es fa una comparativa entre un LGA i un GA, i LGA amb EDA, respectivament; En
-%aquestes comparatives es pot veure un cert avantatge dels LGA respecte els
-%altres algorismes (sempre amb el mateix nombre d'avaluacions per execució). En
-%l'annex \ref{provesLGA} van ser utilitzades 20 funcions matemàtiques
-%\emph{benchmark} \cite{YL97}, mentre que en l'annex \ref{provesEDA} es van
-%utilitzar funcions del tipus \emph{deceptive trap} \cite{36} per fer les
-%comparatives.
+Els treballs més recents relacionats amb algoritmes evolutius estan relacionats
+amb la utilització de entorns de treball (frameworks) i paradigmes de
+programació paralela, com poden ser hadoop o MapReduce \cite{VLCG09}.
 
-%L'optimització local que tots els individus pateixen, pot ser realitzada amb
-%molts algorismes d'optimització. Els dos mètodes més habituals són el
-%\emph{simulated annealing} \cite{AKM97} i estratègies evolutives
-%\cite{Schwefel:1977}. Un estudi teòric molt complet sobre LGA usant estratègies
-%evolutives  és el realitzat per Krasnogor \cite{K02}. Mentre que també es pot
-%citar una aplicació usada en aquest projecte, que usa LGA amb \emph{simulated
-%annealing} \cite{MGHHHBO98}.
+\subsection{Tecnologia} % (fold)
+\label{sub:Tecnologia}
 
-%A banda dels passos evolutius locals, un LGA es comporta exactament igual que un
-%GA dels explicats en la secció anterior. En la següent secció es detallaran amb
-%més profunditat les estratègies evolutives, procés de cerca emprat pel LGA.
+Des dels inicis de la programació 'moderna', el llenguatge per excelència
+relacionat amb la Intelligència artificial ha estat \cite{JMC59}, creat per John
+Macarthy el 1958 donat la gran flexibilitat que oferia (a més, en auqells temps
+hi havia fortran com a alternativa, un llenguatge molt més rígid).  Així doncs,
+els majors avenços relacionats amb la IA han tingut gairebé sempre les seves
+primeres implementacions en lisps o derivats (scheme).  
 
-%\section{Estratègies evolutives} Les estratègies evolutives són un mètode
-%d'optimització local que van ser proposades per primer cop per Schwefel
-%\cite{Schwefel:1965}.  En els GA, el operadors bàsics són la selecció i el
-%creuament, mentre que en les ES és la mutació la que juga aquest paper.  De fet,
-%les propostes inicials de ES i la desenvolupada en aquest projecte, no té cap
-%tipus de creuament. Més endavant ja es van proposar esquemes multimembrats amb
-%diferents tipus de recombinacions \cite{37}.
+El ``problema'' dels llenguatges tant dinàmics com lisp, era que al treballar sobre
+màquina virtual eren massa lents per a la implementació en producció.  Recordem que les
+aplicacions que utilitzen algorismes de intelligència artificial requereixen un
+gran volum de càlculs.
 
-%La notació utilitzada en  ES és $(\mu _,^+ \lambda)$.  On $\mu$ simbolitza el
-%nombre d'individus de la població inicial en cada pas evolutiu. $\lambda$ el
-%nombre final d'individus que es creen en cada pas evolutiu, la $,$ indica que
-%sempre hi hauràreemplaçament, encara que els individus generats siguen pitjors
-%que els pares, i $+$ indica que sols hi haurà reemplaçament si els individus
-%generats són millors que els pares. L'estratègia evolutiva desenvolupada com a
-%pas d'optimització local dintre del LGA és de l'estil $(1+1)$, és dir cada
-%individu té un procés evolutiu independent de la resta, i sols serà dut a terme
-%si el resultat supera l'inidividu inicial.
+És per això que els sistemes amb grans necessitats de càlcul per a producció
+normalment s'implementen amb llenguatges ``propers al ferro'' com poden ser
+C/C++. 
 
-%A l'annex \ref{provesES} es poden consultar les proves realitzades a les ES
-%desenvolupades sobre 20 problemes matemàtics típics en benchmarks d'aquest estil
-%\cite{YL97}.
+Actualment i donada la gran potència de calcul dels ordenadors actuals, cada
+vegada hi ha més empreses que comencen a utilitzar llenguatges interpretats per
+a realitzar algorismes genètics. Llenguatges com haskell i erlang que han
+demostrat ser molt ràpids i paralelitzables, no han fet el salt a la
+inteligència artificial massivament, ja que la seva puresa (transparència
+referencial i fortament tipats) els fa més ferragosos de treballar en problemes
+eminentment dinàmics com els algoritmes evolutius  
 
-%\subsection{Representació dels individus\label{subsec:representacio}} Un
-%individu està format per dos vectors, $\vec{a}=(\vec{x},\vec{\sigma})$. On
-%$\vec{x} \in \Re^n$ és el vector que conté la informació del cromosoma és dir la
-%informació que caracteritza cada fenotip; mentre que $\vec{\sigma}$ conté
-%informació necessària per la ES per realitzar la mutació.
+% subsection Tecnologia (end)
+% section Estat de l'art (end)
 
-%El vector $\vec{\sigma} \in \Re^n$ són les desviacions típiques amb que són
-%realitzades les mutacions Gaussianes (veure apartat \ref{subsec:ESmut}) sobre
-%cada un dels gens de l'individu. Aquest vector s'inicialitza aleatòriament i va
-%evolucionant junt amb el mateix cromosoma, de tal forma que el sistema va
-%aprenent quina és la forma més òptima de realitzar les mutacions.
 
-%En casos bastant particulars també s'inclou dintre del vector $\vec{a}$ un
-%tercer vector que conté els angles de rotació amb que seran tractades cada una
-%de les desviacions típiques per fer-les evolucionar. En aquest cas no s'ha
-%inclòs ja que la complexitat de la cerca augmenta de forma exponencial amb la
-%inclusió de nous valors a optimitzar dintre del problema, i cal fer notar que
-%els passos evolutius que realitza un LGA són de l'ordre de 5, amb la qual cosa
-%no donaria temps a optimitzar gaire cosa.
 
-%\subsection{Esquema bàsic}
-
-%L'esquema de funcionament d'una estratègia evolutiva $(1+1)$ es pot resumir en
-%la figura \ref{fig:es}. A l'inici de l'estratègia, a l'individu se li fan una
-%serie de mutacions Gaussianes que a l'apartat \ref{subsec:ESmut} seran
-%explicades. A continuació s'avalua el nou individu generat. I sols si el nou
-%individu és millor que l'inicial, el nou substitueix a l'inicial, si no ho és,
-%torna a realitzar altra mutació sobre l'inicial, és dir, que sols hi ha
-%reemplaçament si el nou individu supera a l'inicial o d'altra forma, es manté
-%una filosofia elitista. Aquest bucle es realitza tants cops com passos evolutius
-%hi hagen definits.
-
-%\begin{figure} \centering \includegraphics[height=4in]{es}
-%\caption{\label{fig:es}Diagrama d'activitats d'una estratègia evolutiva}
-%\end{figure}
-
-%\subsection{Selecció i reemplaçament} La selecció en ES és determinista. Sempre
-%es seleccionen els millors individus de la població, però per fer-ho hi ha dues
-%formes diferents, l'elitista i la no elitista. En l'elitista, que és la versió
-%utilitzada en aquest projecte, es seleccionen els millors individus del conjunt
-%format pels individus inicials més els nous individus. En la no elitista sempre
-%es seleccionen els individus del nou conjunt generat.  Seguint la notació de les
-%ES, $(\mu _,^+ \lambda)$, en el model elitista s'escolliran els $\mu$ millors
-%individus de la població total (inicials i nous), mentre que en el model no
-%elitista sols s'escolliran el $\mu$ millors individus sobre els $\lambda$ nous
-%individus creats, d'ací ve la restricció en que $\mu < \lambda$.
-
-%Experimentalment s'ha reportat que el model elitista fa augmentar la velocitat
-%de convergència i assegura que mai es perden individus bons \cite{OBS98}.
-
-%\subsection{Mutació\label{subsec:ESmut}} La mutació és el pilar bàsic sobre el
-%qual es recolzen les ES. En les ES la mutació utilitzada és Gaussiana, i
-%mitjançant variables aleatòries que segueixen una distribució normal, es simula
-%de certa manera un entorn natural en tant i en quant, les mutacions xicotetes es
-%realitzen molt a sovint, però les grans mutacions són més poc freqüents.
-
-%A més a més, aquest operador de mutació també fa evolucionar de manera conjunta
-%a la solució, la desviació típica de cada gen, de manera que a cada pas evolutiu
-%les mutacions realitzades sobre cada gen seran més òptimes, és dir, si es veu
-%experimentalment que grans mutacions sobre un gen beneficien l'increment del
-%\emph{fitness} total, llavors la desviació típica d'aquella mutació augmenta per
-%a les següents mutacions, però si per el contrari, es veu que una variació sobre
-%un gen concret fa disminuir el \emph{fitness}, la desviació típica baixa.
-
-%Com es va comentar en l'apartat \ref{subsec:representacio}, un individu està
-%format habitualment per dos vectors, $\vec{x}$ i $\vec{\sigma}$, i les equacions
-%que regeixen les mutacions sobre aquests vectors són les següents: \[
-%\vec{x}^\prime=\vec{x}+\vec{N}(\vec{0},\vec{\sigma}) \] \[
-%\sigma_i^\prime=\sigma_i \cdot exp(\tau^\prime \cdot N(0,1) + \tau \cdot
-%N_i(0,1)) \]
-
-%Pel que fa a la mutació de $\vec{x}$, a cada gen de l'individu inicial se li
-%suma un un nombre aleatori que segueix una distribució normal, amb mitjana 0 i
-%desviació típica $\sigma$, això és el que es simbolitza amb $N(0,\sigma)$.
-
-%D'altra banda, la mutació de les desviacions típiques es veu afectada per dos
-%termes, el primer que és comú per a totes les mutacions que es realitzen sobre
-%les desviacions típiques, i el segon que és personalitzat per a cada desviació
-%típica. El primer terme és un nombre aleatori amb mitjana 0 i desviació típica 1
-%amb una distribució normal, multiplicat pel paràmetre $\tau^\prime$. I el segon,
-%terme és un nombre aleatori amb mitjana 0 i desviació típica 1 amb una
-%distribució normal, multiplicat pel paràmetre $\tau$. $\tau^\prime$ i $\tau$ es
-%recomana que siguen proporcionals als valors que es mostren a continuació
-%\cite{Schwefel:1977}: \[ \tau \propto \frac{1}{\sqrt{2 \sqrt{n}}} \] \[
-%\tau^\prime \propto \frac{1}{\sqrt{2n}} \]
-
-%on, $n$ és la llargada del vector $\vec{x}$.
-
-%A la secció \ref{subsec:representacio} també es va comentar que es poden afegir
-%angles de rotació com un paràmetre extra del cromosoma. Això és degut a que
-%alguns cops les mutacions ortogonals no són suficients i els individus s'han de
-%desplaçar en diagonal per ser més eficients. Si els angles de rotació són
-%afegits a la ES la mutació canvia una mica, per a més informació es pot
-%consultar el llibre de Thomas Bäck \cite{37}.
-
-%\subsection{Recombinació} Les ES també contemplen la possibilitat d'incorporar
-%recombinació entre els individus, encara que aquest no és el cas, ja que en
-%aquest projecte la ES ha estat desenvolupada com a procés evolutiu local dintre
-%d'altre procés evolutiu global. No obstant això es faran un breu repàs sobre
-%aquests tipus d'operadors.
-
-%Al igual que en els GA, en ES hi ha diversos tipus de recombinació o creuament,
-%la principal diferència és que un GA típicament es treballa sota atributs
-%binaris, mentre que en ES es sol treballar amb atributs reals. És per aquest
-%motiu que les recombinacions estan orientades cap a valors reals. Els operadors
-%de recombinació més usats sota ES són: discret, discret panmític, intermig,
-%intermig panmític, intermig generalitzat i intermig generalitzat panmític.
-
-%\section{Especiació\label{sec:especiacio}} En els algorismes evolutius, molt
-%sovint, la població tendeix a convergir cap als màxims de la solució, ja siga un
-%màxim local o un màxim global. En els casos en que la població convergeix cap a
-%màxims locals, no interessa que la població s'homogenitze, ja que això fa pedre
-%el paral·lelisme implícit que aporten els algorismes evolutius. El cas ideal que
-%es desitjaria, és aquell que un cop conegut un màxim local, l'algorisme continue
-%buscant altres màxims.
-
-%Per fer això, diverses tècniques poden ser usades. Una de les més comuns és
-%l'especiació o \emph{niching}. I dintre d'aquesta família de tècniques, s'hi
-%poden trobar tècniques com el \emph{sharing} \cite{33}, \emph{crowding}, etc.
-
-%La tècnica que s'ha emprat en la implementació d'aquest projecte és el
-%\emph{sharing}. Aquesta tècnica és podria explicar com una metàfora agafada de
-%la natura, que evoca la compartició de recursos limitats de l'entorn o els
-%efectes de la pressió demogràfica sobre els individus.  És dir que si una zona
-%del territori està molt poblada, el \emph{fitness} de la població cau pel fet
-%que han de compartir els recursos.
-
-%En termes matemàtics podríem descriure el \emph{sharing} com: Si dos individus
-%estan situats a una distància ($d_{ij}$) menor que el radi de \emph{sharing}
-%($\sigma_{sh}$), el seu nou \emph{fitness} es modifica seguint la següent
-%equació:
-
-%\[ fitness_i=\sum\limits^{tamany}_{j=0,j \neq i}\phi(d_{i,j}) \]
-
-%\[ \phi(d_{i,j})=\left\{ \begin{array}{ll}
-%1-\left(\frac{d_{i,j}}{\sigma_{sh}}\right)^\alpha & d_{i,j}<\sigma_{sh}\\ 0 &
-%altrament \end{array} \right.  \]
-
-%on, $\alpha$ està fixat a 1, i $\sigma_{sh}$ s'ajusta normalment de forma
-%empírica, en aquest cas val 0.3. Les distàncies en aquest cas no són símplement
-%la resta entre els valors que prenen els gens, sinó que, com aquests valors són
-%categòrics, s'ha implementat una funció distància que retorna les distàncies
-%entre dos aminoàcids en funció de la hidrofobicitat i de la càrrega. Per veure a
-%més informació sobre aquesta funció distància es pot consultar l'apartat
-%\ref{subsec:distancies}.
-
-%El \emph{Sharing} és un operador amb el qual es por regular de forma molt
-%efectiva la pressió selectiva sobre la població. Sobre les solucions molt
-%properes la pressió selectiva és molt alta, mentre que les solucions aïllades no
-%ho és tant. Això pressiona a aquelles solucions semblants a que evolucionen cap
-%a llocs diferents, forçant així una major exploració de l'espai de cerca.
-
-%\section{Conclusions} En aquest capítol s'han descrit dos dels quatre algorismes
-%utilitzats en aquest projecte. Un és el GA i l'altre el LGA. A més a més, també
-%s'han explicat les ES que és un algorisme evolutiu dissenyat en aquest cas per
-%fer evolucions locals sobre els individus de la població, utilitzades per un
-%LGA. I finalment la tècnica d'especiació emprada per els quatre algorismes
-%desenvolupats.
-
-%A l'annex \ref{provesLGA} es poden veure les proves i comparatives entre els GA
-%i LGA. D'altra banda en l'annex \ref{provesES} es mostren els resultats de les
-%proves que s'han realitzat sobre les ES, l'objectiu d'aquests resultats no és
-%altre que comprovar que les ES s'han programat correctament, és es dir que és
-%una prova parcial del projecte.
-
-%Finalment es comentarà que en les comparatives realitzades, el LGA generalment
-%és millor que el GA, aquesta idea de barrejar optimitzacions locals amb
-%optimitzacions globals ha tingut l'èxit presentat en la bibliografia
-%relacionada. Ara l'objectiu és comparar-lo amb altres algorismes per la
-%resolució de problemes que requereixen \emph{linkage learning} per resoldre el
-%problema òptimament \cite{G02}.
 
 %\bibliographystyle{unsrt} 
 %\bibliography{bibliografia}
 
 
 %\end{document}
+

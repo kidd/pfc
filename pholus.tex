@@ -797,13 +797,12 @@ sense haver de bolcar-la en cap moment a disc.  Això és de vital importància,
 que segons com haguéssim d'emmagatzemar les dades en disc, el cost d'accés a les
 dades seria superior al de recalcular. 
 
-%XXX Explicar memoize linkar a HOP memoize
 La memoització, és una tècnica semblant a la programació dinàmica, la qual ens
 permet estalviar càlculs en els casos d'haver de fer el mateix càlcul moltes
 vegades.  A diferència de la programació dinàmica, no es necessita una taula de
 2 dimensions on guardar els resultats parcials, sinó que els resultats de
 anteriors càlculs es guarden en un diccionari local a la funció que volem
-memoitzar.  
+memoitzar \cite{MJD05}. 
 
 Per a utilitzar la memoització tal i com es va definir en els inicis
 (scheme), el llenguatge en el que ho implementem ha de tenir ``closures''
