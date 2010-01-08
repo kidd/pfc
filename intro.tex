@@ -187,11 +187,18 @@ població té el mateix valor \cite{D75}, i una població ha convergit quan tots
 els seus gens han convergit.
 
 En alguns casos la condició d'aturada del cicle d'activitats d'un GA ve imposat
-per condicions de convergència, quan els individus han assolit un cert nivell de
-convergència, en general implica que el GA no evolucionarà més les solucions,
-per tant té sentit aturar la cerca.
+per condicions de convergència.  Quan els individus han assolit un cert nivell de
+convergència (el 95\% dels individus d'una generació són iguals), en general
+implica que el GA no evolucionarà més les solucions, per tant té sentit aturar
+la cerca.
 
-%XXX
+Quan apliquem operadors (veure secció \ref{subsec:operadors}) molt restrictius,
+que donen molta pressió evolutiva, ens podem trobar en casos der
+\emph{convergència prematura}, és a dir, en poques generacions, tots els
+individus s'assemblen massa entre ells i els creuaments són poc efectius.  En
+aquests casos, l'algorisme s'estanca en un màxim o mínim local, però rarament
+global.
+
 \subsection{Operadors\label{subsec:operadors}} 
 
 S'entenen com els operadors d'un GA com les diferents tècniques de realitzar les
@@ -212,6 +219,7 @@ nombre finit de valors, o com a màxim, un rang (en el cas de ser representat pe
 un real).
 
 \subsubsection{Selecció}
+\label{subs:Iseleccio}
 La selecció és la manera en que s'escolliran els individus de la població més
 ben adaptats, per a permetre que aquests siguin els ``pares'' dels individuus de
 la següent generació.
@@ -225,10 +233,11 @@ futures.
 Tècniques de sel·lecció n'hi ha moltes, i aquí n'explicarem només algunes, les
 que hem provat per als nostres projectes, o bé alguna d'especialment curiosa.
 
-Els \emph{fitness proportional selection}(FPS) basen el seu funcionament en què
-per a cada sel·lecció, la probabilitat que un individu $f_i$ sigui sel·leccionat
-per a reproduir-se depèn únicament del seu \emph{fitness} absolut comparat amb
-els fitness dels altres individuus de la població. \ref{fig:rwsgraph} 
+Els \emph{fitness proportional selection}, també anomenat selecció per ruleta
+basen el seu funcionament en què per a cada sel·lecció, la probabilitat que un
+individu $f_i$ sigui sel·leccionat per a reproduir-se depèn únicament del seu
+\emph{fitness} absolut comparat amb els fitness dels altres individuus de la
+població. \ref{fig:rwsgraph} 
 
 Aquest mecanisme de sel·lecció va ser introduit a \cite{H75} i ha estat molt
 estudiat en endavant.  Donada la seva simplicitat, s'han trobat diversos
@@ -305,9 +314,9 @@ L'algorisme esquematitzat (tant per p=1 com per p<1) és el següent:
 \end{itemize}
 
 
-En aquest projecte s'ha utilitzat una selecció \emph{stochastic
-universal samplig} \cite{B87a} amb \emph{rank selection} \cite{B87b} i una
-tècnica d'especiació coneguda com \emph{sharing} \cite{33}.
+%En aquest projecte s'ha utilitzat una selecció \emph{stochastic
+%universal samplig} \cite{B87a} amb \emph{rank selection} \cite{B87b} i una
+%tècnica d'especiació coneguda com \emph{sharing} \cite{33}.
 
 \subsubsection{Creuament}
 
@@ -485,9 +494,8 @@ no lineal, fa que aquests individuus no siguin autònoms, i no poden funcionar
 com a genotip i fenotip alhora, ja que han de passar per una fase de
 ``traducció''.
 
-\subsubsection{Funcionament bàsic} % (fold)
-\label{ssub:Funcionament basic}
-% subsubsection Funcionament bàsic (end)
+Per poder diferenciar la programació genètica de la programació d'expressions
+genètiques, fem un repàs molt ràpid dels operadors més comuns en GP.
 
 \subsubsection{operadors} % (fold)
 \label{ssub:operadors}
@@ -734,7 +742,10 @@ individuus.
 
 \subsubsection{Sel·lecció} % (fold)
 \label{ssub:Seleccio}
-ruleta
+En GEP, també s'utilitza, per norma general la selecció per ruleta
+\ref{subs:Iseleccio}.  Un individuu té una probabilitat de ser seleccionat per a
+la reproducció proporcional al seu fitness en valor absolut, respecte als altres
+individus de la població.
 
 % subsubsection Sel·lecció (end)
 

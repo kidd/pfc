@@ -13,7 +13,7 @@
 
 \section{Objectius} % (fold)
 \label{sec:Objectius}
--------------------ININATXO-------------------
+%-------------------ININATXO-------------------
 Aquest projecte anomenat \texttt{Pholus}, és el mòdul que aporta la ``intel·ligència'' d'una tecnologia
 molt més general desenvolupada a Intelligent Pharma, anomenada \texttt{Helios}. A continuació descriurem
 en línies generals Helios, tot i que estrictament no forma part del present PFC, i un cop explicat es detallarà
@@ -75,76 +75,55 @@ Després de fer les corresponents comparatives (no incloses en el present PFC) e
 s'ha analitzat el problema del sobreentrenament, com és necessari en qualsevol altre projecte d'aprenentatge artificial.
 
 
---------------------FINATXO-------------------
+%--------------------FINATXO-------------------
 
-Aquest projecte anomenat \texttt{Pholus}, ha estat desenvolupat per a equilibrar
-(ponderar) pesos dels diferents indicadors de semblança entre molècules, per a
-veure quins són més rellevants en discriminar les que poden tenir una activitat
-més òptima en front una diana. 
+%Aquest projecte anomenat \texttt{Pholus}, ha estat desenvolupat per a equilibrar
+%(ponderar) pesos dels diferents indicadors de semblança entre molècules, per a
+%veure quins són més rellevants en discriminar les que poden tenir una activitat
+%més òptima en front una diana. 
 
-Es tracta d'un algoritme evolutiu relativament senzill pel que fa al propi algoritme, però més
-complex pel referent a les condicions externes que s'imposen per la natura, i que ens obliguen a
-posar condicions i limitacions al Algoritme Evolutiu (als Algoritmes Evolutius
-no els agraden les limitacions).
+%Es tracta d'un algoritme evolutiu relativament senzill pel que fa al propi algoritme, però més
+%complex pel referent a les condicions externes que s'imposen per la natura, i que ens obliguen a
+%posar condicions i limitacions al Algoritme Evolutiu (als Algoritmes Evolutius
+%no els agraden les limitacions).
 
-Pholus forma part de la nova tecnologia desenvolupada per Intelligent Pharma, anomenada HELIOS, que
-serveix per identificar,a partir d'un compost de referència prèviament donat, nous compostos amb
-propietats estructurals completament diferents que imiten el comportament d'aquest compost de
-referència. Per exemple, si el compost de referència ja és conegut (per exemple, un extret d'un
-producte natural o d'una patent), HELIOS pot trobar compostos no  vinculats estructuralmnt que
-reprodueixin les seves propietats psico-químiques tridimensionals; per tant, aquests compostos
-tindran les mateixes característiques biològiques però amb diferent estructura mol·lecular. A
-aquesta búsqueda se l'anomena "Scaffold hopping" (búsqueda entre diferents famílies químiques).
+%Pholus forma part de la nova tecnologia desenvolupada per Intelligent Pharma, anomenada HELIOS, que
+%serveix per identificar,a partir d'un compost de referència prèviament donat, nous compostos amb
+%propietats estructurals completament diferents que imiten el comportament d'aquest compost de
+%referència. Per exemple, si el compost de referència ja és conegut (per exemple, un extret d'un
+%producte natural o d'una patent), HELIOS pot trobar compostos no  vinculats estructuralmnt que
+%reprodueixin les seves propietats psico-químiques tridimensionals; per tant, aquests compostos
+%tindran les mateixes característiques biològiques però amb diferent estructura mol·lecular. A
+%aquesta búsqueda se l'anomena "Scaffold hopping" (búsqueda entre diferents famílies químiques).
 
-La tècnica utilitzada és el Virtual Screening(VS), que normalment s'utilitza per descobrir noves
-famílies químiques en relació a una activitat biològica desitjada. El VS té mètodes que es basen en
-l'estructura dels compostos i d'altres que no. Com hem dit, HELIOS té com a objectiu identificar
-nous compostos que no són anàlegs estructuralment, però sí biològicament. 
+%La tècnica utilitzada és el Virtual Screening(VS), que normalment s'utilitza per descobrir noves
+%famílies químiques en relació a una activitat biològica desitjada. El VS té mètodes que es basen en
+%l'estructura dels compostos i d'altres que no. Com hem dit, HELIOS té com a objectiu identificar
+%nous compostos que no són anàlegs estructuralment, però sí biològicament. 
 
-HELIOS es basa en la superposició de camps mol·leculars entre qualsevol compost i un lligand de
-referència. Però HELIOS, no només considera la superposició generada per càrregues formals, sinó
-també altres tipus relacionades amb el comportament dinàmic; així, es fan diferents superposicions
-entre parells de mol·lècules es duen a terme a la vegada. 
-L'alineament de camps mol·leculars va ser descrit durant els anys noranta, però no s'ha dut a terme
-fins aquesta dècada degut a que l'alineament mol·lecular flexible és un problema impossible de
-resoldre sense les eines de supercomputació. Fins els últims anys, el Virtual Screening basat en els
-lligands s'ha basat en metodologies per buscar semblances moleculars com l'estructura, farmacòfor,
-etc. 
+%HELIOS es basa en la superposició de camps mol·leculars entre qualsevol compost i un lligand de
+%referència. Però HELIOS, no només considera la superposició generada per càrregues formals, sinó
+%també altres tipus relacionades amb el comportament dinàmic; així, es fan diferents superposicions
+%entre parells de mol·lècules es duen a terme a la vegada. 
+%L'alineament de camps mol·leculars va ser descrit durant els anys noranta, però no s'ha dut a terme
+%fins aquesta dècada degut a que l'alineament mol·lecular flexible és un problema impossible de
+%resoldre sense les eines de supercomputació. Fins els últims anys, el Virtual Screening basat en els
+%lligands s'ha basat en metodologies per buscar semblances moleculars com l'estructura, farmacòfor,
+%etc. 
 
-HELIOS utilitza alineaments de camps moleculars flexibles per identificar compostos que s'assemblin
-a un compost de referència. L'alineament molecular e duu a terme mitjançant tècniques de "cloud
-computing", la qual permet fer-ho en pocs dies. Els compostos amb els quals es fa l'alineament es
-treuen d'una base de dades que pot variar segons l'objectiu de la cerca. 
+%HELIOS utilitza alineaments de camps moleculars flexibles per identificar compostos que s'assemblin
+%a un compost de referència. L'alineament molecular e duu a terme mitjançant tècniques de "cloud
+%computing", la qual permet fer-ho en pocs dies. Els compostos amb els quals es fa l'alineament es
+%treuen d'una base de dades que pot variar segons l'objectiu de la cerca. 
 
-Els camps moleculars són discretitzats dins d'una caixa en forma de grid de punts. Idealment, la
-caixa hauria de ser suficientment gran per introduir-hi tots els lligands de la base de dades en una
-conformació estesa. De la mateixa manera la capsa ha d'incloure aquells punts al voltant de les
-molècules que tenen valors significatius. Diferents representacions dels camps moleculars, que donen
-diferent informació sobre la densitat electrònica, són construïts amb sondes atòmiques. Una sonda
-atòmica és una partícula amb característiques químiques particulars que s'assemblen a propietats
-atòmiques en ambients electrònics particulars.  Podem veure les 22 sondes atòmiques
-implementades en HELIOS en la taula \ref{table:maps}.
-
-%\begin{table}
-%\centering
-%\begin{tabular}{|ccc|}
-%\hline
-%aromatic carbon &aliphatic carbon&non-hydrogen bonding sulfur\\
-%non-hydrogen bonding phosphor&phosphor&non-hydrogen bonding nitrogen\\
-%hydrogen donor&oxygen acceptor&nitrogen acceptor\\
-%sulfur acceptor&spherical nitrogen acceptor&spherical oxygen acceptor\\
-%fluorine&chlorine&bromine\\
-%iodine&iron&manganese\\
-%calcium&magnesium&zinc\\
-%positive charge&& \\
-%\hline
-%\end{tabular}
-%\caption{The 22 atom probes implemented in HELIOS.}
-%\label{table:maps}
-%\end{table}
-
-%El camp molecular definit per una sonda en un punt donat és calculat amb la
-%següent equació % XXX : TREURE-HO, no?
+%Els camps moleculars són discretitzats dins d'una caixa en forma de grid de punts. Idealment, la
+%caixa hauria de ser suficientment gran per introduir-hi tots els lligands de la base de dades en una
+%conformació estesa. De la mateixa manera la capsa ha d'incloure aquells punts al voltant de les
+%molècules que tenen valors significatius. Diferents representacions dels camps moleculars, que donen
+%diferent informació sobre la densitat electrònica, són construïts amb sondes atòmiques. Una sonda
+%atòmica és una partícula amb característiques químiques particulars que s'assemblen a propietats
+%atòmiques en ambients electrònics particulars.  Podem veure les 22 sondes atòmiques
+%implementades en HELIOS en la taula \ref{table:maps}.
 
 L'alineament múltiple de camps moleculars flexibles és una taxa complexa que requereix de tècniques i recursos computacionals avançats. El procés implementat per HELIOS fixa el camp molecular del compost de referència i utilitza algoritmes evolutius en un sistems de "cloud-computing" per duu a terme l'alineament flexible múltiple dels camps moleculars de cadascún dels diferents compostos que hi ha dins la base de dades.
 
@@ -158,7 +137,7 @@ resultats a part del propi algorisme evolutiu.
 
 \section{Context Químic} % (fold)
 \label{sec:Context Quimic}
-Tanimotos, conformacions, y tal 
+XXX Tanimotos, conformacions, y tal 
 
 El problema al que ens enfrontem és el de, donat un \texttt{receptor} i un conjunt de %glossari
 lligands, deduir quins són els factors que fan que la unió sigui millor
@@ -166,23 +145,26 @@ o pitjor.  Els factors que intervenen en aquesta unió són molts, però a nivel
 pràctic, utilitzem ``només'' 22 indicadors de potencial, que són els que podem quantificar amb
 facilitat, i que hem cregut que tenen més rellevància en aquest procés.
 
-Aquests indicadors són:
+Aquests indicadors són els mostrats en la taula \ref{table:maps}.
 
 \begin{table}
 \centering
-\begin{tabular}{|ccc|}
+\begin{tabular}{|cc|}
 \hline
-aromatic carbon &aliphatic carbon&non-hydrogen bonding sulfur\\
-non-hydrogen bonding phosphor&phosphor&non-hydrogen bonding nitrogen\\
-hydrogen donor&oxygen acceptor&nitrogen acceptor\\
-sulfur acceptor&spherical nitrogen acceptor&spherical oxygen acceptor\\
-fluorine&chlorine&bromine\\
-iodine&iron&manganese\\
-calcium&magnesium&zinc\\
-positive charge&& \\
+aromatic carbon             & aliphatic carbon\\
+non-hydrogen bonding sulfur & non-hydrogen bonding phosphor\\
+phosphor                    & non-hydrogen bonding nitrogen\\
+hydrogen donor              & oxygen acceptor\\
+nitrogen acceptor           & sulfur acceptor\\
+spherical nitrogen acceptor & spherical oxygen acceptor\\
+fluorine                    & chlorine\\
+bromine                     & iodine\\
+iron                        & manganese\\
+calcium                     & magnesium\\
+zinc                        & positive charge\\
 \hline
 \end{tabular}
-\caption{The 22 atom probes implemented in HELIOS.}
+\caption{Les 22 sondes d'àtom implementades en HELIOS.}
 \label{table:maps}
 \end{table}
 
@@ -358,6 +340,8 @@ el problema presentat.
 Maneres d'avaluar ordenacions n'hi ha moltes(AUAC,ROC,Enrichment
 Factor, RIE, BEDROC), i s'han analitzat unes quantes, però només
 s'explicarà la utilitzada finalment
+
+XXX : IMPORTANT
 % subsubsection Bedroc (end)
 
 \subsubsection{Estereoisomers i conformacions}
@@ -480,7 +464,7 @@ entrat l'usuari.
 %XXX : Explicar alpha?
 
 % subsection Interfície (end)
-\subsection{preparació de dades} % (fold)
+\subsection{Preparació de dades} % (fold)
 \label{sub:preparacio de dades}
 Una molècula es pot trobar en la natura en diverses formes.  Les classificacions
 es divideixen en isomers i conformacions.  Una molècula pot tenir diversos

@@ -13,7 +13,7 @@
 %\begin{document}
 %\tableofcontents  %%Index
 
-\section{Introducció} % (fold) Objectius?
+\section{Objectius} % (fold) Objectius?
 \label{sec:Introduccio}
 Tot seguit es presentarà un projecte en el que s'ha utilitzat una tècnica
 molt pionera derivada de la programació genètica anomenada ``Genetic
@@ -107,7 +107,7 @@ suficients per a la última operació que hem apilat.
 
 La construcció en preordre deixa les fulles al final dels subarbres, i això és
 convenient en la mesura del possible, ja que per als creuaments, augmenta la
-possibilitat de crear un arbre vàlid. % XXX REF a creuaments
+possibilitat de crear un arbre vàlid \ref{Gssub:Creuament}.
 
 Un dels problemes que es donen en els algorismes de programació genètica, és la
 construcció d'arbres invàlids. Per exemple, suposem que fem un creuament per un
@@ -127,7 +127,7 @@ creixen molt de pressa.  Només fent un creuament per 2 punts, es generen
 moltíssims més arbres sintàcticament incorrectes.
 
 És per això que s'ha adoptat finalment per una aproximació utilitzant una
-representació ideada per Cândida Ferreira (XXX bib), on per la pròpia construcció del
+representació ideada per Cândida Ferreira \cite{ferreira:2007}, on per la pròpia construcció del
 arbre, podem assegurar que \textbf{sempre} generarem arbres sintàcticament
 vàlids.
 
@@ -158,10 +158,10 @@ resultats que coneixem, juntament amb les dades que ens porten a aquests.
 
 Juntament amb les dades, també s'han d'entrar els diferents paràmetres referents
 al algorisme genètic.  Ara per ara no està implementat, però com es veurà en
-l'apartat de treballs futurs(XXX), s'ha pensat permetre a l'usuari (se'l
-considera un usuari ``expert'', que coneix tant el problema, com té coneixements
-d'algorismes genètics) entrar ``building blocks'' addicionals, o
-activar/desactivar els que ja venen per defecte.
+l'apartat de treballs futurs \ref{sec:GConclusions i treball futur}, s'ha pensat
+permetre a l'usuari (se'l considera un usuari ``expert'', que coneix tant el
+problema, com té coneixements d'algorismes genètics) entrar ``building blocks''
+addicionals, o activar/desactivar els que ja venen per defecte.
 
 Això suposa un gran repte a causa de les característiques estàtiques del
 llenguatge, però ja s'han estudiat algunes maneres per a poder utilitzar
@@ -191,7 +191,7 @@ comparar-lo amb el resultat de la formula que estem avaluant.
 
 Aquest projecte ha estat el més difícil d'implementar i dissenyar, ja que hem
 hagut de fer un treball notable d'investigació (els primers referents en GEP
-daten de 2002 XXX).
+daten de 2001 \cite{ferreira:2001}.
 
 El procés general del algoritme evolutiu és, donada una llargada de cromosoma,
 decidida per l'usuari en funció de la complexitat ``intuitiva'' de la formula
@@ -221,7 +221,7 @@ possibilitat de ser estesa en un futur, afegint nous tipus d'operacions, i amb
 diferents aritats, més grans de les que hem tingut necessitat fins al moment.
 
 Nosaltres hem tractat només amb aritats 0,1 i dos (a € {0,1,2} ) ja que els
-operands tenien un màxim de aritat 2.
+operands tenien un màxim de aritat 2 \ref{table:func-aritat}.
 
 
  % theme=Berlin;caption_top=1;caption=Relació funció-aritat
@@ -253,41 +253,39 @@ sqrt (arrel quadrada) & 1 \\
 terminals (x,y,z..)   & 0 \\
 \hline
 \end{tabular}
+\label{table:func-aritat}
 \end{table}
 
 Per a poder construir un arbre complet, i avaluar-lo, a partir d'un vector de
 símbols (implementats com a caràcters, donada la manca de símbols en c++ com a
 tipus bàsic), i poder-ho fer amb la màxima robustesa i flexibilitat, s'ha
-implementat una estructura amb nodes, i un arbre tipus template.
+implementat una estructura amb nodes (taula \ref{fig:nodes}), i un template arbre. 
 
-Tot seguit es mostra el diagrama de classes d'aquesta part GEP.
-
-%figura estructura de classes
+%XXX figura estructura de classes
 
 Com es pot veure en la figura anterior (XXX ref fig), s'ha implementat una
 classe abstracte Node de la que ``pengen'' les diferents especialitzacions, que
-son les diferents operacions que suporta GEP, o bé els terminals. Els terminals,
+són les diferents operacions que suporta GEP, o bé els terminals. Els terminals,
 com és d'esperar, tenen aritat zero, i al ser avaluats, retornen el valor del
 terminal en aquest moment com a resultat.  Els operadors (aritat > 0),
 requereixen d'altres nodes per a calcular el seu resultat.  D'això es deriva que
-en un cromosoma donat, al transformar-lo a genotip, les fulles seran totes
+en un cromosoma donat, al transformar-lo a arbre, les fulles seran totes
 terminals, ja que son l'únic tipus de node que poden avaluar a un valor sense
 necessitat de cap altre resultat precalculat.
 
 Al haver-se de crear nodes dinàmicament (i intensament) durant cada execució,
-s'ha utilitzat un patró \emph{Factory}, per facilitar la creació de nodes amb
+s'ha utilitzat un patró \emph{Factory} \cite{GoF94}, per facilitar la creació de nodes amb
 una sintaxis extensible, per quan es vulguin afegir operadors, i per a fer més
 còmode la seva utilització.
 
 Després de implementar-se aquesta part, hem descobert una manera tant o més
-elegant de fer-se aquest procés:  Utilitzant les llibreries Boost (XXX ref), que
+elegant de fer-se aquest procés:  Utilitzant les llibreries Boost\cite{GABOOST} , que
 ofereixen, entre d'altres, funcionalitats pròpies de llenguatges funcionals,
 com per exemple Boost::Functional, que permet la programació de c++ retornant
 funcions com a valor de retorn de una funció (programació d'ordre superior).  
-D'aquesta manera, encara podem delegar un pas més avall la creació de nodes, 
+D'aquesta manera, encara es podría delegar un pas més avall la creació de nodes.
 
 XXX arbres, nodes, avaluació, etc.
-patró estratègia + factory
 Parlar de BOOST::Functional
 % subsubsection Arbres (end)
 
@@ -557,8 +555,18 @@ desbordaments de rang en els resultats.  Tenim en compte que GEP avalua molts
 arbres, i molts d'ells poden donar lloc a operacions equivalents a $x^15$.
 
 Si es disposen només d'uns valors concrets per unes entrades concretes,
-s'utilitzarien aquests per
-avaluar cada individuu %XXX
+s'utilitzarien aquests per avaluar cada individuu, però com que en el nostre
+cas, hem provat l'algorisme amb funcions que coneixem a priori hem pogut
+utilitzar valors aleatòris com a entrada a provar.
+
+Per a valorar les qualitats de cadascun dels individuus, l'algorisme tracta de
+minimitzar la funció del quadrat de la suma de diferències entre el valor
+esperat de la funció que busquem i el resultat del Individu.  Utilitzem el
+quadrat de la suma i no la suma perquè així penalitzem les funcions que poden
+estar molt a prop en una zona però en canvi, en altres zones, s'allunya molt.
+Preferim una funció que s'apropi globalment a la nostra funció objectiu, que no
+pas una que coincideixi només en una part del domini, encara que en aquesta part
+s'apropi molt.
 
 
 % subsubsection Fitness (end)
@@ -637,7 +645,10 @@ crear operadors ad-hoc per al problema, com $sin(x)$ i $cos(x)$.  Tot i que amb
 aquests operadors, GEP era capaç de trobar funcions periòdiques simples, com per
 exemple $sin(x)+cos(x)$, en casos més complexos, com els nostres casos reals de
 molècules, ni tan sols s'acosta a trobar una fórmula fidel al model.
+% section Resultats (end)
 
-% subsection Resultats (end)
+\section{Conclusions i treball futur} % (fold)
+\label{sec:GConclusions i treball futur}
 
+% section Conclusions i treball futur (end)
 %\end{document}

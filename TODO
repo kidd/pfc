@@ -21,6 +21,14 @@ Bedroc en Pholus
 IIntro - Com llegir el PFC.  les paraules angleses traduides a vegades es posen
 entre () en angles, per a fer referència a la paraula original.
 
+INTRO  Funcio avaluacio
+Seleccio Genetic Expression Programming
+Nodes
+GANTT
+Bedroc i tanimotos
+Intro i conclusions
+intro.tex->gep ----> gep.intro
+
 GEP
 PHOLUS
 ------

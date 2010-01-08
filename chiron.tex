@@ -10,7 +10,7 @@
 %\begin{document}
 %\tableofcontents
 
-\section{Introducció} % (fold) Objectius?
+\section{Objectius} % (fold) Objectius?
 	\label{sec:Introduccio}
 	Un altre problema on hem aplicat algoritmes evolutius és en l'optimització
 	molecular.  És a dir, situacions on es disposa d'un esquelet o
@@ -423,31 +423,9 @@ el moment de la següent generació.
 En  molts casos reals, ens trobem que tenim una immensa majoria de valors iguals
 com a resultat de les avaluacions.  Aquests resultats són per les molècules que
 o bé no poden ser sintetitzades, o bé no superen un llindar mínim d'activitat.
+La manera com hem solucionat aquest problema s'explica detalladament en
+l'apartat \ref{ssub:CInicialitzacio}.
 
-Això ens ha suposat un gran problema perquè si avaluem la primera generació i
-tots els elements tenen el mateix fitness (0), la següent població que Chiron
-suggerirà serà una població tal que haurà sortit de creuar i mutar la primera
-població aleatòriament entre ella.  Aquest procediment ens provoca una
-convergència prematura que no desitgem, ja que el que passa en realitat és que
-encara no hem mostrejat cap molècula que ens doni un mínim d'activitat amb el
-que poder ``jugar''.
-
-Problemes d'aquestes característiques només es donen en casos on l'espai de
-búsqueda és molt gran comparat amb el número de elements que tenen resultats
-diferents de 0.
-
-Per exemple, si volguéssim trobar, en el problema de la suma de bits una
-configuració concreta (10101), o bé trobar elements amb unes certes
-característiques (que sumin 3), i tots els elements que ho compleixen tenen
-fitness 1 i els que no, tenen fitness 0, ens trobaríem amb problemes similars.
-
-Aquest problema, l'hem solucionat provocant que Chiron resetegi l'experiment
-(recordant les molècules avaluades en la base de dades), i torni a donar una
-població d'individus aleatòria.  Així maximitzem les probabilitats de trobar un
-o més pous energètics, que son les àrees del espai de búsqueda (normalment
-contínues) on es troben els elements amb fitness superiors al llindar.  En el
-moment que trobem molècules amb activitat, l'algorisme segueix el procediment
-normal.
 % subsubsection Funció fitness configurable (end)
 
 %BBDD
@@ -640,7 +618,7 @@ implementat la funció de fitness, sinó queda externalitzada respecte el nucli 
 paràmetres i estructures de dades necessàries per a la implementació de Chiron.
 
 \subsubsection{Inicialització} % (fold)
-\label{ssub:Inicialitzacio}
+\label{ssub:CInicialitzacio}
 
 En  molts casos reals, ens trobem que tenim una immensa majoria de valors iguals
 com a resultat de les avaluacions.  Aquests resultats són per les molècules que
@@ -711,7 +689,7 @@ problemes de convergència prematura.
 
 % subsubsection Selecció (end)
 
-\subsubsection{Crossover} % (fold)
+\subsubsection{Creuament} % (fold)
 \label{ssub:Crossover}
 
 Com a operador de creuament entre 2 individus d'una generació, s'utilitza el
@@ -944,7 +922,7 @@ aplicacions que es poden utilitzar en el futur.
 
 	\begin{figure}[tbp]
 		\begin{center}
-			\includegraphics[scale=0.75]{chiron/rgrau2.png}
+			\includegraphics[scale=0.75]{chiron/GraficaChironGuai.png}
 		\end{center}
 		\caption{Resultat Chiron 2}
 		\label{fig:resChir2}
@@ -971,7 +949,7 @@ aplicacions que es poden utilitzar en el futur.
 	La intenció inicial era utilitzar l'error relatiu, però en aquests
 	experiments, els pitjors fitness tenen un valor de infinit.  Com que els
 	tres experiments sobre els que hem fet les proves són molt similars en quant
-	al millor fitness possible (0, 0.1 i 0.01 XXX), hem pogut dissenyar un
+	al millor fitness possible (0, 0.1 i 0.09), hem pogut dissenyar un
 	sistema de tests unificant els resultats dels tres experiments, i així tenir
 	una idea més general del rendiment de \texttt{Chiron}.
 
@@ -989,7 +967,7 @@ aplicacions que es poden utilitzar en el futur.
 
 
 \section{Conclusions i treball futur} % (fold)
-	\label{sec:CConclusions i treball futur}
+\label{sec:CConclusions i treball futur}
 
 	Amb tot el desenvolupament i proves realitzades, hem assolit l'objectiu
 	d'aquesta part del PFC.  Tot i això com a projecte futur
