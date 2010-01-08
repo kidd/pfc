@@ -33,7 +33,6 @@ l'espai, havent-hi molt més espai entre els seus àtoms consecutius.
 Aquesta informació és necessita per a poder tractar més còmodament amb
 aquesta informació, i forma part d'un procés més complex relacionat amb XXX
 
-
 % section Introducció (end)
 
 \section{Context Químic} % (fold)
@@ -127,9 +126,9 @@ creixen molt de pressa.  Només fent un creuament per 2 punts, es generen
 moltíssims més arbres sintàcticament incorrectes.
 
 És per això que s'ha adoptat finalment per una aproximació utilitzant una
-representació ideada per Cândida Ferreira \cite{ferreira:2007}, on per la pròpia construcció del
-arbre, podem assegurar que \textbf{sempre} generarem arbres sintàcticament
-vàlids.
+representació ideada per Cândida Ferreira \cite{ferreira:2007}, on per la pròpia
+construcció del arbre, podem assegurar que \textbf{sempre} generarem arbres
+sintàcticament vàlids.
 
 \subsection{Interfície} % (fold)
 \label{sub:Interficie}
@@ -200,7 +199,7 @@ mutacions, la aplicació ha de retornar una fórmula analítica que s'apropa (o
 clava) la fórmula que estem buscant.
 % subsection Impl (end)
 
-(XXX) fer una secció dedicada a GP i GEP o posar-ho a la implementació?
+%(XXX) fer una secció dedicada a GP i GEP o posar-ho a la implementació?
 
 \subsubsection{Arbres} % (fold)
 \label{ssub:Arbres}
@@ -209,7 +208,7 @@ Com s'ha explicat en \ref{sec:Programacio d'expressions genetiques} i en
 \ref{sec:GProcediment informatic}, en GEP, la interpretació dels
 cromosomes com a arbres a l'hora d'avaluar-se, fa que necessitem poder passar
 del fenotip(lineal) al genotip (arbre) amb facilitat, i aquest genotip sigui
-tractable com a tal, avaluant les seves característiques en l'entorn (calculant
+tractable com a tal, avaluant les seves característiques en l'entorn (avaluant
 l'arbre) de manera còmode, ràpida i eficient.
 
 Per això s'ha desenvolupat un conjunt de classes per a tractar amb arbres, que
@@ -301,11 +300,10 @@ gen, sinó que hem seguit dues altres maneres, més sofisticades per a represent
 les nostres fórmules matemàtiques.
 
 Aquests mètodes \cite (XXX) es basen en complicar una mica més el cromosoma,
-però sempre fent servir la notacio karva \ref{XXX}.
-
-Una de les millores, és encabir més d'un gen en un cromosoma. Fent això, el que
-aconseguim és evolucionar dos subarbres, que en el moment de la avaluació,
-s'uneixen d'alguna manera.
+però sempre fent servir la notacio karva \ref{XXX}.  Una de les millores, és
+encabir més d'un gen en un cromosoma. Fent això, el que aconseguim és
+evolucionar dos subarbres, que en el moment de la avaluació, s'uneixen d'alguna
+manera.
 
 Si apliquem aquesta tècnica, es facilita la creació de subarbres que conformen
 el que s'anomenen ``building blocks'', o blocs constructors que representen una

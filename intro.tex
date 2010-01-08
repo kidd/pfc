@@ -648,12 +648,20 @@ On la $Q$ representa l'arrel quadrada.  En aquest gen, té el i\emph{head} (que 
 de la posició 0 a la 7) de llargada, i el tail (de la 8 a la 16) de llargada 9.
 El head té tant funcions com terminals, i el tail, només té terminals.
 
-La codificació d'aquest gen es mostra en XXX (\ref{fda}) mostra com en aquest cas,
+La codificació d'aquest gen es mostra en \ref{fig:unfinished} mostra com en aquest cas,
 no han fet falta tots els elements del gen per a construir l'arbre.  Això és
 perquè la fórmula que en assegura tenir prou tail, preveu el pitjor dels casos,
 éssent tots els elements del head funcions amb la màxima aritat.  Com que en
 aquest cas, tenim una arrel quadrada (i en l'arrel del arbre), deixem de
 necessitar gairebé la meitat del gen per a fer la traducció.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics{geptut/pt02.png}
+\end{center}
+\caption{ET}
+\label{fig:unfinished}
+\end{figure}
 
 Aquests trossos de cromosoma que no s'utilitzen, participen igualment en els
 creuaments (es fan a nivell de vector de símbols), i fan que una mutació en una
@@ -706,18 +714,21 @@ cromosoma complet passaria a ser el mostrat en la figura
 \label{fig:tres sub-et amb link}
 \end{figure}
 
+La implementació del individu que hem programat ha estat una versió una mica més
+avançada que la de les funcions d'enllaç, que utilitza un dels subarbres, com a
+metadada, on els terminals no es refereixen a terminals de la funció, sinó que
+són referències als altres subarbres, que sí tenen com a fulles les entrades de
+la funció objectiu.
 
-Furthermore, no other system has as much growth potential as GEP in the sense that the basic GEP system can give rise to other, more complex systems. We've already encountered here two GEP systems: the unigenic system and the multigenic system. But both these systems can be used as the starting point to create yet more complex systems: from simple GEP systems that elegantly handle random numerical constants to more sophisticated systems that can evolve highly complex structures such as neural networks, decision trees, automatically defined functions and polynomial networks. You can learn all about these and other GEP systems in Ferreira's book
 %XXX
+%\subsubsection{Esquema Bàsic} % (fold)
+%\label{ssub:Esquema Basic}
+%% subsubsection Esquema Bàsic (end)
 
-\subsubsection{Esquema Bàsic} % (fold)
-\label{ssub:Esquema Basic}
-% subsubsection Esquema Bàsic (end)
-
-\subsubsection{Funció d'avaluació} % (fold)
-\label{ssub:funcio d'avaluacio}
-% subsubsection funció d'evaluació (end)
-% subsection Principis Bàsics (end)
+%\subsubsection{Funció d'avaluació} % (fold)
+%\label{ssub:funcio d'avaluacio}
+%% subsubsection funció d'evaluació (end)
+%% subsection Principis Bàsics (end)
 
 \subsection{Operadors} % (fold)
 \label{sub:Operadors}
@@ -725,7 +736,7 @@ Furthermore, no other system has as much growth potential as GEP in the sense th
 Tot seguit es descriuràn els operadors usats en GEP, sense concretar la seva
 implementació, sinó explicant com varien els individuus.  Per a veure els
 detalls sobre la aplicació en aquest projecte, les explicacions i
-imlpementacions més complertes consultar a (\ref{XXX Capitol GEP})
+imlpementacions més complertes consultar la secció \ref{cha:GEP}.
 
 \subsubsection{Inicialització} % (fold)
 \label{ssub:Inicialitzacio}
@@ -799,7 +810,7 @@ llarg del gen.  Aquests operadors estàn explicats més en detall a \ref{par:IS}
 
 Actualment, els algorismes genètics estan essent més i més utilitzats no sols en
 el món acadèmic, sinó també en el món de l'empresa.  Per exemplificar això, es
-presenten les dades d'un article publicat a 
+presenten les dades d'un article publicat a science
 %XXX 
 
 Les últimes publicacions referents a algorismes genètics tendeixen cap a
