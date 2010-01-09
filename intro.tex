@@ -43,7 +43,7 @@ generació en generació.
 Els algorismes genètics Darwinistes segueixen l'esquema de funcionament clàssic
 dels algorismes genètics. En aquests, s'intenta imitar els processos de la
 evolució natural sense cap altra modificació conceptual. Normalment, quan es
-parla del terme algorisme genètic es refereix a aquest primer model de
+parla del terme algorisme genètic es refereix a aquest model de
 funcionament. En l'actualitat els algorismes genètics han estat molt utilitzats
 en gairebé tots els àmbits de la ciència com a eina per optimitzar o buscar
 bones solucions comparables a les actualment disponibles. En l'àmbit de la
@@ -52,12 +52,12 @@ bioinformàtica és una de les àrees d'aplicacions reals on més s'han utilitza
 
 \subsection{Principis bàsics}
 
-Els algorismes genètics es recolzen en tres pilars bàsics: el primer d'ells és la selecció
-d'individus de la població, el segon el creuament d'individus i el tercer la
-funció d'avaluació. La selecció és important perquè és el mètode per escollir
-els individus que generaran descendència, seria bo que normalment aquests
-individus fóssin els millors adaptats a l'entorn. És a dir, aquells amb un
-\emph{fitness} més alt.  Això, junt amb el creuament de les solucions
+Els algorismes genètics es recolzen en tres pilars bàsics: el primer d'ells és
+la selecció d'individus de la població, el segon el creuament d'individus i el
+tercer la funció d'avaluació. La selecció és important perquè és el mètode per
+escollir els individus que generaran descendència, seria bo que normalment
+aquests individus fóssin els millors adaptats a l'entorn. És a dir, aquells amb
+un \emph{fitness} més alt.  Això, junt amb el creuament de les solucions
 seleccionades, progressivament fa evolucionar la població de solucions. La
 funció d'avaluació és el mecanisme amb el qual es computa el grau d'adaptació de
 cada individu a l'entorn.
@@ -79,17 +79,18 @@ caixa, un cromosoma podria venir definit per les següents variables:
 (altura,amplada,profunditat). Cada solució hauria d'estar perfectament definida
 en el seu cromosoma.
 
-Al cromosoma també se'l coneix com genotip, ja que representa un conjunt de
+Al cromosoma també se'l coneix com \emph{genotip}, ja que representa un conjunt de
 qualitats o atributs de la solució que no s'expressen en la realitat (en aquest
 cas la realitat s'entén com la simulació necessària per avaluar un cromosoma).
 
-
-%Podria ser que l'hora de simular el cromosoma, s'adoptaren una serie de
-%qualitats no definides al cromosoma de forma aleatòria, o indeterministes.  Com
-%per d'exemple, es pot imaginar un cromosoma o genotip on els seus gens són els
-%aminoàcids que composaran una cadena peptídica. El fenotip serà l'estructura
-%tridimensional que aquesta molècula adoptarà a l'espai, que no necessàriament ha
-%d'estar codificada al cromosoma.
+Podria ser que l'hora de simular el cromosoma, s'adoptaren una serie de
+qualitats no definides al cromosoma de forma aleatòria, o indeterministes.
+Aquestes qualitats que surten a la llum al ``evaluar'' un element, formen part
+del \emph{fenotip}.  Per d'exemple, es pot imaginar un cromosoma o genotip on
+els seus gens són els Cadenes d'atoms que unim a un cert esquelet d'una
+molècula\cite{GEB79}. El fenotip serà l'estructura tridimensional que aquesta
+molècula adoptarà a l'espai, que no necessàriament ha d'estar codificada al
+cromosoma.
 
 \subsubsection{Esquema bàsic}
 
