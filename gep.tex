@@ -265,7 +265,7 @@ Com es pot veure en la figura anterior (XXX ref fig), s'ha implementat una
 classe abstracte Node de la que ``pengen'' les diferents especialitzacions, que
 són les diferents operacions que suporta GEP, o bé els terminals. Els terminals,
 com és d'esperar, tenen aritat zero, i al ser avaluats, retornen el valor del
-terminal en aquest moment com a resultat.  Els operadors (aritat > 0),
+terminal en aquest moment com a resultat.  Els operadors (aritat $>0$),
 requereixen d'altres nodes per a calcular el seu resultat.  D'això es deriva que
 en un cromosoma donat, al transformar-lo a arbre, les fulles seran totes
 terminals, ja que son l'únic tipus de node que poden avaluar a un valor sense
@@ -283,8 +283,9 @@ com per exemple Boost::Functional, que permet la programació de c++ retornant
 funcions com a valor de retorn de una funció (programació d'ordre superior).  
 D'aquesta manera, encara es podría delegar un pas més avall la creació de nodes.
 
-XXX arbres, nodes, avaluació, etc.
-Parlar de BOOST::Functional
+%XXX arbres, nodes, avaluació, etc.
+%Parlar de BOOST::Functional
+
 % subsubsection Arbres (end)
 
 \subsection{Algorisme Genètic} % (fold)
@@ -298,8 +299,8 @@ l'apartat \ref{issub:individus}, però no només s'han utilitzat cromosomes amb 
 gen, sinó que hem seguit dues altres maneres, més sofisticades per a representar
 les nostres fórmules matemàtiques.
 
-Aquests mètodes \cite (XXX) es basen en complicar una mica més el cromosoma,
-però sempre fent servir la notacio karva \ref{XXX}.  Una de les millores, és
+Aquests mètodes \cite{ferreira:2006} es basen en complicar una mica més el cromosoma,
+però sempre fent servir la notacio karva (secció \ref{ssub:Notacio Karva}).  Una de les millores, és
 encabir més d'un gen en un cromosoma. Fent això, el que aconseguim és
 evolucionar dos subarbres, que en el moment de la avaluació, s'uneixen d'alguna
 manera.
@@ -308,14 +309,12 @@ Si apliquem aquesta tècnica, es facilita la creació de subarbres que conformen
 el que s'anomenen ``building blocks'', o blocs constructors que representen una
 petita part (però significativa) de la fórmula que es vol acabar trobant.
 
-EXEMPLE
+XXX EXEMPLE
 
 Una de les maneres de combinar els diferents gens és utilitzant \emph{Link
 functions} o funcions d'enllaç, que son operadors que decidim a priori, i
-seran els nodes arrel de l'arbre final.
-
-En \ref{figXXX} es mostra com s'avaluarà el cromosoma mostrat abans amb funcions
-d'enllaç suma.
+seran els nodes arrel de l'arbre final.  En l'apartat \ref{issub:individus} s'ha
+exemplificat un ús de les funcions de linkatge.
 
 Aquesta millora, dona molta flexibilitat al algorisme genètic, ja que li dona
 poder per a fer combinacions entre diferents cromosomes (en el creuament), només
@@ -390,9 +389,9 @@ individual en el genotip.
 	ha un \emph{head} i un \emph{tail}. És la versió ``clàssica'', que s'ha
 	explicat en \ref{XXX} (intro)
 	\item Multigen-AD: Cromosoma multigen amb funcions de linkatge.
-	\item Multigen homeòtic: Cromosoma multigen amb l'últim gen contenint
+	\item Multigen \emph{homeòtic}: Cromosoma multigen amb l'últim gen contenint
 	informació sobre com s'organitzen els altres gens, en forma de arbre
-	(notació Karva)
+	(notació Karva).
 \end{itemize}
 
 En funció de quina variant executem, el mòdul  d'inicialització té una relació
@@ -405,9 +404,15 @@ sintàcticament correctes no ens hem de preocupar de validar que en les
 avaluacions donin errors d'aquest tipus.
 % subsubsection Inicialització (end)
 
-\subsubsection{Sel·lecció} % (fold)
+\subsubsection{Selecció} % (fold)
 \label{ssub:Seleccio}
-torneig?
+
+En GEP, s'utilitza la selecció per ruleta sempre , explicat en
+\ref{subs:Iseleccio}.  Hem fet proves amb altres tipus de creuaments com el
+torneig determinista, però els resultats millors ens l'ha donat la selecció per
+ruleta.  La literatura també indica que els millors resultats s'acostumen a
+aconseguir amb aquest tipus de creuament
+\cite{ferreira:2001,ferreira:2006,ferreira:2007}.
 % subsubsection Sel·lecció (end)
 
 \subsubsection{Creuament} % (fold)
@@ -509,47 +514,22 @@ simplement intercanviar els identificadors en el meta-gen, tampoc serveix ja
 que, tot i donar el mateix resultat (al menys en un principi), varia el
 contingut del meta-gen, fent que varii la seva descendència (si es que en té) de
 la que donaria lloc amb l'altre procediment.
-
 % paragraph Translació de gen (end)
-TRans
-
-es manté la simplicitat gracies a Karva notation\ldots
-
-transp
-repla
-
 % subsubsection Mutacions (end)
 % section Algorisme Genètic (end)
-
-% section Procediment informàtic (end)
-    %Introducció
-    %Context Químic
-    %Procediment informàtic
-    %+ Algoritme Genètic
-    %+  Individu (Cromosoma)
-    %+  Crossover
-    %+  Mutacions
-    %+ Implementació
-    %+  algorisme genètic
-    %+  Arxius de configuració
-    %+  DBIx::Class
-    %+  Webservices i Soap
-    %Resultats
-    %+ treball futur
-
 
 \subsubsection{Fitness} % (fold)
 \label{ssub:Fitness}
 La funció de fitness en GEP, es basa en diversos mostrejos empírics que es tenen
 sobre uns valors com a entrades d'un sistema, que donen lloc a unes sortides.
 És per això, que en el nostre cas, en la fase de proves, hem fet servir funcions
-matemàtiques que coneixem i volem que GEP descobreixi.
+matemàtiques que coneixem i volem que GEP descobreixi com a problemes joguina.
 
 Així doncs, per a cada individuu, a partir del genotip, el transformem al arbre
 corresponent, i l'avaluem 50 vegades per a valors de les entrades aleatoris.
 Se'ls hi ha posat límits en el rang de valors possibles, per no patir
 desbordaments de rang en els resultats.  Tenim en compte que GEP avalua molts
-arbres, i molts d'ells poden donar lloc a operacions equivalents a $x^15$.
+arbres, i molts d'ells poden donar lloc a operacions equivalents a $x^{15}$.
 
 Si es disposen només d'uns valors concrets per unes entrades concretes,
 s'utilitzarien aquests per avaluar cada individuu, però com que en el nostre
@@ -558,7 +538,7 @@ utilitzar valors aleatòris com a entrada a provar.
 
 Per a valorar les qualitats de cadascun dels individuus, l'algorisme tracta de
 minimitzar la funció del quadrat de la suma de diferències entre el valor
-esperat de la funció que busquem i el resultat del Individu.  Utilitzem el
+esperat de la funció que busquem i el resultat del individu.  Utilitzem el
 quadrat de la suma i no la suma perquè així penalitzem les funcions que poden
 estar molt a prop en una zona però en canvi, en altres zones, s'allunya molt.
 Preferim una funció que s'apropi globalment a la nostra funció objectiu, que no
