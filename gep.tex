@@ -53,8 +53,8 @@ flexibles.  Aquest fet fa que l'anàlisi de dades estàtiques sigui només una
 petita part de les dades reals que ``conté'' una molècula.
 
 Aquestes dades ``dinàmiques'', com per exemple el volum d'una molècula, són
-dades funcionals XXX(funcionals?), és a dir que no són valors concrets 
-(ser el número d'àtoms, el pes molecular o el número d'enllaços rotables),
+dades funcionals, és a dir que no són valors concrets com poden 
+ser el número d'àtoms, el pes molecular o el número d'enllaços rotables,
 aportaríen informació molt més valuosa, no només perquè no es pot tractar avui
 en dia, sinó que també obre les portes a tractar dades molt més riques i que ens
 poden fer entendre molt millor el comportament de les molècules en la natura.
@@ -117,7 +117,7 @@ punt de tall entre dos arbres, com si fos un algorisme evolutiu clàssic.
 - Q + * | 5 3 5
 \end{verbatim}
 
-al intercanviar els arbres, un dels 2 arbres que queden (- Q + * - 3 5) no
+Al intercanviar els arbres, un dels 2 arbres que queden (- Q + * - 3 5) no
 disposa de prous operands per a realitzar la avaluació.  Això és un cas senzill
 de tots els problemes que es poden generar al fer creuaments, i és el cas en el
 que utilitzem el creuament més trivial (creuament per un punt). Si utilitzéssim
@@ -188,7 +188,7 @@ comparar-lo amb el resultat de la formula que estem avaluant.
 \subsection{Implementació} % (fold)
 \label{sub:GImplementacio}
 
-Aquest projecte ha estat el més difícil d'implementar i dissenyar, ja que hem
+Aquest projecte ha estat el més complex d'implementar i dissenyar, ja que hem
 hagut de fer un treball notable d'investigació (els primers referents en GEP
 daten de 2001 \cite{ferreira:2001}.
 
@@ -219,9 +219,8 @@ Aquesta estructura, s'ha programat el més flexible possible, deixant la
 possibilitat de ser estesa en un futur, afegint nous tipus d'operacions, i amb
 diferents aritats, més grans de les que hem tingut necessitat fins al moment.
 
-Nosaltres hem tractat només amb aritats 0,1 i dos (a € {0,1,2} ) ja que els
-operands tenien un màxim de aritat 2 \ref{table:func-aritat}.
-
+Nosaltres hem tractat només amb aritats 0,1 i 2 ja que els
+operands tenien un màxim de aritat 2 (Taula \ref{table:func-aritat}).
 
  % theme=Berlin;caption_top=1;caption=Relació funció-aritat
  % simbol & aritat
@@ -278,7 +277,7 @@ una sintaxis extensible, per quan es vulguin afegir operadors, i per a fer més
 còmode la seva utilització.
 
 Després de implementar-se aquesta part, hem descobert una manera tant o més
-elegant de fer-se aquest procés:  Utilitzant les llibreries Boost\cite{GABOOST} , que
+elegant de fer-se aquest procés:  Utilitzant les llibreries Boost\cite{GABOOST}, que
 ofereixen, entre d'altres, funcionalitats pròpies de llenguatges funcionals,
 com per exemple Boost::Functional, que permet la programació de c++ retornant
 funcions com a valor de retorn de una funció (programació d'ordre superior).  
@@ -414,7 +413,7 @@ torneig?
 \subsubsection{Creuament} % (fold)
 \label{Gssub:Creuament}
 
-Els creuaments en GEP funcionen d'una manera similar als Algorismes Genètics
+Els creuaments en GEP funcionen d'una manera similar als algorismes genètics
 clàssics, en tant que no hem de tenir present la futura traducció del genotip al
 fenotip.  Entre les tres formes de creuament, s'arriba a un 0.8 de probabilitat
 de creuament.
@@ -425,7 +424,7 @@ sencers.
 
 \paragraph{Creuament per un punt} % (fold)
 \label{par:Creuament per un punt}
-És el creuament que ja hem vist en els Algorismes Evolutius, on es tria
+És el creuament que ja hem vist en els algorismes evolutius, on es tria
 aleatòriament un punt de tall per cada parella de pares, i d'allà en surten dos
 cromosomes nous, que contenen informació dels dos pares, l'un tenint la primera
 part del p1 i la segona del p2 i l'altre fill l'invers.  Aquesta tècnica de
