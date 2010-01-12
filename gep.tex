@@ -13,6 +13,9 @@
 %\begin{document}
 %\tableofcontents  %%Index
 
+\chapter{GEP} % (fold)
+\label{cha:GEP}
+
 \section{Objectius} % (fold) Objectius?
 \label{sec:Introduccio}
 Tot seguit es presentarà un projecte en el que s'ha utilitzat una tècnica
@@ -259,17 +262,16 @@ símbols (implementats com a caràcters, donada la manca de símbols en c++ com 
 tipus bàsic), i poder-ho fer amb la màxima robustesa i flexibilitat, s'ha
 implementat una estructura amb nodes (taula \ref{fig:nodes}), i un template arbre. 
 
-%XXX figura estructura de classes
-
-Com es pot veure en la figura anterior (XXX ref fig), s'ha implementat una
-classe abstracte Node de la que ``pengen'' les diferents especialitzacions, que
-són les diferents operacions que suporta GEP, o bé els terminals. Els terminals,
-com és d'esperar, tenen aritat zero, i al ser avaluats, retornen el valor del
-terminal en aquest moment com a resultat.  Els operadors (aritat $>0$),
-requereixen d'altres nodes per a calcular el seu resultat.  D'això es deriva que
-en un cromosoma donat, al transformar-lo a arbre, les fulles seran totes
-terminals, ja que son l'únic tipus de node que poden avaluar a un valor sense
-necessitat de cap altre resultat precalculat.
+S'ha implementat una classe abstracte Node de la que ``pengen'' les diferents
+especialitzacions, que són les diferents operacions que suporta GEP, o bé els
+terminals.  Cada subclasse de Node implementa la funció \emph{calcula}, amb un
+nobre variable de paràmetres.  Els terminals, com és d'esperar, tenen aritat
+zero, i al ser avaluats, retornen el valor del terminal en aquest moment com a
+resultat.  Els operadors (aritat $>0$), requereixen d'altres nodes per a
+calcular el seu resultat.  D'això es deriva que en un cromosoma donat, al
+transformar-lo a arbre, les fulles seran totes terminals, ja que son l'únic
+tipus de node que poden avaluar a un valor sense necessitat de cap altre
+resultat precalculat.
 
 Al haver-se de crear nodes dinàmicament (i intensament) durant cada execució,
 s'ha utilitzat un patró \emph{Factory} \cite{GoF94}, per facilitar la creació de nodes amb
@@ -309,7 +311,7 @@ Si apliquem aquesta tècnica, es facilita la creació de subarbres que conformen
 el que s'anomenen ``building blocks'', o blocs constructors que representen una
 petita part (però significativa) de la fórmula que es vol acabar trobant.
 
-XXX EXEMPLE
+%XXX EXEMPLE
 
 Una de les maneres de combinar els diferents gens és utilitzant \emph{Link
 functions} o funcions d'enllaç, que son operadors que decidim a priori, i
