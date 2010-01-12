@@ -199,8 +199,6 @@ mutacions, la aplicació ha de retornar una fórmula analítica que s'apropa (o
 clava) la fórmula que estem buscant.
 % subsection Impl (end)
 
-%(XXX) fer una secció dedicada a GP i GEP o posar-ho a la implementació?
-
 \subsubsection{Arbres} % (fold)
 \label{ssub:Arbres}
 
@@ -287,6 +285,30 @@ D'aquesta manera, encara es podría delegar un pas més avall la creació de nod
 %Parlar de BOOST::Functional
 
 % subsubsection Arbres (end)
+
+
+\subsubsection{Constants} % (fold)
+\label{ssub:Constants}
+La detecció de constants en una fórmula és un punt en el que els algorismes de
+programació genètica han de posar especial atenció.  GEP, però, és capaç de
+treure les constants necessàries a base de recombinar subarbres.
+
+Aquest tret característic de GEP li dóna un xic més de valor al algorisme, ja
+que no hem de preparar cap sistema per a trobar aquests valors.  S'han
+desenvolupat tècniques per a localitzar constants que consisteixen en afegir
+nous terminals al problema, amb identificadors propis, i afegir el valor de les
+constants al cromosoma, fent que participin també en els creuaments i les
+mutacions.  Els resultats, però, no podem dir que siguin substancialment millors
+que en la versió ``sense constants''.
+
+La manera en què GEP intenta trobar-les és construïnt arbres que s'anul·len
+entre ells, donant lloc a valors fixes, com per exemple subarbres que divideixen
+un terminal per ell mateix.  D'aquesta manera tenim un 1 fixe en l'arbre.  A
+base de construccions seguint aquest procés GEP és capaç de trobar constants en
+una fórmula.  Cal dir però, que trobar un valor fixe com per exemple 724.67, li
+és molt difícil, i malgastarà molts nodes del cromosoma només per això.
+
+% subsubsection Constants (end)
 
 \subsection{Algorisme Genètic} % (fold)
 \label{ssec:GAlgorisme Genetic}
@@ -484,10 +506,10 @@ tercera part de la mida total del gen, i es ``puja'' cap a una posició anterior
 en el gen.  La zona font pot ser qualsevol posició del gen, però la zona destí,
 té com a restricció no poder començar en l'arrel del arbre (primera posició en
 el cromosoma).  Aquesta restricció té la seva explicació en què si tenim un
-cromosoma amb un sol gen, i pugem un terminal a la posició arrel, el que fem és
+cromosoma amb un sol gen, i posem un terminal a la posició arrel, el que fem és
 anular tot l'arbre, ja que els terminals tenen aritat zero.
 
-XXX imatge d'un cromosoma ``capat''.
+%XXX imatge d'un cromosoma ``capat''.
 % paragraph IS (end)
 
 \paragraph{RIS} % (fold)

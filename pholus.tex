@@ -137,12 +137,12 @@ resultats a part del propi algorisme evolutiu.
 
 \section{Context Químic} % (fold)
 \label{sec:Context Quimic}
-XXX Tanimotos, conformacions, y tal 
+%XXX Tanimotos, conformacions, y tal 
 
 El problema al que ens enfrontem és el de, donat un \texttt{receptor} i un conjunt de %glossari
 lligands, deduir quins són els factors que fan que la unió sigui millor
 o pitjor.  Els factors que intervenen en aquesta unió són molts, però a nivell
-pràctic, utilitzem ``només'' 22 indicadors de potencial, que són els que podem quantificar amb
+pràctic, utilitzem 22 indicadors de potencial, que són els que podem quantificar amb
 facilitat, i que hem cregut que tenen més rellevància en aquest procés.
 
 Aquests indicadors són els mostrats en la taula \ref{table:maps}.
@@ -302,6 +302,7 @@ potencial.
 
 \subsubsection{Bedroc}
 \label{ssub:Bedroc}
+%XXX
 Una vegada sabem com hem de calcular la distància entre dues molècules, necessitem 
 
 ''Virtual Screening'' és un terme que s'aplica a un tipus de problema
@@ -700,13 +701,15 @@ relacions inverses d'algunes ponderacions.
 
 \subsubsection{Inicialització} % (fold)
 \label{ssub:Inicialitzacio}
-Com s'ha explicat en XXX, la inicialització dels individus és totalment
-aleatòria, amb números en coma flotant entre -1 i 1.  L'algorisme genètic no ens
-imposa cap altra restricció, ja que en totes les posicions son vàlids els
-mateixos valors (dins del mateix rang), i aquests valors, seran usats únicament
-com a dades (valors als que multiplicar els potencials).  Al no tenir cap
-significat sintàctic (al contrari que en GP, i fins a cert punt en GEP), podem
-deixar la inicialització al atzar totalment.
+
+La inicialització dels individus és totalment aleatòria, amb números en coma
+flotant entre -1 i 1.  L'algorisme genètic no ens imposa cap altra restricció,
+ja que en totes les posicions son vàlids els mateixos valors (dins del mateix
+rang), i aquests valors, seran usats únicament com a dades (valors als que
+multiplicar els potencials).  Al no tenir cap significat sintàctic (al contrari
+que en GP, i fins a cert punt en GEP), podem deixar la inicialització al atzar
+totalment.
+
 % subsubsection Inicialització (end)
 
 \subsubsection{Mutacions} % (fold)
