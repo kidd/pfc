@@ -48,7 +48,8 @@ però sí biològicament i per tant és un VS basat en lligands.
 Helios es basa en la superposició de camps mol·leculars entre qualsevol compost i un lligand de
 referència. Però Helios, no només considera la superposició generada per càrregues formals, sinó
 també altres tipus relacionades amb el comportament dinàmic; així, es fan diferents superposicions
-entre parells de mol·lècules es duen a terme a la vegada. L'alineament de camps mol·leculars va ser descrit durant els anys noranta \ref{WHW04},
+entre parells de mol·lècules es duen a terme a la vegada. L'alineament de camps mol·leculars va ser
+descrit durant els anys noranta \cite{WHW04},
 però no s'ha dut a terme fins aquesta dècada degut a que l'alineament mol·lecular flexible és un problema que requereix
 grans capacitats supercomputacionals. Fins els últims anys, el problema del VS basat en lligands s'ha hagut de simplificar
 focalitzant-se en tècniques d'identificació de semblances moleculars com l'estructura, farmacòfor, etc. 
@@ -204,8 +205,6 @@ conjunt de 5 caràcters, dels quals cap d'ells és comú. En els dos casos la
 distància Euclídia és $10 \over 1024$  o $0.0098$ quan és evident que les dues
 primeres són més semblants entre elles que la segona parella.
 
-%Continues vs Discretes? bedroc.tex pag 11
-
 Mètriques per a mesurar els potencials i les diferències (o semblances) entre
 ells n'hi ha moltes, unes funcionen millor per a dades qualitatives, altres per
 a quantitatives, i n'hi ha que fins i tot utilitzen la falta d'informació per a
@@ -217,7 +216,7 @@ Hem de tenir en compte el cost de calcular les diferències entre
 molècules, ja que serà un procés a repetir moltes vegades, i en gran
 número de molècules, i hem d'intentar trobar un coeficient que sigui
 viable de calcular.  Ens hem decidit per una variació de Tanimoto
-\ref{ssub:Tanimoto}, acotada entre -1 i +1 que s'explicarà tot seguit.
+(secció \ref{ssub:Tanimoto}), acotada entre -1 i +1 que s'explicarà tot seguit.
 
 %XAVISTOP  XXX
 
@@ -237,47 +236,8 @@ Per tant, si tractem amb vectors el coeficient tindrà la següent expressió:
 
 $$T(A,B)={A \cdot B \over \|A\|^{2} + \|B\|^{2} - A·B}$$
 
-Els vectors de dades (de potencials) amb què treballem nosaltres
-pertanyen a $\Re^{N}$ on N són el nombre de punts que s'han considerat
-dins el grid. L'adaptació que fem nosaltres és convertir-los a vectors
-binaris de manera que només es consideren potencials rellevants. La
-unió de dos camps moleculars alineats són tots aquells punts de
-l'espai on qualsevol dels dos camps presenta potencials de Van der
-Waals menors de -0.1 i el valor absolut del potencial electrostàtic és
-més gran que 0.5 o amb potencials de desolvatació més grans que
-0.25(C'). La intersecció són tots aquells punts de la unió que
-presenten diferències entre els camps moleculars més petites de
-0.25(C). Per tant, el nostre coeficient de Tanimoto modificat és
-definit com:
-
-$$T'_{j}(A_{j},B_{j})={C_{j} \over C'_{j}}$$
-
-on j és un camp molecular donat. Un cop $T'_{j}$ és calculat per
-cadascun dels 22 camps moleculars, el coeficient de Tanimoto final,
-$T'_{i}$ (compost de referència i), és calculat amb una mitjana
-aritmètica ponderada:
-
-$$T'_{i}={\sum_{j=0}^{n} \omega_{j}\cdot T'_{i,j} \over \sum_{j=0}^{n} \omega_{j}}$$
-
-L'últim pas va ser trobar una ponderació general dels 22 coeficients
-de Tanimoto. La primera ponderació utilitzada va ser trobada sota
-criteris químics. Llavors es va realitzar un anàlisi de components
-principals sobre una base dades de 1534 molècules i amb una molècula
-de referència. Els resultats obtinguts van ser millors que amb la
-ponderació sota criteris químics.
-
-Obtinguts aquests resultats es va agafar la mateixa base de dades i es
-va calcular els coeficients de Tanimoto amb 10 molècules de referència
-diferents i es va realitzar un anàlisi canònica de poblacions per
-veure si es podia trobar una ponderació única, i els resultats
-obtinguts van mostrar que no era possible. Per tant, degut a l'alt
-cost computacional que tindria fer un anàlisi de components principals
-per cada càlcul s'ha optat per mantenir la ponderació sota criteris
-químics, ja que aquesta en global donava millors resultats que la
-ponderació obtinguda per anàlisi de components principals.
-
-
-Per a calcular els valors dels 22 potencials de cada lligand, es resten els
+Per al nostre cas, hem de calcular els valors de 22 potencials d'un lligand
+donat i es resten els
 potencials de la molècula de referència amb els del lligand.  El format en el
 que estan ambdues molècules, és el mateix, però pot ser que estiguin situades en
 un espai diferent respecte el 0 del eix de coordenades (recordem que estan
@@ -295,57 +255,93 @@ Després de fer tots els càlculs i restes pels 22 diferents tipus de potencials
 podem donar un número de semblança ``total'' per dos molècules i un tipus de
 potencial.
 
-% \begin{center}
-%   $2[\mid\chi_{A}\cap\chi_{B}\mid]/[\mid\chi_{A}\mid+\mid\chi_{B}\mid]^{1/2}$
-% \end{center}
+Els vectors de dades (de potencials) amb què treballem nosaltres
+pertanyen a $\Re^{N}$ on N són el nombre de punts que s'han considerat
+dins el grid. L'adaptació que fem nosaltres és convertir-los a vectors
+binaris de manera que només es consideren potencials rellevants. La
+unió de dos camps moleculars alineats són tots aquells punts de
+l'espai on qualsevol dels dos camps presenta potencials de Van der
+Waals menors de -0.1 i el valor absolut del potencial electrostàtic és
+més gran que 0.5 o amb potencials de desolvatació més grans que
+0.25(C'). La intersecció són tots aquells punts de la unió que
+presenten diferències entre els camps moleculars més petites de
+0.25(C). 
 
+%Per tant, el nostre coeficient de Tanimoto modificat és
+%definit com:
 
-% subsubsection Tanimoto (end)
+%$$T'_{j}(A_{j},B_{j})={C_{j} \over C'_{j}}$$
+%on j és un camp molecular donat.
+
+Si $T_{j}$ és el valor de Tanimoto del map j, el valor del Tanimoto final és és
+calculat amb una mitjana aritmètica ponderada:
+
+$$T={\sum_{j=0}^{n} \omega_{j}\cdot T{j} \over \sum_{j=0}^{n} \omega_{j}}$$
+
+L'últim pas va ser trobar una ponderació general dels 22 coeficients
+de Tanimoto. La primera ponderació utilitzada va ser trobada sota
+criteris químics. Llavors es va realitzar un anàlisi de components
+principals sobre una base dades de 1534 molècules i amb una molècula
+de referència. Els resultats obtinguts van ser millors que amb la
+ponderació sota criteris químics.
+
+Obtinguts aquests resultats es va agafar la mateixa base de dades i es
+va calcular els coeficients de Tanimoto amb 10 molècules de referència
+diferents i es va realitzar un anàlisi canònica de poblacions per
+veure si es podia trobar una ponderació única, i els resultats
+obtinguts van mostrar que no era possible. 
 
 
 \subsubsection{Bedroc}
 \label{ssub:Bedroc}
 %XXX
-Una vegada sabem com hem de calcular la distància entre dues molècules, necessitem 
+Una vegada sabem com hem de calcular la semblança entre dues molècules, 
+necessitem veure quina ponderació ordena millor les llistes de semblança entre
+molècules.
 
-''Virtual Screening'' és un terme que s'aplica a un tipus de problema
-que conceptualment és l'equivalent computacional de ....... screening, %XXX
-o sigui, a on un gran nombre de mostres (mol·lècules en aquest cas)
-estan disposades per ser discriminades entre actives i inactives. Per
-Intelligent Pharma avaluar l'execució del VS és una pràctica
-necessària, ja que és una forma de seleccionar quin mètode ordena
-millor. Com hem indicat en l'apartat anterior avaluar el VS ens
-servirà per comparar entre diferents ponderacions, o sigui, per
-determinar quina ponderació discrimina millor entre mol·lècules
-actives i inactives.
+%''Virtual Screening'' és un terme que s'aplica a un tipus de problema
+%que conceptualment és l'equivalent computacional de ....... screening, %XXX
+%o sigui, a on un gran nombre de mostres (mol·lècules en aquest cas)
+%estan disposades per ser discriminades entre actives i inactives. Per
+%Intelligent Pharma avaluar l'execució del VS és una pràctica
+%necessària, ja que és una forma de seleccionar quin mètode ordena
+%millor. Com hem indicat en l'apartat anterior avaluar el VS ens
+%servirà per comparar entre diferents ponderacions, o sigui, per
+%determinar quina ponderació discrimina millor entre mol·lècules
+%actives i inactives.
 
-L'èxit en el ''Virtual Screening'' està en trobar un bon coeficient
-que assigni bones puntuacions a les molècules interessants(normalment
-definides com a actives respecte a una proteïna) i males puntuacions a
-les mol·lècules menys interessants (inactives). Per tant, un virtual
-screening exitós posarà a d'alt de tot de la llista ordenada les
-mol·lècules actives i després les inactives.
+%L'èxit en el ''Virtual Screening'' està en trobar un bon coeficient
+%que assigni bones puntuacions a les molècules interessants(normalment
+%definides com a actives respecte a una proteïna) i males puntuacions a
+%les mol·lècules menys interessants (inactives). Per tant, un virtual
+%screening exitós posarà a d'alt de tot de la llista ordenada les
+%mol·lècules actives i després les inactives.
 
-A partir d'ara el que tenim és una llista ordenada de mol·lècules i
-volem saber si l'ordenació obtinguda és adequada al nostre problema,
-per tal de poder comparar diferents coeficients i diferents
-ponderacions. De fet, això no es restringeix només al ''Virtual
-Screening'', és un problema universal de tots els exercicis de
-predicció. Això ens pot ajudar a l'hora de trobar aproximacions de la
-bondat de l'ordenació. El problema és que el Virtual Screening té una
-particularitat, i és que la proporció d'actius a posar a d'alt de tot
-de la llista és molt petita, i pot provocar molt biaix a l'hora de fer
-la predicció. Aquest problema en la literatura és conegut com el
-''early recognition problem''. Aquest tema ha estat de gran interès en
-molts àmbits tan acadèmics com de la indústria farmacèutica en els
-últims anys. En aquest apartat estudiarem diferents maneres de tractar
-el problema presentat.
+A partir d'ara el que tenim és una llista ordenada de mol·lècules i volem saber
+si l'ordenació obtinguda és adequada al nostre problema, per tal de poder
+comparar diferents coeficients i diferents ponderacions. De fet, això no es
+restringeix només al nostre cas, sinó que és un problema universal de tots els
+exercicis de predicció. Això ens pot ajudar a l'hora de trobar aproximacions de
+la bondat de l'ordenació. El problema és que el nostre cas té una
+particularitat, i és que la proporció d'actius a posar a d'alt de tot de la
+llista és molt petita, i pot provocar molt biaix a l'hora de fer la predicció.
+Aquest problema en la literatura és conegut com ``early recognition
+problem''. Aquest tema ha estat de gran interès en molts àmbits tan acadèmics
+com de la indústria farmacèutica en els últims anys.
 
 Maneres d'avaluar ordenacions n'hi ha moltes(AUAC,ROC,Enrichment
 Factor, RIE, BEDROC), i s'han analitzat unes quantes, però només
-s'explicarà la utilitzada finalment
+s'explicarà la utilitzada finalment (Bedroc).
 
-XXX : IMPORTANT
+Bedroc es la normalització (entre 0 i 1) d'una mesura anomenada RIE que pondera
+la densitat de les posicions de les actives segons una exponencial negativa amb
+un parametre $\alpha$, que s'ha d'ajustar segons el cas en que ens trobem.  Fent
+això aconseguim avaluar quines ordenacions són millors que altres donant molta
+importància a les primeres posicions.
+
+$$ RIE =\frac{\int_{0}^{1} f_{a}(x)e^{-\alpha x}\, dx} { 1/\alpha \times (1-e^{-\alpha})}  $$
+
+%XXX : IMPORTANT
 % subsubsection Bedroc (end)
 
 \subsubsection{Estereoisomers i conformacions}
@@ -1158,5 +1154,41 @@ Pholus, però no és un projecte tancat, i de fet, ja s'ha ampliat i millorat
 respecte al que es presenta aquí, amb una interfície web i un sistema de mails
 per a reportar la finalització dels càlculs als usuaris.
 
+\subsubsection{Planificació} % (fold)
+\label{ssub:Plan}
+
+Aquest projecte, s'ha desenvolupat aproximadament en el transcurs de dos mesos,
+desde el seu diseny fins a la seva finalització.  S'ha de dir que primera
+concepció del programa ja estava feta, amb el que des del principi es tenia una
+petita idea dels requeriments que tenia el programa, així com on podíen haver
+els principals problemes.
+
+El testeig de pholus, ha estat particularment complex, ja que des d'un principi,
+les dades amb les que s'ha tractat, són dades reals (no hem utilitzat problemes
+joguina), i la validació química ha hagut d'estar feta per experts en química
+molecular, alentint el desenvolupament i finalització  del projecte.
+
+El projecte ha seguit evolucionant més enllà del explicat en aquest document,
+però hem decidit ``tallar'' una vegada ha estat en un estat funcional.
+
+En la Figura \ref{fig:pholus-gantt} veiem el diagrama de gantt, que descriu les
+diferents etapes del projecte 
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=0.39]{pholus/pholus-gantt.png}
+	\end{center}
+	\caption{Gantt del projecte Pholus}
+	\label{fig:pholus-gantt}
+\end{figure}
+
+\subsubsection{Cost} % (fold)
+\label{ssub:Cost}
+
+Pel que fa els costos, podem contabilitzar aproximadament que hi ha hagut unes
+250 hores de desenvolupament.
+% subsubsection Cost (end)
+
+% section Resultats (end)
 % section Conclusions i treball futur (end)
 %\end{document}
