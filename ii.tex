@@ -1,98 +1,100 @@
-\section{L’optimització numèrica} Gran part dels problemes a resoldre que es
+\chapter{Introducció}
+\section{L'optimització numèrica}
+Gran part dels problemes a resoldre que es
 presenten en els diversos camps de la ciència i la enginyeria es poden abstreure
-com a problemes d’optimització numèrica: des de problemes de disseny industrial,
-com per exemple l’optimització de peces de motors de combustió, fins al
+com a problemes d'optimització numèrica: des de problemes de disseny industrial,
+com per exemple l'optimització de peces de motors de combustió, fins al
 modelatge de patrons de comportament biològic de models animals
-d’experimentació. Sovint, aquests problemes presenten una sèrie de
+d'experimentació. Sovint, aquests problemes presenten una sèrie de
 característiques comunes que els fa complexos i difícils de tractar amb mètodes
-d’optimització ‘‘clàssics´´ com poden ser tècniques com en \emph{backtracking},
+d'optimització ``clàssics'' com poden ser tècniques com en \emph{backtracking},
 \emph{branch and bound} o el \emph{simulated annealing}. Aquestes propietats
-són, primerament, que la solució està immersa dins d’un enorme espai de cerca
+són, primerament, que la solució està immersa dins d'un enorme espai de cerca
 (de vegades infinit i per tant no enumerable), que és costos avaluar la
-\emph{bondat} d’una possible solució, que aquesta avaluació no només és costosa
+\emph{bondat} d'una possible solució, que aquesta avaluació no només és costosa
 sinó que també és sorollosa i, finalment, que les diferents parts que composen
 una solució afecten de manera no lineal i epistàtica la bondat de la solució, és
 a dir, que una modificació en una part de la solució pot afectar
-significativament  la idoneïtat d’altra part de la solució.
+significativament  la idoneïtat d'altra part de la solució.
 
 Per tots els motius anteriors, sovint els usuaris es conformen amb no trobar la
 solució al problema, sinó a trobar una bona solució. En aquests casos,  les
 eines com la computació evolutiva són bons candidats a ser usades com a motor
-d’optimització numèrica. La computació evolutiva i en particular els algorismes
-genètics són la implementació d’un procés evolutiu darwinià que va ser començat
-a ser utilitzat en la dècada dels 70 \cite{H75} i, des d’ençà, els algorismes
+d'optimització numèrica. La computació evolutiva i en particular els algorismes
+genètics són la implementació d'un procés evolutiu darwinià que va ser començat
+a ser utilitzat en la dècada dels 70 \cite{H75} i, des d'ençà, els algorismes
 evolutius han anat progressant i sent utilitzats cada cop més en diferents
-àmbits de l’enginyeria. Fins i tot, i tal i com es veurà en una de les parts del
-present PFC, s’han arribat a utilitzar eficaçment per a l’aprenentatge
+àmbits de l'enginyeria. Fins i tot, i tal i com es veurà en una de les parts del
+present PFC, s'han arribat a utilitzar eficaçment per a l'aprenentatge
 artificial \cite{G89}.
 
-Justament, els algorismes evolutius estan tenint tant d’èxit en la recerca
-industrial perquè aproximen d’una manera correcta les cinc propietats
+Justament, els algorismes evolutius estan tenint tant d'èxit en la recerca
+industrial perquè aproximen d'una manera correcta les cinc propietats
 mencionades anteriorment que confereixen la complexitat als problemes reals.
 Potser la propietat dels problemes que menys bé resolen els algorismes evolutius
-és l’epistàsia. Per això, a principis dels 2000 van començar a ser desenvolupats
-algorismes evolutius d’estimació de distribució, que amb un suficient espai
-mostral resolen bé aquest problema \cite{LL02}. En el present PFC no s’ha
-treballat amb algorismes d’estimació de distribució però sí amb altres conceptes
-moderns que tracten l’epistàsia, com és la meta-genètica \cite{ferreira:2006}, o
+és l'epistàsia. Per això, a principis dels 2000 van començar a ser desenvolupats
+algorismes evolutius d'estimació de distribució, que amb un suficient espai
+mostral resolen bé aquest problema \cite{LL02}. En el present PFC no s'ha
+treballat amb algorismes d'estimació de distribució però sí amb altres conceptes
+moderns que tracten l'epistàsia, com és la meta-genètica \cite{ferreira:2006}, o
 en altres paraules, la regulació per vies genètiques de la interacció entre els
 gens (o parts de la solució).
 
 \section{El disseny de fàrmacs}
 
-El disseny de nous fàrmacs és una tasca costosa (el preu mitjà de recerca d’un
+El disseny de nous fàrmacs és una tasca costosa (el preu mitjà de recerca d'un
 nou fàrmac és de \$1.000 milions), lenta (el temps mitjà de desenvolupament és de
 12 anys) i arriscada (només1 de cada 15 fàrmacs en fases clíniques surt al
 mercat). Per això, i degut a que és un assumpte de tanta transcendència social,
 calen noves eines que puguin abaratir, accelerar i eliminar riscs en tot el
 procés de descobriment de nous fàrmacs.
 
-Abans de les fases clíniques (proves en humans) el procés de disseny un nou fàrmac consta de cinc fases: 1) identificació de \emph{hits}; 2) optimització de \emph{hits}; 3) identificació de \emph{leads}; 4) optimització de \emph{leads}; i 5) la fase preclínica. Les tres parts que composen el present PFC entren en joc en l’etapa 1 (Pholus), 2 (Chiron) i 3 (GEP).
+Abans de les fases clíniques (proves en humans) el procés de disseny un nou fàrmac consta de cinc fases: 1) identificació de \emph{hits}; 2) optimització de \emph{hits}; 3) identificació de \emph{leads}; 4) optimització de \emph{leads}; i 5) la fase preclínica. Les tres parts que composen el present PFC entren en joc en l'etapa 1 (Pholus), 2 (Chiron) i 3 (GEP).
 
-En la etapa d’identificació de \emph{hits} l’objectiu és trobar candidats
-moleculars molt primerencs capaços de mostrar un determinat llindar d’activitat
-biològica. En aquest context, Pholus és el mòdul de cal·libratge automàtic d’una
+En la etapa d'identificació de \emph{hits} l'objectiu és trobar candidats
+moleculars molt primerencs capaços de mostrar un determinat llindar d'activitat
+biològica. En aquest context, Pholus és el mòdul de cal·libratge automàtic d'una
 altra eina desenvolupada a Intelligent Pharma que té aquest objectiu.
 
-En la segona etapa, un cop identificats els \emph{hits}, aquests s’han
+En la segona etapa, un cop identificats els \emph{hits}, aquests s'han
 d'optimitzar. Aquesta optimització es fa a laboratori, és a dir, es sintetitzen
 sistemàticament moltes variants combinatòries dels \emph{hits} identificats i
-s’avaluen biològicament. És el que es coneix com química combinatòria. En aquest
+s'avaluen biològicament. És el que es coneix com química combinatòria. En aquest
 sentit, Chiron és una eina informàtica basada en computació evolutiva que guia
-als químics mèdics encarregats de l’optimització molecular en laboratori en la
+als químics mèdics encarregats de l'optimització molecular en laboratori en la
 seva tasca de selecció de variants combinatòries.
 
-Finalment, en la tercera etapa, s’han de realitzar diversos estudis biològics
+Finalment, en la tercera etapa, s'han de realitzar diversos estudis biològics
 per identificar quina de les bones molècules és, a més a més, un bon fàrmac
-potencial. Per fer-ho, es realitzen una bateria d’estudis molt diversos i
-heterogenis com poden ser des d’estudis sobre les propietats toxicològiques dels
+potencial. Per fer-ho, es realitzen una bateria d'estudis molt diversos i
+heterogenis com poden ser des d'estudis sobre les propietats toxicològiques dels
 \emph{hits} optimitzats fins a les seves capacitats de penetració en membranes
 fisiològiques (barrera intestinal, hematoencefàlica, etc.). Per assistir en
 aquestes tasques, Intelligent Pharma està en procés de recerca de noves eines
 matemàtiques i computacionals que puguin modelar el comportament dels models
 biològics usats habitualment en aquesta etapa (toxicologia, permeabilitat,
-etc.). El GEP és una part important i complexa dins d’un projecte major que té
+etc.). El GEP és una part important i complexa dins d'un projecte major que té
 aquest objectiu. Concretament, el GEP és la part que permet descriure el
 comportament de les propietats fisico-químiques de les molècules en procés
-d’estudi mitjançant funcions matemàtiques (en lloc de valor constants, com
-clàssicament s’ha fet. Ex: pes molecular, nombre d’anells aromàtics, nombre de
-donants de ponts d’hidrogen, etc.). A continuació, i això ja no forma part del
+d'estudi mitjançant funcions matemàtiques (en lloc de valor constants, com
+clàssicament s'ha fet. Ex: pes molecular, nombre d'anells aromàtics, nombre de
+donants de ponts d'hidrogen, etc.). A continuació, i això ja no forma part del
 present PFC, aquestes funcions reben un processament funcional per eines
-d’aprenentatge artificial com poden ser màquines de suport vectorial.
+d'aprenentatge artificial com poden ser màquines de suport vectorial.
 
 \section{Els projecte}
 
-Com s’ha mencionat, el present PFC consta de tres grans
+Com s'ha mencionat, el present PFC consta de tres grans
 parts, totes elles relacionades amb la computació evolutiva aplicada al
-descobriment de nous fàrmacs. El PFC s’ha realitzat immers en un entorn
+descobriment de nous fàrmacs. El PFC s'ha realitzat immers en un entorn
 interdisciplinari amb enginyers informàtics, químics computacionals i
 matemàtics/estadístics i té una altíssima component de recerca aplicada. 
 
 A més a més de la recerca realitzada, el projecte també ha implicat el
 desenvolupament de tres tecnologies que en aquests moments estan sent
-utilitzades per la majoria de les empreses farmacèutiques d’Espanya en projectes
+utilitzades per la majoria de les empreses farmacèutiques d'Espanya en projectes
 reals de recerca de nous medicaments en diverses àrees terapèutiques: oncologia,
 malalties neurodegeneratives, cardiovasculars, infeccioses, etc.
 
 La memòria està estructurada en XXX capítols, blablabla
-%Paràgraf escrit per Rai on s’explica l’estructura del document.
+%Paràgraf escrit per Rai on s'explica l'estructura del document.
