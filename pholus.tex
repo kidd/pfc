@@ -217,7 +217,7 @@ Hem de tenir en compte el cost de calcular les diferències entre
 molècules, ja que serà un procés a repetir moltes vegades, i en gran
 número de molècules, i hem d'intentar trobar un coeficient que sigui
 viable de calcular.  Ens hem decidit per una variació de Tanimoto
-\ref{ssub:Tanimoto}, acotada entre -1 i +1 que s'explicarà tot seguit.
+(secció \ref{ssub:Tanimoto}), acotada entre -1 i +1 que s'explicarà tot seguit.
 
 %XAVISTOP  XXX
 
@@ -1158,13 +1158,40 @@ Pholus, però no és un projecte tancat, i de fet, ja s'ha ampliat i millorat
 respecte al que es presenta aquí, amb una interfície web i un sistema de mails
 per a reportar la finalització dels càlculs als usuaris.
 
+\subsubsection{Planificació} % (fold)
+\label{ssub:Costs}
+
+Aquest projecte, s'ha desenvolupat aproximadament en el transcurs de dos mesos,
+desde el seu diseny fins a la seva finalització.  S'ha de dir que primera
+concepció del programa ja estava feta, amb el que des del principi es tenia una
+petita idea dels requeriments que tenia el programa, així com on podíen haver
+els principals problemes.
+
+El testeig de pholus, ha estat particularment complex, ja que des d'un principi,
+les dades amb les que s'ha tractat, són dades reals (no hem utilitzat problemes
+joguina), i la validació química ha hagut d'estar feta per experts en química
+molecular, alentint el desenvolupament i finalització  del projecte.
+
+El projecte ha seguit evolucionant més enllà del explicat en aquest document,
+però hem decidit ``tallar'' una vegada ha estat en un estat funcional.
+
+En la Figura \ref{fig:pholus-gantt} veiem el diagrama de gantt, que descriu les
+diferents etapes del projecte 
+
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.39]{pholus/pholus-gantt.png}
 	\end{center}
 	\caption{Gantt del projecte Pholus}
-	\label{fig:sobreent}
+	\label{fig:pholus-gantt}
 \end{figure}
+
+\subsubsection{Cost} % (fold)
+\label{ssub:Cost}
+
+Pel que fa els costos, podem contabilitzar aproximadament que hi ha hagut unes
+250 hores de desenvolupament.
+% subsubsection Cost (end)
 
 % section Resultats (end)
 % section Conclusions i treball futur (end)
