@@ -58,7 +58,7 @@ Els algorismes genètics es recolzen en tres pilars bàsics: el primer d'ells é
 la selecció d'individus de la població, el segon el creuament d'individus i el
 tercer la funció d'avaluació. La selecció és important perquè és el mètode per
 escollir els individus que generaran descendència, seria bo que normalment
-aquests individus fóssin els millors adaptats a l'entorn. És a dir, aquells amb
+aquests individus fossin els millors adaptats a l'entorn. És a dir, aquells amb
 un \emph{fitness} més alt.  Això, junt amb el creuament de les solucions
 seleccionades, progressivament fa evolucionar la població de solucions. La
 funció d'avaluació és el mecanisme amb el qual es computa el grau d'adaptació de
@@ -66,7 +66,7 @@ cada individu a l'entorn.
 
 Del paràgraf anterior es pot deduir que els algorismes genètics són algorismes no deterministes.
 Això és el resultat dels mecanismes estocàstics emprats. I això pot comportar
-que no sempre s'assegura l'obtenició del màxim global de la funció que es vol
+que no sempre s'assegura l'obtenció del màxim global de la funció que es vol
 optimitzar, la qual cosa és certa, però el que sí que s'ha demostrat
 empíricament és que normalment sempre s'arriben a solucions bones amb un temps
 molt menor que hagués trigat un algorisme de cerca sistemàtic \cite{BBM93}. 
@@ -87,9 +87,9 @@ cas la realitat s'entén com la simulació necessària per avaluar un cromosoma)
 
 Podria ser que l'hora de simular el cromosoma, s'adoptaren una serie de
 qualitats no definides al cromosoma de forma aleatòria, o indeterministes.
-Aquestes qualitats que surten a la llum al ``evaluar'' un element, formen part
+Aquestes qualitats que surten a la llum al ``avaluar'' un element, formen part
 del \emph{fenotip}.  Per d'exemple, es pot imaginar un cromosoma o genotip on
-els seus gens són els Cadenes d'atoms que unim a un cert esquelet d'una
+els seus gens són els Cadenes d'àtoms que unim a un cert esquelet d'una
 molècula\cite{GEB79}. El fenotip serà l'estructura tridimensional que aquesta
 molècula adoptarà a l'espai, que no necessàriament ha d'estar codificada al
 cromosoma.
@@ -130,8 +130,8 @@ les més habituals és un creuament discret amb un o dos punts de tall.  Aquesta
 Finalment, vé la mutació, que és l'encarregada d'introduir o canvis aleatoris en
 els individus amb una probabilitat més aviat baixa. Aquesta activitat és
 realitza per estar segurs de que tot l'espai de cerca pugui ser explorat.
-Modificant la probablilitat d'aparició de mutacions donem més o menys
-variablilitat genètica al algorisme, afavorint o desfavorint la convergència de
+Modificant la probabilitat d'aparició de mutacions donem més o menys
+variabilitat genètica al algorisme, afavorint o desfavorint la convergència de
 la població.
 
 En acabar la mutació el cicle es tanca, i va iterant fins que la condició
@@ -179,7 +179,7 @@ descendència.
 Un concepte que també s'ha d'introduir és el concepte d'\texttt{elitisme}, que
 implica guardar els $k$ millors individus de la població de generació en
 generació, així s'assegura que els millors individus de la població no es perden
-mai.  Aquest és un element que afegeix presió evolutiva, mantenint un ``llistó''
+mai.  Aquest és un element que afegeix pressió evolutiva, mantenint un ``llistó''
 del que no es baixa mai generació a generació, i accelerant la convergència.
 
 \subsubsection{Convergència} 
@@ -196,7 +196,7 @@ implica que el GA no evolucionarà més les solucions, per tant té sentit atura
 la cerca.
 
 Quan apliquem operadors (veure secció \ref{subsec:operadors}) molt restrictius,
-que donen molta pressió evolutiva, ens podem trobar en casos der
+que donen molta pressió evolutiva, ens podem trobar en casos de
 \emph{convergència prematura}, és a dir, en poques generacions, tots els
 individus s'assemblen massa entre ells i els creuaments són poc efectius.  En
 aquests casos, l'algorisme s'estanca en un màxim o mínim local, però rarament
@@ -206,7 +206,7 @@ global.
 
 S'entenen com els operadors d'un GA com les diferents tècniques de realitzar les
 5 fases bàsiques d'un GA. En el treball final de carrera titulat com
-\emph{Química combinatoria virtual: disseny de pèptids que travessen la barrera
+\emph{Química combinatòria virtual: disseny de pèptids que travessen la barrera
 hematoencefàlica} \cite{B01},  hi ha un ampli recull d'operadors, on s'analitzen
 els punts forts i febles de cadascun.  A continuació es descriuen els operadors
 emprats en el GA desenvolupat en aquest projecte en cadascuna de les fases.
@@ -231,19 +231,19 @@ la següent generació.
 La selecció, en els algorismes evolutius és típicament probabilística, donant
 més probabilitats de ser ``pares'' als cromosomes de més qualitat que als de
 menys.  De totes maneres, els individus de poca qualitat també tenen alguna
-possibilitat d'encreuarse i així passar el seu ``codi genètic'' a generacions
+possibilitat d'encreuar-se i així passar el seu ``codi genètic'' a generacions
 futures.
 
-Tècniques de sel·lecció n'hi ha moltes, i aquí n'explicarem només algunes, les
+Tècniques de selecció n'hi ha moltes, i aquí n'explicarem només algunes, les
 que hem provat per als nostres projectes, o bé alguna d'especialment curiosa.
 
 Els \emph{fitness proportional selection}, també anomenat selecció per ruleta
-basen el seu funcionament en què per a cada sel·lecció, la probabilitat que un
-individu $f_i$ sigui sel·leccionat per a reproduir-se depèn únicament del seu
+basen el seu funcionament en què per a cada selecció, la probabilitat que un
+individu $f_i$ sigui seleccionat per a reproduir-se depèn únicament del seu
 \emph{fitness} absolut comparat amb els fitness dels altres individus de la
 població (Figura \ref{fig:rwsgraph}).
 
-Aquest mecanisme de sel·lecció va ser introduit a \cite{H75} i ha estat molt
+Aquest mecanisme de selecció va ser introduït a \cite{H75} i ha estat molt
 estudiat en endavant.  Donada la seva simplicitat, s'han trobat diversos
 problemes:
 
@@ -254,7 +254,7 @@ problemes:
 	\item Si els fitness dels individus són molt similars, la pressió selectiva
 	es veu molt mermada, fent que a la hora d'escollir, es tingui gairebé les
 	mateixes probabilitats d'escollir un individus que un altre, fent que la
-	sel·lecció segueixi una distribució uniforme aleatòria.
+	selecció segueixi una distribució uniforme aleatòria.
 \end{itemize}
 
 
@@ -262,49 +262,49 @@ problemes:
 \caption{\label{fig:rwsgraph}Ruleta FPS}
 \end{figure}
 
-La sel·lecció \emph{basada en ranking}, és un altre mètode que intenta
+La selecció \emph{basada en ranking}, és un altre mètode que intenta
 solucionar els problemes de FPS \cite{B87a}.  Aquest mètode manté la pressió
 selectiva ordenant la població en funció del seu fitness, i assignant les
-probabilitats de sel·lecció en funció de la ordenació en comptes de fer-ho en
+probabilitats de selecció en funció de la ordenació en comptes de fer-ho en
 funció del propi fitness. D'aquesta manera, s'estableix una relació de qui és
-millor que qui, però no hi ha els problemes que teniem en FPS.  El problema que
+millor que qui, però no hi ha els problemes que teníem en FPS.  El problema que
 té aquest mètode és que no fa cap distinció entre les relacions de fitness
 excepte per la relació de ser millor que un altre.  Per exemple, tres elements
-amb fitness 1,2,3 s'ordenaran igual, i amb les mateixes probablilitats de ser
+amb fitness 1,2,3 s'ordenaran igual, i amb les mateixes probabilitats de ser
 seleccionats que elements amb fitness 1,100 i 1000 .  La manera que es té de
-mitigar (que no solucionar) aquest problema és asignar proporcions escalades en
-relació entre la posició en el ranking i la probabilitat de ser sel·leccionat,
+mitigar (que no solucionar) aquest problema és assignar proporcions escalades en
+relació entre la posició en el ranking i la probabilitat de ser seleccionat,
 pot ser una relació lineal, exponencial o bé logarítmica. 
 
 En la figura \ref{fig:rank1} es mostra  un cas on hi ha un cromosoma que tindria
-el 90\% de probablilitats de ser escollit. El que es fa és ordenar de pitjor a
-millor, i al pitjor donarli un ``calaix'', al següent dos, al següent tres, i
+el 90\% de probabilitats de ser escollit. El que es fa és ordenar de pitjor a
+millor, i al pitjor donar-li un ``calaix'', al següent dos, al següent tres, i
 finalment, al millor quatre. 
 
 \begin{figure} \centering \includegraphics[width=4in]{intro/rank1.png}
-\caption{\label{fig:rank1}seleccio ranking}
+\caption{\label{fig:rank1}selecció ranking}
 \end{figure}
 
 En casos reals, s'utilitzen sistemes una mica més sofisticats, com per exemple
-la \emph{sel·lecció per torneig}.  En una sel·lecció per torneig s'ha de definir
+la \emph{selecció per torneig}.  En una selecció per torneig s'ha de definir
 un paràmetre $N$ que descriu la mida del torneig.
 
-En la sel·lecció per torneig, per decidir quin individu passarà a la següent
+En la selecció per torneig, per decidir quin individu passarà a la següent
 generació, es realitzen ``enfrontaments'' de $N$ individus, comparant el seu
 fitness.  El que guanya de tots ells serà qui passarà a la fase de creuament.
 
 Una de les avantatges que té aquest mètode és que no fa falta tenir
 comptabilitzats tots els fitness de la població sencera, ja que només s'han
-d'evaluar per grups de $N$.  Això el fa molt còmode d'usar en sistemes
+d'avaluar per grups de $N$.  Això el fa molt còmode d'usar en sistemes
 paral·lelitzats, o bé en problemes on es molt costós fer una ordenació dels
 fitness a nivell global, com per exemple, quan avaluem tirades en un joc
 estratègic.
 
 Hi ha variants de tornejos on, es defineix un altre paràmetre, que és la
 probabilitat que el que té millor fitness surti realment guanyador.  En els
-tornejos normals (deterministes), aquest parametre $p=1$, però si el disminuim
-tal que $p<1$, hi haura un numero de casos $1-p$ on no guanyarà el millor.
-Aquesta tècnica redueix la presió evolutiva permetent que individus pitjors,
+tornejos normals (deterministes), aquest paràmetre $p=1$, però si el disminuïm
+tal que $p<1$, hi haurà un numero de casos $1-p$ on no guanyarà el millor.
+Aquesta tècnica redueix la pressió evolutiva permetent que individus pitjors,
 passin el seu codi genètic a següents generacions, augmentant la diversitat.
 
 L'algorisme esquematitzat (tant per p=1 com per p<1) és el següent:
@@ -346,7 +346,7 @@ unipunt.
 
 Aquests creuaments, es poden aplicar amb seguretat quan considerem que la
 relació d'un gen $i$ amb el gen $i+1$ no és forta (no hi ha epistàcia).  Si
-trencant un cromosoma per la posició $i$, destruim algun \emph{building block},
+trencant un cromosoma per la posició $i$, destruïm algun \emph{building block},
 probablement, es perdrà un factor que feia que l'individu fós bo, i al
 creuar-lo, no obtindrem gaire bons resultats.
 
@@ -369,7 +369,7 @@ s'ha explicat abans, crear tota una nova població d'individus de generació en
 generació. Malgrat això els $k$ millors individus van guardant-se per tal
 d'assegurar que no es perden al llarg del procés evolutiu.  En tots els
 projectes que es presenten en aquest treball, s'ha mantingut la mida de la
-població, però també es possible fer que les mides de la població variin al
+població, però també es possible fer que aquesta mida de la població varii al
 llarg de les generacions.
 
 %\subsection{Teoremes} En general no n'hi ha cap teoria universalment acceptada
@@ -441,10 +441,10 @@ optimitzi una entrada donada (Figura \ref{fig:ch1-5}).
 \caption{\label{fig:ch1-5}Optimització procés}
 \end{figure}
 
-Els procéssos que s'intenten optimitzar, contenen, és clar, molta més informació
+Els processos que s'intenten optimitzar, contenen, és clar, molta més informació
 que en un dels algorismes genètics dels que s'han vist fins ara.  Això és
 evident, ja que aquí, els individus són parts funcionals d'un sistema i no
-només dades que un sistema agafarà i evaluarà.  Tot seguit es mostren tres
+només dades que un sistema agafarà i avaluarà.  Tot seguit es mostren tres
 exemples de possibles problemes que es poden optimitzar:
 
 \begin{itemize}
@@ -514,12 +514,12 @@ entre dos individus, el cromosoma resultant, pot no mantenir cap (o gairebé
 cap) característica dels seus pares, donada la no-linealitat dels fenotips
 respecte els genotips.  Això dona lloc a que molts dels individus generats a
 partir de individus vàlids, són invàlids en el sentit que poden no complir les
-condicions bàsiques per a ser traduits a fenotips i posteriorment evaluats.
+condicions bàsiques per a ser traduïts a fenotips i posteriorment avaluats.
 
-Una manera de asegurar que les propietats dels progenitors es mantenen a la
-descendència i que continuen éssent individus vàlids, és aplicar els operadors
+Una manera de assegurar que les propietats dels progenitors es mantenen a la
+descendència i que continuen essent individus vàlids, és aplicar els operadors
 a nivell de fenotip, i assegurant-se que els fills continuen tenint una mínima
-entitat que els fa evaluables en el context del problema.  Això dificulta molt,
+entitat que els fa avaluables en el context del problema.  Això dificulta molt,
 però, la programació dels operadors.
 
 Per exemple, en el cas d'interpretar els genotips com a arbres amb formules
@@ -531,15 +531,15 @@ genètica.
 \paragraph{Mutacions} % (fold)
 \label{par:Mutacions}
 Les mutacions en programació genètica són similars conceptualment a les que
-trobem en els altres algorismes evolutius, canviant un subarbre aleatòri del
+trobem en els altres algorismes evolutius, canviant un subarbre aleatori del
 cromosoma per un altre subarbre generat aleatòriament.  Veiem aquí la diferència
 necessària en la implementació, ja que la mutació té lloc en l'espai del fenotip
-(arbre) i no pas en el genotip (vector de símbols).  Hi ha hagut controversia
-sobre la aplicació de mutacions en programació genètica desde els seus inicis.
+(arbre) i no pas en el genotip (vector de símbols).  Hi ha hagut controvèrsia
+sobre la aplicació de mutacions en programació genètica des de els seus inicis.
 Koza en \cite{koza:92} aconsellava desactivar per complet la mutació.   Més
 endavant, s'ha anat donant una mica més importància, però sense ser mai un
 operador fonamental, donat que el creuament també actua en certa manera
-d'operador de mutació però a més gran escala.  Aquestes mutacions cambien la
+d'operador de mutació però a més gran escala.  Aquestes mutacions canvien la
 mida dels cromosomes.
 % paragraph Mutacions (end)
 
@@ -556,15 +556,23 @@ canvis en la mida dels cromosomes.
 % subsubsection operadors (end)
 % subsection Ant. Programació Genètica (end)
 
-\subsection{Principis Bàsics} % (fold)
+\subsection{Principis bàsics} % (fold)
 \label{sub:Principis Basics}
 
+La programació genètica, però, té alguns problemes fonamentals, que mermen la 
+seva potència, com són el sobreentrenament (és molt fàcil obtenir 
+solucions sobreentrenades per al conjunt de mostres amb el que entrenem
+ l'algorisme), el \emph{bloat} (els arbres, tendeixen a créixer desmesuradament),
+o bé la mateixa complexitat que té fer els creuaments o mutacions a nivell de 
+fenotip. GEP, intenta solucionar alguns d'aquests problemes.
+
+
 En GEP, els principals elements son els cromosomes i els arbres d'expressions,
-on els segons són la expresió del la informació ogenètica codificada en els
-cromosomes.  Com en la natura, el procés de decodificació s'anomena
+on els segons són la expressió del la informació genètica codificada en els
+cromosomes.  Com en la natura, el procés de descodificació s'anomena
 \emph{traducció}.
 
-La correspondència d'un a l'altre ha de ser únivoca i hi ha unes regles que ens
+La correspondència d'un a l'altre ha de ser unívoca i hi ha unes regles que ens
 permeten passar d'un a l'altra.  En la natura, aquesta traducció no és pas tant
 fàcil, ja que no se sap gairebé res del genotip, si tenim només un fenotip, però
 per a tenir una traducció fàcil dins de GEP, es disposa d'una notació anomenada
@@ -589,7 +597,7 @@ fins ara) sinó que cada gen està associat a una K-expression.
 \cite{ferreira:2007}
 
 Tot seguit es mostra un exemple d'un gen, i en \ref{fig:expression tree1} el seu
-\texttt{Arbre d'expresió} equivalent
+\texttt{Arbre d'expressió} equivalent
 
 \begin{center}
 0123456    
@@ -608,22 +616,22 @@ La traducció d'un a l'altre és directe.  El primer element en el gen (posició
 0) correspon a la arrel del arbre.  Llavors, sota d'aquest node, s'enganxen
 tants nodes fills com arguments tingui la funció representada pel node arrel
 (dos en aquest cas). Els nodes fills es van omplint recursivament, consumint
-simbols del cromosoma, fins que un nivell del arbre queda només omplert per
+símbols del cromosoma, fins que un nivell del arbre queda només omplert per
 nodes terminals, que no son més que nodes on el símbol que contenen té aritat
 zero.
 
 Més formalment, tant el gen com l'arbre \ref{fig:expression tree1} poden ser
-representats per la expresió matemàtica:
+representats per la expressió matemàtica:
 
 	$\frac{a}{b}+c \times d$
 
-Per assegurar que els arbres que es crein siguin sintàcticament vàlids, es
+Per assegurar que els arbres que es creïn siguin sintàcticament vàlids, es
 divideix un gen en dues parts, amb mides que segueixen unes normes determinades
 que s'expliquen en detall en l'apartat \ref{ssub:Inicialitzacio}.  Un gen es
 composa de la primera part (\emph{head}) que conté funcions i terminals, i d'una
 segona part (\emph{tail}) que només conté terminals (aritat zero). Si el tail és
 suficientment llarg com per omplir la última capa del arbre que genera el propi
-gen, sempre hi haurà prous operands per a donar a les funcions.
+gen, sempre hi haurà prou operands per a donar a les funcions.
 
 % subsubsection Notació Karva (end)
 
@@ -632,12 +640,12 @@ gen, sempre hi haurà prous operands per a donar a les funcions.
 % subsubsection individus (end)
 
 Com s'ha explicat en \ref{ssub:Notacio Karva}, els individus son representats en
-una tira de simbols (genotip), però al interpretar-los i evaluar-los, tenen una
+una tira de símbols (genotip), però al interpretar-los i avaluar-los, tenen una
 representació en forma d'arbre d'expressió similar a un AST\footnote{Abstract
 syntax tree}.
 
 Un individu o cromosoma està format per un o més gens.  En la versió més
-primaria, un cromosoma conté només un gen, però es poden combinar diversos gens,
+primària, un cromosoma conté només un gen, però es poden combinar diversos gens,
 creant cromosomes multigen, com s'explicarà més endavant.
 
 En aquest tipus de notació, existeixen el que denominem ``zones
@@ -658,7 +666,7 @@ El head té tan funcions com terminals, i el tail, només té terminals.
 La codificació d'aquest gen es mostra en \ref{fig:unfinished} mostra com en aquest cas,
 no han fet falta tots els elements del gen per a construir l'arbre.  Això és
 perquè la fórmula que en assegura tenir prou tail, preveu el pitjor dels casos,
-éssent tots els elements del head funcions amb la màxima aritat.  Com que en
+essent tots els elements del head funcions amb la màxima aritat.  Com que en
 aquest cas, tenim una arrel quadrada (i en l'arrel del arbre), deixem de
 necessitar gairebé la meitat del gen per a fer la traducció.
 
@@ -681,9 +689,9 @@ funcionament de GEP.  La codificació Karva és el nucli del bon funcionament de
 GEP, però és només el principi.  És a dir, existeixen mètodes més avançats que
 parteixen d'aquesta base, i aconsegueixen millorar els resultats del GEP
 estàndard, com per exemple, codificar més d'un gen en un cromosoma. Són els
-anomenats cromosomes multigen.  En aquests sistemes, els cromosomes estàn
+anomenats cromosomes multigen.  En aquests sistemes, els cromosomes estan
 codificats a partir de diversos gens, i cadascun d'ells formen un subarbre o
-subprograma.  Una vegada traduits cadascun dels subarbres, aquests poden ser
+subprograma.  Una vegada traduïts cadascun dels subarbres, aquests poden ser
 connectats entre ells de diferents maneres.  Una de les més utilitzades és usant
 funcions especials, anomenades d'enllaç. Aquestes funcions uneixen linealment
 els diferents subarbres per ordre d'aparició en el gen.  Per exemple, observem
@@ -708,7 +716,7 @@ Aquest cromosoma codifica tres arbres de la Figura \ref{fig:tres sub-et}
 \label{fig:tres sub-et}
 \end{figure}
 
-Si s'utilitzen funcions d'enllaç, per exemple, la suma, la evaluació del
+Si s'utilitzen funcions d'enllaç, per exemple, la suma, la avaluació del
 cromosoma complet passaria a ser el mostrat en la figura 
 \ref{fig:tres sub-et amb link}
 
@@ -739,32 +747,32 @@ la funció objectiu.
 \subsection{Operadors} % (fold)
 \label{sub:Operadors}
 
-Tot seguit es descriuràn els operadors usats en GEP, sense concretar la seva
+Tot seguit es descriuran els operadors usats en GEP, sense concretar la seva
 implementació, sinó explicant com varien els individus.  Per a veure els
 detalls sobre la aplicació en aquest projecte, les explicacions i
-imlpementacions més complertes consultar la secció \ref{cha:GEP}.
+implementacions més complertes consultar la secció \ref{cha:GEP}.
 
 \subsubsection{Inicialització} % (fold)
 \label{ssub:Inicialitzacio}
 Donades les particularitats de la notació Karva, la inicialització d'arbres
-aleatòris, consisteix en omplir head i tail amb simbols aleatoris permesos en
+aleatoris, consisteix en omplir head i tail amb símbols aleatoris permesos en
 cadascuna de les zones.  Normalment, el head tindrà símbols operadors i
 variables terminals i el tail, únicament contindrà variables terminals.  La
 aritat zero dels terminals ens garantitza que l'arbre serà sintàcticament
 correcte.
 
-La població inicial es genera aplicant aquest algorisme a cadascunt dels
+La població inicial es genera aplicant aquest algorisme a cadascun dels
 individus.
 % subsubsection Inicialització (end)
 
-\subsubsection{Sel·lecció} % (fold)
+\subsubsection{Selecció} % (fold)
 \label{ssub:Seleccio}
 En GEP, també s'utilitza, per norma general la selecció per ruleta
 (secció \ref{subs:Iseleccio}).  Un individu té una probabilitat de ser seleccionat per a
 la reproducció proporcional al seu fitness en valor absolut, respecte als altres
 individus de la població.
 
-% subsubsection Sel·lecció (end)
+% subsubsection Selecció (end)
 
 \subsubsection{Creuament} % (fold)
 \label{ssub:Creuament}
@@ -773,7 +781,7 @@ El creuament, juntament amb la mutació és l'element que dóna la major part de
 riquesa als algorismes GEP.  Els creuaments en GEP són uns operadors que, a
 diferència de la programació genètica, donen molta llibertat per a la
 experimentació, ja que només s'han de mantenir unes certes regles molt bàsiques,
-i es pot assegurar que es generaràn arbres sintàcticament correctes.
+i es pot assegurar que es generaran arbres sintàcticament correctes.
 
 Per exemple, en GEP es poden aplicar creuaments típics dels algorismes evolutius
 clàssics, com el \texttt{creuament per un punt}, o els \texttt{creuaments per
@@ -783,7 +791,7 @@ d'aritat $>0$).
 
 A més a més, GEP té uns creuaments particulars, anomenats \texttt{recombinació
 de gens}, que es basen en separar els dos individus a creuar en els seus
-diferents gens, i fer el creuament ajustant els punts de tall als limits dels
+diferents gens, i fer el creuament ajustant els punts de tall als límits dels
 gens.  Aquest creuament només és aplicable si implementem individus multigen.
 % subsubsection Creuament (end)
 
@@ -799,8 +807,8 @@ mutant, per a no incloure en el tail símbols que estan restringits a usar-los
 només en el head.
 
 Per altra banda, GEP disposa de tres mutacions pròpies, anomenades IS, RIS i
-``traslació de gen'', que es basen en desplaçaments de conjunts de simbols al
-llarg del gen.  Aquests operadors estàn explicats més en detall a \ref{par:IS},
+``translació de gen'', que es basen en desplaçaments de conjunts de símbols al
+llarg del gen.  Aquests operadors estan explicats més en detall a \ref{par:IS},
 \ref{par:RIS} i \ref{par:Translacio de gen}
 % subsubsection Mutació (end)
 
@@ -815,9 +823,8 @@ llarg del gen.  Aquests operadors estàn explicats més en detall a \ref{par:IS}
 \label{sec:Estat de l'art}
 
 Actualment, els algorismes genètics estan essent més i més utilitzats no sols en
-el món acadèmic, sinó també en el món de l'empresa.  Per exemplificar això, es
-presenten les dades d'un article publicat a science
-%XXX 
+el món acadèmic, sinó també en el món de l'empresa. 
+
 
 Les últimes publicacions referents a algorismes genètics tendeixen cap a
 optimitzacions de la convergència.  Els algorismes genètics són processos
@@ -826,7 +833,7 @@ conegut a priori).  Així doncs, el que s'intenta és aconseguir ``guiar''
 l'algorisme perquè avanci de pressa cap a un estat convergent (s'aturi), sense
 perjudicar això a la eficàcia.  Molts dels estudis de tècniques per millorar
 l'eficiència dels algorismes genètics estan relacionats amb l'aprofitament de la
-paralelització de processos, aprofitant sistemes distribuits, o fins i tot en
+paralelització de processos, aprofitant sistemes distribuïts, o fins i tot en
 cloud.  
 
 Els treballs més recents relacionats amb algoritmes evolutius estan relacionats
@@ -845,7 +852,7 @@ primeres implementacions en Lisp o derivats (Scheme).
 
 El ``problema'' dels llenguatges tant dinàmics com Lisp, era que al treballar sobre
 màquina virtual eren massa lents per a la implementació en producció.  Recordem que les
-aplicacions que utilitzen algorismes de intelligència artificial requereixen un
+aplicacions que utilitzen algorismes de intel·ligència artificial requereixen un
 gran volum de càlculs.
 
 És per això que els sistemes amb grans necessitats de càlcul per a producció
@@ -856,7 +863,7 @@ Actualment i donada la gran potència de calcul dels ordenadors actuals, cada
 vegada hi ha més empreses que comencen a utilitzar llenguatges interpretats per
 a realitzar algorismes genètics. Llenguatges com Haskell i Erlang que han
 demostrat ser molt ràpids i paralelitzables, no han fet el salt a la
-inteligència artificial massivament, ja que la seva puresa (transparència
+intel·ligència artificial massivament, ja que la seva puresa (transparència
 referencial i fortament tipats) els fa més ferragosos de treballar en problemes
 eminentment dinàmics com els algoritmes evolutius.
 

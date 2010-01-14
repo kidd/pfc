@@ -129,9 +129,9 @@ s'ha analitzat el problema del sobreentrenament, com és necessari en qualsevol 
 %atòmiques en ambients electrònics particulars.  Podem veure les 22 sondes atòmiques
 %implementades en HELIOS en la taula \ref{table:maps}.
 
-L'alineament múltiple de camps moleculars flexibles és una taxa complexa que requereix de tècniques i recursos computacionals avançats. El procés implementat per HELIOS fixa el camp molecular del compost de referència i utilitza algoritmes evolutius en un sistems de "cloud-computing" per duu a terme l'alineament flexible múltiple dels camps moleculars de cadascún dels diferents compostos que hi ha dins la base de dades.
+L'alineament múltiple de camps moleculars flexibles és una taxa complexa que requereix de tècniques i recursos computacionals avançats. El procés implementat per HELIOS fixa el camp molecular del compost de referència i utilitza algoritmes evolutius en un sistema de ``cloud-computing'' per duu a terme l'alineament flexible múltiple dels camps moleculars de cadascun dels diferents compostos que hi ha dins la base de dades.
 
-Amb això obtenim per a cada mol·lècula de la base de dades 22 vectors on hi ha els valors per cadascún dels punts ordenats del grid de les 22 sondes moleculars. A partir d'aquí hem de trobar alguna manera d'avaluar la similitud entre mol·lècules.
+Amb això obtenim per a cada mol·lècula de la base de dades 22 vectors on hi ha els valors per cadascun dels punts ordenats del grid de les 22 sondes moleculars. A partir d'aquí hem de trobar alguna manera d'avaluar la similitud entre mol·lècules.
 
 Com es mostrarà en les següents seccions, hi ha una part important de feina
 realitzada en la preparació de les dades, i en la corresponent validació dels
@@ -185,7 +185,7 @@ Per començar, hem d'imaginar una molècula com un graf en un espai de tres
 dimensions, on els nodes són els àtoms, i les arestes són enllaços.  En general,
 semblança $S_{A,B}$ entre dos objectes és estimada pel nombre d'elements iguals
 que tenen. Els objectes que són iguals, haurien de tenir la màxima puntuació.
-Per tant, una expressió de la semblança sería en termes de la teoria de
+Per tant, una expressió de la semblança seria en termes de la teoria de
 conjunts, la intersecció $(A\cap B)$ que en lògica seria l'operador $AND$. La
 dissimilitud $D_{A,b}$ és estimada pel nombre d'elements diferents que tenen.
 Els objectes idèntics obtindrien la mínima puntuació. Anàlogament a la
@@ -335,7 +335,7 @@ s'explicarà la utilitzada finalment (Bedroc).
 
 Bedroc es la normalització (entre 0 i 1) d'una mesura anomenada RIE que pondera
 la densitat de les posicions de les actives segons una exponencial negativa amb
-un parametre $\alpha$, que s'ha d'ajustar segons el cas en que ens trobem.  Fent
+un paràmetre $\alpha$, que s'ha d'ajustar segons el cas en que ens trobem.  Fent
 això aconseguim avaluar quines ordenacions són millors que altres donant molta
 importància a les primeres posicions.
 
@@ -733,7 +733,7 @@ amb aquest tipus de problemes, el valor de 0.1 s'ha deixat com a bo.
 
 \subsubsection{Selecció} % (fold)
 \label{ssub:Seleccio}
-El procés de sel·lecció de candidats es segueix utilitzant un Torneig
+El procés de selecció de candidats es segueix utilitzant un Torneig
 Determinista de mida 2, és a dir, s'escullen parelles d'individus
 aleatòriament i enfrontem un individu amb l'altre. Del torneig surt ``viu'' el
 que millor fitness té.
@@ -745,8 +745,8 @@ que millor fitness té.
 Pel creuament s'ha provat un creuament per un punt, i el creuament per dos
 punts, donant millors resultats el creuament en tant sols un punt.  
 
-Donats dos individus (els que han estat sel·leccionats en el procés de
-sel·lecció per a reproduir-se , amb una probabilitat d'un 0.85 es fa creuament i
+Donats dos individus (els que han estat seleccionats en el procés de
+selecció per a reproduir-se , amb una probabilitat d'un 0.85 es fa creuament i
 els fills són tan sols una partició formada a partir dels 2 pares, amb un punt
 de tall aleatori.  Donat que no hi ha cap relació entre els diferents indexos
 (estan ordenats arbitràriament) no ens hem de preocupar de partir el cromosoma
@@ -833,19 +833,21 @@ Per a calcular la qualitat d'una ordenació, hi ha diverses maneres de fer-ho.
 
 \begin{itemize}
 	\item Roc
-	\item BedRoc
+	\item Bedroc
 	\item Enrichment Factor
-	\item ...
 \end{itemize}
 
 
-En qualsevol d'aquests procediments, es tracta d'avaluar com està de ben ordenada una llista, en funció d'unes regles.
+En qualsevol d'aquests procediments, es tracta d'avaluar com està de
+ben ordenada una llista, en funció d'unes regles.  La implementació
+final utilitza Bedroc
 
 Posarem un exemple per tal de fer més fàcil la comprensió de la funció de
 fitness.
 
-Suposem una taula amb els identificadors i tanimotos d'un seguit de molècules,
-unes d'elles actives i altres inactives (esquers o decoys).
+Suposem una taula amb els identificadors i tanimotos d'un seguit de
+molècules, unes d'elles actives i altres inactives (esquers o decoys)
+com en la taula \ref{table:tanis}.
 
 
  % theme=Berlin;caption_top=1;caption=Exemple tanimotos
@@ -869,6 +871,7 @@ m3\_i001\_c001 & 0.1 & 0  \\
 \hline
 \end{tabular}
 \caption{Exemple tanimotos}
+\label{table:tanis}
 \end{table}
 
 De totes elles, sabem que les actives son, per exemple m1 i m2, però no sabem
@@ -879,7 +882,7 @@ quedi millor posicionada.
 % subsubsection Fitness (end)
 
 
-\subsection{sobreentrenament} % (fold)
+\subsection{Sobreentrenament} % (fold)
 \label{sub:sobreentrenament}
 
 Un dels problemes que comporta la utilització d'algoritmes evolutius és
@@ -912,7 +915,7 @@ dades,
 	\item 80 10 10, es fa sobre molècules i després es deixen passar totes les
 		conformacions d'aquestes molècules, fent que les dades finals no siguin 80 10 10
 		, però això es correcte perquè la flexibilitat d'una molècula es part de la seva
-		'qualitat'.
+		``qualitat''.
 	\item aquestes ponderacions que ens dona el algoritme genètic, es
 		\texttt{loguegen} i es manté un històric d'elles, per saber quina és la mitja
 		de la població en cada iteració (generació), i la desviació típica.  El que
@@ -1160,7 +1163,7 @@ per a reportar la finalització dels càlculs als usuaris.
 Aquest projecte, s'ha desenvolupat aproximadament en el transcurs de dos mesos,
 desde el seu diseny fins a la seva finalització.  S'ha de dir que primera
 concepció del programa ja estava feta, amb el que des del principi es tenia una
-petita idea dels requeriments que tenia el programa, així com on podíen haver
+petita idea dels requeriments que tenia el programa, així com on podien haver
 els principals problemes.
 
 El testeig de pholus, ha estat particularment complex, ja que des d'un principi,
@@ -1185,7 +1188,7 @@ diferents etapes del projecte
 \subsubsection{Cost} % (fold)
 \label{ssub:Cost}
 
-Pel que fa els costos, podem contabilitzar aproximadament que hi ha hagut unes
+Pel que fa els costos, podem comptabilitzar aproximadament que hi ha hagut unes
 250 hores de desenvolupament.
 % subsubsection Cost (end)
 

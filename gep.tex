@@ -293,7 +293,7 @@ implementat una estructura amb nodes, i un template arbre.
 S'ha implementat una classe abstracte Node de la que ``pengen'' les diferents
 especialitzacions, que són les diferents operacions que suporta GEP, o bé els
 terminals.  Cada subclasse de Node implementa la funció \emph{calcula}, amb un
-nobre variable de paràmetres.  Els terminals, com és d'esperar, tenen aritat
+nombre variable de paràmetres.  Els terminals, com és d'esperar, tenen aritat
 zero, i al ser avaluats, retornen el valor del terminal en aquest moment com a
 resultat.  Els operadors (aritat $>0$), requereixen d'altres nodes per a
 calcular el seu resultat.  D'això es deriva que en un cromosoma donat, al
@@ -311,7 +311,7 @@ elegant de fer-se aquest procés:  Utilitzant les llibreries Boost\cite{GABOOST}
 ofereixen, entre d'altres, funcionalitats pròpies de llenguatges funcionals,
 com per exemple Boost::Functional, que permet la programació de c++ retornant
 funcions com a valor de retorn de una funció (programació d'ordre superior).  
-D'aquesta manera, encara es podría delegar un pas més avall la creació de nodes.
+D'aquesta manera, encara es podria delegar un pas més avall la creació de nodes.
 
 % subsubsection Arbres (end)
 
@@ -330,7 +330,7 @@ constants al cromosoma, fent que participin també en els creuaments i les
 mutacions.  Els resultats, però, no podem dir que siguin substancialment millors
 que en la versió ``sense constants''.
 
-La manera en què GEP intenta trobar-les és construïnt arbres que s'anul·len
+La manera en què GEP intenta trobar-les és construint arbres que s'anul·len
 entre ells, donant lloc a valors fixes, com per exemple subarbres que divideixen
 un terminal per ell mateix.  D'aquesta manera tenim un 1 fixe en l'arbre.  A
 base de construccions seguint aquest procés GEP és capaç de trobar constants en
@@ -351,7 +351,7 @@ gen, sinó que hem seguit dues altres maneres, més sofisticades per a represent
 les nostres fórmules matemàtiques.
 
 Aquests mètodes \cite{ferreira:2006} es basen en complicar una mica més el cromosoma,
-però sempre fent servir la notacio karva (secció \ref{ssub:Notacio Karva}).  Una de les millores, és
+però sempre fent servir la notació Karva (secció \ref{ssub:Notacio Karva}).  Una de les millores, és
 encabir més d'un gen en un cromosoma. Fent això, el que aconseguim és
 evolucionar dos subarbres, que en el moment de la avaluació, s'uneixen d'alguna
 manera.
@@ -464,7 +464,7 @@ torneig determinista, però els resultats millors ens l'ha donat la selecció pe
 ruleta.  La literatura també indica que els millors resultats s'acostumen a
 aconseguir amb aquest tipus de creuament
 \cite{ferreira:2001,ferreira:2006,ferreira:2007}.
-% subsubsection Sel·lecció (end)
+% subsubsection Selecció (end)
 
 \subsubsection{Creuament} % (fold)
 \label{Gssub:Creuament}
@@ -502,12 +502,16 @@ millorar el fitness d'un element.
 
 L'últim creuament que hem aplicat exitosament és el de la recombinació de gens.
 En aquest procés, es separen els gens dels dos cromosomes pares, i en el procés
-de recombinació, es reordenen els gens
+de recombinació, es reordenen els gens.  Si sabem entre quines posicions estàn 
+representats cada subarbre, podem recombinarlos en ordre diferent. En el cas
+d'implementar cromosomes multigen units mitjançant funcions de linkatge, podem 
+recombinar qualsevol gen amb qualsevol altre, però si implementem els cromosomes
+de manera que hi ha un sub-gen que conté referències als altres subgens, aquest 
+subarbre no pot partcicipar en la recombinació, ja que el número de terminals pot
+ser diferent del dels altres gens.
+
 % paragraph Creuament per translació de gen (end)
 
-Creuaments, arbres subarbres blablba
-
-tipus de creuaments
 % subsubsection Creuament (end)
 
 \subsubsection{Mutacions} % (fold)
@@ -575,18 +579,18 @@ sobre uns valors com a entrades d'un sistema, que donen lloc a unes sortides.
 És per això, que en el nostre cas, en la fase de proves, hem fet servir funcions
 matemàtiques que coneixem i volem que GEP descobreixi com a problemes joguina.
 
-Així doncs, per a cada individuu, a partir del genotip, el transformem al arbre
+Així doncs, per a cada individu, a partir del genotip, el transformem al arbre
 corresponent, i l'avaluem 50 vegades per a valors de les entrades aleatoris.
 Se'ls hi ha posat límits en el rang de valors possibles, per no patir
 desbordaments de rang en els resultats.  Tenim en compte que GEP avalua molts
 arbres, i molts d'ells poden donar lloc a operacions equivalents a $x^{15}$.
 
 Si es disposen només d'uns valors concrets per unes entrades concretes,
-s'utilitzarien aquests per avaluar cada individuu, però com que en el nostre
+s'utilitzarien aquests per avaluar cada individu, però com que en el nostre
 cas, hem provat l'algorisme amb funcions que coneixem a priori hem pogut
 utilitzar valors aleatòris com a entrada a provar.
 
-Per a valorar les qualitats de cadascun dels individuus, l'algorisme tracta de
+Per a valorar les qualitats de cadascun dels individus, l'algorisme tracta de
 minimitzar la funció del quadrat de la suma de diferències entre el valor
 esperat de la funció que busquem i el resultat del individu.  Utilitzem el
 quadrat de la suma i no la suma perquè així penalitzem les funcions que poden
@@ -678,9 +682,9 @@ molècules, ni tan sols s'acosta a trobar una fórmula fidel al model.
 \label{sec:GConclusions i treball futur}
 Aquest projecte, tot i que ens ha estat molt útil per a explorar la tècnica de
 la programació d'expressions genètiques no ens ha servit per a la finalitat que
-s'havia disenyat inicialment.
+s'havia dissenyat inicialment.
 
-Creiem que coneixem els motius pels cuals no hem aconseguit la eficiència
+Creiem que coneixem els motius pels quals no hem aconseguit la eficiència
 desitjada, però com que s'ha pogut solucionar el problema global (extracció de
 característiques dinàmiques d'una molècula) amb altres tècniques (màquines de
 suport vectorial) de manera eficient, el projecte GEP, es queda en ``stand by''
@@ -694,9 +698,9 @@ gaire llunyà.
 \label{ssub:GPlan}
 
 Aquest projecte, s'ha desenvolupat aproximadament en el transcurs de dos mesos,
-desde el seu diseny fins a la seva finalització.  Aquest projecte ha tingut una
+des de el seu disseny fins a la seva finalització.  Aquest projecte ha tingut una
 component molt important de documentació sobre algorismes genètics per dos
-motius.  Per una banda jo no teniem coneixements de algorismes genètics, i la
+motius.  Per una banda jo no teníem coneixements de algorismes genètics, i la
 primera part de documentació va ser una aproximació general a aquestes
 tècniques.  Per l'altre, GEP és una tecnologia relativament nova, i no està
 gaire explorada. 

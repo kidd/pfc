@@ -53,7 +53,7 @@
 	La idea en aquest programa és doncs, \emph{construir un algoritme genètic
 	interactiu que ens permeti arribar a la millor tria de ramificacions (o
 	alguna de molt bona) sintetitzant només una petita part del espai de
-	búsqueda.}
+	cerca.}
 
 	Per a avaluar la qualitat de una combinació, no hi ha més remei que
 	sintetitzar la molècula en qüestió en el laboratori i retornar el resultat
@@ -65,7 +65,7 @@
 
 	Una altre objectiu d'aquest programa, ha estat convertir-lo en un
 	``framework'' d'algorismes genètics.  Veient que la funció de fitness és una
-	funció que executa l'usuari, i ell és qui puntúa cadascuna de les
+	funció que executa l'usuari, i ell és qui puntua cadascuna de les
 	combinacions, s'ha intentat anar més enllà i aconseguir una aplicació que
 	pugui ser utilitzada no només en aquest context, sinó en qualsevol que ens
 	podem trobar en un futur, sempre i quan requereixi uns operadors similars.
@@ -224,7 +224,7 @@ d'aquest moment on Chiron s'encarrega de registrar els events.
 Per a la creació d'un nou experiment, Chiron necessita únicament el número de
 ramificacions que conté l'esquelet (R1 \dots RN), el número d'al·lels diferents que
 poden estar en cadascuna de les ramificacions, la mida de la població, i un booleà
-indicant si volem que Chiron recordi (cachegi) els resultats o no.  Amb aquestes
+indicant si volem que Chiron recordi (catch) els resultats o no.  Amb aquestes
 dades, Chiron en té prou per començar l'experiment.  És clar que també demanarà
 un nom per al que l'usuari s'hi pugui referir.
 
@@ -280,11 +280,11 @@ interessa.  Per exemple, si tenim una població de 30 individus i tots tenen
 fitness 0, Chiron intentarà fer creuaments entre ells aleatoris (ja que cap
 d'ells guanya sobre els altres).  No només això sinó que al fer això, molts dels
 individus de la següent generació seran iguals als ja avaluats, ja que hem
-reduït molt l'espai de búsqueda sobre el que explorem.
+reduït molt l'espai de cerca sobre el que explorem.
 
 Si avaluéssim funcions matemàtiques contínues i amb un gradient clar fins al
 millor resultat (o els millors resultats), com en la Figura \ref{fig:normal}, no
-tindríem aquest problema, però els nostres casos són, en la gran majoría, casos
+tindríem aquest problema, però els nostres casos són, en la gran majoria, casos
 hiperdimensionals, on tenim un espai de cerca molt gran però els pous amb
 activitat són molt pocs (i estrets), i hem d'intentar arribar a aquests pous
 primer, i després optimitzar per les vies del algoritme genètic (Figura
@@ -345,7 +345,8 @@ tenint el millor resultat global envoltat de resultats molt dolents, i tenint un
 màxim/mínim local ``fàcil'' d'arribar-hi en un extrem, apartant les solucions de
 l'òptim global.  Una de les funcions trampa que hem provat, és la de mapejar en
 un vector de bits una valoració determinada per a cada suma de bits.  Per
-exemple, donat un vector de 5 posicions:
+exemple, donat un vector de 5 posicions es mostra en la taula \ref{table:ftrampa}
+el fitness que li assignem.
 
  % theme=Berlin;caption_top=1;caption=Exemple tanimotos
  % bits a 1 & valor
@@ -359,6 +360,7 @@ exemple, donat un vector de 5 posicions:
 \begin{table}
 \centering
 \caption{Funció trampa}
+\label{table:ftrampa}
 \begin{tabular}{|r|r|}
 \hline
 \multicolumn{1}{|c|}{\textbf{bits a 1 }} & \multicolumn{1}{c|}{\textbf{ valor}} \\
@@ -448,7 +450,7 @@ o altres SGBDs orientats a Documents,o diccionaris clau-valor).
 Aquesta estructura ens permet tenir un historial de tots els elements que han
 anat construint-se en els diferents experiments per a futurs anàlisis i
 visualitzacions.
-% subsubsection Emmagatematge de les dades (end)
+% subsubsection Emmagatzematge de les dades (end)
 
 \subsubsection{Webservice d'algorismes genètics} % (fold)
 \label{ssub:Webservice d'algorismes genetics}
@@ -497,7 +499,7 @@ utilitzar-lo.
 SaaS també ha despertat dubtes i queixes, bàsicament en dues vessants:
 
 Una d'elles és la dependència en el proveïdor de software.  No tenir cap tipus
-d'infrastructura, suposa estar en mans del proveïdor, i per tant, si els
+d'infraestructura, suposa estar en mans del proveïdor, i per tant, si els
 servidors del proveïdor no funcionen bé, o hi ha problemes d'accés, l'usuari
 no controla les dades, ni pot fer res més que posar-se en contacte amb el
 proveïdor del servei.  Aquesta falta d'autosuficiència fa que encara generi
@@ -561,13 +563,13 @@ comunicació entre els processos en la figura \ref{fig:401px-Orb.png}.
 \label{fig:401px-Orb.png}
 \end{figure} 
 
-Tecnologíes per a executar RPCs (Remote procedure call) n'hi ha moltes
+Tecnologies per a executar RPCs (Remote procedure call) n'hi ha moltes
 diferents. Les tecnologies que ens obliguen a utilitzar el mateix llenguatge de
 programació han quedat descartades de bon principi, ja que un dels objectius
 principals és precisament obrir el programa a futures aplicacions que puguem
 crear.  És per això que RMI, que ens lliga a java no pot ser utilitzada.  
 
-Una altra alternativa que hem estudiat és CORBA, que és un sistema molt extès
+Una altra alternativa que hem estudiat és CORBA, que és un sistema molt estès
 per a tipus d'aplicacions client-servidor en xarxa, i proporciona una capa
 intermitja molt còmoda i extensible.  CORBA és un sistema dissenyat per a
 comunicar diferents llenguatges entre si.  Per aquesta part, ens serveix per als
@@ -682,7 +684,7 @@ condiciona els creuaments, com s'explica en la següent secció.
 
 \subsubsection{Selecció} % (fold)
 \label{ssub:CSeleccio}
-En aquest problema, hem utilitzat un algorisme de sel·lecció per Torneig
+En aquest problema, hem utilitzat un algorisme de selecció per Torneig
 determinista ($p=1$), on competeixen dos individus.  Donat que les poblacions
 són relativament petites en la majoria de casos (tenim un espai total de cerca
 de gairebé 16000), hem utilitzat un torneig petit, ja que la pressió evolutiva
@@ -716,8 +718,8 @@ punts, donant resultats similars en els dos casos.  Donat que els experiments
 químics en què s'ha provat (\ref{sec:Resultats}), tenen només tres llocs per a
 substituents, un creuament per diversos punts no tenia gaire sentit.
 
-Donats dos individus (els que han estat sel·leccionats en el procés de
-sel·lecció per a reproduir-se , amb una probabilitat d'un 0.8 es fa creuament i
+Donats dos individus (els que han estat seleccionats en el procés de
+selecció per a reproduir-se , amb una probabilitat d'un 0.8 es fa creuament i
 els fills són tan sols una partició formada a partir dels 2 pares, amb un punt
 de tall aleatori.  Donat que no hi ha cap relació entre els diferents indexos
 (estan ordenats arbitràriament) no ens hem de preocupar de partir el cromosoma
@@ -780,7 +782,7 @@ Hem de crear doncs, una classe per a cada element del algorisme genètic.
 Eodev disposa d'una manera per llançar execucions amb un arxiu de configuració
 determinat.  El format no respon a cap estàndard (ni .ini, ni .conf\ldots).
 Aquest format és el que fem servir per a llançar procéssos \texttt{Chiron}, amb
-els parametres adequats, i per altra banda, entre generació i generació, omplim
+els paràmetres adequats, i per altra banda, entre generació i generació, omplim
 els fitness en l'arxiu aquest.  És una manera de colar-se en el procediment de
 Chiron, i permetent-nos modificar el fitness d'un element en una generació
 determinada.
@@ -986,11 +988,11 @@ aplicacions que es poden utilitzar en el futur.
 \label{ssub:CPlan}
 
 Aquest projecte, s'ha desenvolupat aproximadament en el transcurs de dos mesos,
-desde el seu diseny fins a la seva finalització.  
+des de el seu disseny fins a la seva finalització.  
 
 El que ha estat més complex en aquest projecte, és la investigació de
-tecnologies, ja que aquest ha estat un projecte molt interdisciplinar que ha
-requerit la utilització de diverses tecnologies que no coneixiem.
+tecnologies, ja que aquest ha estat un projecte molt interdisciplinari que ha
+requerit la utilització de diverses tecnologies que no coneixíem.
 
 En la Figura \ref{fig:chiron-gantt} veiem el diagrama de gantt, que descriu les
 diferents etapes del projecte 
@@ -1006,7 +1008,7 @@ diferents etapes del projecte
 \subsubsection{Cost} % (fold)
 \label{ssub:Cost}
 
-Pel que fa els costos, podem contabilitzar aproximadament que hi ha hagut unes
+Pel que fa els costos, podem comptabilitzar aproximadament que hi ha hagut unes
 320 hores de desenvolupament.
 % subsubsection Cost (end)
 % section Resultats (end)
