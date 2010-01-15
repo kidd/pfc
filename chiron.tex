@@ -239,7 +239,7 @@ els perquès:
 	el procés per a fer càlculs.
 
 	\item \textbf{Perquè decidir si guardem els resultats previs?}
-	Aparentment, sempre que calculem un individuu nou, hauríem de guardar-nos
+	Aparentment, sempre que calculem un individu nou, hauríem de guardar-nos
 	els resultats obtinguts per si més endavant surt el mateix element.  El fet
 	que ens fa donar-li la opció al usuari és que l'avaluació de la activitat
 	d'una molècula, es fa en un laboratori, i segons el tipus d'experiments que
@@ -887,11 +887,11 @@ aplicacions que es poden utilitzar en el futur.
 	nosaltres.
 
 	Per a testejar Chiron, hem usat un programa de test, que analitza totes les
-	dades experimentals, tenint així una resposta per a cada possible individuu
+	dades experimentals, tenint així una resposta per a cada possible individu
 	que pugui proposar Chiron.
 
 	Aquest programa de prova, ha estat desenvolupat en Perl, atacant directament
-	la llibreria també programada en perl, no pas usant la interfície SOAP, ja
+	la llibreria també programada en Perl, no pas usant la interfície SOAP, ja
 	que podent fer les proves en local, és molt més ràpid en executar-se.
 
 	S'han fet 25 execucions de Chiron per a cada projecte, i hem
@@ -947,6 +947,9 @@ aplicacions que es poden utilitzar en el futur.
 
 	Aquestes gràfiques mostren, de diferents maneres, el nombre de elements
 	avaluats, i l'error absolut que s'ha obtingut en cadascun dels experiments.
+	Veiem que hi ha una gran densitat d'experiments on evaluant un percentatge
+	molt petit del espai de cerca, trobem el millor individu de tots, o bé un
+	individu molt pròxim al millor.
 
 	La intenció inicial era utilitzar l'error relatiu, però en aquests
 	experiments, els pitjors fitness tenen un valor de infinit.  Com que els
@@ -964,7 +967,7 @@ aplicacions que es poden utilitzar en el futur.
 	rendiment de Chiron.
 
 	L'estudi, estadístic, l'hem realitzat utilitzant el software estadístic
-	R(\url{http://www.r-project.org/}), i ens permet dir coses com per exemple,
+	R\footnote{\url{http://www.r-project.org/}}, i ens permet dir coses com per exemple,
 	que \textbf{avaluant un 0.1\% de l'espai de cerca, ens quedem a menys de
 	1.68 del millor en un 72.25\% dels casos}, o bé la més interessant 
 	\textbf{avaluant un 0.12\% de l'espai de cerca, trobem la millor combinació
