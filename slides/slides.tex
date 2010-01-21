@@ -14,6 +14,7 @@
 
 \documentclass{beamer}
 %\usepackage{beamerthemeshadow}
+%\usetheme{Warsaw}
 \usetheme{Amsterdam}
 \usepackage[catalan]{babel}
 \usepackage[utf8]{inputenc}
@@ -39,7 +40,7 @@
 \label{sec:Motivacio}
 \begin{itemize}
 	\item hola
-	\item nanana ananan
+	\item nanana ananan \ref{sec:Chiron}
 	\item adeu
 \end{itemize}
 % section Motivació (end)
@@ -61,8 +62,6 @@
 \end{frame}
 
 
-\begin{frame}
-\end{frame}
 
 \section{Algorismes evolutius} % (fold)
 \label{sec:Algorismes evolutius}
@@ -71,7 +70,7 @@
 	\frametitle{Funcionament bàsic}
 	\begin{columns}[c]
 		\column{0.5\textwidth}
-		\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
+		\framebox{\includegraphics[height=0.4\textheight,width=0.9\textwidth]{images/ga.png}}
 		\column{0.5\textwidth}
 		\begin{itemize}
 			\item 
@@ -82,15 +81,20 @@
 \end{frame}
 
 \begin{frame}
+	\frametitle{Fitness}
+\end{frame}
+
+
+\begin{frame}
 	\frametitle{Inicialització}
 	\begin{columns}[c]
 		\column{0.5\textwidth}
 		\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
 		\column{0.5\textwidth}
 		\begin{itemize}
-			\item 
-				\pause
-			\item matat
+			\item Primera població.
+			\item Es generen els individus aleatòriament.
+			\item Si hi ha restriccions, s'han de complir.
 		\end{itemize}
 	\end{columns}
 \end{frame}
@@ -180,6 +184,47 @@
 \section{Chiron} % (fold)
 \label{sec:Chiron}
 % section Chiron (end)
+\begin{frame}
+	\frametitle{Química combinatòria}
+	\begin{itemize}
+		\item Esquelet que presenta certa activitat
+		\item Hi ha punts on podem unir-hi seqüències d'atoms
+		\item Aquestes seqüències estan ja definides quines poden haver-hi en cada punt d'unió
+	\end{itemize}
+	\pause
+	\begin{block}{Objectiu}
+		Volem trobar la combinació de substituients que maximitzi la bondat del esquelet
+	\end{block}
+\end{frame}
+
+\begin{frame}
+\end{frame}
+\begin{frame}
+	\frametitle{API}
+	\begin{itemize}
+		\item \textbf{newExp} (\$user, \$name, \$numAleles, \$popSize, \$cached , \$bounds)
+		\item \textbf{removeExp} (\$id\_exp)
+		\item \textbf{listExp} (\$userName)
+		\item \textbf{setFitness} (\$id\_ind, \$f)
+		\item \textbf{nextIteration} (\$id\_exp)
+		\item \textbf{listIndividualsByExp} (\$id\_exp)
+		\item \textbf{wipe}
+	\end{itemize}
+\end{frame}
+
+    %listIndividualsByExp
+    %setFitness
+    %nextIteration
+    %wipe
+    %sum
+    %print2
+    %gep
+    %bye
+    %hi
+    %number
+    %number2
+    %execu2
+    %execu
 
 \section{GEP} % (fold)
 \label{sec:GEP}
