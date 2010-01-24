@@ -34,7 +34,7 @@
 
 \frame{\titlepage} 
 
-\frame{\frametitle{index}\tableofcontents} 
+%\frame{\frametitle{index}\tableofcontents} 
 
 \section{Motivació} % (fold)
 \label{sec:Motivacio}
@@ -73,9 +73,11 @@
 		\framebox{\includegraphics[height=0.4\textheight,width=0.9\textwidth]{images/ga.png}}
 		\column{0.5\textwidth}
 		\begin{itemize}
-			\item 
-				\pause
-			\item matat
+			\item Inicialització
+			\item Avaluació
+			\item Selecció
+			\item Creuament
+			\item Mutació
 		\end{itemize}
 	\end{columns}
 \end{frame}
@@ -95,15 +97,6 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Fitness: Com de bo és un individu?}
-	\begin{itemize}
-		\item Com de bo un individu?
-			\pause
-		\item dfas
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
 	\frametitle{Inicialització}
 	\begin{columns}[c]
 		\column{0.5\textwidth}
@@ -118,83 +111,128 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Avaluació}
-	\begin{columns}[c]
-		\column{0.5\textwidth}
-		\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
-		\column{0.5\textwidth}
-		\begin{itemize}
-			\item 
-				\pause
-			\item matat
-		\end{itemize}
-	\end{columns}
+	\frametitle{Fitness: Com de bo és un individu? (Avaluació)} 
+	\begin{itemize}
+		\item És el propi problema.  Fa el paper de l'entorn en el que està
+		l'individu.
+		\item Cada individu l'enfrontem a la funció de fitness.
+		\item Retorna un valor (numèric) que ens permet comparar la bondat dels
+		individus entre ells
+	\end{itemize}
+	\pause
+	\begin{alertblock}{Compte!}
+		Aquesta funció s'executa moltes vegades s'ha d'anar amb compte amb el
+		cost
+	\end{alertblock}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Selecció}
-	\begin{columns}[c]
-		\column{0.5\textwidth}
-		\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
-		\column{0.5\textwidth}
+		\begin{block}{Els escollits}
+			Quins individus es reproduiràn, per passar el seu codi genètic a la següent
+			generació?
+		\end{block}
+		\pause
 		\begin{itemize}
-			\item 
-				\pause
-			\item matat
+			\item Accedeixen a reproduir-se un percentatge molt alt de la
+			població.
+			\item Diferents tipus de mecanismes de selecció.
+			\item Un o altre mecanisme pot provocar diferències molt grans en
+			els resultats del algorisme.
+			\item Es el responsable de la pressió evolutiva i la convergència
+			prematura.
 		\end{itemize}
-	\end{columns}
+		%\begin{exampleblock}
+		%\end{exampleblock}
 \end{frame}
+
+%XXX chicha sobre seleccio
 
 \begin{frame}
 	\frametitle{Creuament}
-	\begin{columns}[c]
-		\column{0.5\textwidth}
-		\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
-		\column{0.5\textwidth}
+	\begin{block}
+		Mecanismes pels cuals creem descendència a partir de 2 individus
+		existents.
+	\end{block}
 		\begin{itemize}
-			\item 
-				\pause
-			\item matat
+			\item Varia en funció del problema. %\verbatim{1100110011  001100110011}
+			\item S'ha de ``pensar'' en el tipus de problema, i decidir
+			\item Hi ha creuaments específics per algun tipus de problema (TSP).
 		\end{itemize}
-	\end{columns}
 \end{frame}
+
+%epistàcia
 
 \begin{frame}
 	\frametitle{Mutació}
-	\begin{columns}[c]
-		\column{0.5\textwidth}
-		\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
-		\column{0.5\textwidth}
 		\begin{itemize}
-			\item 
-				\pause
-			\item matat
+			\item Una vegada fet el creuament, un percentatge molt petit de la nova
+			població pateix mutacions en algun dels seus gens.
+			\item Les mutacions provoquen diferències dràstiques respecte el
+			cromosoma no mutat.
+			\item Va en contra de la convergència de la població.
 		\end{itemize}
-	\end{columns}
 \end{frame}
 
+
 \begin{frame}
-	\frametitle{Creuament }
-	\begin{columns}[c]
-		\column{0.5\textwidth}
-		\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
-		\column{0.5\textwidth}
-		\begin{itemize}
-			\item 
-				\pause
-			\item matat
-		\end{itemize}
-	\end{columns}
+\frametitle{Estat de l'art}
+\begin{itemize}
+\item Des que Holland publica sobre algorismes genètics, s'han utilitzat cada
+cop en més àmbits
+\item La gran potència de càlcul actual permet la seva utilització per tot tipus
+de problemes
+\pause
+\item Als inicis s'utilitzava lisp.
+\item Actualment existeixen llibreries en gairebé tots els llenguatges.
+\item En els últims 10 anys, s'han trobat maneres de paralelitzar els algorismes
+genètics.
+\end{itemize}
 \end{frame}
-% section Algorismes evolutius (end)
+
+%\begin{frame}
+	%\frametitle{Creuament}
+	%\begin{columns}[c]
+		%\column{0.5\textwidth}
+		%\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
+		%\column{0.5\textwidth}
+		%\begin{itemize}
+			%\item 
+				%\pause
+			%\item matat
+		%\end{itemize}
+	%\end{columns}
+%\end{frame}
+%% section Algorismes evolutius (end)
 
 \section{Pholus} % (fold)
 \label{sec:Pholus}
 
 \begin{frame}
-	\frametitle{Creuament }
+	\frametitle{Introducció}
+	Per detectar similituds entre molècules 
+\end{frame}
+
+\begin{frame}
+\frametitle{Aproximació}
+\end{frame}
+
+\begin{frame}
+\frametitle{Funcionament general}
+\end{frame}
+
+\begin{frame}
+\frametitle{Operadors}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implementació}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Creuament}
 	\begin{itemize}
-		\item 
+		\item fdsa
 	\end{itemize}
 \end{frame}
 % section Pholus (end)
@@ -216,33 +254,115 @@
 \end{frame}
 
 \begin{frame}
+	\frametitle{Aproximació}
+	Construir un programa que permeti trobar la combinació de substituients que
+	maximitza la seva activitat.
+
+	El procés ha de ser avaluat sintetitzant cada molècula.
+
+	Utilitzem algorismes evolutius per a optimitzar el número d'avaluacions, ja
+	que és un procés molt car.
 \end{frame}
+
+\begin{frame}
+	\frametitle{Abstracció}
+	\begin{itemize}
+	\item Aprofitem creuaments i mutacions, però no tenim funció d'avaluació.
+	\pause
+	\item Podem abstraure el problema i convertir Chiron en un framework
+	d'algorismes genètics.
+	\end{itemize}
+\end{frame}
+
+%explicar chiron en general
+\begin{frame}
+\frametitle{Funcionament General}
+\begin{itemize}
+\item Introducció de les característiques del problema (numero de substituients,
+i possibles substituients en cada posició)
+\item Generació de població inicial
+\item Introducció dels fitness de cada individu
+\item següent iteració\ldots
+\end{itemize}
+\pause
+L'usuari pot decidir si l'experiment ha de recordar els fitness dels elements ja
+evaluats, i no mostrar els individus repetits.
+\end{frame}
+
+\begin{frame}
+\frametitle{Operadors utilitzats}
+
+ % theme=Berlin;caption=Operadors Chiron
+ % Operador & Valor
+ % Inicialització & aleatòria
+ % Selecció & 0.2
+ % Creuament & 0.4
+ % Mutació & 0.7
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Operador }} & \multicolumn{1}{c|}{\textbf{ Valor}} \\
+\hline
+\hline
+Inicialització & aleatòria \\
+Selecció       & 0.2        \\
+Creuament       & 0.4        \\
+Mutació        & 0.7        \\
+\hline
+\end{tabular}
+\caption{Operadors Chiron}
+\end{table}
+\end{frame}
+
+\begin{frame}
+\frametitle{Problemes d'inicialització}
+En el nostre problema real, hi ha molt pocs individus que tinguin un fitness !=
+0.
+\pause
+\begin{alertblock}{Alerta!}
+Si en la primera generació tots els individus tenen el mateix fitness, la segona
+generació (creada a partir de la primera) tindrà bàsicament elements de la
+primera generació, provocant convergència prematura.
+\end{alertblock}
+\pause
+\begin{exampleblock}{Solució}
+En la primera generació, ens assegurem que no tots tinguin igual fitness.  Si és
+així, creem una població nova aleatòria, per abarcar tot l'espai de búsqueda
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Tecnologies utilitzades}
+\begin{tabular}[h!]{|c|c|}
+AE & eodev (c++) \\
+BBDD & Mysql + DBIX::Class (Perl) \\
+WebService & SOAP \\
+Enllaç $AE\rightarrow BBDD\rightarrow WS$ & Perl + Template Toolkit\\
+Client SOAP & PHP , Perl , C++ \\
+\end{tabular}
+\end{frame}
+
 \begin{frame}
 	\frametitle{API}
 	\begin{itemize}
 		\item \textbf{newExp} (\$user, \$name, \$numAleles, \$popSize, \$cached , \$bounds)
-		\item \textbf{removeExp} (\$id\_exp)
+		\item \textbf{removeExp} (\$idExp)
 		\item \textbf{listExp} (\$userName)
-		\item \textbf{setFitness} (\$id\_ind, \$f)
-		\item \textbf{nextIteration} (\$id\_exp)
-		\item \textbf{listIndividualsByExp} (\$id\_exp)
+		\item \textbf{setFitness} (\$idInd, \$f)
+		\item \textbf{nextIteration} (\$idExp)
+		\item \textbf{listIndividualsByExp} (\$idExp)
 		\item \textbf{wipe}
 	\end{itemize}
 \end{frame}
 
-    %listIndividualsByExp
-    %setFitness
-    %nextIteration
-    %wipe
-    %sum
-    %print2
-    %gep
-    %bye
-    %hi
-    %number
-    %number2
-    %execu2
-    %execu
+\begin{frame}
+\frametitle{Resultats}
+Chiron s'ha testejat en 3 problemes reals, amb un espai de cerca de més de 15000
+possibilitats, i en un XXX\% ha trobat la millor combinació explorant només un
+XXX de les possibilitats.
+\end{frame}
 
 \section{GEP} % (fold)
 \label{sec:GEP}
@@ -263,318 +383,5 @@
 % subsubsection hola matat (end)
 
 % section Conclusions (end)
-
-
-%\section{Objetivos y motivaciÃ³n} 
-%\frame{\frametitle{ProblemÃ¡tica} 
-%Los hdd crecen y crecen, y nosotros no somos capaces de organizar toda la info
-%\pause
-%\begin{itemize}
-%\item  Crear un programa de fÃ¡cil interface, que permita moverme por mi hdd.
-%\item  Funciona en X, para cualquier wm.
-%\item  Tiene las mÃ­nimas dependencias posibles.
-%\item  Tiene que ser 'intuitivo' para los usuarios (DWIM)
-%\item  Tiene que ser extensible (a mas o menos nivel)
-%\end{itemize}
-%}
-
-%\frame{\frametitle{Â¿QuÃ© aplicaciones existen?}
-%\begin{itemize}
-%\item  Beagle \\
-%Daemons!!
-%\pause
-%\item  Catfish \\
-%- Mala interficie y limitado en configuracion. \\
-%+ puede usar varios backends
-%\pause
-%\item  Google Desktop \\
-%Linux?
-%\pause
-%\end{itemize}
-%}
-
-%\frame{\frametitle{Requerimientos}
-%\begin{itemize}
-%\item  Permite buscar y abrir archivos rÃ¡pidamente
-%\item  Ejecuta aplicaciones
-%\item  Busca archivos remotamente
-%\item  Permite gestionar playlists
-%\item  Ayuda a navegar por las ventanas abiertas
-%\item  No requiere utilizar ningÃºn mÃ³dulo ni ningun gestor de ventanas para funcionar (no todas las funcionalidades estaran activas)
-%\item  MÃ­nima heurÃ­stica para facilitar su uso
-%\end{itemize}
-%}
-
-%\section{AproximaciÃ³n} 
-%\subsection{Primera AproximaciÃ³n}
-%\frame{\frametitle{Buscando Ayudita}
-%\begin{block}{find}
-%find \~/ -name ``.*\$1.*''
-%\end{block}
-%\pause
-%\begin{block}{ find2perl }
-%find2perl [paths] [predicates] \textbar perl
-%\end{block}
-%}
-
-%\begin{frame}[fragile]
-%\frametitle{Buscando Ayudita(II)}
-%\begin{block}{File::Find}
-%\begin{verbatim}
-%use File::Find; 
-%find(\&wanted, @directories_to_search); 
-%sub wanted { ... }
-%\end{verbatim}
-%\end{block}
-%\pause
-%\begin{block}{find2perl}
-%\begin{verbatim}
-%* File::Find::Rule
-%# find all the .pm files in @INC
-%my @files = File::Find::Rule->file()
-%->name( '*.pm')
-%->in(@INC);
-%\end{verbatim}
-%\end{block}
-%\end{frame}
-
-%\begin{frame}[fragile]
-%\frametitle{Â¿Buscamos cada vez?}
-%\begin{block} {File::Locate}
-%\begin{verbatim}
-%use File::Locate;
-%print join "\n", locate "^/usr", 
-%-rex => 1, "/usr/var/locatedb";
-%\end{verbatim}
-%\end{block}
-%\pause
-%\begin{block} {File::Locate::Harder}
-%\begin{verbatim}
-%my $flh = File::Locate::Harder->new( db => $db_file );
-%my $results_aref = $flh->locate( $search_pattern,
-%{ case_insensitive => 1,
-%regexp => 1, });
-%\end{verbatim}
-%\end{block}
-%\end{frame}
-
-%\begin{frame}[fragile]
-%\frametitle{Â¿QuÃ© escojemos?}
-%\pause
-%\begin{center}
-%\Huge{NINGUNA} \\
-%\pause
-%\Large{Portabilidad (GetOpt::Long; Pod::Usage)} \\
-%\begin{verbatim}
-%slocate -d $dbname $caseflag -r 
-%".*$pattern[^/]*\.$ft\$"
-%\end{verbatim}
-%\end{center}
-%\end{frame}
-
-
-%\subsection{Interfeisss}
-%\frame{
-%\frametitle{InterfÃ­cies}
-%\begin{block}{Tk}
-%Complicado \\
-%No standard
-%\end{block}
-%\pause
-%\begin{block}{Zenity}
-%zenity --info --text=``JAPH'' \\
-%zenity --list --print-column 2 --hide-column 2 label out
-%\end{block}
-%\pause
-%\begin{block}{ratmen}
-%\$ENV\{RATPOISON\} -c `` echo YAPH ''  \\
-%ratmen etiqueta1 comando1 etiqueta2 comando2
-%\end{block}
-%}
-
-%\section{CÃ³digo} 
-%\begin{frame}
-%\frametitle{Algoritmo}
-%\begin{itemize}
-%\item Checkear archivo de configuraciÃ³n
-%\item Preguntar por una extensiÃ³n/comando/orden
-%\begin{itemize}
-%\item si es extensiÃ³n, pedir un patrÃ³n.
-%\item si es una aplicaciÃ³n, ejecutarla
-%\item si es una orden, ejecutarla. (gen, ff, vi)
-%\end{itemize}
-%\item Si es una extensiÃ³n nueva pedimos una aplicaciÃ³n con la que abrir esos archivos.    
-%\end{itemize}
-%\begin{center}
-%Usamos prefijos para distinguir entre .tex (archivo) y tex(aplicaciÃ³n)
-%\end{center}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{Prefijos y heurÃ­stica}
-%\begin{itemize}
-%\item  .extensiÃ³n
-%\item -ejecutable
-%\item ,ventana
-%\pause
-%\item Si no ponemos ningÃºn prefijo, y entramos una extensiÃ³n conocida, rf lo interpreta como EXTENSION.
-%\item Si no es conocida y es un comando, se ejecuta el comando
-%\item Si no es conocida y no es ningun comando, se agrega como nueva extensiÃ³n
-%\end{itemize}
-%\end{frame}
-
-%\begin{frame}[fragile]
-%\frametitle{Recordar Extensiones}
-%\begin{verbatim}
-%lastft: pdf
-%pdf xpf
-%java gvim -f
-%chm kchmviewer
-%mp3 mocp -c -p -a
-%\end{verbatim}
-%\pause
-%\begin{exampleblock}{Mejora}
-%Pasarlo a codigo perl, y organizarlo como un hash, pudiendo
-%hacer referencias a otras entradas: \\
-%\$ext{ebook}=qw/pdf chm/; \$ext{chm}='kchmviewer';... 
-%\end{exampleblock}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{Flags}
-%El usuario tiene que poder usar el programa sin tocar ni una linea de cÃ³digo.
-%\begin{itemize}
-%\item --all
-%\item --case
-%\item --conffile
-%\item --loop (not implemented)
-%\item --man
-%\item --menuexe
-%\item --remote
-%\item --rootdir
-%\end{itemize}
-%\pause
-%\begin{center}
-%\large{GetOpt::Long y posibilidad de meter flags ``en vivo''}
-%\end{center}
-%\end {frame}
-
-%\begin{frame}[fragile]
-%\frametitle{GRID::Machine}
-%El usuario puede definir una lista de servers donde tiene clave ssh SIN
-%passphrase.
-%\begin{verbatim}
-%if ( $remote && eval{require GRID::Machine}){
-%foreach (@remoteHosts){
-%$m = GRID::Machine->new( host => $_ );
-%for my $file (searchRemote($_,qq{slocate ... }, $m)){
-%$file =~ m/.*\/(.*)$/;
-%push @FileList, {path => $file ,name => "$1",
-%machine => $m, IP => $_, app => ''};
-%}
-%}
-%}
-%\end{verbatim}
-%\end{frame}
-
-
-%\begin{frame}[fragile]
-%\frametitle{GRID::Machine (II)}
-%\begin{small}
-%\begin{verbatim}
-%$FileList[$res]{'machine'}->get(
-%[$FileList[$res]{'path'}], '/tmp/');
-%$^T = time();
-%system($application. ' ' .quotemeta("/tmp". 
-%"/$FileList[$res]{'name'}"));
-%my $age = -M quotemeta("/tmp"."/$FileList[$res]{'name'}");
-%$FileList[$res]{'path'} =~ s/(.*\/)[^\/]*/$1/mig;
-%if ($^T == $age) {
-%$FileList[$res]{'machine'}->put(["/tmp
-%/$FileList[$res]{'name'}"],
-%qq{$FileList[$res]{'path'}});
-%}
-%\end{verbatim}
-%\end{small}
-%\end{frame}
-
-%\begin{frame}[fragile]
-%\frametitle{Identificar paths con ``tilde''}
-%\begin{verbatim}
-%--rootdir=~/
-%--rootdir=~foo
-%--rootdir=~foo/bar
-
-%$ext_app_file =~ s{ ^ ~ ( [^/]* ) }
-%{ $1
-%? (getpwnam($1))[7]
-%: ( $ENV{HOME} || $ENV{LOGDIR}
-%|| (getpwuid($>))[7]
-%)
-%}ex;
-%\end{verbatim}
-%\end{frame}
-
-%\section{Un entorno de trabajo completo}
-%\subsection{plugins}
-%\begin{frame}[fragile]
-%\frametitle{Define con WWW::Dictionary}
-%\begin{verbatim}
-%WWW::Dictionary;
-%my $dictionary = WWW::Dictionary->new();
-%my $meaning = $dictionary->meaning( $word );
-%\end{verbatim}
-%\pause
-%\begin{verbatim}
-%use WWW::Dictionary;
-%my $dictionary = WWW::Dictionary->new( join('', @ARGV) );
-%@_ = split ('\n' , $dictionary->get_meaning);
-%print grep {/Spanish/} @_ , "\n";
-%\end{verbatim}
-%\end{frame}
-
-%\begin{frame}[fragile]
-%\frametitle{Syntax con WWW::Mechanize}
-%HTML::Strip - Perl extension for stripping HTML markup from text
-%\begin{verbatim}
-%use WWW::Mechanize;
-%use HTML::Strip;
-
-%$w1 = WWW::Mechanize->new;
-%$w1->get("http://www.google.es/search....");
-%$html = HTML::Strip->new;
-%$html->parse($w1->content);
-%$html =~ m/de aproximadamente ([\d.]+) paginas/;
-%\end{verbatim}
-%\end{frame}
-
-
-%\begin{frame}
-%\frametitle{Trabajo Futuro}
-%\begin{itemize}
-%\item Refactorizar cÃ³digo
-%\item Utilizar sqlite para localizar archivos.
-%\item hacer 'plugins' para buscar streamings de mÃºsica
-%\item --loop flag
-%\item --tmpcmd flag
-%\end{itemize}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{Bibliografia}	
-%\begin{itemize}
-%\item \url{http://software.twotoasts.de/?page=catfish}
-%\item \url{http://beagle-project.org/Main\_Page}
-%\item \url{www.cpan.org}
-%\item O'Reilly Perl  Bookshelf (Beginning Perl,  Programming  Perl, Perl Cookbook...) 
-%\item \url{http://use.perl.org/~Alias/journal/36415}
-%\end{itemize}
-%\end{frame}
-
-%\begin{frame}
-%Gracias por su atenciÃ³n
-%\huge{\centering{http://code.google.com/p/ratfinder/}}
-%\end{frame}
-
 
 \end{document}
