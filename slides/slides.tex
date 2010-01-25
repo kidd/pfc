@@ -54,9 +54,11 @@
 		\framebox{\includegraphics[height=0.9\textheight,width=0.9\textwidth]{images/StrangeLoop.jpg}}
 		\column{0.5\textwidth}
 		\begin{itemize}
-			\item hola
-				\pause
-			\item matat
+			\item Tres projectes que utilitzen algorismes evolutius per a millorar processos en el
+				disseny de nous farmacs
+			\item Utilitzem tècniques apreses de com funciona la natura, per a després millorar la
+				propia ``natura''.
+			\item Oi que és un ``extrany bucle''?
 		\end{itemize}
 	\end{columns}
 \end{frame}
@@ -146,7 +148,7 @@
 		%\end{exampleblock}
 \end{frame}
 
-%XXX chicha sobre seleccio
+%XXX chicha sobre seleccio  Ruleta i torneig
 
 \begin{frame}
 	\frametitle{Creuament}
@@ -161,7 +163,7 @@
 		\end{itemize}
 \end{frame}
 
-%epistàcia
+%epistàcia   1p, 2p, mantenint posicions, creuant, etc..
 
 \begin{frame}
 	\frametitle{Mutació}
@@ -210,31 +212,100 @@ genètics.
 
 \begin{frame}
 	\frametitle{Introducció}
-	Per detectar similituds entre molècules 
+	Per detectar similituds entre molècules volem detectar quins indicadors són més rellevants, i
+	com ho són. 
+	\pause
+	\begin{itemize}
+		\item Enfrontem un conjunt petit de molècules actives amb una llista llarga de molècules,
+			que contenen aquestes actives, junt amb inactives.
+		\item Cada molècula té 22 descriptors que la defineixen.
+		\item Busquem 22 ponderacions que ordenin la llista completa posant les actives en les
+			primeres posicions
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Aproximació}
+	\begin{itemize}
+		\item Creem un Algorisme genètic que busca ponderacions que ordenin les actives al principi.
+		\item L'usuari proporciona una llista d'actives i una llista amb totes les molècules, junt
+			amb els descriptors
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Funcionament general}
+
 \end{frame}
 
 \begin{frame}
+	\frametitle{Individu}
+	Els individus són vectors de 22 números en coma flotant, entre -1 i 1, que descriuen.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Avaluació}
+	\begin{block}{}
+		Donada una ponderació per a cadascun dels 22 descriptors, la llista d'actives, i la llista
+		completa, dona un valor de bondat de la ordenació.
+	\end{block}
+	\pause
+	\begin{itemize}
+		\item Utilitzem Bedroc com a mesura de bondat d'ordenació.
+		\item Una molècula pot estar vàries vegades en la llista, donat que hi ha diferents
+			conformacions en la natura.  En evaluar el Bedroc ens quedem amb la millor conformació
+			de cada molècula.
+	\end{itemize}
+\end{frame}
+
+%\begin{frame}
+	%\frametitle{BEDROC??}
+%\end{frame}
+
+\begin{frame}
 \frametitle{Operadors}
+
+ % theme=Berlin;caption=Operadors Pholus
+ % Operador & Valor
+ % Inicialització & aleatòria [-1 , +1]
+ % Selecció & 0.2
+ % Creuament & 0.4
+ % Mutació & 0.7
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Operador }} & \multicolumn{1}{c|}{\textbf{ Valor}} \\
+\hline
+\hline
+Inicialització & aleatòria [-1 , +1] \\
+Selecció       & Torneig(2) amb elitisme  \\
+Creuament       & 0.4  unipunt        \\
+Mutació        &   0.1                  \\
+\hline
+\end{tabular}
+\caption{Operadors Pholus}
+\end{table}
+
 \end{frame}
 
 \begin{frame}
 \frametitle{Implementació}
+\begin{tabular}[h!]{|c|c|}
+	AE                                         & eodev (c++)                \\ 
+	BBDD                                       & Mysql + DBIX::Class (Perl) \\ 
+	WebService                                 & SOAP                       \\ 
+	Enllaç $AE\rightarrow BBDD\rightarrow WS$  & Perl + Template Toolkit    \\ 
+	Client SOAP                                & PHP , Perl , C++           \\ 
+\end{tabular}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Creuament}
-	\begin{itemize}
-		\item fdsa
-	\end{itemize}
+	\frametitle{Testeig}
+	80 - 10 - 10
 \end{frame}
+
 % section Pholus (end)
 
 \section{Chiron} % (fold)
@@ -307,9 +378,9 @@ evaluats, i no mostrar els individus repetits.
 \hline
 \hline
 Inicialització & aleatòria \\
-Selecció       & 0.2        \\
-Creuament       & 0.4        \\
-Mutació        & 0.7        \\
+Selecció       &  Torneig(2) amb elitisme       \\
+Creuament       & 0.4 unipunt  \\
+Mutació        & 0.5        \\
 \hline
 \end{tabular}
 \caption{Operadors Chiron}
@@ -358,20 +429,44 @@ Client SOAP & PHP , Perl , C++ \\
 \end{frame}
 
 \begin{frame}
-\frametitle{Resultats}
-Chiron s'ha testejat en 3 problemes reals, amb un espai de cerca de més de 15000
-possibilitats, i en un XXX\% ha trobat la millor combinació explorant només un
-XXX de les possibilitats.
+	\frametitle{Resultats}
+	\begin{columns}[c]
+		\column{0.5\textwidth}
+		\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/rgrau1.png}}
+		\column{0.5\textwidth}
+		Chiron s'ha testejat en 3 problemes reals, amb un espai de cerca de més de 15000
+		possibilitats, i en un 40\% ha trobat la millor combinació explorant només un
+		12\% de les possibilitats.
+	\end{columns}
 \end{frame}
 
 \section{GEP} % (fold)
 \label{sec:GEP}
 % section GEP (end)
 
+\begin{frame}
+	\frametitle{Introducció}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Genetic Expression programming}
+	\framebox{\includegraphics[scale=0.2]{images/1-5.jpg}}
+	\begin{itemize}
+		\item Millora sobre la programació genètica
+		\item Busquem optimitzar un procés i no pas la entrada d'un procés
+		\item Els individus són processos, que hem d'optimitzar per tal que donada una entrada,
+			evaluin a una sortida que volem.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{fda}
+\end{frame}
 \section{Conclusions} % (fold)
 \label{sec:Conclusions}
 \begin{frame}
-	i tu ke tal
+
 \end{frame}
 
 \subsubsection{hola matat} % (fold)
