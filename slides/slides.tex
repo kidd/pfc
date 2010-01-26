@@ -19,6 +19,7 @@
 \usepackage[catalan]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{url}
+\usepackage{eurosym}
 \begin{document}
 \title{Algorismes genètics aplicats a ciències de la vida}
 \author{Raimon Grau Cuscó}
@@ -302,16 +303,21 @@ Mutació        &   0.1                  \\
 \frametitle{Implementació}
 \begin{tabular}[h!]{|c|c|}
 	AE                                         & eodev (c++)                \\ 
-	BBDD                                       & Mysql + DBIX::Class (Perl) \\ 
-	WebService                                 & SOAP                       \\ 
-	Enllaç $AE\rightarrow BBDD\rightarrow WS$  & Perl + Template Toolkit    \\ 
-	Client SOAP                                & PHP , Perl , C++           \\ 
+	Interfície & Perl    \\ 
 \end{tabular}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Testeig}
-	80 - 10 - 10
+	\begin{block}{Sobreentrenament}
+		Si entrenem un algorisme evolutiu per un conjunt molt petit de dades, el Algorisme pot
+		sobreentrenar la solució per al nostre conjunt de test.
+	\end{block}
+	\begin{itemize}
+		\item Separem les nostres dades en 3 conjunts: Train, Test i validació.
+		\item Mirant els resultats obtinguts respecte el conjunt de test i validació podem saber si
+			s'ha sobreentrenat.
+	\end{itemize}
 \end{frame}
 
 % section Pholus (end)
@@ -452,10 +458,9 @@ Client SOAP & PHP , Perl , C++ \\
 \label{sec:GEP}
 % section GEP (end)
 
-\begin{frame}
-	\frametitle{Introducció}
-
-\end{frame}
+%\begin{frame}
+	%\frametitle{Introducció}
+%\end{frame}
 
 \begin{frame}
 	\frametitle{Genetic Expression programming}
@@ -511,12 +516,20 @@ Client SOAP & PHP , Perl , C++ \\
 
 \begin{frame}
 	\frametitle{Notació Karva II}
-	multigen
+	\begin{itemize}
+		\item Composem un individu a partir de molts gens.
+		\item Un dels sub-arbres no té referències a terminals sinó als altres sub-arbres
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Avaluació}
-	Nodes, arbres
+	\begin{itemize}
+		\item Per avaluar un individu, el convertim a l'arbre d'expressió corresponent, i
+			l'``executem'' amb els mostrejos que tenim.
+		\item Comparem el resultat obtingut amb l'esperat.
+		\item La diferència entre els resultats esperats i els obtinguts és el fitness (minimitzem)
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -564,24 +577,46 @@ Client SOAP & PHP , Perl , C++ \\
 	\frametitle{Memòria}
 \end{frame}
 
-%\begin{frame}
-	%\frametitle{Costos}
-	%Pholus = 3500 €
+\begin{frame}
+	\frametitle{Costos}
+	Pholus = \EUR{3500} 
 
-	%Chiron = 3000 €
+	Chiron = \EUR{3000} 
 
-	%GEP  = 3000 €
+	GEP  = \EUR{3000} 
 
-	%Total = 9500 €
-%\end{frame}
+	Total = \EUR{9500}
+\end{frame}
 
 % section Planificació i costos (end)
 
 \section{Conclusions} % (fold)
 \label{sec:Conclusions}
+
 \begin{frame}
+	\begin{itemize}
+		\item Aplicació d'algorismes genètics a problemes reals
+		\item La intercomunicació entre processos és vital per a fer programes reutilitzables
+		\item Utilització de moltes tecnologies diferents (MySql,Perl,eodev,SOAP,Template
+			Toolkit,mercurial,git)
+		\item Treballant amb tecnologies noves, la manca de literatura pot ser un impediment a
+			l'hora d'aconseguir els objectius.
+	\end{itemize}
 \end{frame}
 
+\begin{frame}
+	\frametitle{FI}
+	Gràcies per la seva atenció.
+
+	Preguntes?
+
+	\begin{center}
+	\framebox{\includegraphics[height=0.5\textheight,width=0.6\textwidth]{images/mlink.jpg}}
+	\end{center}
+
+	Podeu trobar la memòria a \url{http://github.com/kidd/pfc}
+
+\end{frame}
 % subsubsection hola matat (end)
 
 % section Conclusions (end)
