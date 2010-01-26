@@ -241,12 +241,12 @@ genètics.
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Funcionament general}
-	%\begin{itemize}
-	%\item 
-	%\end{itemize}
-\end{frame}
+%\begin{frame}
+%\frametitle{Funcionament general}
+	%%\begin{itemize}
+	%%\item 
+	%%\end{itemize}
+%\end{frame}
 
 \begin{frame}
 	\frametitle{Individu}
@@ -302,16 +302,19 @@ Mutació        &   0.1                  \\
 
 \begin{frame}
 \frametitle{Implementació}
-\begin{tabular}[h!]{|c|c|}
-	AE                                         & eodev (c++)                \\ 
-	Interfície & Perl    \\ 
-\end{tabular}
+\begin{center}
+	
+	\begin{tabular}[h!]{|c|c|}
+		AE & eodev (c++)                \\ 
+		Interfície & Perl    \\ 
+	\end{tabular}
+\end{center}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Testeig}
 	\begin{block}{Sobreentrenament}
-		Si entrenem un algorisme evolutiu per un conjunt molt petit de dades, el Algorisme pot
+		Si entrenem un algorisme evolutiu per un conjunt molt petit de dades, l'Algorisme pot
 		sobreentrenar la solució per al nostre conjunt de test.
 	\end{block}
 	\begin{itemize}
@@ -319,6 +322,12 @@ Mutació        &   0.1                  \\
 		\item Mirant els resultats obtinguts respecte el conjunt de test i validació podem saber si
 			s'ha sobreentrenat.
 	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Resultats}
+	Exemple de resultat:
+		\framebox{\includegraphics[height=0.5\textheight,width=0.6\textwidth]{../pholus/pholus7.png}}
 \end{frame}
 
 % section Pholus (end)
@@ -409,6 +418,7 @@ Mutació        & 0.05        \\
 \frametitle{Problemes d'inicialització}
 En el nostre problema real, hi ha molt pocs individus que tinguin un fitness !=
 0.
+%XXX Foto normals
 \pause
 \begin{alertblock}{Alerta!}
 Si en la primera generació tots els individus tenen el mateix fitness, la segona
@@ -472,8 +482,8 @@ Client SOAP & PHP , Perl , C++ \\
 		\framebox{\includegraphics[scale=0.4]{images/1-5.jpg}}
 	\end{center}
 	\begin{itemize}
-		\item Millora sobre la programació genètica (2001)
-		\item Busquem optimitzar un procés i no pas la entrada d'un procés
+		\item Millora sobre la programació genètica (2001).
+		\item Busquem optimitzar un procés i no pas la entrada d'un procés.
 		\item Els individus són processos, que hem d'optimitzar per tal que donada una entrada,
 			evaluin a una sortida que volem.
 	\end{itemize}
@@ -487,7 +497,7 @@ Client SOAP & PHP , Perl , C++ \\
 \begin{frame}
 	\frametitle{Funcionament general}
 	\begin{itemize}
-		\item Els individus són fórmules matemàtiques
+		\item Els individus són fórmules matemàtiques.
 		\item A diferència de en la programació genètica, podem fer creuaments i
 		mutacions a nivell de genotip.
 		\item A part d'això, funcionen igual que els algorismes genètics que ja
@@ -499,8 +509,9 @@ Client SOAP & PHP , Perl , C++ \\
 	\frametitle{Notació Karva}
 	\begin{columns}[c]
 		\column{0.5\textwidth}
+		\begin{center}
 		+/*abcd
-
+		\end{center}
 		\framebox{\includegraphics[height=0.5\textheight,width=0.7\textwidth]{images/pt01.png}}
 
 		\column{0.5\textwidth}
@@ -524,6 +535,7 @@ Client SOAP & PHP , Perl , C++ \\
 		\item Composem un individu a partir de molts gens.
 		\item Un dels sub-arbres no té referències a terminals sinó als altres sub-arbres
 	\end{itemize}
+	%XXX imatge multigen
 \end{frame}
 
 \begin{frame}
@@ -565,31 +577,33 @@ Client SOAP & PHP , Perl , C++ \\
 \begin{frame}
 	\frametitle{Pholus}
 		\framebox{\includegraphics[angle=90,height=0.5\textheight,width=1\textwidth]{../pholus/pholus-gantt.png}}
+
+	Pholus = \EUR{3500}. Aproximadament 2 mesos i mig
 \end{frame}
 
 \begin{frame}
 	\frametitle{Chiron}
 		\framebox{\includegraphics[angle=90,height=0.5\textheight,width=1\textwidth]{../chiron/chiron-gantt.png}}
+
+	Chiron = \EUR{3000}. Aproximadament 2 mesos.
 \end{frame}
 
 \begin{frame}
 	\frametitle{GEP}
 		\framebox{\includegraphics[angle=90,height=0.5\textheight,width=1\textwidth]{../gep-gantt.png}}
+
+	GEP  = \EUR{3000}. Aproximadament 2 mesos.
 \end{frame}
 
 \begin{frame}
-	\frametitle{Memòria}
-\end{frame}
+	\frametitle{Memòria i cost total}
+		\begin{center}
+			
+		\framebox{\includegraphics[height=0.3\textheight,width=0.8\textwidth]{images/memo.png}}
+		\end{center}
 
-\begin{frame}
-	\frametitle{Costos}
-	Pholus = \EUR{3500} 
+		El cost total ha estat d'uns \EUR{9500} aproximadament.
 
-	Chiron = \EUR{3000} 
-
-	GEP  = \EUR{3000} 
-
-	Total = \EUR{9500}
 \end{frame}
 
 % section Planificació i costos (end)
@@ -598,6 +612,7 @@ Client SOAP & PHP , Perl , C++ \\
 \label{sec:Conclusions}
 
 \begin{frame}
+\frametitle{Conclusions}
 	\begin{itemize}
 		\item Aplicació d'algorismes genètics a problemes reals
 		\item La intercomunicació entre processos és vital per a fer programes reutilitzables
