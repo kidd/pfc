@@ -35,7 +35,7 @@
 
 \frame{\titlepage} 
 
-\frame{\frametitle{index}\tableofcontents} 
+\frame{\frametitle{Índex}\tableofcontents} 
 
 %\section{Motivació} % (fold)
 %\label{sec:Motivacio}
@@ -75,6 +75,7 @@
 	\pause
 	\framebox{\includegraphics[height=0.9\textheight,width=0.9\textwidth]{images/jirafa11.jpg}}
 \end{frame}
+
 \begin{frame}
 	\frametitle{Funcionament bàsic}
 	\begin{columns}[c]
@@ -159,8 +160,8 @@
 
 \begin{frame}
 	\frametitle{Creuament}
-	\begin{block}
-		Mecanismes pels cuals creem descendència a partir de 2 individus
+	\begin{block}{}
+		Mecanismes pels quals creem descendència a partir de 2 individus
 		existents.
 	\end{block}
 		\begin{itemize}
@@ -347,6 +348,9 @@ Mutació        &   0.1                  \\
 
 	Utilitzem algorismes evolutius per a optimitzar el número d'avaluacions, ja
 	que és un procés molt car.
+
+	\framebox{\includegraphics[height=0.6\textheight,width=0.9\textwidth]{images/Rai_Chiron.jpeg}}
+
 \end{frame}
 
 \begin{frame}
@@ -394,7 +398,7 @@ evaluats, i no mostrar els individus repetits.
 Inicialització & aleatòria \\
 Selecció       &  Torneig(2) amb elitisme       \\
 Creuament       & unipunt  \\
-Mutació        & 0.5        \\
+Mutació        & 0.05        \\
 \hline
 \end{tabular}
 \caption{Operadors Chiron}
@@ -414,7 +418,7 @@ primera generació, provocant convergència prematura.
 \pause
 \begin{exampleblock}{Solució}
 En la primera generació, ens assegurem que no tots tinguin igual fitness.  Si és
-així, creem una població nova aleatòria, per abarcar tot l'espai de búsqueda
+així, creem una població nova aleatòria, per abarcar tot l'espai de cerca.
 \end{exampleblock}
 \end{frame}
 
@@ -463,7 +467,7 @@ Client SOAP & PHP , Perl , C++ \\
 %\end{frame}
 
 \begin{frame}
-	\frametitle{Genetic Expression programming}
+	\frametitle{Genetic Expression Programming}
 	\begin{center}
 		\framebox{\includegraphics[scale=0.4]{images/1-5.jpg}}
 	\end{center}
@@ -560,17 +564,17 @@ Client SOAP & PHP , Perl , C++ \\
 
 \begin{frame}
 	\frametitle{Pholus}
-		\framebox{\includegraphics[height=0.5\textheight,width=1\textwidth]{../pholus/pholus-gantt.png}}
+		\framebox{\includegraphics[angle=90,height=0.5\textheight,width=1\textwidth]{../pholus/pholus-gantt.png}}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Chiron}
-		\framebox{\includegraphics[height=0.5\textheight,width=1\textwidth]{../chiron/chiron-gantt.png}}
+		\framebox{\includegraphics[angle=90,height=0.5\textheight,width=1\textwidth]{../chiron/chiron-gantt.png}}
 \end{frame}
 
 \begin{frame}
 	\frametitle{GEP}
-		\framebox{\includegraphics[height=0.5\textheight,width=1\textwidth]{../gep-gantt.png}}
+		\framebox{\includegraphics[angle=90,height=0.5\textheight,width=1\textwidth]{../gep-gantt.png}}
 \end{frame}
 
 \begin{frame}
@@ -597,8 +601,8 @@ Client SOAP & PHP , Perl , C++ \\
 	\begin{itemize}
 		\item Aplicació d'algorismes genètics a problemes reals
 		\item La intercomunicació entre processos és vital per a fer programes reutilitzables
-		\item Utilització de moltes tecnologies diferents (MySql,Perl,eodev,SOAP,Template
-			Toolkit,mercurial,git)
+		\item Utilització de moltes tecnologies i eines diferents (MySql, Perl, eodev, SOAP, Template
+			Toolkit, mercurial, git, LaTeX)
 		\item Treballant amb tecnologies noves, la manca de literatura pot ser un impediment a
 			l'hora d'aconseguir els objectius.
 	\end{itemize}
