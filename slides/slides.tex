@@ -34,21 +34,22 @@
 
 \frame{\titlepage} 
 
-%\frame{\frametitle{index}\tableofcontents} 
+\frame{\frametitle{index}\tableofcontents} 
 
-\section{Motivació} % (fold)
-\label{sec:Motivacio}
-\begin{itemize}
-	\item hola
-	\item nanana ananan \ref{sec:Chiron}
-	\item adeu
-\end{itemize}
+%\section{Motivació} % (fold)
+%\label{sec:Motivacio}
+%\begin{itemize}
+	%\item hola
+	%\item nanana ananan \ref{sec:Chiron}
+	%\item adeu
+%\end{itemize}
 % section Motivació (end)
 
 
 \section{Introducció} % (fold)
 
 \begin{frame}
+\frametitle{De què tracta aquest PFC?}
 	\begin{columns}[c]
 		\column{0.5\textwidth}
 		\framebox{\includegraphics[height=0.9\textheight,width=0.9\textwidth]{images/StrangeLoop.jpg}}
@@ -68,6 +69,11 @@
 \section{Algorismes evolutius} % (fold)
 \label{sec:Algorismes evolutius}
 
+\begin{frame}
+	\frametitle{En la natura}
+	\pause
+	\framebox{\includegraphics[height=0.9\textheight,width=0.9\textwidth]{images/jirafa11.jpg}}
+\end{frame}
 \begin{frame}
 	\frametitle{Funcionament bàsic}
 	\begin{columns}[c]
@@ -100,16 +106,16 @@
 
 \begin{frame}
 	\frametitle{Inicialització}
-	\begin{columns}[c]
-		\column{0.5\textwidth}
-		\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
-		\column{0.5\textwidth}
+	%\begin{columns}[c]
+		%\column{0.5\textwidth}
+		%\framebox{\includegraphics[height=0.7\textheight,width=0.9\textwidth]{images/giraffe-crossover.jpg}}
+		%\column{0.5\textwidth}
 		\begin{itemize}
 			\item Primera població.
 			\item Es generen els individus aleatòriament.
 			\item Si hi ha restriccions, s'han de complir.
 		\end{itemize}
-	\end{columns}
+	%\end{columns}
 \end{frame}
 
 \begin{frame}
@@ -187,7 +193,7 @@ de problemes
 \pause
 \item Als inicis s'utilitzava lisp.
 \item Actualment existeixen llibreries en gairebé tots els llenguatges.
-\item En els últims 10 anys, s'han trobat maneres de paralelitzar els algorismes
+\item En els últims 10 anys, s'han buscat maneres de paralelitzar els algorismes
 genètics.
 \end{itemize}
 \end{frame}
@@ -212,8 +218,8 @@ genètics.
 
 \begin{frame}
 	\frametitle{Introducció}
-	Per detectar similituds entre molècules volem detectar quins indicadors són més rellevants, i
-	com ho són. 
+	Per detectar similituds entre molècules volem detectar quins indicadors són
+	més rellevants, i com ho són. 
 	\pause
 	\begin{itemize}
 		\item Enfrontem un conjunt petit de molècules actives amb una llista llarga de molècules,
@@ -235,7 +241,9 @@ genètics.
 
 \begin{frame}
 \frametitle{Funcionament general}
-
+	%\begin{itemize}
+	%\item 
+	%\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -281,7 +289,7 @@ genètics.
 \hline
 Inicialització & aleatòria [-1 , +1] \\
 Selecció       & Torneig(2) amb elitisme  \\
-Creuament       & 0.4  unipunt        \\
+Creuament       &  unipunt        \\
 Mutació        &   0.1                  \\
 \hline
 \end{tabular}
@@ -347,7 +355,7 @@ Mutació        &   0.1                  \\
 
 %explicar chiron en general
 \begin{frame}
-\frametitle{Funcionament General}
+\frametitle{Funcionament general}
 \begin{itemize}
 \item Introducció de les característiques del problema (numero de substituients,
 i possibles substituients en cada posició)
@@ -379,7 +387,7 @@ evaluats, i no mostrar els individus repetits.
 \hline
 Inicialització & aleatòria \\
 Selecció       &  Torneig(2) amb elitisme       \\
-Creuament       & 0.4 unipunt  \\
+Creuament       & unipunt  \\
 Mutació        & 0.5        \\
 \hline
 \end{tabular}
@@ -451,28 +459,127 @@ Client SOAP & PHP , Perl , C++ \\
 
 \begin{frame}
 	\frametitle{Genetic Expression programming}
-	\framebox{\includegraphics[scale=0.2]{images/1-5.jpg}}
+	\begin{center}
+		\framebox{\includegraphics[scale=0.4]{images/1-5.jpg}}
+	\end{center}
 	\begin{itemize}
-		\item Millora sobre la programació genètica
+		\item Millora sobre la programació genètica (2001)
 		\item Busquem optimitzar un procés i no pas la entrada d'un procés
 		\item Els individus són processos, que hem d'optimitzar per tal que donada una entrada,
 			evaluin a una sortida que volem.
 	\end{itemize}
+	\pause
+	\begin{block}{Objectiu}
+		Volem trobar fórmules matemàtiques a partir de angles de rotació en els
+		enllaços d'una molècula i els seus volums.
+	\end{block}
 \end{frame}
 
 \begin{frame}
-	\frametitle{fda}
+	\frametitle{Funcionament general}
+	\begin{itemize}
+		\item Els individus són fórmules matemàtiques
+		\item A diferència de en la programació genètica, podem fer creuaments i
+		mutacions a nivell de genotip.
+		\item A part d'això, funcionen igual que els algorismes genètics que ja
+		hem vist.
+	\end{itemize}
 \end{frame}
+
+\begin{frame}
+	\frametitle{Notació Karva}
+	\begin{columns}[c]
+		\column{0.5\textwidth}
+		+/*abcd
+
+		\framebox{\includegraphics[height=0.5\textheight,width=0.7\textwidth]{images/pt01.png}}
+
+		\column{0.5\textwidth}
+		\begin{itemize}
+			\item 2 tipus de nodes: Terminals (aritat 0) i operadors (aritat
+			$>0$)
+			\item Separem el nostre cromosoma en 2 parts, el \emph{head}, que
+			conté operadors i terminals i el \emph{tail}, que només conté
+			terminals.
+		\end{itemize}
+		\begin{block}{Els arbres sempre seran sintàcticament correctes si:}
+			$$ t =  h (n-1) + 1 $$
+			On n és la aritat màxima que podem trobar en un operador
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Notació Karva II}
+	multigen
+\end{frame}
+
+\begin{frame}
+	\frametitle{Avaluació}
+	Nodes, arbres
+\end{frame}
+
+\begin{frame}
+	\frametitle{Operadors}
+	Tots els operadors poden ser iguals que en els algorismes genètics clàssics
+	gràcies a la notació Karva.
+	\pause
+	\begin{itemize}
+		\item Inicialització: Aleatòria, respectant head i tail.
+		\item Creuament: Unipunt, bipunt, creuament de subarbres.
+		\item Mutació: Translació de zones i intercanvi de gens.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Resultats}
+	Hem tingut èxit amb funcions polinòmiques relativament complexes
+	$$ f(x) = x^6 -2x^4 + x^2 $$
+	\pause
+	NO hem tingut èxit amb funcions periòdiques, que era l'objectiu on voliem
+	aplicar GEP.
+
+	$$ :( $$
+\end{frame}
+
+\section{Planificació i costos} % (fold)
+\label{sec:Planificacio i costos}
+
+\begin{frame}
+	\frametitle{Pholus}
+		\framebox{\includegraphics[height=0.5\textheight,width=1\textwidth]{../pholus/pholus-gantt.png}}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Chiron}
+		\framebox{\includegraphics[height=0.5\textheight,width=1\textwidth]{../chiron/chiron-gantt.png}}
+\end{frame}
+
+\begin{frame}
+	\frametitle{GEP}
+		\framebox{\includegraphics[height=0.5\textheight,width=1\textwidth]{../gep-gantt.png}}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Memòria}
+\end{frame}
+
+%\begin{frame}
+	%\frametitle{Costos}
+	%Pholus = 3500 €
+
+	%Chiron = 3000 €
+
+	%GEP  = 3000 €
+
+	%Total = 9500 €
+%\end{frame}
+
+% section Planificació i costos (end)
+
 \section{Conclusions} % (fold)
 \label{sec:Conclusions}
 \begin{frame}
-
-\end{frame}
-
-\subsubsection{hola matat} % (fold)
-\label{ssub:hola matat}
-\begin{frame}
-	jo bé
 \end{frame}
 
 % subsubsection hola matat (end)
